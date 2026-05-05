@@ -1,0 +1,32 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import authRoutes from "./routes/userRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import { swaggerUi, specs } from "./config/swagger.js";
+
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Swagger documentation route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api", userRoutes);
+
+// simple route
+app.get("/", (req, res) => {
+  res.send("API is running... <a href='/api-docs'>View API documentation</a>");
+});
+
+// routes
+app.use("/auth", authRoutes);
+// require('./app/routes/authRoutes')(app);
+// require('./app/routes/userRoutes')(app);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`API documentation available at http://localhost:${PORT}/api-docs`);
+});
