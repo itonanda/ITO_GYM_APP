@@ -11,7 +11,6 @@ import {
 //var jwt = require("jsonwebtoken");
 //var bcrypt = require("bcryptjs");
 
-
 export const addUser = async (req, res) => {
   try {
     const userData = req.body;

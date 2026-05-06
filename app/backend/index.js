@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import authRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { swaggerUi, specs } from "./config/swagger.js";
+// const bodyParser = require("body-parser");
+// const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
