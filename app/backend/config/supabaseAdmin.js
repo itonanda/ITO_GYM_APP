@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config(); // Load environment variables from .env file
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY_SERVICE_ROLE) {
     console.error('ERROR: SUPABASE_URL and SUPABASE_ANON_KEY must be set in .env file');
