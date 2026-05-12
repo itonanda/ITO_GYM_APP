@@ -5,7 +5,6 @@
 
 import React, { useState } from "react";
 import {
-  Alert,
   View,
   Text,
   TextInput,
@@ -21,43 +20,7 @@ import { Link, useRouter } from 'expo-router';
 
 export default function LoginScreen() {
   const router = useRouter();
-
   const [secure, setSecure] = useState(true);
-
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSignIn = () => {
-    if(email.length === 0) {
-      Alert.alert('Attention','Please enter both email');
-      return;
-    }
-    else if(password.length === 0) {
-      Alert.alert('Attention','Please enter both password');
-      return;
-    }
-    else {
-      fetch(`${apiURL}/auth/signin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          router.replace({
-            pathname: '/MemberDashboard',
-            params: { accessToken: data.session.access_token, email: data.session.email }
-          });
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-  };
 
   return (
     <KeyboardAvoidingView
@@ -82,7 +45,6 @@ export default function LoginScreen() {
           style={styles.input}
           placeholder="Email"
           keyboardType="email-address"
-          autoCapitalize="none" value={email} onChangeText={setEmail}
         />
 
         {/* Password */}
@@ -91,8 +53,6 @@ export default function LoginScreen() {
           <TextInput
             style={styles.passwordInput}
             placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
             secureTextEntry={secure}
           />
           <TouchableOpacity onPress={() => setSecure(!secure)}>
