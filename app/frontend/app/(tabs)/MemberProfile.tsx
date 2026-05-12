@@ -1,30 +1,36 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-08
 //-------------------------
 
 
 import React, { useState, useRef } from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
+  TextInput,
+  TouchableOpacity,
   StyleSheet,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
   StatusBar,
   FlatList,
   Image,
-} from 'react-native';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
-import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
 import { Link, useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
 import AntDesign from '@expo/vector-icons/AntDesign';
-
 
 const { width } = Dimensions.get('window');
 
-/* ================= DATA ================= */
 
 export default function MemberProfileScreen() {
   const router = useRouter();
@@ -43,92 +49,100 @@ export default function MemberProfileScreen() {
     viewAreaCoveragePercentThreshold: 50,
   };
 
+
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#E31E24" />
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-      {/* ================= HEADER ================= */}
-      <View style={styles.headerProfile}>
-          <View style={styles.avatarProfile}>
-            <Ionicons name="person-outline" size={50} color="#000" />
-          </View>
-          <Text style={styles.statusProfile}>Active</Text>
-          <Text style={styles.nameProfile}>John Doe</Text>
-          <Text style={styles.emailProfile}>JohnDoe@gmail.com</Text> 
-      </View>
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.headerProfile}
+      >
+        {/* ================= HEADER ================= */}
+        <View style={styles.avatarProfile}>
+          <Ionicons name="person-outline" size={50} color="#000" />
+        </View>
+        <Text style={styles.statusProfile}>Active</Text>
+        <Text style={styles.nameProfile}>John Doe</Text>
+        <Text style={styles.emailProfile}>JohnDoe@gmail.com</Text> 
+
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+
 
       <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120 }}
-      >
-        {/* ================= MENU PROFILE ================= */}
-        <View style={styles.headerMenuProfile}>
-          {/*============ Edit Profile ============*/}
-          <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
-            <TouchableOpacity style={styles.menuButtonProfile}>
-              <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <AntDesign name="edit" size={22} color="#000"/>
-                </View>
-                <Text style={styles.menuTextProfile}>Edit Profile</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <Ionicons name="chevron-forward" size={22} color="#000"/>
-                </View>
-              </TouchableOpacity>
-            </TouchableOpacity>            
-          </View> 
-          {/*============ Change Password ============*/}
-          <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
-            <TouchableOpacity style={styles.menuButtonProfile}>
-              <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <AntDesign name="key" size={22} color="#000"/>
-                </View>
-                <Text style={styles.menuTextProfile}>Change Password</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <Ionicons name="chevron-forward" size={22} color="#000"/>
-                </View>
-              </TouchableOpacity>
-            </TouchableOpacity>            
-          </View> 
-          {/*============ Settings ============*/}
-          <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
-            <TouchableOpacity style={styles.menuButtonProfile}>
-              <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <AntDesign name="setting" size={22} color="#000"/>
-                </View>
-                <Text style={styles.menuTextProfile}>Settings</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <Ionicons name="chevron-forward" size={22} color="#000"/>
-                </View>
-              </TouchableOpacity>
-            </TouchableOpacity>            
-          </View> 
-          {/*============ Log Out ============*/}
-          <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
-            <TouchableOpacity style={styles.menuButtonProfile}>
-              <TouchableOpacity style={styles.ButtonProfile}  onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <AntDesign name="logout" size={22} color="#000"/>
-                </View>
-                <Text style={styles.menuTextProfile}>Log Out</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
-                <View style={styles.menuIconProfile}>
-                  <Ionicons name="chevron-forward" size={22} color="#000"/>
-                </View>
-              </TouchableOpacity>
-            </TouchableOpacity>            
-          </View> 
-        </View>     
-      </ScrollView>
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 120 }}
+            >
+                {/* ================= MENU PROFILE ================= */}
+                <View style={styles.headerMenuProfile}>
+                  {/*============ Edit Profile ============*/}
+                  <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
+                    <TouchableOpacity style={styles.menuButtonProfile}>
+                      <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <AntDesign name="edit" size={22} color="#000"/>
+                        </View>
+                        <Text style={styles.menuTextProfile}>Edit Profile</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <Ionicons name="chevron-forward" size={22} color="#000"/>
+                        </View>
+                      </TouchableOpacity>
+                    </TouchableOpacity>            
+                  </View> 
+                  {/*============ Change Password ============*/}
+                  <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
+                    <TouchableOpacity style={styles.menuButtonProfile}>
+                      <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <AntDesign name="key" size={22} color="#000"/>
+                        </View>
+                        <Text style={styles.menuTextProfile}>Change Password</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <Ionicons name="chevron-forward" size={22} color="#000"/>
+                        </View>
+                      </TouchableOpacity>
+                    </TouchableOpacity>            
+                  </View> 
+                  {/*============ Settings ============*/}
+                  <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
+                    <TouchableOpacity style={styles.menuButtonProfile}>
+                      <TouchableOpacity style={styles.ButtonProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <AntDesign name="setting" size={22} color="#000"/>
+                        </View>
+                        <Text style={styles.menuTextProfile}>Settings</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <Ionicons name="chevron-forward" size={22} color="#000"/>
+                        </View>
+                      </TouchableOpacity>
+                    </TouchableOpacity>            
+                  </View> 
+                  {/*============ Log Out ============*/}
+                  <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
+                    <TouchableOpacity style={styles.menuButtonProfile}>
+                      <TouchableOpacity style={styles.ButtonProfile}  onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <AntDesign name="logout" size={22} color="#000"/>
+                        </View>
+                        <Text style={styles.menuTextProfile}>Log Out</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIconProfile}>
+                          <Ionicons name="chevron-forward" size={22} color="#000"/>
+                        </View>
+                      </TouchableOpacity>
+                    </TouchableOpacity>            
+                  </View> 
+                </View> 
+            </ScrollView>
 
 
       {/* ================= BOTTOM TAB ================= */}
@@ -175,19 +189,52 @@ export default function MemberProfileScreen() {
           </Link>
         </View>
       </View>
+
     </View>
   );
 }
 
-
-/* ================= STYLES ================= */
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: "#fff",
   },
+  header: {
+    height: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingTop: 20,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
+  },
+
+/* ========== Profile ========== */
   headerProfile: {
-    backgroundColor: '#E31E24',
     paddingTop: 40,
     paddingBottom: 40,
     paddingHorizontal: 20,
@@ -223,9 +270,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-    /* BOTTOM MENU */
+
+  
+  /* BOTTOM MENU */
   headerMenuProfile: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#fff',
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -237,7 +286,7 @@ const styles = StyleSheet.create({
     width: 330,
     borderRadius: 14,
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FEFEFE',
     flexDirection: "row",
     marginBottom: 10,
   },

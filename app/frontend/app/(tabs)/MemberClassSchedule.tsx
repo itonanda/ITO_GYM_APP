@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-08
 //-------------------------
 
 
@@ -26,8 +26,10 @@ import CountryPicker, { CountryCode, Country } from 'react-native-country-picker
 import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
+
 
 /* ================= DATA ================= */
 const classDataToday = [
@@ -98,7 +100,6 @@ const classDataTomorrow = [
       'https://media.gettyimages.com/id/639376842/photo/exercising-as-a-class.jpg?s=2048x2048&w=gi&k=20&c=0zs1xGWPsdPIaL6ZmBgHCakuGTUBotEo33BKV_vUJRw=',
   },
 ];
-
 
 export default function MemberClassScheduleScreen() {
   const router = useRouter();
@@ -209,100 +210,102 @@ export default function MemberClassScheduleScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          {/* ================= CLASS SCHEDULE ================= */}
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/MemberDashboard')}>
-            <Ionicons name="arrow-back" size={22} color="#000"/>
-          </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-          <Text style={styles.title}>Class Schedule</Text>
-
-          {/* Spacer biar title center */}
-          <View style={{ width: 24 }} />
-        </View>  
-
-        {/* Line */}
-        <View style={styles.divider} /> 
-      
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberDashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity>
         
-        <View style={styles.classScheduleRow}>
-          {/* Today Button */}
-          <TouchableOpacity
-            style={[
-              styles.classScheduleButton,
-              selectedDay === "today" && styles.classScheduleActiveButton
-            ]}
-            onPress={() => setSelectedDay("today")}
-          >
-            <Text
-              style={[
-                styles.classScheduleButtonText,
-                selectedDay === "today" && styles.classScheduleActiveText
-              ]}
+        <Text style={styles.headerTitle}>Class Schedule</Text>
+
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+
+      <View style={styles.classScheduleRow}>
+            {/* Today Button */}
+            <TouchableOpacity
+                style={[
+                styles.classScheduleButton,
+                selectedDay === "today" && styles.classScheduleActiveButton
+                ]}
+                onPress={() => setSelectedDay("today")}
             >
-               Today {"\n"} {formatTanggal(today)}
-            </Text>
-          </TouchableOpacity>
-          {/* Tomorrow Button */}
-          <TouchableOpacity
-            style={[
-              styles.classScheduleButton,
-              selectedDay === "tomorrow" && styles.classScheduleActiveButton
-            ]}
-            onPress={() => setSelectedDay("tomorrow")}
-          >
-            <Text
-              style={[
-                styles.classScheduleButtonText,
-                selectedDay === "tomorrow" && styles.classScheduleActiveText
-              ]}
+                <Text
+                style={[
+                    styles.classScheduleButtonText,
+                    selectedDay === "today" && styles.classScheduleActiveText
+                ]}
+                >
+                    Today {"\n"} {formatTanggal(today)}
+                </Text>
+            </TouchableOpacity>
+            {/* Tomorrow Button */}
+            <TouchableOpacity
+                style={[
+                styles.classScheduleButton,
+                selectedDay === "tomorrow" && styles.classScheduleActiveButton
+                ]}
+                onPress={() => setSelectedDay("tomorrow")}
             >
-               Tomorrow {"\n"} {formatTanggal(tomorrow)}
-            </Text>
-          </TouchableOpacity>
+                <Text
+                style={[
+                    styles.classScheduleButtonText,
+                    selectedDay === "tomorrow" && styles.classScheduleActiveText
+                ]}
+                >
+                    Tomorrow {"\n"} {formatTanggal(tomorrow)}
+                </Text>
+            </TouchableOpacity>
         </View>
 
         {/* kondisi screen */}
         {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
-
-      </View>
     </View>
   );
 }
 
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
   divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
-  },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
   },
 
   /* ===== CLASS Schedule ===== */
@@ -402,7 +405,7 @@ const styles = StyleSheet.create({
   },
 
 
-  /* ===== SCREEN TODAY & TOMORROW ===== */
+/* ===== SCREEN TODAY & TOMORROW ===== */
   todayScreen: {
     width: "100%",
     //padding: 40,

@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-08
 //-------------------------
 
 
@@ -21,9 +21,16 @@ import {
 } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
 import { Link, useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
+
 
 const { width } = Dimensions.get('window');
+
 
 export default function GuestWorkoutOfTheDayScreen() {
   const router = useRouter();
@@ -283,24 +290,26 @@ export default function GuestWorkoutOfTheDayScreen() {
     </ScrollView>
   );
 
+
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          {/* ================= Workout Of the Day ================= */}
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/GuestDashboard')}>
-            <Ionicons name="arrow-back" size={22} color="#000"/>
-          </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-          <Text style={styles.title}>Workout Of the Day</Text>
-
-          {/* Spacer biar title center */}
-          <View style={{ width: 24 }} />
-        </View>  
-      
-        {/* Line */}
-        <View style={styles.divider} /> 
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/GuestDashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity>
         
+        <Text style={styles.headerTitle}>Workout Of the Day</Text>
+
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+
+
         <View style={styles.classScheduleRow}>
           {/* Today Button */}
           <TouchableOpacity
@@ -339,48 +348,53 @@ export default function GuestWorkoutOfTheDayScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* kondisi screen */}
-        {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
+      {/* kondisi screen */}
+      {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
 
-      </View>
     </View>
   );
 }
 
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
-  divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
   },
 
+  divider: {
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
+  },
+
+  
   /* ===== CLASS Schedule ===== */
   classScheduleRow: {
     flexDirection: 'row',

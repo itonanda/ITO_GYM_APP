@@ -21,6 +21,7 @@ import {
 } from "react-native";
 import { Link, useRouter } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
 
@@ -39,8 +40,15 @@ export default function MemberBookingScreen() {
 
         {/*============ Member Dashboard ============*/}
         <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 50}}>
-        <TouchableOpacity style={styles.homeButton} onPress={() => router.replace('/(tabs)/MemberDashboardAfterBooking')}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/MemberDashboardAfterBooking')}>
+          <LinearGradient
+              colors={["#E82528", "#9A0006"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.homeButton}
+            >
             <Text style={styles.homeText}>Back to Home</Text>
+          </LinearGradient>
         </TouchableOpacity>
         </View> 
       </View>          
@@ -86,6 +94,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     marginTop: 30,
+    color:'#eee',
   },
   homeText: {
     fontSize: 16,

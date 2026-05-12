@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-04
+// Update 2026-05-08
 //-------------------------
 
 
@@ -21,12 +21,14 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
 import { Link, useRouter } from 'expo-router';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { Picker } from '@react-native-picker/picker';
+import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
-
 
 
 export default function MembershipPageDropInScreen() {
@@ -35,149 +37,153 @@ export default function MembershipPageDropInScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          {/* ================= MEMBERSHIP ================= */}
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/MemberDashboard')}>
-            <Ionicons name="arrow-back" size={22} color="#000"/>
-          </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-          <Text style={styles.title}>Membership</Text>
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberDashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity>
+        
+        <Text style={styles.headerTitle}>Membership</Text>
 
-          {/* Spacer biar title center */}
-          <View style={{ width: 24 }} />
-        </View>  
-      
-        {/* Line */}
-        <View style={styles.divider} /> 
+        <View style={{ width: 40 }} />
+      </LinearGradient>
 
 
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 120 }}
-        >
-            <View style={styles.headerTop}>
-                {/* ================= HEADER TOP================= */}
-                {/* ==== CARD ==== */}
-                <LinearGradient
-                    colors={["#9e9e9e", "#000"]}
-                    style={styles.headerTopCard}
-                    >
-                    <View style={styles.headerTopCardContent}>
-                        
-                        <View>
-                        <Text style={styles.headerTopName}>John Doe</Text>
-                        <Text style={styles.headerTopSubText}>
-                            Drop In 5x | Remaining: 3
+      <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 120 }}
+            >
+                <View style={styles.headerTop}>
+                    {/* ================= HEADER TOP================= */}
+                    {/* ==== CARD ==== */}
+                    <LinearGradient
+                        colors={["#9e9e9e", "#000"]}
+                        style={styles.headerTopCard}
+                        >
+                        <View style={styles.headerTopCardContent}>
+                            
+                            <View>
+                            <Text style={styles.headerTopName}>John Doe</Text>
+                            <Text style={styles.headerTopSubText}>
+                                Drop In 5x | Remaining: 3
+                            </Text>
+                            </View>
+                
+                            <View style={styles.headerTopAvatar}>
+                            <Ionicons name="person-outline" size={28} color="#000" />
+                            </View>
+                
+                        </View>
+                
+                        <View style={styles.headerTopDivider} />
+                
+                        <Text style={styles.headerTopValid}>
+                            Valid Until: 30 March, 2026
                         </Text>
-                        </View>
-            
-                        <View style={styles.headerTopAvatar}>
-                        <Ionicons name="person-outline" size={28} color="#000" />
-                        </View>
-            
-                    </View>
-            
-                    <View style={styles.headerTopDivider} />
-            
-                    <Text style={styles.headerTopValid}>
-                        Valid Until: 30 March, 2026
-                    </Text>
-                </LinearGradient>
-            </View>
-            
-            <View style={styles.headerGrid}>
-                {/* ================= Menu Grid ================= */}
-                <View style={styles.menuContainer}>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        <Ionicons name="calendar-outline" size={24} color="#333" />
-                    </View>
-                    <Text style={styles.menuText}>Membership Plans</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        <Ionicons name="newspaper-outline" size={24} color="#333" />
-                    </View>
-                    <Text style={styles.menuText}>Renew</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        <Ionicons name="card-outline" size={24} color="#333" />
-                    </View>
-                    <Text style={styles.menuText}>Payment History</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                    </View>
-                    <Text style={styles.menuText}>---</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                    </View>
-                    <Text style={styles.menuText}>---</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                    </View>
-                    <Text style={styles.menuText}>---</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                    </View>
-                    <Text style={styles.menuText}>---</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                    <View style={styles.menuIcon}>
-                        {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                    </View>
-                    <Text style={styles.menuText}>---</Text>
-                    </TouchableOpacity>
+                    </LinearGradient>
                 </View>
-            </View>  
-        </ScrollView>
-      </View>
+                
+                <View style={styles.headerGrid}>
+                    {/* ================= Menu Grid ================= */}
+                    <View style={styles.menuContainer}>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            <Ionicons name="calendar-outline" size={24} color="#333" />
+                        </View>
+                        <Text style={styles.menuText}>Membership Plans</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            <Ionicons name="newspaper-outline" size={24} color="#333" />
+                        </View>
+                        <Text style={styles.menuText}>Renew</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            <Ionicons name="card-outline" size={24} color="#333" />
+                        </View>
+                        <Text style={styles.menuText}>Payment History</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                        </View>
+                        <Text style={styles.menuText}>---</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                        </View>
+                        <Text style={styles.menuText}>---</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                        </View>
+                        <Text style={styles.menuText}>---</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                        </View>
+                        <Text style={styles.menuText}>---</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <View style={styles.menuIcon}>
+                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                        </View>
+                        <Text style={styles.menuText}>---</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>  
+            </ScrollView>
+
     </View>
   );
 }
 
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
   divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
-  },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
   },
 
   
@@ -261,5 +267,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textAlign: 'center',
   },
+
 
 });

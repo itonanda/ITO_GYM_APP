@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-08
 //-------------------------
 
 
@@ -26,8 +26,10 @@ import CountryPicker, { CountryCode, Country } from 'react-native-country-picker
 import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
+
 
 /* ================= DATA ================= */
 const classDataToday = [
@@ -98,7 +100,6 @@ const classDataTomorrow = [
       'https://media.gettyimages.com/id/639376842/photo/exercising-as-a-class.jpg?s=2048x2048&w=gi&k=20&c=0zs1xGWPsdPIaL6ZmBgHCakuGTUBotEo33BKV_vUJRw=',
   },
 ];
-
 
 export default function GuestClassScheduleScreen() {
   const router = useRouter();
@@ -209,101 +210,232 @@ export default function GuestClassScheduleScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          {/* ================= CLASS SCHEDULE ================= */}
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/GuestDashboard')}>
-            <Ionicons name="arrow-back" size={22} color="#000"/>
-          </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-          <Text style={styles.title}>Class Schedule</Text>
-
-          {/* Spacer biar title center */}
-          <View style={{ width: 24 }} />
-        </View>  
-
-        {/* Line */}
-        <View style={styles.divider} /> 
-      
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/GuestDashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity>
         
-        <View style={styles.classScheduleRow}>
-          {/* Today Button */}
-          <TouchableOpacity
-            style={[
-              styles.classScheduleButton,
-              selectedDay === "today" && styles.classScheduleActiveButton
-            ]}
-            onPress={() => setSelectedDay("today")}
-          >
-            <Text
-              style={[
-                styles.classScheduleButtonText,
-                selectedDay === "today" && styles.classScheduleActiveText
-              ]}
+        <Text style={styles.headerTitle}>Class Schedule</Text>
+
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+
+      <View style={styles.classScheduleRow}>
+            {/* Today Button */}
+            <TouchableOpacity
+                style={[
+                styles.classScheduleButton,
+                selectedDay === "today" && styles.classScheduleActiveButton
+                ]}
+                onPress={() => setSelectedDay("today")}
             >
-               Today {"\n"} {formatTanggal(today)}
-            </Text>
-          </TouchableOpacity>
-          {/* Tomorrow Button */}
-          <TouchableOpacity
-            style={[
-              styles.classScheduleButton,
-              selectedDay === "tomorrow" && styles.classScheduleActiveButton
-            ]}
-            onPress={() => setSelectedDay("tomorrow")}
-          >
-            <Text
-              style={[
-                styles.classScheduleButtonText,
-                selectedDay === "tomorrow" && styles.classScheduleActiveText
-              ]}
+                <Text
+                style={[
+                    styles.classScheduleButtonText,
+                    selectedDay === "today" && styles.classScheduleActiveText
+                ]}
+                >
+                    Today {"\n"} {formatTanggal(today)}
+                </Text>
+            </TouchableOpacity>
+            {/* Tomorrow Button */}
+            <TouchableOpacity
+                style={[
+                styles.classScheduleButton,
+                selectedDay === "tomorrow" && styles.classScheduleActiveButton
+                ]}
+                onPress={() => setSelectedDay("tomorrow")}
             >
-               Tomorrow {"\n"} {formatTanggal(tomorrow)}
-            </Text>
-          </TouchableOpacity>
+                <Text
+                style={[
+                    styles.classScheduleButtonText,
+                    selectedDay === "tomorrow" && styles.classScheduleActiveText
+                ]}
+                >
+                    Tomorrow {"\n"} {formatTanggal(tomorrow)}
+                </Text>
+            </TouchableOpacity>
         </View>
 
         {/* kondisi screen */}
         {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
-
-      </View>
     </View>
   );
 }
 
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
   divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
   },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
+
+
+/* ===== HEADER CENTER ===== */
+  cardTop: {
+    backgroundColor: "#FFF",
+    borderRadius: 24,
+    padding: 20,
   },
+
+  CardCenter: {
+    backgroundColor: "#FFF",
+    borderRadius: 24,
+    padding: 20,
+    marginTop: 20,
+  },
+
+
+/* ===== HEADER TOP ===== */
+  headerTop: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    //padding: 20,
+    marginBottom: -20,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 2,
+    borderWidth: 1,
+    borderRadius: 12,
+    borderColor: '#fff',
+    backgroundColor: '#fff',
+    //marginBottom: 20,
+  },
+  headerRowTop: {
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 2,
+    backgroundColor: '#fff',
+    height: 150,
+    width: 150,
+    borderRadius: 5,
+  },
+  headerRowTopRight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'baseline',
+    backgroundColor: '#fff',
+    height: 150,
+    width: 150,
+    borderRadius: 5,
+  },
+  headerRowTopLeft: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    height: 150,
+    width: 150,
+    borderRadius: 5,
+  },
+  headerTitleDetail: {
+    fontSize: 22,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  headerSubTitleDetail: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 22.5,
+    backgroundColor: 'rgb(240, 235, 235)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
+  
+/* ===== HEADER DETAIL ===== */
+  headerDetail: {
+    borderColor: '#108932',
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: 20,
+    borderRadius: 20,
+    //margin: 20,
+  },
+  headerDetailRow: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    marginBottom: 20,
+  },
+  headerRowDetail: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+  },
+  headerRowDetailRight: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+  },
+  headerRowDetailLeft: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  iconTemp: {
+    width: 50,
+    height: 50,
+    borderRadius: 22.5,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
+
+
+
+
 
   /* ===== CLASS Schedule ===== */
   classScheduleRow: {
@@ -402,7 +534,7 @@ const styles = StyleSheet.create({
   },
 
 
-  /* ===== SCREEN TODAY & TOMORROW ===== */
+/* ===== SCREEN TODAY & TOMORROW ===== */
   todayScreen: {
     width: "100%",
     //padding: 40,
@@ -416,5 +548,37 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     borderRadius: 10
+  },
+
+
+
+
+/* ===== HEADER BOTTOM ===== */
+  headerBottomBar: {
+    height: 80,
+    backgroundColor: "#ED1C24",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    gap: 50,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  bottomBarPageBox: {
+    width: 90,
+    height: 38,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bottomBarBookButton: {
+    width: 110,
+    height: 38,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
