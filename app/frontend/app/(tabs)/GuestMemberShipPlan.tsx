@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-08
 //-------------------------
 
 
@@ -21,14 +21,21 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
 import { Link, useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
+
 
 /* ================= DATA ================= */
 const classDataMembership = [
   {
     id: '1',
+    highlight: false,
     titlenumber: '1',
     titleunit: 'Month Unlimited',
     price: '900K !!',
@@ -42,6 +49,7 @@ const classDataMembership = [
   },
   {
     id: '2',
+    highlight: false,
     titlenumber: '2',
     titleunit: 'Month Unlimited',
     price: '900K !!',
@@ -55,6 +63,7 @@ const classDataMembership = [
   },
   {
     id: '3',
+    highlight: false,
     titlenumber: '3',
     titleunit: 'Month Unlimited',
     price: '900K !!',
@@ -68,6 +77,7 @@ const classDataMembership = [
   },
   {
     id: '4',
+    highlight: false,
     titlenumber: '4',
     titleunit: 'Month Unlimited',
     price: '900K !!',
@@ -86,140 +96,152 @@ export default function GuestMembershipPlanScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
-
   const onViewableItemsChanged = useRef(
-      ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
         if (viewableItems.length > 0 && viewableItems[0].index !== null) {
-          setActiveIndex(viewableItems[0].index);
+        setActiveIndex(viewableItems[0].index);
         }
-      }
+    }
     ).current;
 
     const viewConfig = {
     viewAreaCoveragePercentThreshold: 50,
   };
 
+
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          {/* ================= MEMBERSHIP PLAN ================= */}
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/GuestViewClassDetail')}>
-            <Ionicons name="arrow-back" size={22} color="#000"/>
-          </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
-          <Text style={styles.title}>Membership Plan</Text>
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/GuestViewClassDetail')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity>
+        
+        <Text style={styles.headerTitle}>Membership Plan</Text>
 
-          {/* Spacer biar title center */}
-          <View style={{ width: 24 }} />
-        </View>  
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+
+
+      <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 120 }}
+            >
+                <FlatList
+                  ref={flatListRef}
+                  data={classDataMembership}
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={(item) => item.id}
+                  onViewableItemsChanged={onViewableItemsChanged}
+                  viewabilityConfig={viewConfig}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}>       
+                        <View style={styles.classCard}>
+                          <Image
+                            source={{ uri: item.image }}
+                            style={styles.classImage}
+                          />
+                          
+                          <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+                            <View>
+                              <Text style={styles.classTitleNumber}>{item.titlenumber}</Text>
+                              <Text style={styles.classTitle}>{item.titleunit}</Text>
+                              <Text style={styles.classPrice}>{item.price}</Text>
+                              <View style={styles.lineRed}/>
+                              <Text style={styles.classDesc}>
+                                <Ionicons name={"star"} size={22} color="#737070"/>
+                                {"  "}{item.desc1}
+                              </Text>
+                              <Text style={styles.classDesc}>
+                                <Ionicons name={"star"} size={22} color="#737070"/>
+                                {"  "}{item.desc2}
+                              </Text>
+                              <Text style={styles.classDesc}>
+                                <Ionicons name={"star"} size={22} color="#737070"/>
+                                {"  "}{item.desc3}
+                              </Text>
+                              <Text style={styles.classDesc}>
+                                <Ionicons name={"star"} size={22} color="#737070"/>
+                                {"  "}{item.desc4}
+                              </Text>
+                            </View>
       
-        {/* Line */}
-        <View style={styles.divider} /> 
-
-
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 120 }}
-        >
-          <FlatList
-            ref={flatListRef}
-            data={classDataMembership}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item.id}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewConfig}
-            renderItem={({ item }) => (
-              <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/(tabs)/MemberSignUp')}>       
-                  <View style={styles.classCard}>
-                    <Image
-                      source={{ uri: item.image }}
-                      style={styles.classImage}
+                              {/* Button */}
+                              <TouchableOpacity key={item.id} style={{ display: item.highlight ? 'none' : 'flex' }}>
+                                <TouchableOpacity key={item.id} style={styles.buttonMembership} onPress={() => router.replace('/(tabs)/MemberSignUp')}>
+                                  <Text style={styles.buttonTextMembership}>Sign Up</Text>
+                                </TouchableOpacity>
+                              </TouchableOpacity>
+                              
+                          </View>
+                        </View>
+                    </TouchableOpacity>
+                  )}
+                />
+      
+                {/* ================= DOT INDICATOR ================= */}
+                <View style={styles.dotContainer}>
+                  {classDataMembership.map((_, index) => (
+                    <View
+                      key={index}
+                      style={[
+                        styles.dot,
+                        activeIndex === index && styles.activeDot,
+                      ]}
                     />
-                    
-                    <View style={styles.cardContent}>
-                      <View>
-                        <Text style={styles.classTitleNumber}>{item.titlenumber}</Text>
-                        <Text style={styles.classTitle}>{item.titleunit}</Text>
-                        <Text style={styles.classPrice}>{item.price}</Text>
-                        <View style={styles.lineRed}/>
-                        <Text style={styles.classDesc}>
-                          <Ionicons name={"star"} size={22} color="#737070"/>
-                          {"  "}{item.desc1}
-                        </Text>
-                        <Text style={styles.classDesc}>
-                          <Ionicons name={"star"} size={22} color="#737070"/>
-                          {"  "}{item.desc2}
-                        </Text>
-                        <Text style={styles.classDesc}>
-                          <Ionicons name={"star"} size={22} color="#737070"/>
-                          {"  "}{item.desc3}
-                        </Text>
-                        <Text style={styles.classDesc}>
-                          <Ionicons name={"star"} size={22} color="#737070"/>
-                          {"  "}{item.desc4}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-              </TouchableOpacity>
-            )}
-          />
-
-          {/* ================= DOT INDICATOR ================= */}
-          <View style={styles.dotContainer}>
-            {classDataMembership.map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.dot,
-                  activeIndex === index && styles.activeDot,
-                ]}
-              />
-            ))}
-          </View>
-        </ScrollView>
-      </View>
+                  ))}
+                </View>
+            </ScrollView>
     </View>
   );
 }
 
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
   divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
   },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-  },
+
 
   /* ===== CLASS CARD ===== */
   headerCard: {
@@ -227,8 +249,8 @@ const styles = StyleSheet.create({
     //backgroundColor: '#d26868',
     marginHorizontal: 20,
     borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
   },
   classCard: {
     width: width - 40,
@@ -294,6 +316,12 @@ const styles = StyleSheet.create({
   },
 
 
+  highlightCard: {
+    backgroundColor: "#FFBABA",
+    borderColor: "#fbafaf",
+  },
+
+
  /* DOT */
   dotContainer: {
     flexDirection: 'row',
@@ -301,7 +329,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     marginTop:30,
   },
-
   dot: {
     width: 8,
     height: 8,
@@ -309,8 +336,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     marginHorizontal: 4,
   },
-
   activeDot: {
     backgroundColor: '#000',
+  },
+
+  // Button
+  buttonMembership: {
+    backgroundColor: '#e53935',
+    padding: 16,
+    borderRadius: 14,
+    marginTop: 50,
+    marginBottom: 30,
+    alignItems: 'center',
+  },
+  buttonTextMembership: {
+    color: '#fff',
+    fontWeight: '700',
   },
 });

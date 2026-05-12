@@ -1,19 +1,34 @@
 //-------------------------
-// Update 2026-05-04 
+// Update 2026-05-08
 //-------------------------
 
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
-  FlatList,
+  ScrollView,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
   StatusBar,
+  FlatList,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from 'expo-router';
+import { ViewToken } from 'react-native';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
+import { Link, useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { Background } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
+
+const { width } = Dimensions.get('window');
 
 // ================== TYPE ==================
 type NotificationType = {
@@ -35,7 +50,7 @@ const DataNotifications: NotificationType[] = [
   { id: "9", title: "New Class Available", date: "Sunday | 24 February | 09.00 AM" },
 ];
 
-// ================== Notification Screen ==================
+
 export default function NotificationPageScreen() {
   const router = useRouter();
 
@@ -72,80 +87,99 @@ export default function NotificationPageScreen() {
 
             <View style={styles.divider} />
           </View>
-      
     </TouchableOpacity>
   );
 
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {/* ================= NOTIFICATION ================= */}
-        <TouchableOpacity onPress={() => router.replace('/(tabs)/MemberDashboard')}>
-          <Ionicons name="arrow-back" size={22} color="#000"/>
+      <StatusBar barStyle="light-content" backgroundColor="#E82528" />
+
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberDashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
+        
+        <Text style={styles.headerTitle}>Notification</Text>
 
-        <Text style={styles.title}>Notification</Text>
-
-        {/* Spacer biar title center */}
-        <View style={{ width: 24 }} />
-      </View>  
-    
-      {/* Line */}
-      <View style={styles.divider} /> 
-
-      {/* ================= LIST NOTIF ================= */}
-      <FlatList
-        data={DataNotifications}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-      />
-
+        <View style={{ width: 40 }} />
+      </LinearGradient>
+      
+      <View style={styles.card}>
+        {/* ================= LIST NOTIF ================= */}
+        <FlatList
+          data={DataNotifications}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+      </View>
     </View>
   );
 }
 
-
-{/* ================= STYLES ================= */}
 const styles = StyleSheet.create({
+/* ===== HEADER TOP ===== */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    marginBottom: -20,
   },
   header: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: -20,
-    
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
   divider: {
-    marginTop: 15,
-    height: 2,
-    backgroundColor: "#ddd",
-  },
-    
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
+    height: 1,
+    backgroundColor: "#EAEAEA",
+    marginVertical: 20,
+  }, 
+  
+  content: {
+    flex: 1,
+    padding: 20,
   },
 
   
+/* ===== HEADER CENTER ===== */
+  card: {
+    backgroundColor: "#FFF",
+    borderRadius: 24,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+
+
+
   // ===== ITEM NOTIF =====
   itemWrapperNotif: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    //paddingTop: 10,
   },
   itemContainerNotif: {
     paddingVertical: 10,
