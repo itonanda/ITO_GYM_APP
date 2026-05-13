@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-04-15 
+// Update 2026-05-12
 //-------------------------
 
 
@@ -19,6 +19,7 @@ import { ViewToken } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { LinearGradient } from "expo-linear-gradient";
 
 
 
@@ -120,10 +121,12 @@ export default function GuestDashboardScreen() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E31E24" />
-
-
-      {/* ================= HEADER ================= */}
-      <View style={styles.header}>
+      
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
         <View style={styles.headerLeft}>
           <View style={styles.avatar}>
             <Ionicons name="person-outline" size={24} color="#000" />
@@ -133,8 +136,7 @@ export default function GuestDashboardScreen() {
           </View>
         </View>
         <Ionicons name="notifications-outline" size={24} color="#fff"/>
-      </View>
-
+      </LinearGradient>
 
       <ScrollView
         showsVerticalScrollIndicator={false}

@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-04
+// Update 2026-05-12
 //-------------------------
 
 
@@ -19,6 +19,7 @@ import { ViewToken } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { LinearGradient } from "expo-linear-gradient";
 
 
 
@@ -32,7 +33,7 @@ const classDataToday = [
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
     quota: '2/15',
-    highlight: true,
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=',
   },
@@ -88,6 +89,7 @@ const classDataPromo = [
 const classDataBookingClass = [
   {
     id: '1',
+    highlight: true,
     title: 'Morning Class',
     day: '25',
     month: 'FEB',
@@ -96,6 +98,7 @@ const classDataBookingClass = [
   },
   {
     id: '2',
+    highlight: false,
     title: 'Morning Class',
     day: '26',
     month: 'FEB',
@@ -153,9 +156,11 @@ export default function MemberDashboardAfterBookingScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E31E24" />
 
-
-      {/* ================= HEADER ================= */}
-      <View style={styles.header}>
+      {/* HEADER */}
+      <LinearGradient
+        colors={["#E82528", "#9A0006"]}
+        style={styles.header}
+      >
         <View style={styles.headerLeft}>
           <View style={styles.avatar}>
             <Ionicons name="person-outline" size={24} color="#000" onPress={() => router.replace('/(tabs)/MemberProfile')}/>
@@ -166,15 +171,92 @@ export default function MemberDashboardAfterBookingScreen() {
           </View>
         </View>
         <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/(tabs)/NotificationPage')}/>
-      </View>
-
+      </LinearGradient>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
+
+
         {/* ================= BOOKING CLASS ================= */}
-        <Text style={styles.sectionTitle}>Booking Class</Text>
+
+        {classDataBookingClass.some(item => item.highlight) && (
+          <>
+            <Text style={styles.sectionTitle}>Booking Class</Text>
+
+              <FlatList
+                ref={flatListRefBookingClass}
+                data={classDataBookingClass}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                onViewableItemsChanged={onViewableItemsChangedBookingClass}
+                viewabilityConfig={viewConfigBookingClass}
+                renderItem={({ item }) => {
+                if (!item.highlight) return null;
+
+                return (
+                  <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/(tabs)/noted')}>       
+                    <View style={styles.cardBookingClass}>
+                      {/* Date Box */}
+                      <View style={styles.dateContainer}>
+                        <View style={styles.monthBox}>
+                          <Text style={styles.monthText}>{item.month}</Text>
+                        </View>
+                        <View style={styles.dayBox}>
+                          <Text style={styles.dayText}>{item.day}</Text>
+                        </View>
+                      </View>
+              
+                      {/* Divider */}
+                      <View style={styles.divider} />
+              
+                      {/* Content */}
+                      <View style={styles.content}>
+                        <Text style={styles.classTitleTime}>{item.title}</Text>
+                        <Text style={styles.time}>{item.time}</Text>
+                        <Text style={styles.author}>By {item.trainer}</Text>
+                      </View>
+                    </View>
+                </TouchableOpacity>
+                );
+              }}
+            />
+
+            {/* ================= DOT INDICATOR BOOKING CLASS================= */}
+            <View style={styles.dotContainer}>
+              {classDataBookingClass
+                .filter(item => item.highlight)
+                .map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.dot,
+                      activeIndexBookingClass === index &&
+                        styles.activeDot,
+                    ]}
+                  />
+                ))}
+            </View>
+          </>
+        )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* ================= BOOKING CLASS ================= */}
+        {/*<Text style={styles.sectionTitle}>Booking Class</Text>
 
         <FlatList
           ref={flatListRefBookingClass}
@@ -188,7 +270,7 @@ export default function MemberDashboardAfterBookingScreen() {
           renderItem={({ item }) => (
             <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/(tabs)/noted')}>       
                 <View style={styles.cardBookingClass}>
-                  {/* Date Box */}
+                  {/* Date Box 
                   <View style={styles.dateContainer}>
                     <View style={styles.monthBox}>
                       <Text style={styles.monthText}>{item.month}</Text>
@@ -198,10 +280,10 @@ export default function MemberDashboardAfterBookingScreen() {
                     </View>
                   </View>
           
-                  {/* Divider */}
+                  {/* Divider 
                   <View style={styles.divider} />
           
-                  {/* Content */}
+                  {/* Content 
                   <View style={styles.content}>
                     <Text style={styles.classTitleTime}>{item.title}</Text>
                     <Text style={styles.time}>{item.time}</Text>
@@ -212,7 +294,7 @@ export default function MemberDashboardAfterBookingScreen() {
           )}
         />
 
-        {/* ================= DOT INDICATOR BOOKING CLASS================= */}
+        {/* ================= DOT INDICATOR BOOKING CLASS================= 
         <View style={styles.dotContainer}>
           {classDataBookingClass.map((_, index) => (
             <View
@@ -223,7 +305,7 @@ export default function MemberDashboardAfterBookingScreen() {
               ]}
             />
           ))}
-        </View>
+        </View>*/}
 
         
         {/* ================= AVAILABLE CLASS ================= */}
