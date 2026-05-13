@@ -15,10 +15,12 @@ export default function IndexScreen() {
       />
 
       <View style={styles.content}>
-        <Image
-          source={require('../assets/images/bg_logo.png')}
-          style={styles.logo}
-        />
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/images/bg_logo.png')}
+            style={styles.logo}
+          />
+        </View>
       </View>
 
       <View style={styles.contenttext}>
@@ -34,11 +36,11 @@ export default function IndexScreen() {
           </Link>
         </View>
 
-        {/* <View style={styles.subtitle}>
-          <Link href={"/(tabs)/GuestDashboard"}>
+        <View style={styles.subtitle}>
+          <Link href={"/(tabs)/(guest)/dashboard"}>
             <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>As Guest</Text>
           </Link>
-        </View> */}
+        </View>
       </View>
     </View>
   );
@@ -62,20 +64,18 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
+  },
+
+  logoContainer: {
     alignItems: 'center',
+    marginBottom: 10,
   },
 
   logo: {
-    flex: 1,
-    width: 364,
-    height: 121,
-    marginTop: 182,
-    marginBottom: 20,
-    resizeMode: 'none',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 40,
+    width: 300,
+    height: 100,
   },
 
   contenttext: {

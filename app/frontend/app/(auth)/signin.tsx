@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from 'expo-router';
 
-export default function LoginScreen() {
+export default function SignInScreen() {
   const router = useRouter();
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const [email, setEmail] = useState('');
@@ -42,8 +42,8 @@ export default function LoginScreen() {
         .then(response => response.json())
         .then(data => {
           router.replace({
-            pathname: '../(tabs)/(dashboard)/',
-            params: { accessToken: data.session.access_token, email: data.session.email }
+            pathname: '../(tabs)/(member)/dashboard',
+            params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
           });
         })
         .catch(error => {

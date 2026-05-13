@@ -1,7 +1,10 @@
 import { 
   signUpService, 
   signInService,
-  signOutService
+  signOutService,
+  sendbyEmailService,
+  generateLinkService,
+  inviteByEmailService
 } from "../services/authService.js";
 
 export const signUp = async (req, res) => {
@@ -9,9 +12,11 @@ export const signUp = async (req, res) => {
     const userData = req.body;
     const createUser = await signUpService(userData);
     // res.status(201).json(createUser);
+    res.status(201).json({ message: 'User created successfully', createUser });
     // Returns the user object and session (if email confirmation is off)
     // res.status(200).json({ message: 'Check your email for the confirmation link!', createUser });
-    res.status(201).json({ message: 'User created successfully', createUser });
+    const Email = await sendbyEmailService(userData);
+    res.status(200).json({ message: 'Check your email for the confirmation link!', Email });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -33,6 +38,7 @@ export const signIn = async (req, res) => {
     // });
     
     res.status(200).json(User);
+
     // res.cookie("access_token", data.session.access_token, { httpOnly: true });
     // const { email } = req.params;
     // const user = await getUserByEmail(email);
@@ -42,7 +48,25 @@ export const signIn = async (req, res) => {
 
     // Return the access token to the client
     // res.json({ session: data.session });
-    
+
+    if (error) return res.status(401).json({ error: error.message });
+
+    // Return the access_token to the client
+    // return res.status(200).json({
+    //     access_token: data.session.access_token,
+    //     refresh_token: data.session.refresh_token,
+    //     user: data.user
+    // });
+
+    return res.status(200).json({ session: data.session });
+
+    // Example using cookie-parser
+    // res.cookie('sb-access-token', data.session.access_token, {
+    // httpOnly: true,
+    // secure: true, // true in production
+    // sameSite: 'Lax',
+    // });
+
   } catch (error) {
     res.status(400).json({ error: error.message });
     // res.status(500).json({ error: error.message });

@@ -39,8 +39,31 @@ const { data, error } = await supabaseServiceRole.auth.admin.createUser({
     email_confirm: false, // Automatically confirm email if (true)
     user_metadata: { name: userData.fullname }
   });
-
+  
   if (error) throw new Error(error.message);
+  return data;
+};
+
+export const sendbyEmailService = async (userData) => {
+const { data, error } = await supabaseServiceRole.auth.resend({
+  type: 'signup',
+  email: userData.email,
+  options: {
+    emailRedirectTo: 'http://192.168.20.68:8001'
+  }
+})
+if (error) throw new Error(error.message);
+  return data;
+};
+
+export const generateLinkService = async (userData) => {
+const { data, error } = await supabaseServiceRole.auth.admin.generateLink({
+  type: 'signup',
+  email: userData.email,
+  options: { redirectTo: 'http://192.168.20.68:8001' }
+});
+
+ if (error) throw new Error(error.message);
   return data;
 };
 
