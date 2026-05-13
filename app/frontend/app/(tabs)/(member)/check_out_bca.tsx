@@ -69,7 +69,7 @@ export default function CheckOutBCATransferScreen() {
                     <View style={styles.card}>
                       <View style={styles.logoContainer}>
                         <Image
-                          source={require('../../assets/payment/logo_BCA.png')}
+                          source={require('../../../assets/payment/logo_BCA.png')}
                           style={styles.logo}
                         />
                       </View>

@@ -81,7 +81,7 @@ export default function CheckOutGopayScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/CheckPaymentMethod')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/check_out_payment_method')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -100,7 +100,7 @@ export default function CheckOutGopayScreen() {
                     <View style={styles.card}>
                       <View style={styles.logoContainer}>
                         <Image
-                          source={require('../../assets/payment/logo_Gopay.png')}
+                          source={require('../../../assets/payment/logo_Gopay.png')}
                           style={styles.logo}
                         />
                       </View>
@@ -141,7 +141,7 @@ export default function CheckOutGopayScreen() {
                       >
                         <View style={styles.qrWrapper}>
                             <Image
-                              source={require('../../assets/payment/payment_Gopay.png')}
+                              source={require('../../../assets/payment/payment_Gopay.png')}
                               style={styles.qrImage}
                             />
                             {/*<Image

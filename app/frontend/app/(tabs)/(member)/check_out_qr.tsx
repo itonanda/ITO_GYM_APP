@@ -100,7 +100,7 @@ export default function CheckOutQRScreen() {
                     <View style={styles.card}>
                       <View style={styles.logoContainer}>
                         <Image
-                          source={require('../../assets/payment/logo_QR.png')}
+                          source={require('../../../assets/payment/logo_QR.png')}
                           style={styles.logo}
                         />
                       </View>
@@ -141,7 +141,7 @@ export default function CheckOutQRScreen() {
                       >
                         <View style={styles.qrWrapper}>
                             <Image
-                              source={require('../../assets/payment/payment_QR.png')}
+                              source={require('../../../assets/payment/payment_QR.png')}
                               style={styles.qrImage}
                             />
                             {/*<Image
