@@ -18,14 +18,16 @@ export default function IndexScreen() {
         source={require('../../assets/images/bg_loginguest.png')}
         style={styles.noise}
       />
-
+      
       <View style={styles.content}>
-        <Image
-          source={require('../../assets/images/bg_logo.png')}
-          style={styles.logo}
-        />
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../../assets/images/bg_logo.png')}
+            style={styles.logo}
+          />
+        </View>
       </View>
-
+      
       <View style={styles.contenttext}>
         <View style={styles.subtitle}>
           <Link href={"/(tabs)/Login"}>
@@ -44,28 +46,6 @@ export default function IndexScreen() {
             <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>As Guest</Text>
           </Link>
         </View>
-
-
-
-
-        {/*============ Continue Testing Screen ============*/}
-        <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 50}}>
-          <TouchableOpacity style={styles.socialButton} onPress={() => router.replace('/(tabs)/Testing')}>
-            <Image
-              source={{
-                uri: "https://cdn.iconscout.com/icon/free/png-512/free-avatar-icon-svg-download-png-456327.png?f=webp&w=512",
-              }}
-              style={styles.icon}
-            />
-            <Text style={styles.socialText}>Continue Testing App</Text>
-          </TouchableOpacity>
-        </View>  
-
-
-
-
-
-
       </View>
     </View>
   );
@@ -89,20 +69,16 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
   logo: {
-    flex: 1,
     width: 364,
     height: 121,
-    marginTop: 182,
-    marginBottom: 20,
-    resizeMode: 'none',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 40,
   },
 
   contenttext: {
@@ -110,7 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   subtitle: {
     marginBottom: 10,
     flexDirection: 'row',      //Untuk Memanjang
