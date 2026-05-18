@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-12
+// Update 2026-05-18
 //-------------------------
 
 
@@ -135,7 +135,7 @@ export default function GuestDashboardScreen() {
             <Text style={styles.headerTitle}>Guest</Text>
           </View>
         </View>
-        <Ionicons name="notifications-outline" size={24} color="#fff"/>
+        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/(tabs)/Testing')}/>
       </LinearGradient>
 
       <ScrollView
@@ -193,7 +193,7 @@ export default function GuestDashboardScreen() {
 
 
         {/* ================= Menu Grid ================= */}
-        <View style={styles.menuContainer}>
+        {/*<View style={styles.menuContainer}>
           <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
             <View style={styles.menuIcon}>
               <Ionicons name="information-outline" size={24} color="#333" />
@@ -242,7 +242,7 @@ export default function GuestDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Settings</Text>
           </TouchableOpacity>
-        </View>
+        </View>*/}
 
 
         {/* ================= Iklan Banner / Event Banner ================= */}
@@ -289,7 +289,7 @@ export default function GuestDashboardScreen() {
 
 
       {/* ================= BOTTOM TAB ================= */}
-      <View style={styles.bottomTab}>
+      {/* <View style={styles.bottomTab}>
         <View style={styles.bottomTabTitle}>
           <Link href={"/(tabs)/noted"}>
             <View style={styles.bottomTabTitle}>
@@ -331,7 +331,7 @@ export default function GuestDashboardScreen() {
             </View>
           </Link>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
   },
 
   //=========== Menu Grid ===========
-  menuContainer: {
+  /*menuContainer: {
     marginTop: 20,
     paddingHorizontal: 10,
     flexDirection: 'row',
@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 500,
     alignItems: 'center',
-  },
+  },*/
 
   //================= BOOKING CLASS =================
   cardBookingClass: {

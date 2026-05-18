@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-08
+// Update 2026-05-18
 //-------------------------
 
 
@@ -231,37 +231,42 @@ export default function MemberViewClassDetailScreen() {
                         </View>
                     </View>
                 </View>
+
+                {/* BOTTOM BAR */}
+                <LinearGradient
+                  colors={["#FFFFFF", "#FFFFFF"]}
+                  start={{ x: 0, y: 1 }}
+                  end={{ x: 0, y: 0 }}
+                  style={styles.headerBottomBar}
+                >
+                  {/* PAGE */}
+                  <LinearGradient
+                      colors={["#f4afafa4", "#f4afaf"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 0, y: 1 }}
+                      style={styles.bottomBarPageBox}
+                  >
+                    <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
+                        2/15
+                    </Text>
+                  </LinearGradient>
+
+                  {/* BUTTON */}
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/MemberBooking')}>
+                    <LinearGradient
+                      colors={["#E82528", "#9A0006"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.bottomBarBookButton}
+                    >
+                      <Text style={{fontSize:16, color:'#000', fontStyle:"italic",fontWeight:'bold'}}>
+                          Book
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </LinearGradient>
+
             </ScrollView>
-
-      {/* BOTTOM BAR */}
-      <LinearGradient
-         colors={["#E82528", "#9A0006"]}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-        style={styles.headerBottomBar}
-      >
-        {/* PAGE */}
-        <View style={styles.bottomBarPageBox}>
-            <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
-                2/15
-            </Text>
-        </View>
-
-        {/* BUTTON */}
-        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/MemberBooking')}>
-          <LinearGradient
-            colors={["#FFFFFF", "#cbc9c9"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.bottomBarBookButton}
-          >
-            <Text style={{fontSize:16, color:'#000', fontStyle:"italic",fontWeight:'bold'}}>
-                Book
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </LinearGradient>
-
     </View>
   );
 }
@@ -433,27 +438,27 @@ const styles = StyleSheet.create({
 /* ===== HEADER BOTTOM ===== */
   headerBottomBar: {
     height: 80,
-    backgroundColor: "#ED1C24",
+    backgroundColor: "#fffS",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 16,
     gap: 50,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    //borderTopLeftRadius: 20,
+    //borderTopRightRadius: 20,
   },
   bottomBarPageBox: {
-    width: 90,
-    height: 38,
+    width: 110,
+    height: 50,
     backgroundColor: "#FFF",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
   },
   bottomBarBookButton: {
-    width: 110,
-    height: 38,
-    backgroundColor: "#FFF",
+    width: 150,
+    height: 50,
+    backgroundColor: "#E82528",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",

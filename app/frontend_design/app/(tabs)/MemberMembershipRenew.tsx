@@ -119,7 +119,7 @@ export default function MemberMembershipRenewScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberViewClassDetail')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MembershipPage')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

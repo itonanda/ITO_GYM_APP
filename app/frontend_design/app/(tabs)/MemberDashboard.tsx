@@ -207,7 +207,7 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Class Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MembershipPage')}>
             <View style={styles.menuIcon}>
               <Ionicons name="card-outline" size={24} color="#333" />
             </View>

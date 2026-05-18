@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-08
+// Update 2026-05-18
 //-------------------------
 
 
@@ -31,7 +31,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 
-export default function MembershipPageUnlimitedScreen() {
+export default function MembershipPageScreen() {
   const router = useRouter();
   
 
@@ -91,7 +91,7 @@ export default function MembershipPageUnlimitedScreen() {
                 <View style={styles.headerGrid}>
                     {/* ================= Menu Grid ================= */}
                     <View style={styles.menuContainer}>
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MemberMemberShipPlan')}>
                         <View style={styles.menuIcon}>
                             <Ionicons name="calendar-outline" size={24} color="#333" />
                         </View>
@@ -101,7 +101,13 @@ export default function MembershipPageUnlimitedScreen() {
                         <View style={styles.menuIcon}>
                             <Ionicons name="newspaper-outline" size={24} color="#333" />
                         </View>
-                        <Text style={styles.menuText}>Renew</Text>
+                        <Text style={styles.menuText}>Booking Class</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/CheckOut')}>
+                        <View style={styles.menuIcon}>
+                            <Ionicons name="bag-handle-outline" size={24} color="#333" />
+                        </View>
+                        <Text style={styles.menuText}>Billing</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
                         <View style={styles.menuIcon}>
@@ -109,36 +115,31 @@ export default function MembershipPageUnlimitedScreen() {
                         </View>
                         <Text style={styles.menuText}>Payment History</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
+                        
+                        {/*<TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
                         <View style={styles.menuIcon}>
-                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                            <Ionicons name="warning-outline" size={24} color="#333" />
                         </View>
-                        <Text style={styles.menuText}>---</Text>
+                        <Text style={styles.menuText}>Workout</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
                         <View style={styles.menuIcon}>
-                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                            <Ionicons name="warning-outline" size={24} color="#333" />
                         </View>
-                        <Text style={styles.menuText}>---</Text>
+                        <Text style={styles.menuText}>Check-in History</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
                         <View style={styles.menuIcon}>
-                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                            <Ionicons name="warning-outline" size={24} color="#333" />
                         </View>
-                        <Text style={styles.menuText}>---</Text>
+                        <Text style={styles.menuText}>Store</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
                         <View style={styles.menuIcon}>
-                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
+                            <Ionicons name="warning-outline" size={24} color="#333" />
                         </View>
-                        <Text style={styles.menuText}>---</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-                        <View style={styles.menuIcon}>
-                            {/*<Ionicons name="warning-outline" size={24} color="#333" />*/}
-                        </View>
-                        <Text style={styles.menuText}>---</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.menuText}>Rewards</Text>
+                        </TouchableOpacity>*/}
                     </View>
                 </View>  
             </ScrollView>
