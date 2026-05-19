@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-12
+// Update 2026-05-19
 //-------------------------
 
 
@@ -44,6 +44,13 @@ export default function CheckOutBCATransferScreen() {
     await Clipboard.setStringAsync(vaNumber);
 
     Alert.alert("Copied", "Virtual Account copied successfully");
+
+
+
+      //------------------------------------------------------
+      //Sementara biar bisa keliatan Screen Payment sukses
+      router.replace('/(tabs)/PaymentSuccess')
+      //------------------------------------------------------
   };
 
   return (

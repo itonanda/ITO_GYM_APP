@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-18
+// Update 2026-05-19
 //-------------------------
 
 
@@ -57,7 +57,7 @@ export default function MemberUpdatedViewClassDetailScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberDashboardAfterBooking')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/MemberDashboard')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -252,7 +252,7 @@ export default function MemberUpdatedViewClassDetailScreen() {
                   </LinearGradient>
 
                   {/* BUTTON */}
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/MemberDashboardAfterBooking')}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/MemberBookingCancel')}>
                     <LinearGradient
                       colors={["#E82528", "#9A0006"]}
                       start={{ x: 0, y: 0 }}

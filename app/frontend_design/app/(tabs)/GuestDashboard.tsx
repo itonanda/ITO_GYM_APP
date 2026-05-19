@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-18
+// Update 2026-05-19
 //-------------------------
 
 
@@ -135,7 +135,7 @@ export default function GuestDashboardScreen() {
             <Text style={styles.headerTitle}>Guest</Text>
           </View>
         </View>
-        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/(tabs)/Testing')}/>
+        <Ionicons name="notifications-outline" size={24} color="#fff"/>
       </LinearGradient>
 
       <ScrollView
@@ -192,59 +192,6 @@ export default function GuestDashboardScreen() {
         </View>
 
 
-        {/* ================= Menu Grid ================= */}
-        {/*<View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="information-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>About Us</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/GuestClassSchedule')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="calendar-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Class Schedule</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="card-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Membership</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="trophy-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Leaderboard</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="chatbubble-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Chat</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="gift-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Promo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="newspaper-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>News</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/noted')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="settings-outline" size={24} color="#333" />
-            </View>
-            <Text style={styles.menuText}>Settings</Text>
-          </TouchableOpacity>
-        </View>*/}
-
-
         {/* ================= Iklan Banner / Event Banner ================= */}
         <FlatList
           ref={flatListRefPromo}
@@ -287,51 +234,6 @@ export default function GuestDashboardScreen() {
         </View>
       </ScrollView>
 
-
-      {/* ================= BOTTOM TAB ================= */}
-      {/* <View style={styles.bottomTab}>
-        <View style={styles.bottomTabTitle}>
-          <Link href={"/(tabs)/noted"}>
-            <View style={styles.bottomTabTitle}>
-              <Ionicons name="home" size={24} color="#E11F27" />
-              <Text style={styles.bottomTabTitle}>Home</Text>
-            </View>
-          </Link>
-        </View>
-        <View style={styles.bottomTabTitle}>
-          <Link href={"/(tabs)/noted"}>
-            <View style={styles.bottomTabTitle}>
-              <Ionicons name="calendar" size={24} color="#E11F27" />
-              <Text style={styles.bottomTabTitle}>Activity</Text>
-            </View>
-          </Link>
-        </View>
-
-
-        <View style={styles.bottomTabBarbel}>
-          <Link href={"/(tabs)/GuestWorkoutOfTheDay"}>
-            <Ionicons name="barbell" size={35} color="#fff"/>
-          </Link>
-        </View>
-
-
-        <View style={styles.bottomTabTitle}>
-          <Link href={"/(tabs)/noted"}>
-            <View style={styles.bottomTabTitle}>
-              <AntDesign name="rise" size={24} color="#E11F27" />
-              <Text style={styles.bottomTabTitle}>Progress</Text>
-            </View>
-          </Link>
-        </View>
-        <View style={styles.bottomTabTitle}>
-          <Link href={"/(tabs)/noted"}>
-            <View style={styles.bottomTabTitle}>
-              <Ionicons name="body" size={24} color="#E11F27" />
-              <Text style={styles.bottomTabTitle}>You</Text>
-            </View>
-          </Link>
-        </View>
-      </View> */}
     </View>
   );
 }

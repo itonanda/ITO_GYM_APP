@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-12
+// Update 2026-05-19
 //-------------------------
 
 
@@ -74,6 +74,12 @@ export default function CheckOutGopayScreen() {
       console.log(error);
       Alert.alert("Error", "Gagal menyimpan QR");
     }
+
+
+      //------------------------------------------------------
+      //Sementara biar bisa keliatan Screen Payment sukses
+      router.replace('/(tabs)/PaymentSuccess')
+      //------------------------------------------------------
   };
 
 
@@ -122,9 +128,9 @@ export default function CheckOutGopayScreen() {
                         <Text style={styles.detailValue}>Gopay</Text>
                       </View>
 
-                      {/*<View style={styles.detailRow}>
+                      <View style={styles.detailRow}>
                         <Text style={styles.detailLabel}>Transaction ID</Text>
-                        <Text style={styles.detailValue}>TRX982374</Text>
+                        <Text style={styles.detailValue}>TRX2026</Text>
                       </View>
 
                       <View style={styles.detailRow}>
@@ -132,7 +138,7 @@ export default function CheckOutGopayScreen() {
                         <View style={styles.statusBadge}>
                           <Text style={styles.statusText}>Waiting Payment</Text>
                         </View>
-                      </View>*/}
+                      </View>
                     </View>
 
                     {/* INSTRUCTION */}

@@ -13,16 +13,19 @@ import {
   Switch,
   Image,
   StatusBar,
+  Dimensions,
 } from 'react-native';
-
+import { Link, useRouter } from 'expo-router';
 import {
   Ionicons,
   MaterialIcons,
   Feather,
   FontAwesome5,
 } from '@expo/vector-icons';
-
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
+
+const { width } = Dimensions.get('window');
 
 export default function SettingsScreen() {
   const [notificationEnabled, setNotificationEnabled] = useState(true);
@@ -31,33 +34,31 @@ export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
+     
+      {/* HEADER */}
+      <LinearGradient
+        colors={['#9A0006', '#E82528', '#4d0205']}
+        style={styles.header}
+      >
+        <View style={styles.profileContainer}>
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
+            }}
+            style={styles.profileImage}
+          />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-
-        {/* HEADER */}
-        <LinearGradient
-          colors={['#9A0006', '#E82528', '#4d0205']}
-          style={styles.header}
-        >
-          <View style={styles.profileContainer}>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
-              }}
-              style={styles.profileImage}
-            />
-
-            <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>John Doe</Text>
-              <Text style={styles.profileEmail}>
-                JohnDoe@gmail.com
-              </Text>
-              <Text style={styles.profileStatus}>Active</Text>
-            </View>
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileName}>John Doe</Text>
+            <Text style={styles.profileEmail}>
+              JohnDoe@gmail.com
+            </Text>
+            <Text style={styles.profileStatus}>Active</Text>
           </View>
-        </LinearGradient>
+        </View>
+      </LinearGradient>
 
-
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* ACCOUNT SECTION */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
@@ -157,6 +158,52 @@ export default function SettingsScreen() {
         </Text>
 
       </ScrollView>
+
+
+      {/* ================= BOTTOM TAB ================= */}
+      <View style={styles.bottomTab}>
+        <View style={styles.bottomTabTitle}>
+          <Link href={"/(tabs)/MemberDashboard"}>
+            <View style={styles.bottomTabTitle}>
+              <Ionicons name="home" size={24} color="#E11F27" />
+              <Text style={styles.bottomTabTitle}>Home</Text>
+            </View>
+          </Link>
+        </View>
+        <View style={styles.bottomTabTitle}>
+          <Link href={"/(tabs)/noted"}>
+            <View style={styles.bottomTabTitle}>
+              <Ionicons name="calendar" size={24} color="#E11F27" />
+              <Text style={styles.bottomTabTitle}>Activity</Text>
+            </View>
+          </Link>
+        </View>
+
+
+        <View style={styles.bottomTabBarbel}>
+          <Link href={"/(tabs)/MemberWorkoutOfTheDay"}>
+            <Ionicons name="barbell" size={35} color="#fff"/>
+          </Link>
+        </View>
+
+
+        <View style={styles.bottomTabTitle}>
+          <Link href={"/(tabs)/noted"}>
+            <View style={styles.bottomTabTitle}>
+              <AntDesign name="rise" size={24} color="#E11F27" />
+              <Text style={styles.bottomTabTitle}>Progress</Text>
+            </View>
+          </Link>
+        </View>
+        <View style={styles.bottomTabTitle}>
+          <Link href={"/(tabs)/noted"}>
+            <View style={styles.bottomTabTitle}>
+              <Ionicons name="body" size={24} color="#E11F27" />
+              <Text style={styles.bottomTabTitle}>You</Text>
+            </View>
+          </Link>
+        </View>
+      </View>
     </View>
   );
 }
@@ -268,5 +315,38 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 40,
     fontSize: 14,
+  },
+
+
+  //=========== BOTTOM TAB ===========
+  bottomTab: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 85,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingBottom: 15,
+    borderTopColor:'#000',
+    borderTopWidth: 1,
+  },
+  bottomTabBarbel: {
+    bottom: 0,
+    backgroundColor: '#E11F27',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top:-30,
+    borderRadius:20,
+    padding: 10,
+    borderColor: '#000',
+    borderWidth: 1,
+  },
+  bottomTabTitle: {
+    fontSize: 12,
+    fontWeight: 500,
+    alignItems: 'center',
   },
 });

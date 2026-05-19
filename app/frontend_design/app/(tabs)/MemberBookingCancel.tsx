@@ -26,7 +26,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 
-export default function MemberBookingScreen() {
+export default function MemberBookingCancelScreen() {
   const router = useRouter();
   
   
@@ -34,9 +34,9 @@ export default function MemberBookingScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         {/* ================= DETAIL CLASS ================= */}
-        <AntDesign name="like" size={100} color="black" />
-        <Text style={styles.title}>Booking {"\n"}Successful</Text>
-        <Text style={styles.subtitle}>Your booking is confirmed and saved</Text>
+        <AntDesign name="delete" size={100} color="black" />
+        <Text style={styles.title}>Booking {"\n"}Cancelled</Text>
+        <Text style={styles.subtitle}>Your class booking was successfully cancelled</Text>
 
         {/*============ Member Dashboard ============*/}
         <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 50}}>

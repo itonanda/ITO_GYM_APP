@@ -53,42 +53,14 @@ export default function TestingPageScreen() {
             </View>
             <Text style={styles.menuText}>Member Dashboard</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MemberDashboardAfterBooking')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="water-outline" size={24} color="#1a0dd1" />
-            </View>
-            <Text style={styles.menuText}>Member Dashboard After Booking</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MembershipPage')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="water-outline" size={24} color="#1a0dd1" />
-            </View>
-            <Text style={styles.menuText}>Membership Page</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MemberMemberShipPlan')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="water-outline" size={24} color="#1a0dd1" />
-            </View>
-            <Text style={styles.menuText}>Membership Plan</Text>
-          </TouchableOpacity>
+          
           <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/MemberMembershipRenew')}>
             <View style={styles.menuIcon}>
               <Ionicons name="water-outline" size={24} color="#1a0dd1" />
             </View>
             <Text style={styles.menuText}>Membership Renew</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/CheckOut')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="water-outline" size={24} color="#1a0dd1" />
-            </View>
-            <Text style={styles.menuText}>Check Out</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/(tabs)/PaymentSuccess')}>
-            <View style={styles.menuIcon}>
-              <Ionicons name="water-outline" size={24} color="#1a0dd1" />
-            </View>
-            <Text style={styles.menuText}>Payment Success</Text>
-          </TouchableOpacity>
+          
 
 
 

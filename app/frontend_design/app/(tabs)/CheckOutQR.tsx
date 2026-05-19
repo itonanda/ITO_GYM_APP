@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-12
+// Update 2026-05-19
 //-------------------------
 
 
@@ -70,10 +70,17 @@ export default function CheckOutQRScreen() {
       await MediaLibrary.saveToLibraryAsync(uri);
 
       Alert.alert("Berhasil", "QR berhasil disimpan ke galeri");
+
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Gagal menyimpan QR");
     }
+
+    
+      //------------------------------------------------------
+      //Sementara biar bisa keliatan Screen Payment sukses
+      router.replace('/(tabs)/PaymentSuccess')
+      //------------------------------------------------------
   };
 
 
@@ -122,9 +129,9 @@ export default function CheckOutQRScreen() {
                         <Text style={styles.detailValue}>QRIS</Text>
                       </View>
 
-                      {/*<View style={styles.detailRow}>
+                      <View style={styles.detailRow}>
                         <Text style={styles.detailLabel}>Transaction ID</Text>
-                        <Text style={styles.detailValue}>TRX982374</Text>
+                        <Text style={styles.detailValue}>TRX2026</Text>
                       </View>
 
                       <View style={styles.detailRow}>
@@ -132,7 +139,7 @@ export default function CheckOutQRScreen() {
                         <View style={styles.statusBadge}>
                           <Text style={styles.statusText}>Waiting Payment</Text>
                         </View>
-                      </View>*/}
+                      </View>
                     </View>
 
                     {/* INSTRUCTION */}

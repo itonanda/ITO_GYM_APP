@@ -1,5 +1,5 @@
 //-------------------------
-// Update 2026-05-18
+// Update 2026-05-19
 //-------------------------
 
 
@@ -34,7 +34,7 @@ import * as Sharing from "expo-sharing";
 const { width } = Dimensions.get('window');
 
 // =========== DATA ===========
-const vaTransactionID = "#TRX2026";
+const vaTransactionID = "TRX2026";
 const vaPaymentMethod = "Gopay";
 const vaDate = "18 May 2026";
 const vaprice = "900.000";
@@ -61,6 +61,7 @@ const formatTanggal = (date: Date) => {
   return `${namaHari}, ${tanggal} ${namaBulan} ${tahun}`;
 };
 
+/* ----------- Download Invoice ----------- */
 const downloadInvoice = async () => {
   try {
     const html = `
@@ -89,7 +90,7 @@ const downloadInvoice = async () => {
       .topGlow{
         width:220px;
         height:220px;
-        background:#22C55E;
+        background:#9A0006;
         border-radius:999px;
         position:absolute;
         top:-80px;
@@ -109,7 +110,7 @@ const downloadInvoice = async () => {
 
       .brand{
         text-align:center;
-        color:#22C55E;
+        color:#9A0006;
         font-size:18px;
         letter-spacing:4px;
         font-weight:bold;
@@ -121,22 +122,22 @@ const downloadInvoice = async () => {
         height:130px;
         margin:auto;
         border-radius:999px;
-        background:rgba(34,197,94,0.12);
-        border:5px solid #22C55E;
+        background:rgba(197, 34, 34, 0.12);
+        border:5px solid #9A0006;
         display:flex;
         justify-content:center;
         align-items:center;
-        box-shadow:0 0 40px rgba(34,197,94,0.35);
+        box-shadow:0 0 40px rgba(197, 34, 34, 0.35);
       }
 
       .check{
-        color:#22C55E;
+        color:#9A0006;
         font-size:70px;
         font-weight:bold;
       }
 
       .title{
-        color:#22C55E;
+        color:#9A0006;
         text-align:center;
         font-size:34px;
         font-weight:bold;
@@ -154,11 +155,11 @@ const downloadInvoice = async () => {
 
       .amountBox{
         margin-top:35px;
-        background:linear-gradient(90deg,#22C55E,#16A34A);
+        background:linear-gradient(90deg,#E82528,#9A0006);
         padding:28px;
         border-radius:28px;
         text-align:center;
-        box-shadow:0 10px 30px rgba(34,197,94,0.25);
+        box-shadow:0 10px 30px rgba(197, 34, 34, 0.25);
       }
 
       .amountLabel{
@@ -199,7 +200,7 @@ const downloadInvoice = async () => {
       }
 
       .status{
-        color:#22C55E;
+        color:#9A0006;
         font-weight:bold;
       }
 
@@ -239,9 +240,9 @@ const downloadInvoice = async () => {
         text-align:center;
         padding:14px;
         border-radius:999px;
-        background:rgba(34,197,94,0.12);
-        border:1px solid rgba(34,197,94,0.25);
-        color:#22C55E;
+        background:rgba(197, 34, 34, 0.12);
+        border:1px solid rgba(197, 34, 34, 0.25);
+        color:#9A0006;
         font-weight:bold;
         letter-spacing:1px;
       }
@@ -337,7 +338,7 @@ export default function PaymentSuccessScreen() {
 
   return (
     <LinearGradient
-      colors={["#FFFFFF", "#FFFFFF", "#22C55E"]}
+      colors={["#FFFFFF", "#FFFFFF", "#9A0006"]}
       style={styles.container}
     >
       <ScrollView
@@ -349,7 +350,7 @@ export default function PaymentSuccessScreen() {
               {/* Success Icon */}
               <View style={styles.iconContainerPayNotif}>
                 <View style={styles.iconCirclePayNotif}>
-                  <Ionicons name="checkmark-done" size={80} color="#22C55E" />
+                  <Ionicons name="checkmark-done" size={80} color="#9A0006" />
                 </View>
               </View>
 
@@ -426,10 +427,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 3,
-    borderColor: "#22C55E",
+    borderColor: "#9A0006",
   },
   titlePayNotif: {
-    color: "#22C55E",
+    color: "#9A0006",
     fontSize: 25,
     fontWeight: "bold",
     marginBottom: 10,
@@ -465,7 +466,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   amountPayNotif: {
-    color: "#22C55E",
+    color: "#E82528",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -473,7 +474,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 58,
     borderRadius: 18,
-    backgroundColor: "#22C55E",
+    backgroundColor: "#E82528",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
