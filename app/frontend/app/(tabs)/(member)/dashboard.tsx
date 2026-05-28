@@ -27,6 +27,7 @@ const classDataToday = [
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
     quota: '2/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=',
   },
@@ -36,6 +37,7 @@ const classDataToday = [
     time: '13.00 - 14.00',
     trainer: 'Michael Tan',
     quota: '5/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1493959975/photo/young-man-working-out-with-battle-ropes-in-gym.jpg?s=2048x2048&w=gi&k=20&c=AU9pMkFlLTtqi-Cn_W5Rp7g40dd7DZJXy1lQbIdQMt0=',
   },
@@ -45,6 +47,7 @@ const classDataToday = [
     time: '18.00 - 19.00',
     trainer: 'Sarah Lee',
     quota: '10/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/2208288816/photo/female-kickboxer-shadowboxing-with-dumbbells.jpg?s=2048x2048&w=gi&k=20&c=v3cUTd65XgSCj0lHYQ4KYkRhsI7BEuxTMxoHbByeynI=',
   },
@@ -77,16 +80,36 @@ const classDataPromo = [
   },
 ];
 
+const classDataBookingClass = [
+  {
+    id: '1',
+    highlight: false,
+    title: 'Morning Class',
+    day: '25',
+    month: 'FEB',
+    time: '08.00 - 09.00',
+    trainer: 'Adryl Nath',
+  },
+  {
+    id: '2',
+    highlight: false,
+    title: 'Morning Class',
+    day: '26',
+    month: 'FEB',
+    time: '08.00 - 09.00',
+    trainer: 'Adryl Nath',
+  },
+];
+
 export default function MemberDashboardScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [activeIndexPromo, setActiveIndexPromo] = useState(0);
   const flatListRefPromo = useRef(null);
-
-  // Accesses both route params
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  const { accessToken, email } = useLocalSearchParams();
+  const [activeIndexBookingClass, setActiveIndexBookingClass] = useState(0);
+  const flatListRefBookingClass = useRef(null);
+  
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -104,6 +127,14 @@ export default function MemberDashboardScreen() {
     }
   ).current;
 
+  const onViewableItemsChangedBookingClass = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (viewableItems.length > 0 && viewableItems[0].index !== null) {
+        setActiveIndexBookingClass(viewableItems[0].index);
+      }
+    }
+  ).current;
+
   const viewConfig = {
     viewAreaCoveragePercentThreshold: 50,
   };
@@ -111,17 +142,27 @@ export default function MemberDashboardScreen() {
   const viewConfigPromo = {
     viewAreaCoveragePercentThreshold: 50,
   };
+
+  const viewConfigBookingClass = {
+    viewAreaCoveragePercentThreshold: 50,
+  };
+
   
+  // Accesses both route params
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  const { accessToken, email } = useLocalSearchParams();
+
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E31E24" />
-      
+
       {/* HEADER */}
       <LinearGradient
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-         <View style={styles.headerLeft}>
+        <View style={styles.headerLeft}>
           <View style={styles.avatar}>
             <Ionicons name="person-outline" size={24} color="#000" onPress={() => router.replace('/profile')}/>
           </View>
@@ -137,7 +178,72 @@ export default function MemberDashboardScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-                
+
+
+        {/* ================= BOOKING CLASS ================= */}
+        {classDataBookingClass.some(item => item.highlight) && (
+          <>
+            <Text style={styles.sectionTitle}>Booking Class</Text>
+
+              <FlatList
+                ref={flatListRefBookingClass}
+                data={classDataBookingClass}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                onViewableItemsChanged={onViewableItemsChangedBookingClass}
+                viewabilityConfig={viewConfigBookingClass}
+                renderItem={({ item }) => {
+                if (!item.highlight) return null;
+
+                return (
+                  <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail_update')}>       
+                    <View style={styles.cardBookingClass}>
+                      {/* Date Box */}
+                      <View style={styles.dateContainer}>
+                        <View style={styles.monthBox}>
+                          <Text style={styles.monthText}>{item.month}</Text>
+                        </View>
+                        <View style={styles.dayBox}>
+                          <Text style={styles.dayText}>{item.day}</Text>
+                        </View>
+                      </View>
+              
+                      {/* Divider */}
+                      <View style={styles.divider} />
+              
+                      {/* Content */}
+                      <View style={styles.content}>
+                        <Text style={styles.classTitleTime}>{item.title}</Text>
+                        <Text style={styles.time}>{item.time}</Text>
+                        <Text style={styles.author}>By {item.trainer}</Text>
+                      </View>
+                    </View>
+                </TouchableOpacity>
+                );
+              }}
+            />
+
+            {/* ================= DOT INDICATOR BOOKING CLASS================= */}
+            <View style={styles.dotContainer}>
+              {classDataBookingClass
+                .filter(item => item.highlight)
+                .map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.dot,
+                      activeIndexBookingClass === index &&
+                        styles.activeDot,
+                    ]}
+                  />
+                ))}
+            </View>
+          </>
+        )}
+        
+
         {/* ================= AVAILABLE CLASS ================= */}
         <Text style={styles.sectionTitle}>Available Classes</Text>
 
@@ -151,22 +257,29 @@ export default function MemberDashboardScreen() {
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewConfig}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail')}>       
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} 
+              onPress={() =>
+                router.push(
+                  item.highlight
+                    ? '/(tabs)/(member)/class_detail_update'
+                    : '/(tabs)/(member)/class_detail'
+                )
+              }>       
                 <View style={styles.classCard}>
                   <Image
                     source={{ uri: item.image }}
                     style={styles.classImage}
                   />
                   
-                  <View style={styles.cardContent}>
+                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
                       <Text style={styles.classTitle}>{item.title}</Text>
                       <Text style={styles.classTime}>{item.time}</Text>
-                      <Text style={styles.classTrainer}>
+                      <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
                         By {item.trainer}
                       </Text>
                     </View>
-                    <Text style={styles.classQuota}>{item.quota}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -201,7 +314,7 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Class Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership_plan')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership')}>
             <View style={styles.menuIcon}>
               <Ionicons name="card-outline" size={24} color="#333" />
             </View>
@@ -286,7 +399,7 @@ export default function MemberDashboardScreen() {
       {/* ================= BOTTOM TAB ================= */}
       <View style={styles.bottomTab}>
         <View style={styles.bottomTabTitle}>
-          <Link href={"/dashboard"}>
+          <Link href={"/(tabs)/(member)/dashboard"}>
             <View style={styles.bottomTabTitle}>
               <Ionicons name="home" size={24} color="#E11F27" />
               <Text style={styles.bottomTabTitle}>Home</Text>
@@ -294,7 +407,7 @@ export default function MemberDashboardScreen() {
           </Link>
         </View>
         <View style={styles.bottomTabTitle}>
-          <Link href={"/+not-found"}>
+          <Link href={'/+not-found'}>
             <View style={styles.bottomTabTitle}>
               <Ionicons name="calendar" size={24} color="#E11F27" />
               <Text style={styles.bottomTabTitle}>Activity</Text>
@@ -304,14 +417,14 @@ export default function MemberDashboardScreen() {
 
 
         <View style={styles.bottomTabBarbel}>
-          <Link href={"/workout_of_the_day"}>
+          <Link href={"/(tabs)/(member)/workout_of_the_day"}>
             <Ionicons name="barbell" size={35} color="#fff"/>
           </Link>
         </View>
 
 
         <View style={styles.bottomTabTitle}>
-          <Link href={"/+not-found"}>
+          <Link href={'/+not-found'}>
             <View style={styles.bottomTabTitle}>
               <AntDesign name="rise" size={24} color="#E11F27" />
               <Text style={styles.bottomTabTitle}>Progress</Text>
@@ -319,7 +432,7 @@ export default function MemberDashboardScreen() {
           </Link>
         </View>
         <View style={styles.bottomTabTitle}>
-          <Link href={"/+not-found"}>
+          <Link href={'/+not-found'}>
             <View style={styles.bottomTabTitle}>
               <Ionicons name="body" size={24} color="#E11F27" />
               <Text style={styles.bottomTabTitle}>You</Text>
@@ -570,5 +683,10 @@ const styles = StyleSheet.create({
   author: {
     color: "red",
     fontStyle: "italic",
+  },
+
+  highlightCard: {
+    backgroundColor: "#69d36e",
+    borderColor: "#4caf50",
   },
 });

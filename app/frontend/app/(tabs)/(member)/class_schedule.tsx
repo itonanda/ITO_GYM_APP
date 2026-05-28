@@ -34,6 +34,7 @@ const classDataToday = [
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
     quota: '2/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=',
   },
@@ -43,6 +44,7 @@ const classDataToday = [
     time: '12.00 - 13.00',
     trainer: 'Kent Handi',
     quota: '10/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/639376842/photo/exercising-as-a-class.jpg?s=2048x2048&w=gi&k=20&c=0zs1xGWPsdPIaL6ZmBgHCakuGTUBotEo33BKV_vUJRw=',
   },
@@ -52,6 +54,7 @@ const classDataToday = [
     time: '13.00 - 14.00',
     trainer: 'Michael Tan',
     quota: '5/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1493959975/photo/young-man-working-out-with-battle-ropes-in-gym.jpg?s=2048x2048&w=gi&k=20&c=AU9pMkFlLTtqi-Cn_W5Rp7g40dd7DZJXy1lQbIdQMt0=',
   },
@@ -61,6 +64,7 @@ const classDataToday = [
     time: '18.00 - 19.00',
     trainer: 'Sarah Lee',
     quota: '10/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/2208288816/photo/female-kickboxer-shadowboxing-with-dumbbells.jpg?s=2048x2048&w=gi&k=20&c=v3cUTd65XgSCj0lHYQ4KYkRhsI7BEuxTMxoHbByeynI=',
   },
@@ -73,6 +77,7 @@ const classDataTomorrow = [
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
     quota: '2/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=',
   },
@@ -82,6 +87,7 @@ const classDataTomorrow = [
     time: '13.00 - 14.00',
     trainer: 'Michael Tan',
     quota: '5/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/1493959975/photo/young-man-working-out-with-battle-ropes-in-gym.jpg?s=2048x2048&w=gi&k=20&c=AU9pMkFlLTtqi-Cn_W5Rp7g40dd7DZJXy1lQbIdQMt0=',
   },
@@ -91,10 +97,12 @@ const classDataTomorrow = [
     time: '12.00 - 13.00',
     trainer: 'Kent Handi',
     quota: '10/15',
+    highlight: false,
     image:
       'https://media.gettyimages.com/id/639376842/photo/exercising-as-a-class.jpg?s=2048x2048&w=gi&k=20&c=0zs1xGWPsdPIaL6ZmBgHCakuGTUBotEo33BKV_vUJRw=',
   },
 ];
+
 
 export default function MemberClassScheduleScreen() {
   const router = useRouter();
@@ -147,22 +155,29 @@ export default function MemberClassScheduleScreen() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail')}>       
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} 
+              onPress={() =>
+                router.push(
+                  item.highlight
+                    ? '/(tabs)/(member)/class_detail_update'
+                    : '/(tabs)/(member)/class_detail'
+                )
+              }>       
                 <View style={styles.classCard}>
                   <Image
                     source={{ uri: item.image }}
                     style={styles.classImage}
                   />
                   
-                  <View style={styles.cardContent}>
+                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
                       <Text style={styles.classTitle}>{item.title}</Text>
                       <Text style={styles.classTime}>{item.time}</Text>
-                      <Text style={styles.classTrainer}>
+                      <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
                         By {item.trainer}
                       </Text>
                     </View>
-                    <Text style={styles.classQuota}>{item.quota}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -179,22 +194,29 @@ export default function MemberClassScheduleScreen() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail')}>       
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}
+              onPress={() =>
+                router.push(
+                  item.highlight
+                    ? '/(tabs)/(member)/class_detail_update'
+                    : '/(tabs)/(member)/class_detail'
+                )
+              }>       
                 <View style={styles.classCard}>
                   <Image
                     source={{ uri: item.image }}
                     style={styles.classImage}
                   />
                   
-                  <View style={styles.cardContent}>
+                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
                       <Text style={styles.classTitle}>{item.title}</Text>
                       <Text style={styles.classTime}>{item.time}</Text>
-                      <Text style={styles.classTrainer}>
+                      <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
                         By {item.trainer}
                       </Text>
                     </View>
-                    <Text style={styles.classQuota}>{item.quota}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -220,46 +242,47 @@ export default function MemberClassScheduleScreen() {
 
         <View style={{ width: 40 }} />
       </LinearGradient>
-
+      
       <View style={styles.classScheduleRow}>
-            {/* Today Button */}
-            <TouchableOpacity
-                style={[
-                styles.classScheduleButton,
-                selectedDay === "today" && styles.classScheduleActiveButton
-                ]}
-                onPress={() => setSelectedDay("today")}
+          {/* Today Button */}
+          <TouchableOpacity
+            style={[
+              styles.classScheduleButton,
+              selectedDay === "today" && styles.classScheduleActiveButton
+            ]}
+            onPress={() => setSelectedDay("today")}
+          >
+            <Text
+              style={[
+                styles.classScheduleButtonText,
+                selectedDay === "today" && styles.classScheduleActiveText
+              ]}
             >
-                <Text
-                style={[
-                    styles.classScheduleButtonText,
-                    selectedDay === "today" && styles.classScheduleActiveText
-                ]}
-                >
-                    Today {"\n"} {formatTanggal(today)}
-                </Text>
-            </TouchableOpacity>
-            {/* Tomorrow Button */}
-            <TouchableOpacity
-                style={[
-                styles.classScheduleButton,
-                selectedDay === "tomorrow" && styles.classScheduleActiveButton
-                ]}
-                onPress={() => setSelectedDay("tomorrow")}
+                Today {"\n"} {formatTanggal(today)}
+            </Text>
+          </TouchableOpacity>
+          {/* Tomorrow Button */}
+          <TouchableOpacity
+            style={[
+              styles.classScheduleButton,
+              selectedDay === "tomorrow" && styles.classScheduleActiveButton
+            ]}
+            onPress={() => setSelectedDay("tomorrow")}
+          >
+            <Text
+              style={[
+                styles.classScheduleButtonText,
+                selectedDay === "tomorrow" && styles.classScheduleActiveText
+              ]}
             >
-                <Text
-                style={[
-                    styles.classScheduleButtonText,
-                    selectedDay === "tomorrow" && styles.classScheduleActiveText
-                ]}
-                >
-                    Tomorrow {"\n"} {formatTanggal(tomorrow)}
-                </Text>
-            </TouchableOpacity>
+                Tomorrow {"\n"} {formatTanggal(tomorrow)}
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        {/* kondisi screen */}
-        {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
+      {/* kondisi screen */}
+      {selectedDay === "today" ? <TodayScreen/> : <TomorrowScreen />}
+
     </View>
   );
 }
@@ -302,6 +325,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+
 
   /* ===== CLASS Schedule ===== */
   classScheduleRow: {
@@ -399,8 +423,12 @@ const styles = StyleSheet.create({
     color: '#E31E24',
   },
 
+  highlightCard: {
+    backgroundColor: "#69d36e",
+    borderColor: "#4caf50",
+  },
 
-/* ===== SCREEN TODAY & TOMORROW ===== */
+  /* ===== SCREEN TODAY & TOMORROW ===== */
   todayScreen: {
     width: "100%",
     //padding: 40,

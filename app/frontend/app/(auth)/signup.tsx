@@ -21,6 +21,9 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function SignUpScreen() {
   const router = useRouter();
 
+  // STATE API
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+
   // STATE FORM
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -45,10 +48,29 @@ export default function SignUpScreen() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   // FORMAT DATE
-  const formatDate = (date: Date) =>
+  /*const formatDate = (date: Date) =>
     `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
       .toString()
-      .padStart(2, '0')}/${date.getFullYear()}`;
+      .padStart(2, '0')}/${date.getFullYear()}`;*/
+  const formatDate = (date: Date) =>
+    `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  const birthDateJSON = birthDate.toISOString().split('T')[0];
+
+// 1. Convert the Date state directly to a JSON-safe string
+  // const birthDateJSON = birthDate.toISOString().split('T')[0];
+// const getYYYYMMDD = (dateObj = new Date()) => {
+//   return dateObj.toISOString().split('T')[0].replace(/-/g, '');
+// };
+//     const convertDate = (birthDate) => {
+//   if (!birthDate) return '';
+//   const date = new Date(birthDate);
+//   return date.toISOString().split('T')[0];
+// };
+
+  // ROLE_USER
+  const role = 'user';
 
   // VALIDASI
   const validate = () => {
@@ -56,7 +78,7 @@ export default function SignUpScreen() {
 
     if (!fullName.trim()) tempErrors.fullName = 'Full Name is required.';
     if (!email.trim()) tempErrors.email = 'Email is required.';
-    else if (!/\S+@\S+\.\S+/.test(email)) tempErrors.email = 'Oops! That email looks wrong.. "xxx@doms.com"';
+    else if (!/\S+@\S+\.\S+/.test(email)) tempErrors.email = 'Oops! That email looks wrong.';
     if (!phone.trim()) tempErrors.phone = 'Phone Number is required.';
     if (!birthDate) tempErrors.birthDate = 'Birth Date is required.';
     if (!gender) tempErrors.gender = 'Gender is required.'; 
@@ -81,10 +103,26 @@ export default function SignUpScreen() {
 
   // REGISTER
   const handleRegister = () => {
-    if (!validate()) return;
-
-    {/*Alert.alert('Success', 'Registrasi berhasil!');*/}
-    router.replace('/(auth)/signin');
+    if (!validate()) {
+      return;
+    } else {
+      fetch(`${apiURL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          // 'Authorization': `Bearer YOUR_KEY`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, fullName, role, birthDateJSON, gender, phone, emergencyContactNo, emergencyContactName }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          Alert.alert('Success', 'Registrasi berhasil!');
+          router.replace('/(auth)/signin');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
   };
 
   const onChangeDate = (event: any, selectedDate?: Date) => {
@@ -137,6 +175,14 @@ export default function SignUpScreen() {
                 style={[styles.inputSignUp, errors.email && { borderColor: 'red' }]}
                 placeholder="Email"
                 keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect={false}
+                textContentType="emailAddress"
+                // Cursor/Caret styling
+                cursorColor="#007AFF" // Sets cursor color (Android)
+                selectionColor="#007AFF" // Sets cursor/selection color (iOS)
+                caretHidden={false}
                 value={email}
                 //onChangeText={setEmail}
                 onChangeText={(text) => {

@@ -37,7 +37,7 @@ const { data, error } = await supabaseServiceRole.auth.admin.createUser({
     phone:userData.phone,
     password:userData.password,
     email_confirm: false, // Automatically confirm email if (true)
-    user_metadata: { name: userData.fullname }
+    user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateToJson, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   });
   
   if (error) throw new Error(error.message);

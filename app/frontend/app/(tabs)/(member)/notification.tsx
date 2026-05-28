@@ -1,8 +1,3 @@
-//-------------------------
-// Update 2026-05-08
-//-------------------------
-
-
 import React, { useState, useRef } from 'react';
 import {
   View,
@@ -51,7 +46,7 @@ const DataNotifications: NotificationType[] = [
 ];
 
 
-export default function MemberNotificationScreen() {
+export default function NotificationScreen() {
   const router = useRouter();
 
   // Item Notif

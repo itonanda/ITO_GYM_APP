@@ -18,3 +18,8 @@ const authenticateUser = async (req, res, next) => {
 app.get('/dashboard', authenticateUser, (req, res) => {
   res.json({ message: `Welcome ${req.user.email}!` });
 });
+
+// Protected Route
+app.get('/api/secure-data', authenticateUser, (req, res) => {
+  res.json({ message: 'Access granted', user: req.user });
+});

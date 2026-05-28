@@ -31,13 +31,13 @@ export default function ForgotPasswordScreen() {
         return;
     }
     else {
-      fetch(`${apiURL}/auth/signin`, {
+      fetch(`${apiURL}/auth/resetpassword`, {
         method: 'POST',
         headers: {
           // authorization: "Bearer YOUR_KEY",
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email }),
       })
         .then(response => response.json())
         .then(data => {
@@ -63,10 +63,10 @@ export default function ForgotPasswordScreen() {
       >
         {/* Title */}
         <Text style={styles.title}>
-          Log in to your{"\n"}Account
+          Reset password to your{"\n"}Account
         </Text>
         <Text style={styles.subtitle}>
-          Enter your email and password to log in
+          Enter your email to reset password
         </Text>
 
         {/* Email */}
@@ -78,61 +78,10 @@ export default function ForgotPasswordScreen() {
           autoCapitalize="none" value={email} onChangeText={setEmail} 
         />
 
-        {/* Password */}
-        <Text style={styles.label}>Password</Text>
-        <View style={styles.passwordWrapper}>
-          <TextInput
-            style={styles.passwordInput}
-            value={password}
-            onChangeText={setPassword}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="Password"
-            secureTextEntry={secure}
-          />
-          <TouchableOpacity onPress={() => setSecure(!secure)}>
-            <Ionicons
-              name={secure ? "eye-off-outline" : "eye-outline"}
-              size={22}
-              color="#999"
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* Forgot */}
-        <TouchableOpacity>
-          <Text style={styles.forgot} onPress={() => router.replace('/(auth)/forgot_password')}>Forgot Password ?</Text>
-        </TouchableOpacity>
-
         {/* Login Button */}
         <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
-          <Text style={styles.loginText}>Log In</Text>
+          <Text style={styles.loginText}>Send</Text>
         </TouchableOpacity>
-
-        {/* Or
-        <Text style={styles.or}>Or</Text> */}
-
-        {/* Google */}
-        {/* <TouchableOpacity style={styles.socialButton} onPress={() => router.replace('/(tabs)/noted')}>
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-            }}
-            style={styles.icon}
-          />
-          <Text style={styles.socialText}>Continue with Google</Text>
-        </TouchableOpacity> */}
-
-        {/* Facebook */}
-        {/* <TouchableOpacity style={styles.socialButton} onPress={() => router.replace('/(tabs)/noted')}>
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/733/733547.png",
-            }}
-            style={styles.icon}
-          />
-          <Text style={styles.socialText}>Continue with Facebook</Text>
-        </TouchableOpacity> */}
 
         {/* Signup */}
         <Text style={styles.signup}>

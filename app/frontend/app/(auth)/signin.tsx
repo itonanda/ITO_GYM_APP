@@ -76,6 +76,10 @@ export default function SignInScreen() {
           placeholder="Email"
           keyboardType="email-address"
           autoCapitalize="none" value={email} onChangeText={setEmail} 
+          autoComplete="email"
+          autoCorrect={false}
+          textContentType="emailAddress"
+          caretHidden={false}
         />
 
         {/* Password */}

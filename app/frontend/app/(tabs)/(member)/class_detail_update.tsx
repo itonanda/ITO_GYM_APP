@@ -26,7 +26,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 
-export default function MemberClassDetailUpdatedScreen() {
+export default function MemberClassDetailUpdateScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
@@ -52,7 +52,7 @@ export default function MemberClassDetailUpdatedScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/after_booking')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -226,37 +226,41 @@ export default function MemberClassDetailUpdatedScreen() {
                         </View>
                     </View>
                 </View>
+
+                {/* BOTTOM BAR */}
+                <LinearGradient
+                  colors={["#FFFFFF", "#FFFFFF"]}
+                  start={{ x: 0, y: 1 }}
+                  end={{ x: 0, y: 0 }}
+                  style={styles.headerBottomBar}
+                >
+                  {/* PAGE */}
+                  <LinearGradient
+                      colors={["#98eb98", "#78fa78"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 0, y: 1 }}
+                      style={styles.bottomBarPageBox}
+                  >
+                    <Text style={{fontSize:16, color:'#08b208', fontStyle:"italic",fontWeight:'bold'}}>
+                      2/15
+                    </Text>
+                  </LinearGradient>
+
+                  {/* BUTTON */}
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_cancel')}>
+                    <LinearGradient
+                      colors={["#E82528", "#9A0006"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.bottomBarBookButton}
+                    >
+                      <Text style={{fontSize:16, color:'#000', fontStyle:"italic",fontWeight:'bold'}}>
+                        Cancel
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </LinearGradient>
             </ScrollView>
-
-      {/* BOTTOM BAR */}
-      <LinearGradient
-         colors={["#E82528", "#9A0006"]}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
-        style={styles.headerBottomBar}
-      >
-        {/* PAGE */}
-        <View style={styles.bottomBarPageBox}>
-            <Text style={{fontSize:16, color:'#08b208', fontStyle:"italic",fontWeight:'bold'}}>
-              2/15
-            </Text>
-        </View>
-
-        {/* BUTTON */}
-        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/after_booking')}>
-          <LinearGradient
-            colors={["#FFFFFF", "#cbc9c9"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.bottomBarBookButton}
-          >
-            <Text style={{fontSize:16, color:'#000', fontStyle:"italic",fontWeight:'bold'}}>
-              Cancel
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </LinearGradient>
-
     </View>
   );
 }
@@ -428,27 +432,27 @@ const styles = StyleSheet.create({
 /* ===== HEADER BOTTOM ===== */
   headerBottomBar: {
     height: 80,
-    backgroundColor: "#ED1C24",
+    backgroundColor: "#fffS",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 16,
     gap: 50,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    //borderTopLeftRadius: 20,
+    //borderTopRightRadius: 20,
   },
   bottomBarPageBox: {
-    width: 90,
-    height: 38,
+    width: 110,
+    height: 50,
     backgroundColor: "#FFF",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
   },
   bottomBarBookButton: {
-    width: 110,
-    height: 38,
-    backgroundColor: "#FFF",
+    width: 150,
+    height: 50,
+    backgroundColor: "#E82528",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",

@@ -51,9 +51,9 @@ export default function CheckOutScreen() {
   
   // FORMAT DATE
   const formatDate = (date: Date) =>
-    `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+    `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
-    .padStart(2, '0')}/${date.getFullYear()}`;
+    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
   // FORMAT 1 Month
   const OneMonth = new Date();
@@ -87,7 +87,7 @@ export default function CheckOutScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

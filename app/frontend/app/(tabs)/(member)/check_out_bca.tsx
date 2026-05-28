@@ -39,6 +39,13 @@ export default function CheckOutBCATransferScreen() {
     await Clipboard.setStringAsync(vaNumber);
 
     Alert.alert("Copied", "Virtual Account copied successfully");
+
+
+
+      //------------------------------------------------------
+      //Sementara biar bisa keliatan Screen Payment sukses
+      router.replace('/(tabs)/(member)/check_out_payment_success')
+      //------------------------------------------------------
   };
 
   return (

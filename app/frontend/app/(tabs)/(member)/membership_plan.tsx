@@ -88,7 +88,7 @@ const classDataMembership = [
 
 
 
-export default function MemberMembershipPlanScreen() {
+export default function MembershipPlanScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
@@ -114,7 +114,7 @@ export default function MemberMembershipPlanScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/class_detail')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

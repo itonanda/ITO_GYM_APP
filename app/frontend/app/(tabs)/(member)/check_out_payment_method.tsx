@@ -67,11 +67,11 @@ export default function CheckOutPaymentMethodScreen() {
           onPress: () => {
             // pindah screen sesuai payment
             if (selectedMethod?.title === "QRIS") {
-              router.push("/check_out_qr");
+              router.push("/(tabs)/(member)/check_out_qr");
             } else if (selectedMethod?.title === "Gopay") {
-              router.push("/check_out_gopay");
+              router.push("/(tabs)/(member)/check_out_gopay");
             } else if (selectedMethod?.title === "BCA Transfer") {
-              router.push("/check_out_bca");
+              router.push("/(tabs)/(member)/check_out_bca");
             }
           },
         },
