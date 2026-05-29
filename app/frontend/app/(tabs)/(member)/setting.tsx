@@ -65,9 +65,7 @@ export default function SettingsScreen() {
       >
         <View style={styles.profileContainer}>
           <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
-            }}
+            source={require('../../../assets/images/user/user.png')}
             style={styles.profileImage}
           />
 
@@ -254,6 +252,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    borderWidth: 1,
   },
 
   profileInfo: {

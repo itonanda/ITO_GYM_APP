@@ -123,14 +123,17 @@ export default function GuestDashboardScreen() {
         style={styles.header}
       >
         <View style={styles.headerLeft}>
-          <View style={styles.avatar}>
-            <Ionicons name="person-outline" size={24} color="#000" />
-          </View>
-          <View>
+          <TouchableOpacity>
+            <Image
+              source={require('../../../assets/images/user/guest.png')}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
+          <View  style={{marginLeft:10}}>
             <Text style={styles.headerTitle}>Guest</Text>
           </View>
         </View>
-        <Ionicons name="notifications-outline" size={24} color="#fff"/>
+        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/(tabs)/(member)/dashboard')}/>
       </LinearGradient>
 
       <ScrollView
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#E31E24',
-    paddingTop: 40,
+    paddingTop: 50,
     paddingBottom: 40,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 25,
@@ -269,6 +272,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
+  },
+
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    borderWidth:1,
   },
 
   //=========== Available Class and Promo ===========

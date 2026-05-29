@@ -163,11 +163,15 @@ export default function MemberDashboardScreen() {
         style={styles.header}
       >
         <View style={styles.headerLeft}>
-          <View style={styles.avatar}>
-            <Ionicons name="person-outline" size={24} color="#000" onPress={() => router.replace('/profile')}/>
-          </View>
-          <View>
-            <Text style={styles.headerTitle} onPress={() => router.replace('/profile')}>John Doe</Text>
+          <TouchableOpacity onPress={() => router.replace('/(tabs)/(member)/membership')}>
+            <Image
+              source={require('../../../assets/images/user/user.png')}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
+          
+          <View style={{marginLeft:10}}>
+            <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>John Doe</Text>
             <Text style={{fontSize:12,color:'#fff',fontWeight:'bold'}}>Valid until 20/12/2026</Text>
           </View>
         </View>
@@ -302,7 +306,7 @@ export default function MemberDashboardScreen() {
 
         {/* ================= Menu Grid ================= */}
         <View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}>
             <View style={styles.menuIcon}>
               <Ionicons name="information-outline" size={24} color="#333" />
             </View>
@@ -320,7 +324,7 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Membership</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/leaderboard')}>
             <View style={styles.menuIcon}>
               <Ionicons name="trophy-outline" size={24} color="#333" />
             </View>
@@ -454,7 +458,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#E31E24',
-    paddingTop: 40,
+    paddingTop: 50,
     paddingBottom: 40,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 25,
@@ -481,6 +485,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    borderWidth:1,
   },
 
   //=========== Available Class and Promo ===========

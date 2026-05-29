@@ -61,18 +61,19 @@ export default function MembershipPageScreen() {
                         style={styles.headerTopCard}
                         >
                         <View style={styles.headerTopCardContent}>
-                            
-                            <View>
+                          <View>
                             <Text style={styles.headerTopName}>John Doe</Text>
                             <Text style={styles.headerTopSubText}>
                                 1 Month Unlimited Plan
                             </Text>
-                            </View>
-                
-                            <View style={styles.headerTopAvatar}>
-                            <Ionicons name="person-outline" size={28} color="#000" onPress={() => router.replace('/profile')} />
-                            </View>
-                
+                          </View>
+                          
+                          <TouchableOpacity onPress={() => router.replace('/setting')}>
+                            <Image
+                              source={require('../../../assets/images/user/user.png')}
+                              style={styles.profileImage}
+                            />
+                          </TouchableOpacity>
                         </View>
                 
                         <View style={styles.headerTopDivider} />
@@ -187,11 +188,19 @@ const styles = StyleSheet.create({
   headerTopAvatar: {
     width: 50,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 50,
     backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
   },
+
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    borderWidth:1,
+  },
+
   headerTopDivider: {
     height: 1,
     backgroundColor: "#555",
