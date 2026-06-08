@@ -130,10 +130,10 @@ export default function GuestDashboardScreen() {
             />
           </TouchableOpacity>
           <View  style={{marginLeft:10}}>
-            <Text style={styles.headerTitle}>Guest</Text>
+            <Text style={styles.headerTitle} >Guest</Text>
           </View>
         </View>
-        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/(tabs)/(member)/dashboard')}/>
+        <Ionicons name="notifications-outline" size={24} color="#fff" />
       </LinearGradient>
 
       <ScrollView

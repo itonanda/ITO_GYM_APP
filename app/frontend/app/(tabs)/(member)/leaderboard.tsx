@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -27,7 +27,6 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 // ============ DATA ============
-
 interface LeaderboardItem {
   id: string;
   name: string;
@@ -85,19 +84,27 @@ const leaderboardData: LeaderboardItem[] = [
 export default function LeaderboardScreen() {
   const router = useRouter();
 
-  // SORT BY POINTS + AUTO RANK
-  const sortedLeaderboard = [...leaderboardData]
-    .sort((a, b) => b.points - a.points)
-    .map((item, index) => ({
-      ...item,
-      rank: index + 1,
-    }));
+  const [searchText, setSearchText] =
+    useState("");
 
-  // TOP PLAYER
-  const topUser = sortedLeaderboard[0];
+  // FILTER + SORT
+  const filteredLeaderboard = useMemo(() => {
+    return [...leaderboardData]
+      .filter((item) =>
+        item.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      )
+      .sort((a, b) => b.points - a.points)
+      .map((item, index) => ({
+        ...item,
+        rank: index + 1,
+      }));
+  }, [searchText]);
 
-  // LIST WITHOUT TOP PLAYER
-  const otherPlayers = sortedLeaderboard.filter(
+  const topUser = filteredLeaderboard[0];
+
+  const otherPlayers = filteredLeaderboard.filter(
     (item) => item.rank !== 1
   );
 
@@ -107,7 +114,7 @@ export default function LeaderboardScreen() {
     item: LeaderboardItem;
   }) => {
     return (
-      <TouchableOpacity activeOpacity={0.85} style={styles.cardLeader}>
+      <TouchableOpacity style={styles.cardLeader}>
         <LinearGradient
           colors={["rgba(147, 18, 18, 0.27)", "rgba(193, 18, 18, 0.85)"]}
           style={styles.cardGradient}
@@ -132,13 +139,15 @@ export default function LeaderboardScreen() {
             />
 
             <View>
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.name}>
+                {item.name}
+              </Text>
 
               <View style={styles.workoutRow}>
                 <MaterialCommunityIcons
                   name="dumbbell"
                   size={14}
-                  color="#3c0405"
+                  color="#A855F7"
                 />
 
                 <Text style={styles.workoutText}>
@@ -164,44 +173,9 @@ export default function LeaderboardScreen() {
   };
 
 
-
-  const [selectedFilter, setSelectedFilter] =
-    useState("All Time");
-
-  const handleFilter = (type: string) => {
-    setSelectedFilter(type);
-
-    // nanti data leaderboard bisa di filter di sini
-    console.log("Selected:", type);
-  };
-
-  const openFilter = () => {
-    Alert.alert(
-      "Leaderboard Filter",
-      "Choose leaderboard type",
-      [
-        {
-          text: "Weekly",
-          onPress: () => handleFilter("Weekly"),
-        },
-        {
-          text: "Monthly",
-          onPress: () => handleFilter("Monthly"),
-        },
-        {
-          text: "All Time",
-          onPress: () => handleFilter("All Time"),
-        },
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-      ]
-    );
-  };
-
   return (
     <View style={styles.container}>
+      
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
       {/* HEADER */}
@@ -219,23 +193,39 @@ export default function LeaderboardScreen() {
       </LinearGradient>
 
 
-        <View style={styles.contentLeader}>
-          
-          <StatusBar barStyle="light-content" />
+      <View style={styles.contentLeader}>
+      
+        <StatusBar barStyle="light-content" />
 
-          {/* BACKGROUND */}
-          <View style={styles.bgCircle1} />
-          <View style={styles.bgCircle2} />
+        {/* BACKGROUND */}
+        <View style={styles.bgCircle1} />
+        <View style={styles.bgCircle2} />
 
-          {/* CHAMPION CARD */}
+        {/* SEARCH */}
+        <View style={styles.searchContainer}>
+          <Ionicons
+            name="search"
+            size={20}
+            color="#9CA3AF"
+          />
+
+          <TextInput
+            placeholder="Search player..."
+            placeholderTextColor="#9CA3AF"
+            value={searchText}
+            onChangeText={setSearchText}
+            style={styles.searchInput}
+          />
+        </View>
+
+        {/* TOP PLAYER */}
+        {topUser && (
           <LinearGradient
             colors={["#3c0405", "#9A0006", "#E82528"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.championCard}
           >
-            <View style={styles.topGlow} />
-
             <View style={styles.crownWrapper}>
               <Ionicons
                 name="trophy"
@@ -280,7 +270,7 @@ export default function LeaderboardScreen() {
                 </Text>
               </View>
 
-              <View style={styles.separator} />
+              {/*<View style={styles.separator} />
 
               <View style={styles.statBox}>
                 <Text style={styles.statValue}>
@@ -288,42 +278,26 @@ export default function LeaderboardScreen() {
                 </Text>
 
                 <Text style={styles.statLabel}>
-                  Global Rank
+                  Rank
                 </Text>
-              </View>
+              </View>*/}
             </View>
           </LinearGradient>
+        )}
 
-          {/* SECTION TITLE */}
-          <View style={styles.listHeader}>
-            <Text style={styles.listTitle}>
-              Other Players
-            </Text>
-
-            <TouchableOpacity style={styles.filterButton}>
-              <Ionicons
-                name="options-outline"
-                size={18}
-                color="#fff"
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* LIST */}
-          <FlatList<LeaderboardItem>
-            data={otherPlayers}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-          />
-        </View>
-
-        
-
+        {/* LIST */}
+        <FlatList<LeaderboardItem>
+          data={otherPlayers}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+      </View>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
 /* ===== HEADER TOP ===== */
@@ -635,4 +609,25 @@ const styles = StyleSheet.create({
     marginTop: 4,
     letterSpacing: 1,
   },
+  
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    height: 56,
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+
+  searchInput: {
+    flex: 1,
+    color: "#656565",
+    marginLeft: 10,
+    fontSize: 15,
+  },
+
 });
