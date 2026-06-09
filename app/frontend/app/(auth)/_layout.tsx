@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function AuthLayout() {
   // return <Stack />;
@@ -8,8 +8,11 @@ export default function AuthLayout() {
       <Stack.Screen name="signup" options={{ headerShown: false }} />
       <Stack.Screen name="signin" options={{ headerShown: false }} />
       <Stack.Screen name="forgot_password" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="registration_success"
+        options={{ headerShown: false }}
+      />
       <StatusBar style="auto" />
     </Stack>
-    
   );
 }
