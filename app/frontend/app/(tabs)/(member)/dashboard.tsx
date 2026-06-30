@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,10 +12,14 @@ import {
 } from 'react-native';
 import { ViewToken } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { Link, useRouter } from 'expo-router';
+import { Link, useGlobalSearchParams, useRouter } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from 'expo-router';
+
+
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
+import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
 
 const { width } = Dimensions.get('window');
 
@@ -101,6 +105,32 @@ const classDataBookingClass = [
   },
 ];
 
+interface ItemData {
+  coach : any;
+  id : Int32;
+  fullname : string;
+
+  class: any;
+  name_class: string; // Replace with your actual table column schemas
+  
+  class_schedule : any;
+  id_class_schedule: Int32;
+  start_time_class: Timestamp;
+  end_time_class: Timestamp;
+  available_quota_class: Int32;
+  quota_class: Int32;
+  list_class: String;
+  highlight: false;
+
+  booking_class: any;
+}
+
+interface UsersData {
+  id_user : Int32
+  name : string;
+  email : string;
+}
+
 export default function MemberDashboardScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -150,8 +180,54 @@ export default function MemberDashboardScreen() {
   
   // Accesses both route params
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  const { accessToken, email } = useLocalSearchParams();
+  // const { accessToken, email } = useLocalSearchParams();
+  const { accessToken } = useGlobalSearchParams();
 
+  // GET DATA
+    const [items, setItems] = useState<ItemData[]>([]);
+    const [users, setUsers] = useState<UsersData | null>(null);
+    // const [loading, setLoading] = useState<boolean>(true);
+    // const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      fetchDataClassToday();
+      fetchDataUser();
+    }, []);
+
+    const fetchDataClassToday = async () => {
+      try {
+        // const response = await fetch(`${apiURL}/class/schedule_today`);
+        const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time_class&order=asc`);
+        const data = await response.json();
+        const datalimit = data.slice(0,3);
+        setItems(datalimit);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchDataUser = async () => {
+      try {
+        // console.log(accessToken);
+        const responseUser = await fetch(`${apiURL}/profile`, {
+        method: 'GET',
+        headers: {
+           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
+        const dataUser = await responseUser.json();
+        setUsers(dataUser);
+        // console.log(dataUser);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <View style={styles.container}>
@@ -163,15 +239,13 @@ export default function MemberDashboardScreen() {
         style={styles.header}
       >
         <View style={styles.headerLeft}>
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/(member)/membership')}>
-            <Image
-              source={require('../../../assets/images/user/user.png')}
-              style={styles.profileImage}
-            />
-          </TouchableOpacity>
-          
-          <View style={{marginLeft:10}}>
-            <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>John Doe</Text>
+          <View style={styles.avatar}>
+            <Ionicons name="person-outline" size={24} color="#000" onPress={() => router.replace('/profile')}/>
+          </View>
+          <View>
+            {users && (
+              <Text style={styles.headerTitle} onPress={() => router.replace('/profile')}>{users.name}</Text>
+            )}
             <Text style={{fontSize:12,color:'#fff',fontWeight:'bold'}}>Valid until 20/12/2026</Text>
           </View>
         </View>
@@ -252,16 +326,16 @@ export default function MemberDashboardScreen() {
         <Text style={styles.sectionTitle}>Available Classes</Text>
 
         <FlatList
-          ref={flatListRef}
-          data={classDataToday}
+          // ref={flatListRef}
+          data={items}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id_class_schedule.toString()}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewConfig}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} 
+            <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
                 router.push(
                   item.highlight
@@ -271,19 +345,20 @@ export default function MemberDashboardScreen() {
               }>       
                 <View style={styles.classCard}>
                   <Image
-                    source={{ uri: item.image }}
+                    // source={{ uri: item.image }}
+                    source={{ uri: 'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=' }}
                     style={styles.classImage}
                   />
                   
-                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+                  <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.title}</Text>
-                      <Text style={styles.classTime}>{item.time}</Text>
+                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
+                      <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.trainer}
+                        By {item.coach.fullname}
                       </Text>
                     </View>
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -306,7 +381,7 @@ export default function MemberDashboardScreen() {
 
         {/* ================= Menu Grid ================= */}
         <View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="information-outline" size={24} color="#333" />
             </View>
@@ -318,31 +393,45 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Class Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership')}>
+          
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => 
+            // router.replace('/membership')
+            {users && (
+            router.push({
+                  pathname: '/membership',
+                  params: { userId: users.id_user, name: users.name, email: users.email },
+                  // state: { 
+                  //   token: 'super-secret-token-12345',
+                  //   userId: 99
+                  // }
+                })
+            )}
+            }>
+            
             <View style={styles.menuIcon}>
               <Ionicons name="card-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Membership</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/leaderboard')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="trophy-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Leaderboard</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/chat')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="chatbubble-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Chat</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/promo')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="gift-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Promo</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/news')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="newspaper-outline" size={24} color="#333" />
             </View>
@@ -458,7 +547,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#E31E24',
-    paddingTop: 50,
+    paddingTop: 40,
     paddingBottom: 40,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 25,
@@ -485,13 +574,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
-  },
-  
-  profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    borderWidth:1,
   },
 
   //=========== Available Class and Promo ===========

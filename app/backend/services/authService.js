@@ -36,8 +36,8 @@ const { data, error } = await supabaseServiceRole.auth.admin.createUser({
     email:userData.email,
     phone:userData.phone,
     password:userData.password,
-    email_confirm: false, // Automatically confirm email if (true)
-    user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateToJson, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
+    email_confirm: true, // Automatically confirm email if (true)
+    user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   });
   
   if (error) throw new Error(error.message);
@@ -81,6 +81,12 @@ export const signInService = async (userData) => {
 const { data, error } = await supabaseAnon.auth.signInWithPassword({ 
     email:userData.email, 
     password:userData.password, 
+    auth: {
+     storage: localStorage,
+     autoRefreshToken: true,
+     persistSession: true,
+     detectSessionInUrl: false,
+    }
     });
 
     // if (error) console.error('Error logging in:', error.message)
@@ -92,7 +98,50 @@ const { data, error } = await supabaseAnon.auth.signInWithPassword({
 
     // Session data includes access_token and refresh_token
     // const { session, user } = data;
-    
+    if (error) {
+    console.error('Login failed:', error.message)
+    return
+  }
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const signInDataService = async (userData) => {
+// const { email, password } = req.body;
+const { data, error } = await supabaseAnon.auth.signInWithPassword({ 
+    email:userData.email, 
+    password:userData.password, 
+    // auth: {
+    //  storage: localStorage,
+    //  autoRefreshToken: true,
+    //  persistSession: true,
+    //  detectSessionInUrl: false,
+    // }
+    });
+
+    // if (error) console.error('Error logging in:', error.message)
+    // else {
+    //     // Access the token from the session
+    //     // const accessToken = data.session.access_token
+    //      // The access token is inside the session object
+    //     const accessToken = data.session.access_token
+    //     const refreshToken = data.session.refresh_token
+    //     const userEmail = data.user.email
+    //     const userName = data.user.username
+    //     console.log('Access Token:', accessToken)
+    //     console.log('Refresh Token:', refreshToken)
+    //     console.log('Email:', userEmail)
+    //     console.log('Name:', userName)
+    // }
+
+    // Session data includes access_token and refresh_token
+    // const { session, user } = data;
+
+    // console.log('Access Token:', data.session.access_token)
+    // console.log('Refresh Token:', data.session.refresh_token)
+    // console.log('Email:', data.user.email)
+    // console.log('Name:', data.profile.full_name)
+
   if (error) throw new Error(error.message);
   return data;
 };

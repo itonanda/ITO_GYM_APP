@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,13 +18,58 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
+import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
 
 const { width } = Dimensions.get('window');
 
+ // STATE API
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+
+  // const [items, setItems] = useState<ItemData[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+
+interface ItemData {
+  coach : any;
+  class: any;
+  booking_class: any;
+  
+  id_class_schedule: Int32;
+  name_class: string; // Replace with your actual table column schemas
+  start_time_class: string;
+  end_time_class: string;
+  available_quota_class: Int32;
+  quota_class: Int32;
+  list_class: String;
+  highlight: false;
+}
+
+interface UsersData {
+  id_user : Int32;
+  name : string;
+  email : string;
+}
+
+// GET DATA
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch(`${apiURL}/class/schedule`);
+  //     const data = await response.json();
+  //     setItems(data);
+  //   } catch (error) {
+  //     console.error('Error fetching list data:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 /* ================= DATA ================= */
 const classDataToday = [
@@ -77,7 +122,7 @@ const classDataTomorrow = [
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
     quota: '2/15',
-    highlight: false,
+    highlight: true,
     image:
       'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=',
   },
@@ -108,6 +153,81 @@ export default function MemberClassScheduleScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
+
+  // GET DATA
+  const [users, setUsers] = useState<UsersData[]>([]);
+  const [itemsToday, setItemsToday] = useState<ItemData[]>([]);
+  const [itemsTomorrow, setItemsTommorow] = useState<ItemData[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { accessToken, id_user, name, email } = useGlobalSearchParams();
+
+  useEffect(() => {
+    fetchDataUser();
+    fetchDataClassToday();
+    fetchDataClassTomorrow();
+  }, []);
+
+  const fetchDataUser = async () => {
+      try {
+        // console.log(accessToken);
+        const responseUser = await fetch(`${apiURL}/profile`, {
+        method: 'GET',
+        headers: {
+           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
+        const dataUser = await responseUser.json();
+        setUsers(dataUser);
+        // console.log(dataUser);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  const fetchDataClassToday = async () => {
+    try {
+      // const response = await fetch(`${apiURL}/class/schedule_today`);
+      const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time_class&order=asc`);
+      const data = await response.json();
+      setItemsToday(data);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDataClassTomorrow = async () => {
+    try {
+      // const response = await fetch(`${apiURL}/class/schedule_tomorrow`);
+      const response = await fetch(`${apiURL}/class/schedule_tomorrow_list?sortBy=start_time_class&order=asc`);
+      const data = await response.json();
+      setItemsTommorow(data);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   // Replace with your local Express server IP (e.g., http://192.168.1)
+  //   fetch(`${apiURL}/class/schedule`)
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       setData(json);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const onViewableItemsChanged = useRef(
       ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -145,39 +265,56 @@ export default function MemberClassScheduleScreen() {
     //return `${namaHari}, ${tanggal} ${namaBulan} ${tahun}`;
     return `${tanggal} ${namaBulan} ${tahun}`;
   };
-  const tanggalDipilih = selectedDay === "today" ? today : tomorrow;
+  // const tanggalDipilih = selectedDay === "today" ? today : tomorrow;
+  
+  const extractTimeHHMM = (apiISOString: string) => {
+  // Extracts the "14:30" part from "14:30:00"
+  return apiISOString.slice(0,5); 
+};
 
   const TodayScreen = () => (
     <View style={styles.todayScreen}>
         <FlatList
-          data={classDataToday}
-          keyExtractor={(item, index) => index.toString()}
+          data={itemsToday}
+          keyExtractor={(item) => item.id_class_schedule.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} 
+            <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
-                router.push(
-                  item.highlight
-                    ? '/(tabs)/(member)/class_detail_update'
-                    : '/(tabs)/(member)/class_detail'
-                )
+                // router.push(
+                //   item.highlight
+                //     ? '/(tabs)/(member)/class_detail_update'
+                //     : '/(tabs)/(member)/class_detail/'${item.id_class_schedule}
+                // )
+                router.push({
+                  pathname: '/(tabs)/(member)/class_detail',
+                  params: { id_class_schedule: item.id_class_schedule },
+                  // state: { 
+                  //   token: 'super-secret-token-12345',
+                  //   userId: 99
+                  // }
+                })
               }>       
                 <View style={styles.classCard}>
                   <Image
-                    source={{ uri: item.image }}
+                    // source={{ uri: item.image }}
+                    source={{ uri: 'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=' }}
                     style={styles.classImage}
                   />
                   
-                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+                  <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.title}</Text>
-                      <Text style={styles.classTime}>{item.time}</Text>
+                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
+                      
+                      {/* <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text> */}
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time_class)} - {extractTimeHHMM(item.end_time_class)}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.trainer}
+                        By {item.coach?.fullname}
                       </Text>
                     </View>
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
+                    {/* <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota_class}</Text> */}
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -189,34 +326,45 @@ export default function MemberClassScheduleScreen() {
   const TomorrowScreen = () => (
     <View style={styles.tomorrowScreen}>
         <FlatList
-          data={classDataTomorrow}
-          keyExtractor={(item, index) => index.toString()}
+          data={itemsTomorrow}
+          keyExtractor={(item) => item.id_class_schedule.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}
+            <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
-                router.push(
-                  item.highlight
-                    ? '/(tabs)/(member)/class_detail_update'
-                    : '/(tabs)/(member)/class_detail'
-                )
+                // router.push(
+                //   item.highlight
+                //     ? '/(tabs)/(member)/class_detail_update'
+                //     : '/(tabs)/(member)/class_detail/'${item.id_class_schedule}
+                // )
+                router.push({
+                  pathname: '/(tabs)/(member)/class_detail',
+                  params: { id_class_schedule: item.id_class_schedule },
+                  // state: { 
+                  //   token: 'super-secret-token-12345',
+                  //   userId: 99
+                  // }
+                })
               }>       
                 <View style={styles.classCard}>
                   <Image
-                    source={{ uri: item.image }}
+                    // source={{ uri: item.image }}
+                    source={{ uri: 'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=' }}
                     style={styles.classImage}
                   />
                   
-                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+                  <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.title}</Text>
-                      <Text style={styles.classTime}>{item.time}</Text>
+                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
+                      {/* <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text> */}
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time_class)} - {extractTimeHHMM(item.end_time_class)}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.trainer}
+                        By {item.coach?.fullname}
                       </Text>
                     </View>
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
+                    {/* <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota_class}</Text> */}
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -224,6 +372,45 @@ export default function MemberClassScheduleScreen() {
         />
     </View>
   );
+
+  //  const TomorrowScreen = () => (
+  //   <View style={styles.tomorrowScreen}>
+  //       <FlatList
+  //         data={classDataTomorrow}
+  //         keyExtractor={(item, index) => index.toString()}
+  //         showsVerticalScrollIndicator={false}
+  //         contentContainerStyle={{ paddingBottom: 350 }}
+  //         renderItem={({ item }) => (
+  //           <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}
+  //             onPress={() =>
+  //               router.push(
+  //                 item.highlight
+  //                   ? '/(tabs)/(member)/class_detail_update'
+  //                   : '/(tabs)/(member)/class_detail'
+  //               )
+  //             }>       
+  //               <View style={styles.classCard}>
+  //                 <Image
+  //                   source={{ uri: item.image }}
+  //                   style={styles.classImage}
+  //                 />
+                  
+  //                 <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+  //                   <View>
+  //                     <Text style={styles.classTitle}>{item.title}</Text>
+  //                     <Text style={styles.classTime}>{item.time}</Text>
+  //                     <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
+  //                       By {item.trainer}
+  //                     </Text>
+  //                   </View>
+  //                   <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
+  //                 </View>
+  //               </View>
+  //           </TouchableOpacity>
+  //         )}
+  //       />
+  //   </View>
+  // );
 
   return (
     <View style={styles.container}>

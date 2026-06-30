@@ -12,13 +12,13 @@ import {
 
 const { width } = Dimensions.get("window");
 
-export default function RegistrationSuccessScreen() {
+export default function SignUpSuccessScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* ================= DETAIL CLASS ================= */}
+        {/* ================= DETAIL ================= */}
         <AntDesign name="file-done" size={100} color="#08c631" />
         <Text style={styles.title}>Registration {"\n"}Successful</Text>
         <Text style={styles.subtitle}>
@@ -26,7 +26,7 @@ export default function RegistrationSuccessScreen() {
           account.
         </Text>
 
-        {/*============ Member Dashboard ============*/}
+        {/*============ BUTTON OK ============*/}
         <View
           style={{
             justifyContent: "flex-end",
@@ -36,7 +36,7 @@ export default function RegistrationSuccessScreen() {
         >
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => router.replace("/dashboard")}
+            onPress={() => router.replace("/signin")}
           >
             <LinearGradient
               colors={["#08c631", "#034511"]}

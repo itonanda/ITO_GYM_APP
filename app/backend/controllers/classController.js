@@ -1,0 +1,87 @@
+import { 
+  scheduleTodayService,
+  scheduleTomorrowService,
+  fetchClassByIdService,
+  scheduleTodaySortByOrderService,
+  scheduleTomorrowSortByOrderService,
+  bookingClassService,
+  fetchBookingByIdService
+} from "../services/classService.js";
+
+export const scheduleToday = async (req, res) => {
+ try {
+     const scheduleToday = await scheduleTodayService();
+     res.status(200).json(scheduleToday);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const scheduleTomorrow = async (req, res) => {
+ try {
+     const scheduleTommorrow = await scheduleTomorrowService();
+     res.status(200).json(scheduleTommorrow);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const fetchClassById = async (req, res) => {
+ try {
+     const { id_class_schedule } = req.params;
+     const fetchClassById = await fetchClassByIdService(id_class_schedule);
+     if (!fetchClassById) {
+      return res.status(404).json({ error: "Class Schedule not found" });
+    }
+     res.status(200).json(fetchClassById);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const scheduleTodaySortByOrder = async (req, res) => {
+  try {
+    // Extract sort parameters from the query string (e.g., ?sortBy=created_at&order=desc)
+    const sortBy = req.query.sortBy || 'start_time_class';
+    const sortOrder = req.query.order === 'asc' ? true : false;
+     const scheduleTodayDashboard = await scheduleTodaySortByOrderService(sortBy,sortOrder);
+     res.status(200).json(scheduleTodayDashboard);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const scheduleTomorrowSortByOrder = async (req, res) => {
+  try {
+    // Extract sort parameters from the query string (e.g., ?sortBy=created_at&order=desc)
+    const sortBy = req.query.sortBy || 'start_time_class';
+    const sortOrder = req.query.order === 'asc' ? true : false;
+     const scheduleTodayDashboard = await scheduleTomorrowSortByOrderService(sortBy,sortOrder);
+     res.status(200).json(scheduleTodayDashboard);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const bookingClass = async (req, res) => {
+  try {
+     const Data = req.body;
+     const bookingClass = await bookingClassService(Data);
+     res.status(201).json(bookingClass);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};
+
+export const fetchBookingById = async (req, res) => {
+ try {
+     const { id_user } = req.params;
+     const fetchBookingById = await fetchBookingByIdService(id_user);
+     if (!fetchBookingById) {
+      return res.status(404).json({ error: "Class Schedule not found" });
+    }
+     res.status(200).json(fetchBookingById);
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+   }
+};

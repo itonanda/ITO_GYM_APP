@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import classRoutes from "./routes/classRoutes.js";
+import authorization from "./middlewares/authorization.js";
 
 import { swaggerUi, specs } from "./config/swagger.js";
 
@@ -15,6 +17,7 @@ dotenv.config(); // Load environment variables from .env file
 const app = express();
 app.use(express.json()); // Enable the JSON body parsing for incoming requests
 app.use(cors());
+app.use(express.urlencoded({ extended: true }))
 
 // Swagger documentation route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
@@ -27,6 +30,8 @@ app.get("/", (req, res) => {
 
 // routes
 app.use("/auth", authRoutes);
+app.use("/class", classRoutes);
+app.use("/", authorization);
 
 // Start server
 const PORT = process.env.PORT || 5000;

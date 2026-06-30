@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,19 +13,49 @@ import {
   StatusBar,
   FlatList,
   Image,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 const { width } = Dimensions.get('window');
 
+// STATE API
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
+  interface ItemData {
+    coach : any;
+    class: any;
+    class_schedule: any;
+    
+    id_class_booking: string;
+    id_user: string;
+    id_class_schedule: string;
+    name_class: string; // Replace with your actual table column schemas
+    start_time_class: string;
+    end_time_class: string;
+    schedule_date_class: string;
+    available_quota_class: string;
+    quota_class: string;
+    list_class: String;
+    highlight: false;
+  }
+  
+  interface UsersData {
+    userId : string;
+    fullname : string;
+    name : string;
+    display_name : string;
+    email : string;
+  }
+  
 /* ================= DATA ================= */
 const classDataBookingClass = [
   {
@@ -36,37 +66,8 @@ const classDataBookingClass = [
     month: 'May',
     time: '08.00 - 09.00',
     trainer: 'Adryl Nath',
-  },
-  {
-    id: '2',
-    highlight: false,
-    title: 'Afternoon Class',
-    day: '25',
-    month: 'May',
-    time: '13.00 - 14.00',
-    trainer: 'Adryl Nath',
-  },
-  {
-    id: '3',
-    highlight: true,
-    title: 'Morning Class',
-    day: '26',
-    month: 'May',
-    time: '08.00 - 09.00',
-    trainer: 'Adryl Nath',
-  },
-  {
-    id: '4',
-    highlight: true,
-    title: 'Afternoon Class',
-    day: '26',
-    month: 'May',
-    time: '13.00 - 14.00',
-    trainer: 'Adryl Nath',
-  },
+  }
 ];
-
-
 
 export default function BookingClassScreen() {
   const router = useRouter();
@@ -84,6 +85,140 @@ export default function BookingClassScreen() {
   const viewConfigBookingClass = {
     viewAreaCoveragePercentThreshold: 50,
   };
+
+  // GET DATA
+    // Accesses both route params ([id]) and query params (?name=John)
+      // const { id_class_schedule } = useLocalSearchParams();
+      // const [items, setItems] = useState<ItemData[]>([]);
+      // const [loading, setLoading] = useState<boolean>(true);
+      const [itemsBooking, setData] = useState<ItemData[]>([]);
+      const [users, setUsers] = useState<UsersData| null>(null);
+      const [loading, setLoading] = useState(true);
+      const { accessToken } = useGlobalSearchParams();
+      const { id_user } = useGlobalSearchParams();
+
+      useEffect(() => {
+        fetchDataUser();
+        fetchDataBookingClass();
+        console.log(id_user);
+      }, []);
+    
+      const fetchDataUser = async () => {
+      try {
+        // console.log(accessToken);
+        const responseUser = await fetch(`${apiURL}/profile`, {
+        method: 'GET',
+        headers: {
+           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
+        const dataUser = await responseUser.json();
+        setUsers(dataUser);
+        // userId(dataUser.userId);
+        // console.log(dataUser);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+      const fetchDataBookingClass = async () => {
+        try {
+          const response = await fetch(`${apiURL}/class/booking/${id_user}`);
+          // const response = await fetch(`${apiURL}/class/schedule_today`);
+          const data = await response.json();
+          // setItems(data);
+          setData(data);
+          console.log(data);
+        } catch (error) {
+          console.error('Error fetching list data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+// 2. Function to handle item press
+  const handleItemPress = (item : any) => {
+    alert(`You tapped: ${item.name}`);
+  };
+
+  // 3. Render item function
+  const renderItem = ({ item }: { item: any }) => (
+    //  <Pressable key={item.id_class_booking} style={styles.headerCard} onPress={() => router.replace('/class_detail_update')}>       
+                                    
+    //                              </Pressable>
+    <TouchableOpacity 
+      key={item.id_class_booking}
+      style={styles.headerCard} 
+      onPress={() => handleItemPress(item)}
+      activeOpacity={0.7}
+    >
+      <View style={styles.cardBookingClass}>
+          {/* Date Box */}
+          <View style={styles.dateContainer}>
+          {/* <View style={styles.monthBox}>
+              <Text style={styles.monthText}>{item.month}</Text>
+          </View> */}
+          <View style={styles.dayBox}>
+              <Text style={styles.dayText}>{item.class_schedule.schedule_date_class}</Text>
+          </View>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.dividerBooking} />
+
+          {/* Content */}
+          <View style={styles.contentBooking}>
+          <Text style={styles.classTitleTime}>{item.class_schedule.class.name_class}</Text>
+          <Text style={styles.time}>{item.class_schedule.start_time_class}-{item.end_time_class}</Text>
+          <Text style={styles.author}>By {item.class_schedule.coach.fullname}</Text>
+          </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const TodayScreen = () => (
+      
+          <FlatList
+            data={itemsBooking}
+            keyExtractor={(item) => item.id_class_booking.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 350 }}
+            renderItem={({ item }) => (
+              <TouchableOpacity 
+      key={item.id_class_booking}
+      style={styles.headerCard} 
+      onPress={() => handleItemPress(item)}
+      activeOpacity={0.7}
+    >
+      <View style={styles.cardBookingClass}>
+          {/* Date Box */}
+          <View style={styles.dateContainer}>
+          {/* <View style={styles.monthBox}>
+              <Text style={styles.monthText}>{item.month}</Text>
+          </View> */}
+          <View style={styles.dayBox}>
+              <Text style={styles.dayText}>{item.class_schedule.schedule_date_class}</Text>
+          </View>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.dividerBooking} />
+
+          {/* Content */}
+          <View style={styles.contentBooking}>
+          <Text style={styles.classTitleTime}>{item.class_schedule.class.name_class}</Text>
+          <Text style={styles.time}>{item.class_schedule.start_time_class}-{item.end_time_class}</Text>
+          <Text style={styles.author}>By {item.class_schedule.coach.fullname}</Text>
+          </View>
+      </View>
+              </TouchableOpacity>
+            )}
+          />
+      
+    );
 
   return (
     <View style={styles.container}>
@@ -104,55 +239,51 @@ export default function BookingClassScreen() {
       </LinearGradient>
 
 
-      <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 120 }}
-            >
+      
                 
                 {/* ================= BOOKING CLASS ================= */}
         
-                {classDataBookingClass.some(item => item.highlight) && (
-                    <>
-                    <Text style={styles.sectionTitle}></Text>
-        
+                {/*{classDataBookingClass.some(item => item.highlight) && (*/}
+                    
+                   <Text style={styles.sectionTitle}></Text>
+
+                        <FlatList
+                            data={itemsBooking}
+                            keyExtractor={(item) => item.id_class_booking.toString()}
+                            showsVerticalScrollIndicator={false}
+                            //contentContainerStyle={{ paddingBottom: 350 }}
+                            renderItem={({ item }) => (
+                              <view>
+                                <Text style={styles.monthText}>{item.id_class_booking}</Text>
+                                <Text style={styles.monthText}>Test</Text>
+                                <Text style={styles.monthText}>Test</Text>
+                                <Text style={styles.monthText}>Test</Text>
+                                <Text style={styles.monthText}>Test</Text>
+                                <Text style={styles.monthText}>Test</Text>
+                                <Text style={styles.monthText}>Test</Text>
+
+                              </view>
+                               
+                             )}
+                         />
+                        
+                         {/*<Text style={styles.sectionTitle}>Testing</Text>
+
                         <FlatList
                             data={classDataBookingClass}
-                            scrollEnabled={false}
                             keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => {
-                            if (!item.highlight) return null;
-            
-                            return (
-                                <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail_update')}>       
-                                    <View style={styles.cardBookingClass}>
-                                        {/* Date Box */}
-                                        <View style={styles.dateContainer}>
-                                        <View style={styles.monthBox}>
-                                            <Text style={styles.monthText}>{item.month}</Text>
-                                        </View>
-                                        <View style={styles.dayBox}>
-                                            <Text style={styles.dayText}>{item.day}</Text>
-                                        </View>
-                                        </View>
-                                
-                                        {/* Divider */}
-                                        <View style={styles.dividerBooking} />
-                                
-                                        {/* Content */}
-                                        <View style={styles.contentBooking}>
-                                        <Text style={styles.classTitleTime}>{item.title}</Text>
-                                        <Text style={styles.time}>{item.time}</Text>
-                                        <Text style={styles.author}>By {item.trainer}</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            );
-                            }}
-                        />
-                    </>
-                )}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{ paddingBottom: 350 }}
+                            renderItem={({ item }) => (
+                              <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}>
+                                <Text style={styles.monthText}>{item.trainer}</Text>
+                              </TouchableOpacity>
+                             )}
+                         />*/}
+                     
+                {/*)}*/}
         
-            </ScrollView>
+           
 
     </View>
   );

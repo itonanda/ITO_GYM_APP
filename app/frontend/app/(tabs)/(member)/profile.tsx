@@ -145,13 +145,15 @@ export default function MemberProfileScreen() {
                   {/*============ Log Out ============*/}
                   <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 10}}>
                     <TouchableOpacity style={styles.menuButtonProfile}>
-                      <TouchableOpacity style={styles.ButtonProfile}  onPress={() => router.replace('/+not-found')}>
+                      {/* <TouchableOpacity style={styles.ButtonProfile}  onPress={() => router.replace('/+not-found')}> */}
+                      <TouchableOpacity style={styles.ButtonProfile}  onPress={handleSignOut}>
                         <View style={styles.menuIconProfile}>
                           <AntDesign name="logout" size={22} color="#000"/>
                         </View>
                         <Text style={styles.menuTextProfile}>Log Out</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/+not-found')}>
+                      {/* <TouchableOpacity style={styles.ButtonNextProfile} onPress={() => router.replace('/+not-found')}> */}
+                      <TouchableOpacity style={styles.ButtonNextProfile} onPress={handleSignOut}>
                         <View style={styles.menuIconProfile}>
                           <Ionicons name="chevron-forward" size={22} color="#000"/>
                         </View>

@@ -7,7 +7,6 @@ export default function TabsLayout() {
     <Stack>
       <Stack.Screen name="(guest)" options={{ headerShown: false }} />
       <Stack.Screen name="(member)" options={{ headerShown: false }} />
-      <Stack.Screen name="(coach)" options={{ headerShown: false }} />
       <StatusBar style="auto" />
     </Stack>
     

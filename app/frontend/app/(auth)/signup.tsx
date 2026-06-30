@@ -70,7 +70,7 @@ export default function SignUpScreen() {
 // };
 
   // ROLE_USER
-  const role = 'user';
+  const role = 'member';
 
   // VALIDASI
   const validate = () => {
@@ -116,8 +116,9 @@ export default function SignUpScreen() {
       })
         .then(response => response.json())
         .then(data => {
-          Alert.alert('Success', 'Registrasi berhasil!');
-          router.replace('/(auth)/signin');
+          console.log('BOD :', birthDateJSON);
+          // Alert.alert('Success', 'Registrasi berhasil!');
+          router.replace('/(auth)/signup_success');
         })
         .catch(error => {
           console.error('Error:', error);

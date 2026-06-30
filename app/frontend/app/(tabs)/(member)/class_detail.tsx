@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,14 +18,43 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
+import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
+import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
+import { useLocalSearchParams } from 'expo-router';
+
 const { width } = Dimensions.get('window');
 
+// STATE API
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  
+interface ItemData {
+  coach : any;
+  fullname : string;
 
+  class: any;
+  booking_class: any;
+  
+  id_class_schedule: Int32;
+  name_class: string; // Replace with your actual table column schemas
+  start_time_class: string;
+  end_time_class: string;
+  descriptions_class : string;
+  available_quota_class: Int32;
+  quota_class: Int32;
+  list_class: String;
+  highlight: false;
+}
+
+interface UsersData {
+  id_user : Int32;
+  name : string;
+  email : string;
+}
 export default function MemberClassDetailScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -42,6 +71,108 @@ export default function MemberClassDetailScreen() {
     viewAreaCoveragePercentThreshold: 50,
   };
 
+  // GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+    const { id_class_schedule } = useLocalSearchParams();
+    // const [items, setItems] = useState<ItemData[]>([]);
+    // const [loading, setLoading] = useState<boolean>(true);
+    const [items, setData] = useState<ItemData | null>(null);
+    const [users, setUsers] = useState<UsersData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const { accessToken } = useGlobalSearchParams();
+  
+    useEffect(() => {
+      fetchDataUser();
+      fetchDataClassDetail();
+    }, []);
+  
+    const fetchDataUser = async () => {
+      try {
+        // console.log(accessToken);
+        const responseUser = await fetch(`${apiURL}/profile`, {
+        method: 'GET',
+        headers: {
+           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
+        const dataUser = await responseUser.json();
+        setUsers(dataUser);
+        // console.log(dataUser);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    const fetchDataClassDetail = async () => {
+      try {
+        const response = await fetch(`${apiURL}/class/schedule/${id_class_schedule}`);
+        // const response = await fetch(`${apiURL}/class/schedule_today`);
+        const data = await response.json();
+        // setItems(data);
+        setData(data);
+        // console.log(data);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const handleBookingClass = () => {
+      // 1. Combine the two flat lists
+    const combinedData = [users, items];
+    // console.log(combinedData);
+
+    // 2. Prepare the payload (wrap in an object for good API practice)
+    const payload = {
+      data: combinedData
+    };
+    // console.log(payload);
+    // if(email.length === 0) {
+    //     Alert.alert('Attention','Please enter both email');
+    //     return;
+    // }
+    // else {
+       // 2. Convert to JSON string
+      const jsonPayload = JSON.stringify(combinedData);
+      
+      // 2. Memasukkan state ke dalam objek dan mengubahnya ke JSON String
+      const dataObject = { users, items };
+
+      fetch(`${apiURL}/class/booking_class`, {
+        method: 'POST',
+        headers: {
+          // authorization: "Bearer YOUR_KEY",
+          'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify({ 
+        //     users, items 
+        // }),
+        // body: jsonPayload,
+        body: JSON.stringify(combinedData),
+        // body: JSON.stringify(payload), // Convert the data to a JSON string
+        // body: JSON.stringify(dataObject), // Convert the data to a JSON string
+      })
+        .then(response => response.json())
+        .then(data => {
+          router.replace({
+            pathname: '/booking_success',
+            // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    // }
+    };
+
+    const extractTimeHHMM = (apiISOString: string) => {
+      // Extracts the "14:30" part from "2026-06-23T14:30:00.000Z"
+      return apiISOString.slice(0,5); 
+    };
 
   return (
     <View style={styles.container}>
@@ -61,11 +192,12 @@ export default function MemberClassDetailScreen() {
         <View style={{ width: 40 }} />
       </LinearGradient>
 
-
+      
       <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 120 }}
             >
+              {items && (
                 <View style={styles.content}>
                     {/* CARD TOP */}
                     <View style={styles.cardTop}>
@@ -74,8 +206,9 @@ export default function MemberClassDetailScreen() {
                             <View style={styles.headerRow}>
                                 <View style={styles.headerRowTop}>
                                 <View style={styles.headerRowTopRight}>
-                                    <Text style={styles.headerTitleDetail}>Morning Class</Text>
-                                    <Text style={styles.headerSubTitleDetail}>08.00 - 09.00</Text> 
+                                    <Text style={styles.headerTitleDetail}>{items.class.name_class}</Text>
+                                    {/* <Text style={styles.headerSubTitleDetail}>{items.start_time_class}-{items.end_time_class}</Text>  */}
+                                    <Text style={styles.headerSubTitleDetail}>{extractTimeHHMM(items.start_time_class)} - {extractTimeHHMM(items.end_time_class)}</Text> 
                                 </View>
                                 </View>
                                 <View style={styles.headerRowTop}>
@@ -83,12 +216,12 @@ export default function MemberClassDetailScreen() {
                                     <View style={styles.avatar}>
                                     <Ionicons name="person-circle-outline" size={100} color="#000"/>
                                     </View>
-                                    <Text style={styles.headerSubTitleDetail}>Adryl Nath</Text> 
+                                    <Text style={styles.headerSubTitleDetail}>{items.coach.fullname}</Text> 
                                 </View>
                                 </View>
                             </View>
                 
-                            <Text style={{fontSize:16, color:'#F02727', fontStyle:'italic', marginBottom:10}}>For Upper body, make you more energize and feel better .....</Text>
+                            <Text style={{fontSize:16, color:'#F02727', fontStyle:'italic', marginBottom:10}}>{items.descriptions_class} .....</Text>
                         </View> 
                     </View>
 
@@ -108,117 +241,11 @@ export default function MemberClassDetailScreen() {
                                 </View>
                                 <View style={styles.headerRowDetail}>
                                     <View style={styles.headerRowDetailLeft}>
-                                    <Text style={styles.headerTitleDetail}>Warm Up</Text>
-                                    <Text></Text>
+                                    <Text style={styles.headerTitleDetail}>Workout Of The Day</Text>
+                                    {/* <Text></Text> */}
                                     <Text style={styles.headerSubTitleDetail}>
-                                        A. Jumping{"\n"}
-                                        B. Running{"\n"}
-                                        C. Squats</Text>
-                                    </View>
-                                </View>
-                                </View>
-                            </View>
-                            
-                            {/* --------- Exercise 1 --------- */}
-                            <View>
-                                <View style={styles.headerDetailRow}>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailRight}>
-                                    <View style={styles.iconTemp}>
-                                        <Ionicons name="thermometer-outline" size={40} color="#8A0404" />
-                                    </View>
-                                    </View>
-                                </View>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailLeft}>
-                                    <Text style={styles.headerTitleDetail}>Exercise 1</Text>
-                                    <Text></Text>
-                                    <Text style={styles.headerSubTitleDetail}>
-                                        A. Jumping Jacks{"\n"}
-                                        B. Swimming{"\n"}
-                                        C. Bench Press</Text>
-                                    </View>
-                                </View>
-                                </View>
-                            </View>
-            
-                            {/* --------- Exercise 2 --------- */}
-                            <View>
-                                <View style={styles.headerDetailRow}>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailRight}>
-                                    <View style={styles.iconTemp}>
-                                        <Ionicons name="thermometer-outline" size={40} color="#8A0404" />
-                                    </View>
-                                    </View>
-                                </View>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailLeft}>
-                                    <Text style={styles.headerTitleDetail}>Exercise 2</Text>
-                                    <Text></Text>
-                                    <Text style={styles.headerSubTitleDetail}>
-                                        A. Running{"\n"}
-                                        B. Jumping Jacks{"\n"}
-                                        C. Jump Rope{"\n"}
-                                        D. Burpees{"\n"}
-                                        E. Mountain Climbers{"\n"}
-                                        F. High Knees{"\n"}
-                                        G. Cycling{"\n"}
-                                        H. Swimming</Text>
-                                    </View>
-                                </View>
-                                </View>
-                            </View>
-            
-                            {/* --------- Exercise 3 --------- */}
-                            <View>
-                                <View style={styles.headerDetailRow}>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailRight}>
-                                    <View style={styles.iconTemp}>
-                                        <Ionicons name="thermometer-outline" size={40} color="#8A0404" />
-                                    </View>
-                                    </View>
-                                </View>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailLeft}>
-                                    <Text style={styles.headerTitleDetail}>Exercise 3</Text>
-                                    <Text></Text>
-                                    <Text style={styles.headerSubTitleDetail}>
-                                        A. Bench Press{"\n"}
-                                        B. Squat{"\n"}
-                                        C. Deadlift{"\n"}
-                                        D. Push Up{"\n"}
-                                        E. Pull Up{"\n"}
-                                        F. Shoulder Press{"\n"}
-                                        G. Bicep Curl{"\n"}
-                                        H. Tricep Dip{"\n"}
-                                        I. Lunges{"\n"}
-                                        J. Leg Press</Text>
-                                    </View>
-                                </View>
-                                </View>
-                            </View>
-            
-                            {/* --------- Exercise 4 --------- */}
-                            <View>
-                                <View style={styles.headerDetailRow}>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailRight}>
-                                    <View style={styles.iconTemp}>
-                                        <Ionicons name="thermometer-outline" size={40} color="#8A0404" />
-                                    </View>
-                                    </View>
-                                </View>
-                                <View style={styles.headerRowDetail}>
-                                    <View style={styles.headerRowDetailLeft}>
-                                    <Text style={styles.headerTitleDetail}>Exercise 4</Text>
-                                    <Text></Text>
-                                    <Text style={styles.headerSubTitleDetail}>
-                                        A. Single Leg Stand{"\n"}
-                                        B. Heel to Toe Walk{"\n"}
-                                        C. Balance Board{"\n"}
-                                        D. Tree Pose</Text>
+                                        {items.list_class}
+                                    </Text>
                                     </View>
                                 </View>
                                 </View>
@@ -226,6 +253,8 @@ export default function MemberClassDetailScreen() {
                         </View>
                     </View>
                 </View>
+
+              )}
 
                 {/* BOTTOM BAR */}
                 <LinearGradient
@@ -242,12 +271,13 @@ export default function MemberClassDetailScreen() {
                       style={styles.bottomBarPageBox}
                   >
                     <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
-                        2/15
+                        {items?.available_quota_class}/{items?.quota_class}
                     </Text>
                   </LinearGradient>
 
                   {/* BUTTON */}
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_success')}>
+                  {/* <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_success')}> */}
+                  <TouchableOpacity activeOpacity={0.8} onPress={handleBookingClass}>
                     <LinearGradient
                       colors={["#E82528", "#9A0006"]}
                       start={{ x: 0, y: 0 }}
@@ -260,7 +290,7 @@ export default function MemberClassDetailScreen() {
                     </LinearGradient>
                   </TouchableOpacity>
                 </LinearGradient>
-
+              
             </ScrollView>
     </View>
   );
@@ -366,7 +396,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   headerTitleDetail: {
-    fontSize: 22,
+    fontSize: 18,
     fontStyle: 'italic',
     fontWeight: 'bold',
     color: '#000',

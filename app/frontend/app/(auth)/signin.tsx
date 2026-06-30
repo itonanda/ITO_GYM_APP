@@ -31,7 +31,8 @@ export default function SignInScreen() {
         return;
     }
     else {
-      fetch(`${apiURL}/auth/signin`, {
+      // fetch(`${apiURL}/auth/signin`, {
+      fetch(`${apiURL}/auth/sign-in`, {
         method: 'POST',
         headers: {
           // authorization: "Bearer YOUR_KEY",
@@ -41,9 +42,32 @@ export default function SignInScreen() {
       })
         .then(response => response.json())
         .then(data => {
+        //   const fetchUser = async () => {
+        //   // Retrieve JWT token from the active session
+        //   const token = data.session?.access_token;
+
+        //   // Send an authenticated request to your Express server
+        //   try {
+        //     // const response = fetch('https://your-express-backend.com', {
+        //     const response = fetch(`${apiURL}/profile`, {
+        //       method: 'GET',
+        //       headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${token}`, // Pass JWT token to backend
+        //       },
+        //     });
+        //     const json = await response.json();
+        //     console.log('Backend Response:', json);
+        //   } catch (err) {
+        //     console.error(err);
+        //   }
+
+        //   // setLoading(false);
+        // }
           router.replace({
             pathname: '../(tabs)/(member)/dashboard',
-            params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+            // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+            params: { accessToken: data.session.access_token }
           });
         })
         .catch(error => {
