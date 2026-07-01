@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -19,10 +19,15 @@ import {
 } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useLocalSearchParams } from 'expo-router';
-
+import { useLocalSearchParams, useGlobalSearchParams } from 'expo-router';
 
 const { width } = Dimensions.get('window');
+
+interface UsersData {
+  id_user : string;
+  name : string;
+  email : string;
+}
 
 export default function SettingsScreen() {
   const router = useRouter();  
@@ -32,13 +37,42 @@ export default function SettingsScreen() {
   
   // Accesses both route params
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  const { accessToken, email } = useLocalSearchParams();
+  const { accessToken } = useGlobalSearchParams();
+// GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+  const [users, setUsers] = useState<UsersData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { id_user } = useGlobalSearchParams();
+  const [error, setError] = useState(null);
 
+  const fetchDataUser = async () => {
+    try {
+      setLoading(true);
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // userId(dataUser.userId);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+      //setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const handleSignOut = () => {
     fetch(`${apiURL}/auth/signout`, {
         method: 'POST',
         headers: {
-        authorization: `Bearer ${accessToken}`,
+        'authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
         },
     })
@@ -53,6 +87,9 @@ export default function SettingsScreen() {
       });
   };
   
+  useEffect(() => {
+    fetchDataUser();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -72,10 +109,14 @@ export default function SettingsScreen() {
           />
 
           <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>John Doe</Text>
+            {users && (
+            <Text style={styles.profileName}>{users.name}</Text>
+            )}
+            {users && (
             <Text style={styles.profileEmail}>
-              JohnDoe@gmail.com
+              {users.email}
             </Text>
+            )}
             <Text style={styles.profileStatus}>Active</Text>
           </View>
         </View>

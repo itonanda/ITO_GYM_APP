@@ -25,6 +25,12 @@ export default function MemberLayout() {
       <Stack.Screen name="payment_history" options={{ headerShown: false }} />
       <Stack.Screen name="workout_of_the_day" options={{ headerShown: false }} />
       <Stack.Screen name="setting" options={{ headerShown: false }} />
+      <Stack.Screen name="about_us" options={{ headerShown: false }} />
+      <Stack.Screen name="promo" options={{ headerShown: false }} />
+      <Stack.Screen name="news" options={{ headerShown: false }} />
+      <Stack.Screen name="chat" options={{ headerShown: false }} />
+      <Stack.Screen name="leaderboard" options={{ headerShown: false }} />
+      <Stack.Screen name="notification" options={{ headerShown: false }} />
       <StatusBar style="auto" />
     </Stack>
     

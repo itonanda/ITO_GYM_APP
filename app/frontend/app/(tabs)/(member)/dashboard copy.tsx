@@ -259,7 +259,8 @@ export default function MemberDashboardScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-{/* ================= BOOKING CLASS ================= */}
+
+        {/* ================= BOOKING CLASS ================= */}
         {classDataBookingClass.some(item => item.highlight) && (
           <>
             <Text style={styles.sectionTitle}>Booking Class</Text>
@@ -326,45 +327,6 @@ export default function MemberDashboardScreen() {
         {/* ================= AVAILABLE CLASS ================= */}
         <Text style={styles.sectionTitle}>Available Classes</Text>
 
-        {/* <FlatList
-          ref={flatListRef}
-          data={classDataToday}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={viewConfig}
-          renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} 
-              onPress={() =>
-                router.push(
-                  item.highlight
-                    ? '/(tabs)/(member)/class_detail_update'
-                    : '/(tabs)/(member)/class_detail'
-                )
-              }>       
-                <View style={styles.classCard}>
-                  <Image
-                    source={{ uri: item.image }}
-                    style={styles.classImage}
-                  />
-                  
-                  <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
-                    <View>
-                      <Text style={styles.classTitle}>{item.title}</Text>
-                      <Text style={styles.classTime}>{item.time}</Text>
-                      <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.trainer}
-                      </Text>
-                    </View>
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota}</Text>
-                  </View>
-                </View>
-            </TouchableOpacity>
-          )}
-        /> */}
-
         <FlatList
           // ref={flatListRef}
           data={items}
@@ -377,15 +339,11 @@ export default function MemberDashboardScreen() {
           renderItem={({ item }) => (
             <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
-                // router.push(
-                //   item.highlight
-                //     ? '/(tabs)/(member)/class_detail_update'
-                //     : '/(tabs)/(member)/class_detail'
-                // )
-                router.push({
-                  pathname: '/(tabs)/(member)/class_detail',
-                  params: { id_class_schedule: item.id_class_schedule }
-                })
+                router.push(
+                  item.highlight
+                    ? '/(tabs)/(member)/class_detail_update'
+                    : '/(tabs)/(member)/class_detail'
+                )
               }>       
                 <View style={styles.classCard}>
                   <Image
@@ -425,7 +383,7 @@ export default function MemberDashboardScreen() {
 
         {/* ================= Menu Grid ================= */}
         <View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="information-outline" size={24} color="#333" />
             </View>
@@ -437,31 +395,45 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Class Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership')}>
+          
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => 
+            // router.replace('/membership')
+            {users && (
+            router.push({
+                  pathname: '/membership',
+                  params: { userId: users.id_user, name: users.name, email: users.email },
+                  // state: { 
+                  //   token: 'super-secret-token-12345',
+                  //   userId: 99
+                  // }
+                })
+            )}
+            }>
+            
             <View style={styles.menuIcon}>
               <Ionicons name="card-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Membership</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/leaderboard')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="trophy-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Leaderboard</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/chat')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="chatbubble-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Chat</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/promo')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="gift-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Promo</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/news')}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
             <View style={styles.menuIcon}>
               <Ionicons name="newspaper-outline" size={24} color="#333" />
             </View>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -23,9 +23,15 @@ import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useLocalSearchParams } from 'expo-router';
+import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 
 const { width } = Dimensions.get('window');
+
+interface UsersData {
+  id_user : string;
+  name : string;
+  email : string;
+}
 
 export default function MemberProfileScreen() {
   const router = useRouter();  
@@ -34,7 +40,14 @@ export default function MemberProfileScreen() {
   
   // Accesses both route params
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  const { accessToken, email } = useLocalSearchParams();
+  // const { accessToken } = useLocalSearchParams();
+  const { accessToken } = useGlobalSearchParams();
+// GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+    const [users, setUsers] = useState<UsersData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const { id_user } = useGlobalSearchParams();
+    const [error, setError] = useState(null);
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -47,6 +60,29 @@ export default function MemberProfileScreen() {
   const viewConfig = {
     viewAreaCoveragePercentThreshold: 50,
   };
+
+  const fetchDataUser = async () => {
+      try {
+        setLoading(true);
+        // console.log(accessToken);
+        const responseUser = await fetch(`${apiURL}/profile`, {
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
+        const dataUser = await responseUser.json();
+        setUsers(dataUser);
+        // userId(dataUser.userId);
+        // console.log(dataUser);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+        //setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   const handleSignOut = () => {
     fetch(`${apiURL}/auth/signout`, {
@@ -67,6 +103,10 @@ export default function MemberProfileScreen() {
       });
   };
   
+  useEffect(() => {
+    fetchDataUser();
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -80,10 +120,20 @@ export default function MemberProfileScreen() {
         <View style={styles.avatarProfile}>
           <Ionicons name="person-outline" size={50} color="#000" />
         </View>
-        <Text style={styles.statusProfile}>Active</Text>
+        {/* <Text style={styles.statusProfile}>Active</Text>
         <Text style={styles.nameProfile}>John Doe</Text>
-        <Text style={styles.emailProfile}>JohnDoe@gmail.com</Text> 
-
+        <Text style={styles.emailProfile}>JohnDoe@gmail.com</Text>  */}
+        <View>
+          {/* {users && (
+            <Text style={styles.statusProfile}>Active</Text>
+          )} */}
+          {users && (
+            <Text style={styles.nameProfile}>{users.name}</Text>
+          )}
+          {users && (
+            <Text style={styles.emailProfile}>{users.email}</Text> 
+          )}
+        </View>
         <View style={{ width: 40 }} />
       </LinearGradient>
 

@@ -49,10 +49,8 @@ const { width } = Dimensions.get('window');
   }
   
   interface UsersData {
-    userId : string;
-    fullname : string;
+    id_user : string;
     name : string;
-    display_name : string;
     email : string;
   }
   
@@ -92,19 +90,16 @@ export default function BookingClassScreen() {
       // const [items, setItems] = useState<ItemData[]>([]);
       // const [loading, setLoading] = useState<boolean>(true);
       const [itemsBooking, setData] = useState<ItemData[]>([]);
+      const [items, setDataItem] = useState<ItemData| null>(null);
       const [users, setUsers] = useState<UsersData| null>(null);
       const [loading, setLoading] = useState(true);
       const { accessToken } = useGlobalSearchParams();
       const { id_user } = useGlobalSearchParams();
+      const [error, setError] = useState(null);
 
-      useEffect(() => {
-        fetchDataUser();
-        fetchDataBookingClass();
-        console.log(id_user);
-      }, []);
-    
       const fetchDataUser = async () => {
       try {
+        setLoading(true);
         // console.log(accessToken);
         const responseUser = await fetch(`${apiURL}/profile`, {
         method: 'GET',
@@ -119,6 +114,7 @@ export default function BookingClassScreen() {
         // console.log(dataUser);
       } catch (error) {
         console.error('Error fetching list data:', error);
+        //setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -131,6 +127,7 @@ export default function BookingClassScreen() {
           const data = await response.json();
           // setItems(data);
           setData(data);
+          setDataItem(data);
           console.log(data);
         } catch (error) {
           console.error('Error fetching list data:', error);
@@ -138,6 +135,14 @@ export default function BookingClassScreen() {
           setLoading(false);
         }
       };
+
+      useEffect(() => {
+        fetchDataUser();
+        fetchDataBookingClass();
+        // console.log(id_user);
+        // console.log(itemsBooking);
+        // console.log(items);
+      }, []);
 
 // 2. Function to handle item press
   const handleItemPress = (item : any) => {
@@ -245,28 +250,43 @@ export default function BookingClassScreen() {
         
                 {/*{classDataBookingClass.some(item => item.highlight) && (*/}
                     
-                   <Text style={styles.sectionTitle}></Text>
-
+                   <Text style={styles.sectionTitle}>Tes</Text>
+                        {items &&(
+                          <View>
+                            <Text >{items.id_class_booking}</Text>
+                                <Text >{items.id_user}</Text>
+                              </View>
+                        )}
                         <FlatList
-                            data={itemsBooking}
-                            keyExtractor={(item) => item.id_class_booking.toString()}
+                        style={{ flex: 1 , backgroundColor: 'red'}} // Forces the list to grow and fill empty space
+                            data={itemsBooking || []}
+                            keyExtractor={(item) => (item.id_class_booking?? Math.random()).toString()}
                             showsVerticalScrollIndicator={false}
+                            ListEmptyComponent={
+                              <View style={{ padding: 20, alignItems: 'center' }}>
+                                <Text>No booking data found or loading...</Text>
+                              </View>
+                            }
+                            // Optimization: Prevents full list re-renders when data updates
+                            initialNumToRender={10}
+                            maxToRenderPerBatch={10}
+                            windowSize={5}
                             //contentContainerStyle={{ paddingBottom: 350 }}
                             renderItem={({ item }) => (
-                              <view>
-                                <Text style={styles.monthText}>{item.id_class_booking}</Text>
-                                <Text style={styles.monthText}>Test</Text>
-                                <Text style={styles.monthText}>Test</Text>
-                                <Text style={styles.monthText}>Test</Text>
-                                <Text style={styles.monthText}>Test</Text>
-                                <Text style={styles.monthText}>Test</Text>
-                                <Text style={styles.monthText}>Test</Text>
+                              <View>
+                                <Text >{item.id_user}</Text>
+                                <Text>Test</Text>
+                                <Text>Test</Text>
+                                <Text>Test</Text>
+                                <Text>Test</Text>
+                                <Text>Test</Text>
+                                <Text>Test</Text>
 
-                              </view>
+                              </View>
                                
                              )}
                          />
-                        
+                      
                          {/*<Text style={styles.sectionTitle}>Testing</Text>
 
                         <FlatList
@@ -282,7 +302,7 @@ export default function BookingClassScreen() {
                          />*/}
                      
                 {/*)}*/}
-        
+        <TodayScreen/>
            
 
     </View>

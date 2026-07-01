@@ -158,6 +158,20 @@ export default function MemberClassDetailScreen() {
       })
         .then(response => response.json())
         .then(data => {
+          // fetch(`${apiURL}/class/update_qouta_class`, {
+          //   method: 'POST',
+          //   headers: {
+          //     // authorization: "Bearer YOUR_KEY",
+          //     'Content-Type': 'application/json',
+          //   },
+          //   // body: JSON.stringify({ 
+          //   //     users, items 
+          //   // }),
+          //   // body: jsonPayload,
+          //   body: JSON.stringify(combinedData),
+          //   // body: JSON.stringify(payload), // Convert the data to a JSON string
+          //   // body: JSON.stringify(dataObject), // Convert the data to a JSON string
+          // })
           router.replace({
             pathname: '/booking_success',
             // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
