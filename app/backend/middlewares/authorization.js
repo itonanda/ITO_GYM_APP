@@ -24,7 +24,7 @@ const authenticate = async (req, res, next) => {
   req.user = user; // Attach user to request
   // req.profiles = profiles; // Attach user profiles to request
 
-  console.log(user);
+  // console.log(user);
 
   next();
 };
@@ -55,7 +55,7 @@ const dataUser = async (req, res, next) => {
     .eq('id', user.id)
     .single();
     
-  console.log(users.fullname);
+  // console.log(users.fullname);
   }
 
   req.user = user; // Attach user to request
@@ -77,8 +77,8 @@ router.get('/profile', authenticate, (req, res) => {
     id_user: req.user.id,
     email: req.user.email,
     // fullname: req.profiles.fullname
-    // full_name: req.user.metadata.full_name,
-    name: req.user.user_metadata.name,
+    full_name: req.user.user_metadata.full_name,
+    // name: req.user.user_metadata.name,
     // display_name : req.user.display_name
   });
 });

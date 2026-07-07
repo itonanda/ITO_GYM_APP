@@ -11,10 +11,23 @@ import {
 export const signUp = async (req, res) => {
   try {
     const userData = req.body;
+    // 1. Validate inputs
+    if (!userData.email || !userData.password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
     const createUser = await signUpService(userData);
+
+    // 3. Handle Supabase error
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    // 4. Send success response
+    // return res.status(200).json({ message: 'User created successfully', createUser });
+
     // if (error) return res.status(400).json({ error: error.message });
     // res.status(201).json(createUser);
-    res.status(201).json({ message: 'User created successfully', createUser });
+    res.status(200).json({ message: 'User created successfully', createUser });
     // Returns the user object and session (if email confirmation is off)
     // res.status(200).json({ message: 'Check your email for the confirmation link!', createUser });
     const Email = await sendbyEmailService(userData);

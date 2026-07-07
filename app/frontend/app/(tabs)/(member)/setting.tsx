@@ -25,7 +25,7 @@ const { width } = Dimensions.get('window');
 
 interface UsersData {
   id_user : string;
-  name : string;
+  full_name : string;
   email : string;
 }
 
@@ -110,7 +110,7 @@ export default function SettingsScreen() {
 
           <View style={styles.profileInfo}>
             {users && (
-            <Text style={styles.profileName}>{users.name}</Text>
+            <Text style={styles.profileName}>{users.full_name}</Text>
             )}
             {users && (
             <Text style={styles.profileEmail}>

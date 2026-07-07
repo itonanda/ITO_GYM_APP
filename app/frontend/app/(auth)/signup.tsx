@@ -116,7 +116,7 @@ export default function SignUpScreen() {
       })
         .then(response => response.json())
         .then(data => {
-          console.log('BOD :', birthDateJSON);
+          // console.log('BOD :', birthDateJSON);
           // Alert.alert('Success', 'Registrasi berhasil!');
           router.replace('/(auth)/signup_success');
         })

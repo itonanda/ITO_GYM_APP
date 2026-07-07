@@ -5,7 +5,8 @@ import {
   scheduleTodaySortByOrderService,
   scheduleTomorrowSortByOrderService,
   bookingClassService,
-  fetchBookingByIdService
+  fetchBookingByIdService,
+  updateAvailableQuotaClassByIdService
 } from "../services/classService.js";
 
 export const scheduleToday = async (req, res) => {
@@ -42,7 +43,7 @@ export const fetchClassById = async (req, res) => {
 export const scheduleTodaySortByOrder = async (req, res) => {
   try {
     // Extract sort parameters from the query string (e.g., ?sortBy=created_at&order=desc)
-    const sortBy = req.query.sortBy || 'start_time_class';
+    const sortBy = req.query.sortBy || 'start_time';
     const sortOrder = req.query.order === 'asc' ? true : false;
      const scheduleTodayDashboard = await scheduleTodaySortByOrderService(sortBy,sortOrder);
      res.status(200).json(scheduleTodayDashboard);
@@ -54,7 +55,7 @@ export const scheduleTodaySortByOrder = async (req, res) => {
 export const scheduleTomorrowSortByOrder = async (req, res) => {
   try {
     // Extract sort parameters from the query string (e.g., ?sortBy=created_at&order=desc)
-    const sortBy = req.query.sortBy || 'start_time_class';
+    const sortBy = req.query.sortBy || 'start_time';
     const sortOrder = req.query.order === 'asc' ? true : false;
      const scheduleTodayDashboard = await scheduleTomorrowSortByOrderService(sortBy,sortOrder);
      res.status(200).json(scheduleTodayDashboard);
@@ -66,8 +67,11 @@ export const scheduleTomorrowSortByOrder = async (req, res) => {
 export const bookingClass = async (req, res) => {
   try {
      const Data = req.body;
+     const { id_class_schedule,available_quota } = req.params;
      const bookingClass = await bookingClassService(Data);
      res.status(201).json(bookingClass);
+     const updateAvailableQuotaClass = await updateAvailableQuotaClassByIdService(Data);
+     res.status(201).json(updateAvailableQuotaClass);
    } catch (error) {
      res.status(500).json({ error: error.message });
    }

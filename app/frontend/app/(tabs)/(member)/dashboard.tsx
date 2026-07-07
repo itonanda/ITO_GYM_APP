@@ -106,20 +106,20 @@ const classDataBookingClass = [
 ];
 
 interface ItemData {
-  coach : any;
+  profiles : any;
   id : Int32;
-  fullname : string;
+  full_name : string;
 
-  class: any;
-  name_class: string; // Replace with your actual table column schemas
+  class_title: any;
+  id_class_title: Int32;
+  title: string; // Replace with your actual table column schemas
   
   class_schedule : any;
   id_class_schedule: Int32;
-  start_time_class: Timestamp;
-  end_time_class: Timestamp;
-  available_quota_class: Int32;
-  quota_class: Int32;
-  list_class: String;
+  start_time: string;
+  end_time: string;
+  available_quota: Int32;
+  quota: Int32;
   highlight: false;
 
   booking_class: any;
@@ -127,7 +127,7 @@ interface ItemData {
 
 interface UsersData {
   id_user : Int32
-  name : string;
+  full_name : string;
   email : string;
 }
 
@@ -182,6 +182,7 @@ export default function MemberDashboardScreen() {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   // const { accessToken, email } = useLocalSearchParams();
   const { accessToken } = useGlobalSearchParams();
+  // console.log(accessToken);
 
   // GET DATA
     const [items, setItems] = useState<ItemData[]>([]);
@@ -198,7 +199,7 @@ export default function MemberDashboardScreen() {
     const fetchDataClassToday = async () => {
       try {
         // const response = await fetch(`${apiURL}/class/schedule_today`);
-        const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time_class&order=asc`);
+        const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time&order=asc`);
         const data = await response.json();
         const datalimit = data.slice(0,3);
         setItems(datalimit);
@@ -229,6 +230,11 @@ export default function MemberDashboardScreen() {
       }
     };
 
+  const extractTimeHHMM = (apiISOString: string) => {
+  // Extracts the "14:30" part from "14:30:00"
+  return apiISOString.slice(0,5);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E31E24" />
@@ -247,7 +253,7 @@ export default function MemberDashboardScreen() {
           
           <View style={{marginLeft:10}}>
             {users && (
-            <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>{users.name}</Text>
+            <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>{users.full_name}</Text>
             )}
             <Text style={{fontSize:12,color:'#fff',fontWeight:'bold'}}>Valid until 20/12/2026</Text>
           </View>
@@ -396,13 +402,13 @@ export default function MemberDashboardScreen() {
                   
                   <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
-                      <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text>
+                      <Text style={styles.classTitle}>{item.class_title?.title}</Text>
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time)}-{extractTimeHHMM(item.end_time)}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.coach.fullname}
+                        By {item.profiles.full_name}
                       </Text>
                     </View>
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota}/{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>

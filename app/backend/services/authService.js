@@ -30,6 +30,8 @@ export const signUpService = async (userData) => {
 
 // const { data, error } = await supabase.auth.admin.createUser({
 const { data, error } = await supabaseServiceRole.auth.admin.createUser({
+  // const { data, error } = await supabaseAnon.auth.signUp({
+// const { data, error } = await supabaseServiceRole.auth.signUp({
 // const { data, error } = await supabaseServiceRole.auth.admin.inviteUserByEmail(
     // userData.email
     // );
@@ -37,7 +39,7 @@ const { data, error } = await supabaseServiceRole.auth.admin.createUser({
     phone:userData.phone,
     password:userData.password,
     email_confirm: true, // Automatically confirm email if (true)
-    user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
+    user_metadata: { role: userData.role, full_name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   });
   
   if (error) throw new Error(error.message);

@@ -33,26 +33,26 @@ const { width } = Dimensions.get('window');
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   
 interface ItemData {
-  coach : any;
-  fullname : string;
+  profiles : any;
+  full_name : string;
 
-  class: any;
+  class_title: any;
   booking_class: any;
   
   id_class_schedule: Int32;
-  name_class: string; // Replace with your actual table column schemas
-  start_time_class: string;
-  end_time_class: string;
-  descriptions_class : string;
-  available_quota_class: Int32;
-  quota_class: Int32;
-  list_class: String;
+  titile: string; // Replace with your actual table column schemas
+  start_time: string;
+  end_time: string;
+  descriptions : string;
+  available_quota: Int32;
+  quota: Int32;
+  list: String;
   highlight: false;
 }
 
 interface UsersData {
   id_user : Int32;
-  name : string;
+  full_name : string;
   email : string;
 }
 export default function MemberClassDetailScreen() {
@@ -92,7 +92,7 @@ export default function MemberClassDetailScreen() {
         const responseUser = await fetch(`${apiURL}/profile`, {
         method: 'GET',
         headers: {
-           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
           'Content-Type': 'application/json',
         }
       });
@@ -220,9 +220,9 @@ export default function MemberClassDetailScreen() {
                             <View style={styles.headerRow}>
                                 <View style={styles.headerRowTop}>
                                 <View style={styles.headerRowTopRight}>
-                                    <Text style={styles.headerTitleDetail}>{items.class.name_class}</Text>
+                                    <Text style={styles.headerTitleDetail}>{items.class_title.title}</Text>
                                     {/* <Text style={styles.headerSubTitleDetail}>{items.start_time_class}-{items.end_time_class}</Text>  */}
-                                    <Text style={styles.headerSubTitleDetail}>{extractTimeHHMM(items.start_time_class)} - {extractTimeHHMM(items.end_time_class)}</Text> 
+                                    <Text style={styles.headerSubTitleDetail}>{extractTimeHHMM(items.start_time)} - {extractTimeHHMM(items.end_time)}</Text> 
                                 </View>
                                 </View>
                                 <View style={styles.headerRowTop}>
@@ -230,12 +230,12 @@ export default function MemberClassDetailScreen() {
                                     <View style={styles.avatar}>
                                     <Ionicons name="person-circle-outline" size={100} color="#000"/>
                                     </View>
-                                    <Text style={styles.headerSubTitleDetail}>{items.coach.fullname}</Text> 
+                                    <Text style={styles.headerSubTitleDetail}>{items.profiles.full_name}</Text> 
                                 </View>
                                 </View>
                             </View>
                 
-                            <Text style={{fontSize:16, color:'#F02727', fontStyle:'italic', marginBottom:10}}>{items.descriptions_class} .....</Text>
+                            <Text style={{fontSize:16, color:'#F02727', fontStyle:'italic', marginBottom:10}}>{items.descriptions} .....</Text>
                         </View> 
                     </View>
 
@@ -258,7 +258,7 @@ export default function MemberClassDetailScreen() {
                                     <Text style={styles.headerTitleDetail}>Workout Of The Day</Text>
                                     {/* <Text></Text> */}
                                     <Text style={styles.headerSubTitleDetail}>
-                                        {items.list_class}
+                                        {items.list}
                                     </Text>
                                     </View>
                                 </View>
@@ -285,7 +285,7 @@ export default function MemberClassDetailScreen() {
                       style={styles.bottomBarPageBox}
                   >
                     <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
-                        {items?.available_quota_class}/{items?.quota_class}
+                        {items?.available_quota}/{items?.quota}
                     </Text>
                   </LinearGradient>
 

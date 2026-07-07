@@ -26,53 +26,55 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 // STATE API
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+const apiURL = process.env.EXPO_PUBLIC_API_URL;
 interface UsersData {
   id_user : string;
-  name : string;
+  full_name : string;
   email : string;
 }
 
 export default function MembershipPageScreen() {
   const router = useRouter();
-  const { accessToken, userId, name, email } = useGlobalSearchParams();
-
+  
   // GET DATA
   // Accesses both route params ([id]) and query params (?name=John)
   const [users, setUsers] = useState<UsersData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { accessToken, userId, name, email } = useGlobalSearchParams();
 
   useEffect(() => {
       fetchDataUser();
     }, []);
     
-    const fetchDataUser = async () => {
-      try {
-        // console.log(accessToken);
-        const responseUser = await fetch(`${apiURL}/profile`, {
-        method: 'GET',
-        headers: {
-            'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataUser = await responseUser.json();
-        setUsers(dataUser);
-        // console.log(dataUser);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
+  const fetchDataUser = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
       }
-    };
-    const handleBookingClass = () => {
-      {users &&(
-        router.push({
-          pathname: '/booking_class',
-          params: { id_user: users.id_user }
-        })
-      )}
-    };
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBookingClass = () => {
+    {users &&(
+      router.push({
+        pathname: '/booking_class',
+        params: { id_user: users.id_user }
+      })
+    )}
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -103,23 +105,24 @@ export default function MembershipPageScreen() {
                         colors={["#E82528", "#9A0006"]}
                         style={styles.headerTopCard}
                         >
-                        {users && (
                         <View style={styles.headerTopCardContent}>
-                            <View>
-                            {/* <Text style={styles.headerTopName}>John Doe</Text> */}
-                            <Text style={styles.headerTopName}>{users.name}</Text>
+                          <View>
+                            {users && (
+                            <Text style={styles.headerTopName}>{users.full_name}</Text>
+                            )}
                             <Text style={styles.headerTopSubText}>
                                 1 Month Unlimited Plan
                             </Text>
-                            </View>
-                
-                            <View style={styles.headerTopAvatar}>
-                            <Ionicons name="person-outline" size={28} color="#000" onPress={() => router.replace('/profile')} />
-                            </View>
+                          </View>
                           
+                          <TouchableOpacity onPress={() => router.replace('/setting')}>
+                            <Image
+                              source={require('../../../assets/images/user/user.png')}
+                              style={styles.profileImage}
+                            />
+                          </TouchableOpacity>
                         </View>
-                        )}
-
+                
                         <View style={styles.headerTopDivider} />
                 
                         <Text style={styles.headerTopValid}>
@@ -137,7 +140,6 @@ export default function MembershipPageScreen() {
                         </View>
                         <Text style={styles.menuText}>Membership Plans</Text>
                         </TouchableOpacity>
-                        
                         {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/booking_class')}> */}
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={handleBookingClass}>
                         <View style={styles.menuIcon}>
@@ -145,12 +147,12 @@ export default function MembershipPageScreen() {
                         </View>
                         <Text style={styles.menuText}>Booking Class</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/check_out')}>
+                        {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/check_out')}>
                         <View style={styles.menuIcon}>
                             <Ionicons name="bag-handle-outline" size={24} color="#333" />
                         </View>
                         <Text style={styles.menuText}>Billing</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/payment_history')}>
                         <View style={styles.menuIcon}>
                             <Ionicons name="card-outline" size={24} color="#333" />
@@ -234,11 +236,19 @@ const styles = StyleSheet.create({
   headerTopAvatar: {
     width: 50,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 50,
     backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
   },
+
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    borderWidth:1,
+  },
+
   headerTopDivider: {
     height: 1,
     backgroundColor: "#555",

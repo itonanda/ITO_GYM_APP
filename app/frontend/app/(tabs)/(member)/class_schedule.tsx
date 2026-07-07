@@ -34,23 +34,22 @@ const { width } = Dimensions.get('window');
   // const [loading, setLoading] = useState<boolean>(true);
 
 interface ItemData {
-  coach : any;
-  class: any;
+  profiles : any;
+  class_title: any;
   booking_class: any;
   
   id_class_schedule: Int32;
-  name_class: string; // Replace with your actual table column schemas
-  start_time_class: string;
-  end_time_class: string;
-  available_quota_class: Int32;
-  quota_class: Int32;
-  list_class: String;
+  title: string; // Replace with your actual table column schemas
+  start_time: string;
+  end_time: string;
+  available_quota: Int32;
+  quota: Int32;
   highlight: false;
 }
 
 interface UsersData {
   id_user : Int32;
-  name : string;
+  full_name : string;
   email : string;
 }
 
@@ -192,7 +191,7 @@ export default function MemberClassScheduleScreen() {
   const fetchDataClassToday = async () => {
     try {
       // const response = await fetch(`${apiURL}/class/schedule_today`);
-      const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time_class&order=asc`);
+      const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time&order=asc`);
       const data = await response.json();
       setItemsToday(data);
     } catch (error) {
@@ -205,7 +204,7 @@ export default function MemberClassScheduleScreen() {
   const fetchDataClassTomorrow = async () => {
     try {
       // const response = await fetch(`${apiURL}/class/schedule_tomorrow`);
-      const response = await fetch(`${apiURL}/class/schedule_tomorrow_list?sortBy=start_time_class&order=asc`);
+      const response = await fetch(`${apiURL}/class/schedule_tomorrow_list?sortBy=start_time&order=asc`);
       const data = await response.json();
       setItemsTommorow(data);
     } catch (error) {
@@ -305,16 +304,16 @@ export default function MemberClassScheduleScreen() {
                   
                   <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
+                      <Text style={styles.classTitle}>{item.class_title?.title}</Text>
                       
                       {/* <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text> */}
-                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time_class)} - {extractTimeHHMM(item.end_time_class)}</Text>
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time)} - {extractTimeHHMM(item.end_time)}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.coach?.fullname}
+                        By {item.profiles?.full_name}
                       </Text>
                     </View>
                     {/* <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota_class}</Text> */}
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota}/{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -356,15 +355,15 @@ export default function MemberClassScheduleScreen() {
                   
                   <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.class?.name_class}</Text>
+                      <Text style={styles.classTitle}>{item.class_title?.title}</Text>
                       {/* <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text> */}
-                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time_class)} - {extractTimeHHMM(item.end_time_class)}</Text>
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time)} - {extractTimeHHMM(item.end_time)}</Text>
                       <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
-                        By {item.coach?.fullname}
+                        By {item.profiles?.fullname}
                       </Text>
                     </View>
                     {/* <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota_class}</Text> */}
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota_class}/{item.quota_class}</Text>
+                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota}/{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>

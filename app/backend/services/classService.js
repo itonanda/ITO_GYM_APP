@@ -9,19 +9,19 @@ export const scheduleTodayService = async () => {
     // .select("*");
     .select(`
         id_class_schedule, 
-        start_time_class,
-        end_time_class,
-        available_quota_class,
-        quota_class,
-        descriptions_class,
-        list_class,
-        coach (
+        start_time,
+        end_time,
+        descriptions,
+        list,
+        quota,
+        available_quota,
+        profiles (
           id,
-          fullname
+          full_name
         ),
-        class (
-          id_class,
-          name_class
+        class_title (
+          id_class_title,
+          title
         ),
         class_booking (
           id_class_booking,
@@ -30,7 +30,7 @@ export const scheduleTodayService = async () => {
         )
       `//);
       )
-    .eq("schedule_date_class", `${today}`);
+    .eq("date", `${today}`);
     // .single();
   if (error) throw new Error(error.message);
   return data;
@@ -56,19 +56,19 @@ export const scheduleTomorrowService = async () => {
     // .select("*");
     .select(`
         id_class_schedule, 
-        start_time_class,
-        end_time_class,
-        available_quota_class,
-        quota_class,
-        descriptions_class,
-        list_class,
-        coach (
+        start_time,
+        end_time,
+        descriptions,
+        list,
+        quota,
+        available_quota,
+        profiles (
           id,
-          fullname
+          full_name
         ),
-        class (
-          id_class,
-          name_class
+        class_title (
+          id_class_title,
+          title
         ),
         class_booking (
           id_class_booking,
@@ -77,7 +77,7 @@ export const scheduleTomorrowService = async () => {
         )
       `//);
       )
-    .eq("schedule_date_class", `${tomorrowString}`);
+    .eq("date", `${tomorrowString}`);
     // .single();
   if (error) throw new Error(error.message);
   return data;
@@ -89,19 +89,19 @@ export const fetchClassByIdService = async (id_class_schedule) => {
     // .select("*");
     .select(`
         id_class_schedule, 
-        start_time_class,
-        end_time_class,
-        available_quota_class,
-        quota_class,
-        descriptions_class,
-        list_class,
-        coach (
+        start_time,
+        end_time,
+        descriptions,
+        list,
+        quota,
+        available_quota,
+        profiles (
           id,
-          fullname
+          full_name
         ),
-        class (
-          id_class,
-          name_class
+        class_title (
+          id_class_title,
+          title
         ),
         class_booking (
           id_class_booking,
@@ -125,19 +125,19 @@ export const scheduleTodaySortByOrderService = async (sortBy,sortOrder) => {
     // .select("*");
     .select(`
         id_class_schedule, 
-        start_time_class,
-        end_time_class,
-        available_quota_class,
-        quota_class,
-        descriptions_class,
-        list_class,
-        coach (
+        start_time,
+        end_time,
+        descriptions,
+        list,
+        quota,
+        available_quota,
+        profiles (
           id,
-          fullname
+          full_name
         ),
-        class (
-          id_class,
-          name_class
+        class_title (
+          id_class_title,
+          title
         ),
         class_booking (
           id_class_booking,
@@ -146,7 +146,7 @@ export const scheduleTodaySortByOrderService = async (sortBy,sortOrder) => {
         )
       `//);
       )
-    .eq("schedule_date_class", `${today}`)
+    .eq("date", `${today}`)
     .order(sortBy, { ascending: sortOrder });
     // .single();
   if (error) throw new Error(error.message);
@@ -173,19 +173,19 @@ export const scheduleTomorrowSortByOrderService = async (sortBy,sortOrder) => {
     // .select("*");
     .select(`
         id_class_schedule, 
-        start_time_class,
-        end_time_class,
-        available_quota_class,
-        quota_class,
-        descriptions_class,
-        list_class,
-        coach (
+        start_time,
+        end_time,
+        descriptions,
+        list,
+        quota,
+        available_quota,
+        profiles (
           id,
-          fullname
+          full_name
         ),
-        class (
-          id_class,
-          name_class
+        class_title (
+          id_class_title,
+          title
         ),
         class_booking (
           id_class_booking,
@@ -194,7 +194,7 @@ export const scheduleTomorrowSortByOrderService = async (sortBy,sortOrder) => {
         )
       `//);
       )
-    .eq("schedule_date_class", `${tomorrowString}`)
+    .eq("date", `${tomorrowString}`)
     .order(sortBy, { ascending: sortOrder });
     // .single();
   if (error) throw new Error(error.message);
@@ -205,7 +205,7 @@ export const bookingClassService = async (Data) => {
   const { data, error } = await supabaseServiceRole
   .from("class_booking")
   .insert({
-    id_user:Data[0].userId,
+    id_user:Data[0].id_user,
     id_class_schedule:Data[1].id_class_schedule,
     // user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   })
@@ -226,22 +226,34 @@ export const fetchBookingByIdService = async (id_user) => {
         status,
         class_schedule (
           id_class_schedule,
-          start_time_class,
-          end_time_class,
-          schedule_date_class,
-          coach (
+          start_time,
+          end_time,
+          date,
+          profiles (
             id,
-            fullname
+            full_name
           ),
-          class (
-            id_class,
-            name_class
+          class_title (
+            id_class_title,
+            title
           )
         )
       `//);
       )
     .eq("id_user", id_user)
-    .single();
+    // .single();
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const updateAvailableQuotaClassByIdService = async (Data) => {
+  const value = Data[1].available_quota-1;
+  const { data, error } = await supabaseServiceRole
+    .from("class_schedule")
+    .update({
+        available_quota: value
+      })
+    .eq("id_class_schedule", Data[1].id_class_schedule);
   if (error) throw new Error(error.message);
   return data;
 };
