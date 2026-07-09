@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,19 +17,62 @@ import {
   MaterialCommunityIcons,
   FontAwesome5,
 } from '@expo/vector-icons';
+import { ViewToken } from 'react-native';
+
+
+const { width } = Dimensions.get('window');
+
+/* ================= DATA ================= */
+const layananProgram = [
+  {
+    id: '1',
+    title: 'Functional Training',
+    desc: 'Latihan gerakan harian untuk meningkatkan performa aktivitas sehari-hari.',
+    icon: "barbell",
+  },
+  {
+    id: '2',
+    title: 'Personal Training',
+    desc: 'Program latihan privat yang dirancang khusus sesuai kebutuhan & tujuan Anda.',
+    icon: "people"
+  },
+  {
+    id: '3',
+    title: 'Community Event',
+    desc: 'Aktivitas seru bersama member untuk membangun kebersamaan dan kekompakan.',
+    icon: "time",
+  },
+];
+
 
 export default function AboutUsScreen() {
   const router = useRouter();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const flatListRef = useRef(null);
+
+  const onViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (viewableItems.length > 0 && viewableItems[0].index !== null) {
+        setActiveIndex(viewableItems[0].index);
+      }
+    }
+  ).current;
+
+  const viewConfig = {
+    viewAreaCoveragePercentThreshold: 50,
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+      >
 
         {/* HERO SECTION */}
         <LinearGradient
-          colors={['#9A0006', '#E82528', '#000000']}
+          colors={['#E82528', '#9A0006', '#000000']}
           style={styles.heroSection}
         >
           <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
@@ -37,12 +82,12 @@ export default function AboutUsScreen() {
           <Text style={styles.smallTitle}>WELCOME TO</Text>
 
           <Text style={styles.gymName}>
-            DOMS FITNESS CLUB
+            DOMS FITNESS
           </Text>
 
-          <Text style={styles.heroDescription}>
+          {/* <Text style={styles.heroDescription}>
             Train harder, become stronger, and unlock the best version of yourself.
-          </Text>
+          </Text> */}
 
         </LinearGradient>
 
@@ -52,71 +97,78 @@ export default function AboutUsScreen() {
           <Text style={styles.sectionTitle}>About Us</Text>
 
           <Text style={styles.sectionDescription}>
-           At Doms Fitness Club, we provide a premium fitness experience with state-of-the-art facilities, certified trainers and dynamic training programs designed to unlock your full potential.</Text>
+            DOMSBOX merupakan sebuah usaha di bidang kebugaran yang sudah berdiri sejak tahun 2020. Dengan menggunakan metode latihan CrossFit, DOMSBOX menjadi pusat kebugaran yang berbeda dari pusat kebugaran yang sudah ada sebelumnya.{"\n"}
+            Selain itu, didukung dengan basis komunitas yang kuat menjadikan jenis olahraga ini semakin dicari oleh masyarakat dewasa ini.{"\n"}
+            Nama DOMS (Delayed Onset Muscle Soreness) sendiri mencerminkan semangat kami, bahwa dalam setiap rasa lelah dan nyeri adalah tanda dari pertumbuhan dan kemajuan.
+          </Text>
         </View>
 
 
         {/* FEATURES */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Why Choose Us</Text>
+          <Text style={styles.sectionTitle}>Layanan & Program Kami</Text>
+        </View>
 
-          <View style={styles.featureContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={layananProgram}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewConfig}
+          renderItem={({ item }) => (
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}>       
+                <View style={styles.classCard}>
+                  <View style={styles.cardContent}>
+                    <View>
+                      <Ionicons
+                        name={item.icon as any}
+                        size={34}
+                        color="#EF4444"
+                      />
+                      <Text style={styles.featureTitle}>{item.title}</Text>
+                      <Text style={styles.featureText}>{item.desc}</Text>
+                    </View>
+                  </View>
+                </View>
+            </TouchableOpacity>
+          )}
+        />
 
-            <View style={styles.featureCard}>
-              <Ionicons name="barbell" size={34} color="#EF4444" />
-
-              <Text style={styles.featureTitle}>
-                Premium Equipment
-              </Text>
-
-              <Text style={styles.featureText}>
-                High-quality modern workout equipment.
-              </Text>
-            </View>
-
-
-            <View style={styles.featureCard}>
-              <MaterialCommunityIcons
-                name="account-group"
-                size={34}
-                color="#EF4444"
-              />
-
-              <Text style={styles.featureTitle}>
-                Professional Trainers
-              </Text>
-
-              <Text style={styles.featureText}>
-                Certified trainers ready to guide you.
-              </Text>
-            </View>
-
-
-            <View style={styles.featureCard}>
-              <Ionicons name="time" size={34} color="#EF4444" />
-
-              <Text style={styles.featureTitle}>
-                Flexible Schedule
-              </Text>
-
-              <Text style={styles.featureText}>
-                Open everyday with flexible class schedules.
-              </Text>
-            </View>
+        {/* ================= DOT INDICATOR  PROMO================= */}
+        <View style={styles.dotContainer}>
+          {layananProgram.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                activeIndex === index && styles.activeDot,
+              ]}
+            />
+          ))}
+        </View>
 
 
-            <View style={styles.featureCard}>
-              <FontAwesome5 name="heartbeat" size={30} color="#EF4444" />
+        {/* VISI MISI */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Visi</Text>
 
-              <Text style={styles.featureTitle}>
-                Healthy Lifestyle
-              </Text>
-
-              <Text style={styles.featureText}>
-                Support your fitness and healthy lifestyle.
-              </Text>
-            </View>
-          </View>
+          <Text style={styles.sectionDescription}>
+            Menjadi wadah bagi siapapun untuk menjadi versi yang lebih baik setiap harinya.
+          </Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Misi</Text>
+          <Text style={styles.featureTitle}>Aman, Efektif, & Menyenangkan :</Text>
+          <Text style={styles.sectionDescription}>
+            Memberikan program latihan yang aman, efektif, dan menyenangkan sehingga meningkatkan kesadaran masyarakat akan pentingnya latihan untuk mendukung gaya hidup yang aktif.
+          </Text>
+          <Text style={styles.featureTitle}>Komunitas yang Positif :</Text>
+          <Text style={styles.sectionDescription}>
+            Membangun komunitas yang suportif dan positif bagi seluruh anggota.
+          </Text>
         </View>
 
 
@@ -126,15 +178,15 @@ export default function AboutUsScreen() {
           <Text style={styles.contactTitle}>Contact Us</Text>
 
           <Text style={styles.contactText}>
-            📍 Doms Fitness Club, Jakarta
+            📍 Doms Fitness, Jakarta
           </Text>
 
           <Text style={styles.contactText}>
-            📞 +62 812 0000 0000
+            📞 +62 817 4151 491
           </Text>
 
           <Text style={styles.contactText}>
-            ✉️ support@domsfitness.com
+            ✉️ infodomsbox@gmail.com
           </Text>
         </View>
 
@@ -180,27 +232,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
 
-  heroDescription: {
-    color: '#D1D5DB',
-    fontSize: 16,
-    lineHeight: 28,
-    marginTop: 16,
-  },
-
-  joinButton: {
-    backgroundColor: '#EF4444',
-    paddingVertical: 16,
-    borderRadius: 18,
-    alignItems: 'center',
-    marginTop: 28,
-  },
-
-  joinButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-
   section: {
     paddingHorizontal: 20,
     marginTop: 30,
@@ -215,8 +246,9 @@ const styles = StyleSheet.create({
 
   sectionDescription: {
     color: '#6B7280',
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: 28,
+    textAlign: "justify",
   },
 
   featureContainer: {
@@ -226,24 +258,27 @@ const styles = StyleSheet.create({
   },
 
   featureCard: {
-    width: '48%',
+    width: '50%',
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
-    padding: 20,
+    padding: 30,
     marginBottom: 16,
   },
 
   featureTitle: {
-    fontSize: 17,
-    fontWeight: '700',
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#111827',
-    marginTop: 16,
+    marginTop: 10,
   },
 
-  featureText: {
+  featureText: { 
+    fontSize: 14,
+    fontWeight: '400',
     color: '#6B7280',
     marginTop: 10,
-    lineHeight: 22,
+    marginBottom: 10,
+    lineHeight: 28,
   },
 
   statsContainer: {
@@ -302,7 +337,11 @@ const styles = StyleSheet.create({
   contactContainer: {
     backgroundColor: '#9A0006',
     marginTop: 30,
-    padding: 28,
+    //padding: 28,
+    paddingRight: 28,
+    paddingLeft: 28,
+    paddingTop: 28,
+    paddingBottom: 50,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
@@ -318,5 +357,53 @@ const styles = StyleSheet.create({
     color: '#D1D5DB',
     fontSize: 16,
     marginBottom: 12,
+  },
+
+  
+  // === CLASS CARD ===
+  headerCard: {
+    width: width - 40,
+    //backgroundColor: '#d26868',
+    marginHorizontal: 20,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //marginBottom: 20,
+  },
+  classCard: {
+    width: width - 40,
+    marginHorizontal: 20,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  cardContent: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  //=== DOT ===
+  dotContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 12,
+    marginBottom: 10,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#ccc',
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: '#000',
   },
 });
