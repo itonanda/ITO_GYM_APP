@@ -26,63 +26,50 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get('window');
 
 
-/* ================= DATA ================= */
-const classDataMembership = [
+
+
+const membershipPlans = [
   {
-    id: '1',
-    highlight: false,
-    titlenumber: '1',
-    titleunit: 'Month Unlimited',
-    price: '900K !!',
-    desc1: 'Up to 100+ Class To Join',
-    desc2: 'Free Open Gym',
-    desc3: 'WOD App Access',
-    desc4: 'Exercise Review History',
-    desc5: '',
-     image:
-      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    id: "1",
+    title: "1 Month Unlimited",
+    price: "300k/Month",
+    benefits: ["In and out free", "Free wifi", "Towel"],
+    icon: "card-outline",
   },
   {
-    id: '2',
-    highlight: true,
-    titlenumber: '2',
-    titleunit: 'Month Unlimited',
-    price: '1.200K !!',
-    desc1: 'Up to 100+ Class To Join',
-    desc2: 'Free Open Gym',
-    desc3: 'WOD App Access',
-    desc4: 'Exercise Review History',
-    desc5: '',
-     image:
-      'https://plus.unsplash.com/premium_photo-1670505062582-fdaa83c23c9e?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    id: "2",
+    title: "5 Month Unlimited",
+    price: "900k/Month",
+    benefits: ["In and out free", "Free wifi", "Locker", "Towel"],
+    icon: "card-outline",
   },
   {
-    id: '3',
-    highlight: false,
-    titlenumber: '3',
-    titleunit: 'Month Unlimited',
-    price: '1.900K !!',
-    desc1: 'Up to 100+ Class To Join',
-    desc2: 'Free Open Gym',
-    desc3: 'WOD App Access',
-    desc4: 'Exercise Review History',
-    desc5: '',
-     image:
-      'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    id: "3",
+    title: "Open Gym Day Pass",
+    price: "",
+    benefits: [],
+    icon: "card-outline",
   },
   {
-    id: '4',
-    highlight: false,
-    titlenumber: '4',
-    titleunit: 'Month Unlimited',
-    price: '2.500K !!',
-    desc1: 'Up to 100+ Class To Join',
-    desc2: 'Free Open Gym',
-    desc3: 'WOD App Access',
-    desc4: 'Exercise Review History',
-    desc5: '',
-     image:
-      'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    id: "4",
+    title: "Open Gym Unlimited",
+    price: "",
+    benefits: [],
+    icon: "card-outline",
+  },
+  {
+    id: "5",
+    title: "1x Drop In",
+    price: "",
+    benefits: [],
+    icon: "card-outline",
+  },
+  {
+    id: "6",
+    title: "5x Drop In",
+    price: "",
+    benefits: [],
+    icon: "card-outline",
   },
 ];
 
@@ -92,12 +79,63 @@ export default function MembershipPlanScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
-  const onViewableItemsChanged = useRef(
-    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-        if (viewableItems.length > 0 && viewableItems[0].index !== null) {
-        setActiveIndex(viewableItems[0].index);
-        }
+  const [selected, setSelected] = useState("");
+  //const [selected, setSelected] = useState<number | null>(null);
+  
+  // const handleNext = () => {
+  //   const selectedMethod = membershipPlans.find(
+  //     (item) => item.id === selected
+  //   );
+
+  //   Alert.alert(
+  //     "Membership Plan Selected",
+  //     `You selected ${selectedMethod?.title}`,
+  //     [
+  //       {
+  //         text: "OK",
+  //         onPress: () => {
+  //             router.push("/(tabs)/(member)/check_out");
+  //           }
+  //       },
+  //     ]
+  //   );
+  // };
+
+  const handleNext = () => {
+    const selectedMethod = membershipPlans.find(
+      (item) => item.id === selected
+    );
+
+    // Belum memilih membership
+    if (!selectedMethod) {
+      Alert.alert(
+        "Warning",
+        "Please select a membership plan."
+      );
+      return; // Tetap di halaman ini
     }
+
+    // Sudah memilih membership
+    Alert.alert(
+      "Membership Plan Selected",
+      `You selected ${selectedMethod.title}`,
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            router.push("/(tabs)/(member)/check_out");
+          },
+        },
+      ]
+    );
+  };
+
+  const onViewableItemsChanged = useRef(
+      ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        if (viewableItems.length > 0 && viewableItems[0].index !== null) {
+          setActiveIndex(viewableItems[0].index);
+        }
+      }
     ).current;
 
     const viewConfig = {
@@ -110,91 +148,129 @@ export default function MembershipPlanScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
 
       {/* HEADER */}
-      <LinearGradient
-        colors={["#E82528", "#9A0006"]}
-        style={styles.header}
-      >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
-            <Ionicons name="arrow-back" size={22} color="#fff"/>
+      <LinearGradient colors={["#E82528", "#9A0006"]} style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.replace("/membership")}
+        >
+          <Ionicons name="arrow-back" size={22} color="#fff" />
         </TouchableOpacity>
-        
+
         <Text style={styles.headerTitle}>Membership Plan</Text>
 
         <View style={{ width: 40 }} />
       </LinearGradient>
 
 
+
       <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 120 }}
             >
-                <FlatList
-                  ref={flatListRef}
-                  data={classDataMembership}
-                  horizontal
-                  pagingEnabled
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item) => item.id}
-                  onViewableItemsChanged={onViewableItemsChanged}
-                  viewabilityConfig={viewConfig}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1}>       
-                        <View style={styles.classCard}>
-                          <Image
-                            source={{ uri: item.image }}
-                            style={styles.classImage}
-                          />
-                          
-                          <View key={item.id} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
-                            <View>
-                              <Text style={styles.classTitleNumber}>{item.titlenumber}</Text>
-                              <Text style={styles.classTitle}>{item.titleunit}</Text>
-                              <Text style={styles.classPrice}>{item.price}</Text>
-                              <View style={styles.lineRed}/>
-                              <Text style={styles.classDesc}>
-                                <Ionicons name={"star"} size={22} color="#737070"/>
-                                {"  "}{item.desc1}
-                              </Text>
-                              <Text style={styles.classDesc}>
-                                <Ionicons name={"star"} size={22} color="#737070"/>
-                                {"  "}{item.desc2}
-                              </Text>
-                              <Text style={styles.classDesc}>
-                                <Ionicons name={"star"} size={22} color="#737070"/>
-                                {"  "}{item.desc3}
-                              </Text>
-                              <Text style={styles.classDesc}>
-                                <Ionicons name={"star"} size={22} color="#737070"/>
-                                {"  "}{item.desc4}
-                              </Text>
-                            </View>
-                            
-                            {/* Button */}
-                            <TouchableOpacity key={item.id} style={{ display: item.highlight ? 'none' : 'flex' }}>
-                              <TouchableOpacity key={item.id} style={styles.buttonMembership} onPress={() => router.replace('/+not-found')}>
-                                <Text style={styles.buttonTextMembership}>Upgrade</Text>
+                                            
+                {/* ================= Membership Plan ================= */}
+                <View style={styles.headerMembershipPlans}>
+                    <View style={styles.cardMembershipPlans}>
+                          {membershipPlans.map((item) => {
+                          const active = selected === item.id;
+              
+                          return (
+                              <TouchableOpacity
+                                key={item.id}
+                                activeOpacity={0.8}
+                                style={[
+                                    styles.membershipItemMembershipPlans,
+                                    active && styles.membershipItemActiveMembershipPlans,
+                                ]}
+                                onPress={() => setSelected(item.id)}
+                                //onPress={() => router.replace('/(tabs)/CheckOutQR')}
+                              >
+                                  <View style={styles.leftContentMembershipPlans}>
+                                    <View style={styles.leftContentMembershipPlansTitle}>
+                                      <View
+                                      style={[
+                                          styles.iconContainerMembershipPlans,
+                                          active && styles.iconContainerActiveMembershipPlans,
+                                      ]}
+                                      >
+                                        <Ionicons
+                                            name={item.icon as any}
+                                            size={22}
+                                            color={active ? "#FFFFFF" : "#E31E24"}
+                                        />
+                                      </View>
+
+                                      <View>
+                                          <Text
+                                            style={[
+                                                styles.membershipTextMembershipPlans,
+                                                active && styles.membershipTextActiveMembershipPlans,
+                                            ]}
+                                          >
+                                            {item.title}
+                                          </Text>
+
+                                          {item.price !== "" && (
+                                            <Text style={styles.planPrice}>{item.price}</Text>
+                                          )}
+                                      </View>                                                   
+                                    </View>
+                                    
+                                    {active && 
+                                      <View>
+                                        <View style={styles.divider} />
+                                        {item.benefits.map((benefit, index) => (
+                                          <Text key={index} style={styles.benefit}>
+                                            • {benefit}
+                                          </Text>
+                                        ))}
+                                      </View>
+                                    }
+                                  </View>
+                                  
+                                  <View>
+                                    <View
+                                        style={[
+                                        styles.radioOuterMembershipPlans,
+                                        active && styles.radioOuterActiveMembershipPlans,
+                                        ]}
+                                    >
+                                        {active && <View style={styles.radioInnerMembershipPlans} />}                                      
+                                    </View>
+                                  </View>  
                               </TouchableOpacity>
-                            </TouchableOpacity>
-                            
-                          </View>
-                        </View>
-                    </TouchableOpacity>
-                  )}
-                />
-      
-                {/* ================= DOT INDICATOR ================= */}
-                <View style={styles.dotContainer}>
-                  {classDataMembership.map((_, index) => (
-                    <View
-                      key={index}
-                      style={[
-                        styles.dot,
-                        activeIndex === index && styles.activeDot,
-                      ]}
-                    />
-                  ))}
+                          );
+                          })}
+                    </View>                        
                 </View>
             </ScrollView>
+
+
+      {/* ================= HEADER BOTTOM================= */}
+      <LinearGradient
+        colors={["#ffffff", "#E4E9E4"]}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
+        style={styles.headerBottomCheckOut}
+      >
+        
+        <View style={styles.headerBottomRowCheckOutNext}>
+          {/* BUTTON */}
+          <TouchableOpacity activeOpacity={0.8} disabled={selected === null} onPress={handleNext}>
+            <LinearGradient
+              colors={["#E82528", "#9A0006"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.headerRowBottomCheckOut}
+            >
+              <Text style={{fontSize:16, color:'#ffff',fontWeight:'bold'}}>
+                  Next
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+
     </View>
   );
 }
@@ -229,7 +305,7 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "#C7C7C7",
     marginVertical: 20,
   }, 
   
@@ -238,115 +314,144 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-
-  /* ===== CLASS CARD ===== */
-  headerCard: {
-    width: width - 40,
-    //backgroundColor: '#d26868',
-    marginHorizontal: 20,
-    borderRadius: 15,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-  },
-  classCard: {
-    width: width - 40,
-    //marginHorizontal: 20,
-    marginTop: 20,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: '#ffffff',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 3 },
-    borderWidth:1,
-  },
-  classImage: {
-    width: '100%',
-    height: 80,
-  },
-  cardContent: {
-    padding: 5,
-    //flexDirection: 'row',
-   // justifyContent: 'space-between',
-   // alignItems: 'center',
-  },
-  classTitleNumber: {
-    fontSize: 60,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    alignContent: 'center',
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 20,
-  },
-  classTitle: {
-    fontSize: 50,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    alignContent: 'center',
-    textAlign: 'center',
-  },
-  classPrice: {
-    fontSize: 50,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    alignContent: 'center',
-    textAlign: 'center',
-    color: '#E31E24',
-  },
-  classDesc: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
-    marginLeft: 20,
-    marginTop: 10,
-  },
-  lineRed: {
-    width: "80%",
-    height: 5,
-    backgroundColor: "#E31E24",
-    alignSelf:'center',
-    marginBottom: 20,
-  },
+  
 
 
-  highlightCard: {
-    backgroundColor: "#FFBABA",
-    borderColor: "#fbafaf",
+  /* ===== Membership Plans ===== */
+  headerMembershipPlans: {
+    borderColor: '#fff',
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 20,
+    marginRight: 15,
+    marginLeft: 15,
+    marginBottom: 100,
+  },
+  cardMembershipPlans: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 24,
+    padding: 12,
+    //shadowColor: "#000",
+    //shadowOffset: {
+    //  width: 0,
+    //  height: 4,
+    //},
+    //shadowOpacity: 0.08,
+    //shadowRadius: 8,
+    //elevation: 5,
+  },
+  membershipItemMembershipPlans: {
+    //height: 75,
+    borderRadius: 20,
+    backgroundColor: "#F7F7F7",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 18,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+  },
+  membershipItemActiveMembershipPlans: {
+    backgroundColor: "#FFF1F1",
+    borderColor: "#E31E24",
+  },
+  leftContentMembershipPlans: {
+    borderRadius: 12,
+    paddingVertical: 14,
   },
 
-
- /* DOT */
-  dotContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 12,
-    marginTop:30,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#ccc',
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: '#000',
+  leftContentMembershipPlansTitle: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 
-  // Button
-  buttonMembership: {
-    backgroundColor: '#e53935',
-    padding: 16,
+  iconContainerMembershipPlans: {
+    width: 45,
+    height: 45,
     borderRadius: 14,
-    marginTop: 50,
-    marginBottom: 30,
-    alignItems: 'center',
+    backgroundColor: "#FFE5E5",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 14,
   },
-  buttonTextMembership: {
-    color: '#fff',
-    fontWeight: '700',
+  iconContainerActiveMembershipPlans: {
+    backgroundColor: "#E31E24",
+  },
+  membershipTextMembershipPlans: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#222",
+  },
+  membershipTextActiveMembershipPlans: {
+    color: "#E31E24",
+  },
+  radioOuterMembershipPlans: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    borderWidth: 2,
+    borderColor: "#C7C7C7",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  radioOuterActiveMembershipPlans: {
+    borderColor: "#E31E24",
+  },
+  radioInnerMembershipPlans: {
+    width: 13,
+    height: 13,
+    borderRadius: 7,
+    backgroundColor: "#E31E24",
+  },
+  
+  planTitle: {
+    fontSize: 18,
+    color: "#111",
+    fontWeight: "500",
+  },
+
+  planPrice: {
+    marginTop: 3,
+    fontSize: 16,
+    color: "#90080c",
+    fontWeight: "700",
+  },
+
+  benefit: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+ 
+  
+/* ===== HEADER BOTTOM ===== */
+  headerBottomCheckOut: {
+    backgroundColor: "#E4E9E4",
+    alignItems: "center",
+    justifyContent: "center",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius:20,
+    borderColor: '#000',
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+  },
+  headerBottomRowCheckOutNext: {
+    alignItems: 'center',
+    padding: 2,
+    marginTop: 20,
+    marginBottom: 40,
+  },
+  headerRowBottomCheckOut: {
+    backgroundColor: '#E01F26',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: '#000',
+    height: 50,
+    width: 250,
   },
 });
