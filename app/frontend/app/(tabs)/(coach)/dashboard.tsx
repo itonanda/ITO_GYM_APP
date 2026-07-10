@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -16,56 +16,113 @@ import { Link, useRouter } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from 'expo-router';
+import { Calendar } from "react-native-calendars";
 
 const { width } = Dimensions.get('window');
 
 
 /* ================= DATA ================= */
-const classDataTodaySchedule = [
-  {
-    id: '1',
-    title: 'Morning Class',
-    time: '08.00 - 09.00',
-    memberCount: '10 Members Joined',
-  },
-  {
-    id: '2',
-    title: 'Afternoon Class',
-    time: '13.00 - 14.00',
-    memberCount: '18 Members Joined',
-  },
-  {
-    id: '3',
-    title: 'Kids Class',
-    time: '10.00 - 11.00',
-    memberCount: '15 Members Joined',
-  },
-  {
-    id: '4',
-    title: 'Kids Class',
-    time: '16.00 - 17.00',
-    memberCount: '13 Members Joined',
-  },
-];
+//Calendar
+const workoutSchedule: Record<string, any[]> = {
+  "2026-07-05": [
+    {
+      id: "1",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+  ],
+  "2026-07-10": [
+    {
+      id: "1",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+    {
+      id: "2",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+    {
+      id: "3",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+  ],
+  "2026-07-18": [
+    {
+      id: "1",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+    {
+      id: "2",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+  ],
+  "2026-08-01": [
+    {
+      id: "1",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+    {
+      id: "2",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+    {
+      id: "3",
+      title: "Morning Cardio",
+      time: "08.00 - 09.00",
+      booked: 2,
+      total: 15,
+    },
+  ],
+};
 
 
 export default function CoachDashboardScreen() {
   const router = useRouter();
+  
+  const today = new Date().toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState(today);
+  const selectedWorkouts = workoutSchedule[selectedDate] || [];
+  
+  const markedDates = Object.keys(workoutSchedule).reduce(
+    (acc, date) => {
+      acc[date] = {
+        marked: true,
+        dotColor: "#E82528", // warna titik
+      };
 
-   const [activeIndexTodaySchedule, setActiveIndexTodaySchedule] = useState(0);
-   const flatListRefTodaySchedule = useRef(null);
- 
-   const onViewableItemsChangedTodaySchedule = useRef(
-     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-       if (viewableItems.length > 0 && viewableItems[0].index !== null) {
-         setActiveIndexTodaySchedule(viewableItems[0].index);
-       }
-     }
-   ).current;
- 
-   const viewConfigTodaySchedule = {
-     viewAreaCoveragePercentThreshold: 50,
-   }; 
+      return acc;
+    },
+    {} as Record<string, any>
+  );
+
+  // Tandai tanggal yang sedang dipilih
+  markedDates[selectedDate] = {
+    ...markedDates[selectedDate],
+    selected: true,
+    selectedColor: "#E82528",
+  };
 
 
   return (
@@ -96,96 +153,74 @@ export default function CoachDashboardScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
+          
+          {/* Class Schedule */}
+          <View style={styles.classDateScreen}>
+            
+            {/* Calendar */}
+            <View style={styles.calendarCard}>
 
-          {/* Hero Card */}
-          <LinearGradient
-            colors={['#AEAEB2', '#000000']}
-            style={styles.heroCard}
-          >
-            <Text style={styles.heroTitle}>
-              Active Members
-            </Text>
-            <Text style={styles.heroNumber}>
-              248
-            </Text>
-            <Text style={styles.heroSub}>
-              +12 New Members This Week
-            </Text>
-          </LinearGradient>
+              {/* <Calendar
+                onDayPress={(day) => {
+                  setSelectedDate(day.dateString);
+                }}
+                markedDates={{
+                  [selectedDate]: {
+                    selected: true,
+                    selectedColor: "#E82528",
+                  },
+                }}
+              /> */}
 
-          {/* Stats */}
-          <View style={styles.statsRow}>
-            <LinearGradient
-              colors={[ "#000000", "#000000"]}
-              style={styles.statCard}
-            >
-              <Ionicons
-                name="barbell"
-                size={24}
-                color="#FF7B00"
+              <Calendar
+                onDayPress={(day) => {
+                  setSelectedDate(day.dateString);
+                }}
+                markedDates={markedDates}
               />
-              <Text style={styles.statValue}>12</Text>
-              <Text style={styles.statLabel}>Classes</Text>
-            </LinearGradient>
 
-            <LinearGradient
-              colors={[ "#000000", "#000000"]}
-              style={styles.statCard}
-            >
-              <Ionicons
-                name="checkmark-circle"
-                size={24}
-                color="#00D26A"
-              />
-              <Text style={styles.statValue}>92%</Text>
-              <Text style={styles.statLabel}>Attendance</Text>
-            </LinearGradient>
+              <Text
+                style={{
+                  marginTop: 20,
+                  marginBottom: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  color: '#000',
+                }}
+              >
+                Schedule - {selectedDate}
+              </Text>
 
-            <LinearGradient
-              colors={[ "#000000", "#000000"]}
-              style={styles.statCard}
-            >
-              <Ionicons
-                name="trophy"
-                size={24}
-                color="#FFD700"
-              />
-              <Text style={styles.statValue}>15</Text>
-              <Text style={styles.statLabel}>Programs</Text>
-            </LinearGradient>
+              {selectedWorkouts.length === 0 ? (
+                <Text
+                  style={{
+                    textAlign: "center",
+                    marginTop: 30,
+                    color: "#999",
+                  }}
+                >
+                  No Schedule Available
+                </Text>
+              ) : (
+                selectedWorkouts.map((item) => (
+                  <TouchableOpacity key={item.id} style={styles.cardClassDate}>
+                    <View>
+                      <Text style={styles.titleClassDate}>{item.title}</Text>
+                      <Text style={styles.timeClassDate}>{item.time}</Text>
+                    </View>
+
+                    <Text style={styles.slotClassDate
+                    }>
+                      {item.booked}/{item.total}
+                    </Text>
+                  </TouchableOpacity>
+
+                ))
+              )}
+            </View>
           </View>
 
-         
-          {/* ================= Today's Classes ================= */}
-          <Text style={styles.sectionTitle}>
-            Today's Classes
-          </Text>
-          <FlatList
-              ref={flatListRefTodaySchedule}
-              data={classDataTodaySchedule}
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item) => item.id}
-              onViewableItemsChanged={onViewableItemsChangedTodaySchedule}
-              viewabilityConfig={viewConfigTodaySchedule}
-              renderItem={({ item }) => (
-
-                <TouchableOpacity activeOpacity={1}>       
-                    <LinearGradient
-                      colors={[ "#024205", "#25f40a"]}
-                      style={styles.classCard}
-                    >
-                      <Text style={styles.className}>{item.title}</Text>
-                      <Text style={styles.classTime}>{item.time}</Text>
-                      <Text style={styles.classMembers}>{item.memberCount}</Text>
-                    </LinearGradient>
-                </TouchableOpacity>
-            )}
-          />
-
           
-
           {/* Quick Actions */}
           <Text style={styles.sectionTitle}>
             Quick Actions
@@ -218,6 +253,7 @@ export default function CoachDashboardScreen() {
               <Text style={styles.menuText}>Reports</Text>
             </TouchableOpacity>
           </View>
+
         </ScrollView>
     </View>
   );
@@ -270,49 +306,6 @@ const styles = StyleSheet.create({
 
 
   //=========== Coach Screen ===========
-  heroCard: {
-    margin: 20,
-    borderRadius: 28,
-    padding: 25,
-  },
-  heroTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  heroNumber: {
-    color: '#fff',
-    fontSize: 42,
-    fontWeight: 'bold',
-    marginVertical: 10,
-  },
-  heroSub: {
-    color: '#FFE2D2',
-  },
-
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-  },
-  statCard: {
-    width: '31%',
-    backgroundColor: '#000000',
-    borderRadius: 20,
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  statValue: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: '700',
-    marginTop: 10,
-  },
-  statLabel: {
-    color: '#999',
-    marginTop: 5,
-  },
-
   sectionTitle: {
     color: '#000',
     fontSize: 18,
@@ -321,27 +314,53 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 20,
   },
-  classCard: {
-    width: 150,
-    backgroundColor: '#fff',
-    marginLeft: 20,
-    borderRadius: 20,
-    padding: 18,
+
+  classDateScreen: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
-  className: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+
+  calendarCard: {
+    //height: 550,
+    backgroundColor: "#fff",
+    //borderRadius: 20,
+    padding: 20,
+    //elevation: 4,
+    //marginBottom: 10,
+    //marginTop: 10,
   },
-  classTime: {
-    color: '#363534',
-    marginTop: 10,
-    fontWeight: '700',
+
+  cardClassDate: {
+    borderWidth: 1,
+    borderColor: "#555",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#eee",
   },
-  classMembers: {
-    color: '#5a5a5a',
+
+  titleClassDate: {
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "italic",
+  },
+
+  timeClassDate: {
     marginTop: 5,
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#666",
   },
+
+  slotClassDate: {
+    color: "red",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+
   
   //=========== Menu Grid ===========
   menuContainer: {
