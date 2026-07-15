@@ -132,7 +132,7 @@ export default function GuestMembershipPlanScreen() {
       <LinearGradient colors={["#E82528", "#9A0006"]} style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => router.replace("/class_detail")}
+          onPress={() => router.replace("/dashboard")}
         >
           <Ionicons name="arrow-back" size={22} color="#fff" />
         </TouchableOpacity>

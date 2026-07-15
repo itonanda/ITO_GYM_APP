@@ -186,9 +186,28 @@ export default function GuestDashboardScreen() {
           ))}
         </View>
 
+        {/* ================= Check Mambership Plan ================= */}
+        <TouchableOpacity style={{marginTop: 30, marginBottom: 40}} activeOpacity={1} onPress={() => router.replace('/membership_plan')}>
+          <View style={styles.headerCard}>       
+              <View style={styles.classCard}>
+                <View style={styles.cardContent}>
+                  <View>
+                    <Text style={styles.classTitle}>Membership Plan</Text>
+                  </View>
+                </View>
+
+                <Image
+                  source={{ uri: 'https://www.spookynooksports.com/hubfs/01-reasons-why-a-gym-membership-is-worth-your-time-and-money.jpg' }}
+                  style={styles.classImage}
+                />
+              </View>
+          </View>
+        </TouchableOpacity>
+        
+
 
         {/* ================= Iklan Banner / Event Banner ================= */}
-        <FlatList
+        {/* <FlatList
           ref={flatListRefPromo}
           data={classDataPromo}
           horizontal
@@ -213,10 +232,10 @@ export default function GuestDashboardScreen() {
                 </View>
             </TouchableOpacity>
           )}
-        />
+        /> */}
 
         {/* ================= DOT INDICATOR  PROMO================= */}
-        <View style={styles.dotContainer}>
+        {/* <View style={styles.dotContainer}>
           {classDataPromo.map((_, index) => (
             <View
               key={index}
@@ -226,7 +245,7 @@ export default function GuestDashboardScreen() {
               ]}
             />
           ))}
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );

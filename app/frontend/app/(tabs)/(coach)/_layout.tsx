@@ -6,7 +6,9 @@ export default function CoachLayout() {
   return (
     <Stack>
       <Stack.Screen name="dashboard" options={{ headerShown: false }} />
-      {/* <StatusBar style="auto" /> */}
+      <Stack.Screen name="about_us" options={{ headerShown: false }} />
+      <Stack.Screen name="setting" options={{ headerShown: false }} />
+      <StatusBar style="auto" />
     </Stack>
     
   );

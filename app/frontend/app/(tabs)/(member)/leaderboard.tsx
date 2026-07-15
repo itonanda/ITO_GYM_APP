@@ -33,6 +33,9 @@ interface LeaderboardItem {
   email: string;
   points: number;
   workouts: number;
+  time: number;
+  weight: number;
+  rep: number;
   avatar: string;
   rank?: number;
 }
@@ -44,6 +47,9 @@ const leaderboardData: LeaderboardItem[] = [
     email: "@michael",
     points: 9850,
     workouts: 28,
+    time: 17,
+    weight: 80,
+    rep: 50,
     avatar: "https://i.pravatar.cc/300?img=12",
   },
   {
@@ -51,7 +57,10 @@ const leaderboardData: LeaderboardItem[] = [
     name: "Sarah Johnson",
     email: "@sarah",
     points: 9320,
-    workouts: 24,
+    workouts: 24,    
+    time: 29,
+    weight: 75,
+    rep: 45,
     avatar: "https://i.pravatar.cc/300?img=32",
   },
   {
@@ -59,7 +68,10 @@ const leaderboardData: LeaderboardItem[] = [
     name: "David Lee",
     email: "@david",
     points: 8740,
-    workouts: 21,
+    workouts: 21,   
+    time: 45,
+    weight: 70,
+    rep: 40,
     avatar: "https://i.pravatar.cc/300?img=15",
   },
   {
@@ -68,6 +80,9 @@ const leaderboardData: LeaderboardItem[] = [
     email: "@emma",
     points: 8200,
     workouts: 19,
+    time: 60,
+    weight: 65,
+    rep: 35,
     avatar: "https://i.pravatar.cc/300?img=45",
   },
   {
@@ -76,6 +91,9 @@ const leaderboardData: LeaderboardItem[] = [
     email: "@chris",
     points: 7900,
     workouts: 17,
+    time: 67,
+    weight: 68,
+    rep: 30,
     avatar: "https://i.pravatar.cc/300?img=22",
   },
 ];
@@ -83,32 +101,33 @@ const leaderboardData: LeaderboardItem[] = [
 
 export default function LeaderboardScreen() {
   const router = useRouter();
+  const [selectedDay, setSelectedDay] = useState("time");
 
   const [searchText, setSearchText] =
     useState("");
 
-  // FILTER + SORT
-  const filteredLeaderboard = useMemo(() => {
+  // FILTER + SORT Time
+  const filteredLeaderboardTime = useMemo(() => {
     return [...leaderboardData]
       .filter((item) =>
         item.name
           .toLowerCase()
           .includes(searchText.toLowerCase())
       )
-      .sort((a, b) => b.points - a.points)
+      .sort((a, b) => a.time - b.time)
       .map((item, index) => ({
         ...item,
         rank: index + 1,
       }));
   }, [searchText]);
 
-  const topUser = filteredLeaderboard[0];
+  //const topUser = filteredLeaderboard[0];
 
-  const otherPlayers = filteredLeaderboard.filter(
-    (item) => item.rank !== 1
+  const otherPlayersTime = filteredLeaderboardTime.filter(
+    (item) => item.rank !== 0
   );
 
-  const renderItem = ({
+  const renderItemTime = ({
     item,
   }: {
     item: LeaderboardItem;
@@ -124,6 +143,7 @@ export default function LeaderboardScreen() {
             <View
               style={[
                 styles.rankCircle,
+                item.rank === 1 && styles.gold,
                 item.rank === 2 && styles.silver,
                 item.rank === 3 && styles.bronze,
               ]}
@@ -142,35 +162,199 @@ export default function LeaderboardScreen() {
               <Text style={styles.name}>
                 {item.name}
               </Text>
-
-              <View style={styles.workoutRow}>
-                <MaterialCommunityIcons
-                  name="dumbbell"
-                  size={14}
-                  color="#A855F7"
-                />
-
-                <Text style={styles.workoutText}>
-                  {item.workouts} workouts
-                </Text>
-              </View>
             </View>
           </View>
 
           {/* RIGHT */}
           <View style={styles.rightSection}>
             <Text style={styles.points}>
-              {item.points.toLocaleString()}
-            </Text>
-
-            <Text style={styles.pointsLabel}>
-              TOTAL POINTS
+              {item.time}s
             </Text>
           </View>
         </LinearGradient>
       </TouchableOpacity>
     );
   };
+
+  // FILTER + SORT Berat
+  const filteredLeaderboardBerat = useMemo(() => {
+    return [...leaderboardData]
+      .filter((item) =>
+        item.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      )
+      .sort((a, b) => b.weight - a.weight)
+      .map((item, index) => ({
+        ...item,
+        rank: index + 1,
+      }));
+  }, [searchText]);
+
+  //const topUser = filteredLeaderboard[0];
+
+  const otherPlayersBerat = filteredLeaderboardBerat.filter(
+    (item) => item.rank !== 0
+  );
+
+  const renderItemBerat = ({
+    item,
+  }: {
+    item: LeaderboardItem;
+  }) => {
+    return (
+      <TouchableOpacity style={styles.cardLeader}>
+        <LinearGradient
+          colors={["rgba(147, 18, 18, 0.27)", "rgba(193, 18, 18, 0.85)"]}
+          style={styles.cardGradient}
+        >
+          {/* LEFT */}
+          <View style={styles.leftSection}>
+            <View
+              style={[
+                styles.rankCircle,
+                item.rank === 1 && styles.gold,
+                item.rank === 2 && styles.silver,
+                item.rank === 3 && styles.bronze,
+              ]}
+            >
+              <Text style={styles.rankText}>
+                #{item.rank}
+              </Text>
+            </View>
+
+            <Image
+              source={{ uri: item.avatar }}
+              style={styles.avatar}
+            />
+
+            <View>
+              <Text style={styles.name}>
+                {item.name}
+              </Text>
+            </View>
+          </View>
+
+          {/* RIGHT */}
+          <View style={styles.rightSection}>
+            <Text style={styles.points}>
+              {item.weight}kg
+            </Text>
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  };
+  
+  // FILTER + SORT Rap
+  const filteredLeaderboardRap = useMemo(() => {
+    return [...leaderboardData]
+      .filter((item) =>
+        item.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      )
+      .sort((a, b) => b.rep - a.rep)
+      .map((item, index) => ({
+        ...item,
+        rank: index + 1,
+      }));
+  }, [searchText]);
+
+  //const topUser = filteredLeaderboard[0];
+
+  const otherPlayersRap = filteredLeaderboardBerat.filter(
+    (item) => item.rank !== 0
+  );
+
+  const renderItemRap = ({
+    item,
+  }: {
+    item: LeaderboardItem;
+  }) => {
+    return (
+      <TouchableOpacity style={styles.cardLeader}>
+        <LinearGradient
+          colors={["rgba(147, 18, 18, 0.27)", "rgba(193, 18, 18, 0.85)"]}
+          style={styles.cardGradient}
+        >
+          {/* LEFT */}
+          <View style={styles.leftSection}>
+            <View
+              style={[
+                styles.rankCircle,
+                item.rank === 1 && styles.gold,
+                item.rank === 2 && styles.silver,
+                item.rank === 3 && styles.bronze,
+              ]}
+            >
+              <Text style={styles.rankText}>
+                #{item.rank}
+              </Text>
+            </View>
+
+            <Image
+              source={{ uri: item.avatar }}
+              style={styles.avatar}
+            />
+
+            <View>
+              <Text style={styles.name}>
+                {item.name}
+              </Text>
+            </View>
+          </View>
+
+          {/* RIGHT */}
+          <View style={styles.rightSection}>
+            <Text style={styles.points}>
+              {item.rep}
+            </Text>
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  };
+
+
+  const TimeScreen = () => (
+    <View style={styles.contentLeader}>
+        {/* LIST */}
+        <FlatList<LeaderboardItem>
+          data={otherPlayersTime}
+          renderItem={renderItemTime}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+    </View>
+  );
+  
+  const BeratScreen = () => (
+    <View style={styles.contentLeader}>
+        {/* LIST */}
+        <FlatList<LeaderboardItem>
+          data={otherPlayersBerat}
+          renderItem={renderItemBerat}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+    </View>
+  );
+
+  const RapScreen = () => (
+    <View style={styles.contentLeader}>
+        {/* LIST */}
+        <FlatList<LeaderboardItem>
+          data={otherPlayersRap}
+          renderItem={renderItemRap}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContent}
+        />
+    </View>
+  );
 
 
   return (
@@ -193,107 +377,69 @@ export default function LeaderboardScreen() {
       </LinearGradient>
 
 
-      <View style={styles.contentLeader}>
-      
-        <StatusBar barStyle="light-content" />
-
-        {/* BACKGROUND */}
-        <View style={styles.bgCircle1} />
-        <View style={styles.bgCircle2} />
-
-        {/* SEARCH */}
-        <View style={styles.searchContainer}>
-          <Ionicons
-            name="search"
-            size={20}
-            color="#9CA3AF"
-          />
-
-          <TextInput
-            placeholder="Search player..."
-            placeholderTextColor="#9CA3AF"
-            value={searchText}
-            onChangeText={setSearchText}
-            style={styles.searchInput}
-          />
-        </View>
-
-        {/* TOP PLAYER */}
-        {topUser && (
-          <LinearGradient
-            colors={["#3c0405", "#9A0006", "#E82528"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.championCard}
+      <View style={styles.leaderboardRow}>
+        {/* Time */}
+        <TouchableOpacity
+          style={[
+            styles.leaderboardButton,
+            selectedDay === "time" && styles.leaderboardActiveButton
+          ]}
+          onPress={() => setSelectedDay("time")}
+        >
+          <Text
+            style={[
+              styles.leaderboardButtonText,
+              selectedDay === "time" && styles.leaderboardActiveText
+            ]}
           >
-            <View style={styles.crownWrapper}>
-              <Ionicons
-                name="trophy"
-                size={28}
-                color="#FFD700"
-              />
-            </View>
-
-            <Image
-              source={{ uri: topUser.avatar }}
-              style={styles.championAvatar}
-            />
-
-            <Text style={styles.championName}>
-              {topUser.name}
-            </Text>
-
-            <Text style={styles.championEmail}>
-              {topUser.email}
-            </Text>
-
-            <View style={styles.statsRow}>
-              <View style={styles.statBox}>
-                <Text style={styles.statValue}>
-                  {topUser.points}
-                </Text>
-
-                <Text style={styles.statLabel}>
-                  Points
-                </Text>
-              </View>
-
-              <View style={styles.separator} />
-
-              <View style={styles.statBox}>
-                <Text style={styles.statValue}>
-                  {topUser.workouts}
-                </Text>
-
-                <Text style={styles.statLabel}>
-                  Workouts
-                </Text>
-              </View>
-
-              {/*<View style={styles.separator} />
-
-              <View style={styles.statBox}>
-                <Text style={styles.statValue}>
-                  #{topUser.rank}
-                </Text>
-
-                <Text style={styles.statLabel}>
-                  Rank
-                </Text>
-              </View>*/}
-            </View>
-          </LinearGradient>
-        )}
-
-        {/* LIST */}
-        <FlatList<LeaderboardItem>
-          data={otherPlayers}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.listContent}
-        />
+              Time
+          </Text>
+        </TouchableOpacity>
+        {/* Berat */}
+        <TouchableOpacity
+          style={[
+            styles.leaderboardButton,
+            selectedDay === "berat" && styles.leaderboardActiveButton
+          ]}
+          onPress={() => setSelectedDay("berat")}
+        >
+          <Text
+            style={[
+              styles.leaderboardButtonText,
+              selectedDay === "berat" && styles.leaderboardActiveText
+            ]}
+          >
+              Berat
+          </Text>
+        </TouchableOpacity>
+        {/* Rap */}
+        <TouchableOpacity
+          style={[
+            styles.leaderboardButton,
+            selectedDay === "rap" && styles.leaderboardActiveButton
+          ]}
+          onPress={() => setSelectedDay("rap")}
+        >
+          <Text
+            style={[
+              styles.leaderboardButtonText,
+              selectedDay === "rap" && styles.leaderboardActiveText
+            ]}
+          >
+              Rap
+          </Text>
+        </TouchableOpacity>
+        
       </View>
+
+      {/* kondisi screen */}
+      {selectedDay === "time" ? (
+        <TimeScreen />
+      ) : selectedDay === "berat" ? (
+        <BeratScreen />
+      ) : (
+        <RapScreen />
+      )}
     </View>
   );
 }
@@ -535,8 +681,8 @@ const styles = StyleSheet.create({
   },
 
   rankCircle: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     borderRadius: 20,
     backgroundColor: "rgba(255,255,255,0.08)",
     justifyContent: "center",
@@ -559,18 +705,19 @@ const styles = StyleSheet.create({
   rankText: {
     color: "#000",
     fontWeight: "bold",
+    fontSize: 10,
   },
 
   avatar: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     borderRadius: 32,
     marginRight: 14,
   },
 
   name: {
     color: "#310606",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
   },
 
@@ -599,7 +746,7 @@ const styles = StyleSheet.create({
 
   points: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
 
@@ -628,6 +775,52 @@ const styles = StyleSheet.create({
     color: "#656565",
     marginLeft: 10,
     fontSize: 15,
+  },
+
+
+  /* ===== Leaderboard ===== */
+  leaderboardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 12,
+    borderColor: '#eee',
+    backgroundColor: '#fafafa',
+    margin: 20,
+  },
+  leaderboardButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginHorizontal: 2,
+    backgroundColor: '#fff',
+    height: 70,
+    width: 150,
+    borderRadius: 16,
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  leaderboardActiveButton: {
+    backgroundColor: "#e53935"
+  },
+  leaderboardButtonText: {
+    color: "#333",
+    fontWeight: "bold",
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  leaderboardActiveText: {
+    color: "#fff",
+    fontWeight: "bold",
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  leaderboardDateText: {
+    fontSize: 18,
+    marginTop: 10
   },
 
 });

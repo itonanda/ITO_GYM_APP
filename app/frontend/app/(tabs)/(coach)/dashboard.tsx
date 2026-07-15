@@ -252,6 +252,19 @@ export default function CoachDashboardScreen() {
               </View>
               <Text style={styles.menuText}>Reports</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}>
+              <View style={styles.menuIcon}>
+                <Ionicons name="information-outline" size={24} color="#fff" />
+              </View>
+              <Text style={styles.menuText}>About Us</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/setting')}>
+              <View style={styles.menuIcon}>
+                <Ionicons name="settings-outline" size={24} color="#fff" />
+              </View>
+              <Text style={styles.menuText}>Settings</Text>
+            </TouchableOpacity>
+
           </View>
 
         </ScrollView>
@@ -368,7 +381,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   menuItem: {
     width: width / 4.5,
