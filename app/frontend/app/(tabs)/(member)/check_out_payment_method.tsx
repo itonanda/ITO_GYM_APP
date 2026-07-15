@@ -63,7 +63,7 @@ export default function CheckOutPaymentMethodScreen() {
       `You selected ${selectedMethod?.title}`,
       [
         {
-          text: "OK",
+          //text: "OK",
           onPress: () => {
             // pindah screen sesuai payment
             if (selectedMethod?.title === "QRIS") {
@@ -145,10 +145,14 @@ export default function CheckOutPaymentMethodScreen() {
                 {/* ================= Payment Metohd ================= */}
                 <View style={styles.headerPaymentMetohd}>
                     <View style={styles.cardPaymentMetohd}>
-                          {paymentMethods.map((item) => {
-                          const active = selected === item.id;
-              
-                          return (
+                        <FlatList
+                          data={paymentMethods}
+                          scrollEnabled={false}
+                          keyExtractor={(item) => item.id}
+                          renderItem={({ item }) => {
+                            const active = selected === item.id;
+
+                            return (
                               <TouchableOpacity
                               key={item.id}
                               activeOpacity={0.8}
@@ -157,7 +161,6 @@ export default function CheckOutPaymentMethodScreen() {
                                   active && styles.paymentItemActivePaymentMetohd,
                               ]}
                               onPress={() => setSelected(item.id)}
-                              //onPress={() => router.replace('/(tabs)/CheckOutQR')}
                               >
                                   <View style={styles.leftContentPaymentMetohd}>
                                       <View
@@ -192,8 +195,9 @@ export default function CheckOutPaymentMethodScreen() {
                                       {active && <View style={styles.radioInnerPaymentMetohd} />}
                                   </View>
                               </TouchableOpacity>
-                          );
-                          })}
+                            );
+                          }}
+                        />
                     </View>                        
                 </View>
             </ScrollView>
