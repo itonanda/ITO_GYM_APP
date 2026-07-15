@@ -151,79 +151,82 @@ export default function GuestMembershipPlanScreen() {
                                             
                 {/* ================= Membership Plan ================= */}
                 <View style={styles.headerMembershipPlans}>
-                    <View style={styles.cardMembershipPlans}>
-                          {membershipPlans.map((item) => {
-                          const active = selected === item.id;
-              
-                          return (
-                              <TouchableOpacity
-                                key={item.id}
-                                activeOpacity={0.8}
+                  <FlatList
+                    data={membershipPlans}
+                    scrollEnabled={false}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => {
+                      const active = selected === item.id;
+
+                      return (
+                        <TouchableOpacity
+                          key={item.id}
+                          activeOpacity={0.8}
+                          style={[
+                              styles.membershipItemMembershipPlans,
+                              active && styles.membershipItemActiveMembershipPlans,
+                          ]}
+                          onPress={() => setSelected(item.id)}
+                        >
+                            <View style={styles.leftContentMembershipPlans}>
+                              <View style={styles.leftContentMembershipPlansTitle}>
+                                <View
                                 style={[
-                                    styles.membershipItemMembershipPlans,
-                                    active && styles.membershipItemActiveMembershipPlans,
+                                    styles.iconContainerMembershipPlans,
+                                    active && styles.iconContainerActiveMembershipPlans,
                                 ]}
-                                onPress={() => setSelected(item.id)}
-                                //onPress={() => router.replace('/(tabs)/CheckOutQR')}
-                              >
-                                  <View style={styles.leftContentMembershipPlans}>
-                                    <View style={styles.leftContentMembershipPlansTitle}>
-                                      <View
+                                >
+                                  <Ionicons
+                                      name={item.icon as any}
+                                      size={22}
+                                      color={active ? "#FFFFFF" : "#E31E24"}
+                                  />
+                                </View>
+
+                                <View>
+                                    <Text
                                       style={[
-                                          styles.iconContainerMembershipPlans,
-                                          active && styles.iconContainerActiveMembershipPlans,
+                                          styles.membershipTextMembershipPlans,
+                                          active && styles.membershipTextActiveMembershipPlans,
                                       ]}
-                                      >
-                                        <Ionicons
-                                            name={item.icon as any}
-                                            size={22}
-                                            color={active ? "#FFFFFF" : "#E31E24"}
-                                        />
-                                      </View>
-
-                                      <View>
-                                          <Text
-                                            style={[
-                                                styles.membershipTextMembershipPlans,
-                                                active && styles.membershipTextActiveMembershipPlans,
-                                            ]}
-                                          >
-                                            {item.title}
-                                          </Text>
-
-                                          {item.price !== "" && (
-                                            <Text style={styles.planPrice}>{item.price}</Text>
-                                          )}
-                                      </View>                                                   
-                                    </View>
-                                    
-                                    {active && 
-                                      <View>
-                                        <View style={styles.divider} />
-                                        {item.benefits.map((benefit, index) => (
-                                          <Text key={index} style={styles.benefit}>
-                                            • {benefit}
-                                          </Text>
-                                        ))}
-                                      </View>
-                                    }
-                                  </View>
-                                  
-                                  <View>
-                                    <View
-                                        style={[
-                                        styles.radioOuterMembershipPlans,
-                                        active && styles.radioOuterActiveMembershipPlans,
-                                        ]}
                                     >
-                                        {active && <View style={styles.radioInnerMembershipPlans} />}                                      
-                                    </View>
-                                  </View>  
-                              </TouchableOpacity>
-                          );
-                          })}
-                    </View>                        
-                </View>
+                                      {item.title}
+                                    </Text>
+
+                                    {item.price !== "" && (
+                                      <Text style={styles.planPrice}>{item.price}</Text>
+                                    )}
+                                </View>                                                   
+                              </View>
+                              
+                              {active && 
+                                <View>
+                                  <View style={styles.divider} />
+                                  {item.benefits.map((benefit, index) => (
+                                    <Text key={index} style={styles.benefit}>
+                                      • {benefit}
+                                    </Text>
+                                  ))}
+                                </View>
+                              }
+                            </View>
+                            
+                            <View>
+                              <View
+                                  style={[
+                                  styles.radioOuterMembershipPlans,
+                                  active && styles.radioOuterActiveMembershipPlans,
+                                  ]}
+                              >
+                                  {active && <View style={styles.radioInnerMembershipPlans} />}                                      
+                              </View>
+                            </View>  
+                        </TouchableOpacity>
+                      );
+                    }}
+                    contentContainerStyle={styles.cardMembershipPlans}
+                  />
+              </View>
             </ScrollView>
 
 
