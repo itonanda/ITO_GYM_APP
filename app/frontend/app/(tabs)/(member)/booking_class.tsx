@@ -255,13 +255,14 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
                             // if (!item.highlight) return null;
             
                             return (
-                                <TouchableOpacity key={item.id_class_booking} style={styles.headerCard} activeOpacity={1} onPress={() => 
-                                  // router.replace('/class_detail_update')
-                                  router.push({
-                                    pathname: '/(tabs)/(member)/class_detail_update',
-                                    params: { id_class_booking: item.id_class_booking },
-                                  })
-                                }>       
+                                // <TouchableOpacity key={item.id_class_booking} style={styles.headerCard} activeOpacity={1} onPress={() => 
+                                //   // router.replace('/class_detail_update')
+                                //   router.push({
+                                //     pathname: '/(tabs)/(member)/class_detail_update',
+                                //     params: { id_class_booking: item.id_class_booking },
+                                //   })
+                                // }>    
+                                <View>    
                                     <View style={styles.cardBookingClass}>
                                         {/* Date Box */}
                                         <View style={styles.dateContainer}>
@@ -282,8 +283,11 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
                                         <Text style={styles.time}>{item.class_schedule.start_time}-{item.class_schedule.end_time}</Text>
                                         <Text style={styles.author}>By {item.class_schedule.profiles.full_name}</Text>
                                         </View>
+                                        <TouchableOpacity key={item.id_class_booking}> 
+                                          <Ionicons name="trash" size={34} color="#E11F27" />
+                                        </TouchableOpacity>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
                             );
                             }}
                         />
