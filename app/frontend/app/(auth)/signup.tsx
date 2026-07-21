@@ -96,8 +96,11 @@ export default function SignUpScreen() {
     if (!emergencyContactNo.trim())
       tempErrors.emergencyContactNo = "Emergency Contact Number is required.";
     if (!password) tempErrors.password = "Password is required.";
+    if (password.length < 8) tempErrors.password = "Password must be at least 8 characters long.";
     if (!confirmPassword)
       tempErrors.confirmPassword = "Confirm Password is required.";
+    if (confirmPassword.length < 8)
+      tempErrors.confirmPassword = "Confirm Password must be at least 8 characters long.";
     if (password && confirmPassword && password !== confirmPassword)
       tempErrors.confirmPassword = "Oops! Your passwords don't match.";
 

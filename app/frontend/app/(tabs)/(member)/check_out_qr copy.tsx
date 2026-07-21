@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,32 +18,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 import QRCode from "react-native-qrcode-svg";
 import ViewShot from "react-native-view-shot";
-import { captureRef } from 'react-native-view-shot';
 import * as MediaLibrary from "expo-media-library";
 
 const { width } = Dimensions.get('window');
 
-// STATE API
-const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-interface UsersData {
-  id_user : string;
-  full_name : string;
-  email : string;
-}
-
-interface ItemsData {
-  id_membership_plan : string;
-  title : string;
-  price : string;
-  description : string;
-}
 
 export default function CheckOutQRScreen() {
   const router = useRouter();
@@ -67,35 +51,20 @@ export default function CheckOutQRScreen() {
   const saveQRCode = async () => {
     try {
       // izin akses galeri
-      // const permission = await MediaLibrary.requestPermissionsAsync();
+      const permission = await MediaLibrary.requestPermissionsAsync();
 
-      // if (!permission.granted) {
-      //   Alert.alert("Izin ditolak", "Harus izinkan akses galeri");
-      //   return;
-      // }
+      if (!permission.granted) {
+        Alert.alert("Izin ditolak", "Harus izinkan akses galeri");
+        return;
+      }
 
       // capture QR jadi image
-      // const uri = await viewShotRef.current.capture();
-      const uri = await captureRef(viewShotRef.current, {
-        format: 'jpg',
-        quality: 0.8, // Compression level
-      });
-      // // save ke gallery
-      // await MediaLibrary.saveToLibraryAsync(uri);
+      const uri = await viewShotRef.current.capture();
 
-      // Alert.alert("Berhasil", "QR berhasil disimpan ke galeri");
-      
-      // 1. Request permissions first
-    // const { status } = await MediaLibrary.requestPermissionsAsync();
-    // if (status !== 'granted') return;
+      // save ke gallery
+      await MediaLibrary.saveToLibraryAsync(uri);
 
-    // 2. Create a media asset from your local file
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    
-    // 3. Create the album with the asset included
-    await MediaLibrary.createAlbumAsync('DOMS', asset, false);
-    
-    // console.log('Folder created successfully!');
+      Alert.alert("Berhasil", "QR berhasil disimpan ke galeri");
 
     } catch (error) {
       console.log(error);
@@ -105,67 +74,11 @@ export default function CheckOutQRScreen() {
     
       //------------------------------------------------------
       //Sementara biar bisa keliatan Screen Payment sukses
-      //router.replace('/(tabs)/(member)/check_out_payment_success')
+      router.replace('/(tabs)/(member)/check_out_payment_success')
       //------------------------------------------------------
   };
 
-  // GET DATA
-  // Accesses both route params ([id]) and query params (?name=John)
-  const [items, setItems] = useState<ItemsData | null>(null);
-  const [users, setUsers] = useState<UsersData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
-  console.log(id_user);
-  console.log(id_membership_plan);
-  console.log(membership_date);
-  console.log(paymentMethod);
-  console.log(id_transaction);
 
-  useEffect(() => {
-      fetchDataUser();
-      fetchDataMembershipPlans();
-    }, []);
-    
-  const fetchDataUser = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/profile`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataUser = await responseUser.json();
-      setUsers(dataUser);
-      // console.log(dataUser);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataMembershipPlans = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/membership/plans/${id_membership_plan}`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataMembershipPlans = await responseUser.json();
-      setItems(dataMembershipPlans);
-      console.log(dataMembershipPlans);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -200,20 +113,20 @@ export default function CheckOutQRScreen() {
                       </View>
 
                       <Text style={styles.payTitle}>Complete Your Payment</Text>
-                      {items && (
-                      <Text style={styles.amount}>Rp. {items.price}</Text>
-                      )}
+
+                      <Text style={styles.amount}>Rp 900.000</Text>
+
                       <View style={styles.divider} />
 
                       {/* DETAIL */}
                       <View style={styles.detailRow}>
                         <Text style={styles.detailLabel}>Payment Method</Text>
-                        <Text style={styles.detailValue}>{paymentMethod}</Text>
+                        <Text style={styles.detailValue}>QRIS</Text>
                       </View>
 
                       <View style={styles.detailRow}>
                         <Text style={styles.detailLabel}>Transaction ID</Text>
-                        <Text style={styles.detailValue}>{id_transaction}</Text>
+                        <Text style={styles.detailValue}>TRX2026</Text>
                       </View>
 
                       <View style={styles.detailRow}>

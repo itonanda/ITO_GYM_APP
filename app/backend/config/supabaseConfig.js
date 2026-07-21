@@ -46,6 +46,48 @@ export const supabaseServiceRole = createClient(
   }
 );
 
+// Instance 3: Koneksi Key Publishable
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY_PUBLISHABLE) {
+    console.error('ERROR: SUPABASE_URL and SUPABASE_ANON_KEY must be set in .env file');
+    throw new Error('Supabase configuration is missing. Please set SUPABASE_URL and SUPABASE_ANON_KEY in your .env file');
+}
+
+export const supabasePublishable = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY_PUBLISHABLE , // SECRET_KEY!
+  {
+    auth: {
+    //  storage: localStorage,
+    //  autoRefreshToken: true,
+    //  persistSession: true,
+    //  detectSessionInUrl: false,
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+
+// Instance 4: Koneksi Key Secret
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY_SECRET) {
+    console.error('ERROR: SUPABASE_URL and SUPABASE_ANON_KEY must be set in .env file');
+    throw new Error('Supabase configuration is missing. Please set SUPABASE_URL and SUPABASE_ANON_KEY in your .env file');
+}
+
+export const supabaseSecret = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY_SECRET, // SECRET_KEY!
+  {
+    auth: {
+    //  storage: localStorage,
+    //  autoRefreshToken: true,
+    //  persistSession: true,
+    //  detectSessionInUrl: false,
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+
 // Tambahkan Interceptor (Optional tapi disarankan)
 // apiMain.interceptors.request.use(async config => {
 //   // Misal: Ambil token dari AsyncStorage

@@ -94,7 +94,7 @@ export default function CheckOutScreen() {
 
   // GET DATA
   // Accesses both route params ([id]) and query params (?name=John)
-  const [items, setItems] = useState<ItemsData | null>(null);
+  const [items, setItems] = useState<ItemsData[]>([]);
   const [users, setUsers] = useState<UsersData | null>(null);
   const [loading, setLoading] = useState(true);
   const { accessToken, id_membership_plan } = useGlobalSearchParams();
@@ -128,7 +128,7 @@ export default function CheckOutScreen() {
   const fetchDataMembershipPlans = async () => {
     try {
       // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/membership/plans/${id_membership_plan}`, {
+      const responseUser = await fetch(`${apiURL}/membership/plans`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
@@ -176,14 +176,11 @@ export default function CheckOutScreen() {
                     style={styles.card}
                   >
                     <View style={styles.classCheckOutRow}>
-                      {/* <View style={styles.classCheckOutPlan_V1}>
+                      <View style={styles.classCheckOutPlan_V1}>
                           <Text style={styles.classTitleNumberCheckOut}>{vatitlenumber}</Text>
-                      </View> */}
+                      </View>
                       <View style={styles.classCheckOutPlan_V2}>
-                          {/* <Text style={styles.classTitleCheckOut}>{vatitleunit}</Text> */}
-                          {items &&(
-                          <Text style={styles.classTitleCheckOut}>{items.title}</Text>
-                          )}
+                          <Text style={styles.classTitleCheckOut}>{vatitleunit}</Text>
                       </View>
                     </View>
                   </LinearGradient>
@@ -195,11 +192,31 @@ export default function CheckOutScreen() {
                 <View style={styles.headerCheckOut}>
                     {/* Membership Start Date */}
                     <Text style={styles.labelCheckOut}>Membership Start Date</Text>
-                    <View style={styles.headerMemberDate}>
-                      <View style={styles.MemberDate_V1}>
-                          <Text>{formatDate(MembershipStartDate)}</Text>
-                      </View>
-                    </View>                        
+                    <TouchableOpacity style={styles.headerMemberDate}>
+                            <TouchableOpacity
+                                style={styles.MemberDate_V1}
+                                onPress={() => setShowDate(true)}
+                                >
+                                    <Text>{formatDate(MembershipStartDate)}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.MemberDate_V2}
+                                onPress={() => setShowDate(true)}
+                                >
+                                    <Ionicons name={'calendar-outline'} size={23} />
+                            </TouchableOpacity>
+                    </TouchableOpacity> 
+                    {showDate && (
+                    <DateTimePicker
+                        value={MembershipStartDate}
+                        mode="date"
+                        display="default"
+                        onChange={onChangeDate}
+                        maximumDate={OneMonth}
+                        minimumDate={new Date()}
+                    />
+                    )}
+                        
                     
                     {/* Voucher */}
                     <Text style={styles.labelCheckOut}>Voucher</Text>
@@ -245,23 +262,15 @@ export default function CheckOutScreen() {
           </View>                
           <View>
             <View>
-               {items &&(
               <Text style={{fontSize:16, color:'#000', fontWeight:'bold'}}>
-                  Rp. {items.price}
+                  Rp. {vaprice}
               </Text>
-               )}
             </View>
           </View>
         </View>
         <View style={styles.headerBottomRowCheckOutNext}>
           {/* BUTTON */}
-          {/* <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/check_out_payment_method')}> */}
-          <TouchableOpacity activeOpacity={0.8} onPress={() => 
-           router.push({
-              pathname: '/(tabs)/(member)/check_out_payment_method',
-              params: { id_membership_plan: id_membership_plan, membership_date: JSON.stringify(formatDate(MembershipStartDate),null, 2)}
-            })
-          }>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/check_out_payment_method')}>
             <LinearGradient
               colors={["#E82528", "#9A0006"]}
               start={{ x: 0, y: 0 }}

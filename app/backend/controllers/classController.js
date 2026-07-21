@@ -67,13 +67,54 @@ export const scheduleTomorrowSortByOrder = async (req, res) => {
 export const bookingClass = async (req, res) => {
   try {
      const Data = req.body;
-     const { id_class_schedule,available_quota } = req.params;
+    //  const { id_class_schedule,available_quota } = req.params;
      const bookingClass = await bookingClassService(Data);
-     res.status(201).json(bookingClass);
-     const updateAvailableQuotaClass = await updateAvailableQuotaClassByIdService(Data);
-     res.status(201).json(updateAvailableQuotaClass);
+    //  console.log(error);
+     // 3. Handle Supabase error
+    // if (error) {
+    //   // console.log(error);
+    //   return res.status(400).json({ error: error.message });
+    // }
+     res.status(200).json({ message: 'Booking Class created successfully', bookingClass});
+    
+    //  const updateAvailableQuotaClass = await updateAvailableQuotaClassByIdService(Data);
+    //  console.log(error);
+    //  // 3. Handle Supabase error
+    // if (error) {
+    //   // console.log(error);
+    //   return res.status(400).json({ error: error.message });
+    // }
+    //  res.status(200).json({ message: 'Update Quota created successfully', updateAvailableQuotaClass});
    } catch (error) {
      res.status(500).json({ error: error.message });
+    //  console.log(error);
+    //  console.log(error.message);
+   }
+
+   try {
+     const UpdateData = req.body;
+    //  const { id_class_schedule,available_quota } = req.params;
+    //  const bookingClass = await bookingClassService(Data);
+    //  console.log(error);
+     // 3. Handle Supabase error
+    // if (error) {
+    //   // console.log(error);
+    //   return res.status(400).json({ error: error.message });
+    // }
+    //  res.status(201).json({ message: 'Booking Class created successfully', bookingClass});
+    
+     const updateAvailableQuotaClass = await updateAvailableQuotaClassByIdService(UpdateData);
+    //  console.log(error);
+    //  // 3. Handle Supabase error
+    // if (error) {
+    //   // console.log(error);
+    //   return res.status(400).json({ error: error.message });
+    // }
+     return res.status(200).json({ message: 'Update Quota created successfully', updateAvailableQuotaClass});
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+    //  console.log(error);
+    //  console.log(error.message);
    }
 };
 

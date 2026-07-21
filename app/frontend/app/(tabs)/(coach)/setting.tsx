@@ -100,6 +100,9 @@ export default function SettingsScreen() {
         colors={['#9A0006', '#E82528', '#4d0205']}
         style={styles.header}
       >
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}>
+            <Ionicons name="arrow-back" size={22} color="#fff"/>
+        </TouchableOpacity> */}
         <View style={styles.profileContainer}>
           <Image
             source={{
@@ -127,7 +130,17 @@ export default function SettingsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
 
-          <TouchableOpacity style={styles.menuCard}>
+          {users && (
+          <TouchableOpacity style={styles.menuCard} onPress={() =>
+              router.push({
+                pathname: '/(tabs)/(coach)/edit_profile',
+                params: { id_user: users.id_user },
+                // state: { 
+                //   token: 'super-secret-token-12345',
+                //   userId: 99
+                // }
+              })
+            }>
             <View style={styles.leftMenu}>
               <Ionicons name="person-outline" size={24} color="#EF4444" />
 
@@ -136,9 +149,19 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
+          )}
 
-
-          <TouchableOpacity style={styles.menuCard}>
+          {users && (
+          <TouchableOpacity style={styles.menuCard}onPress={() =>
+              router.push({
+                pathname: '/(tabs)/(coach)/change_password',
+                params: { id_user: users.id_user },
+                // state: { 
+                //   token: 'super-secret-token-12345',
+                //   userId: 99
+                // }
+              })
+            }>
             <View style={styles.leftMenu}>
               <MaterialIcons name="key" size={24} color="#EF4444" />
 
@@ -147,6 +170,7 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
+          )}
         </View>
 
 
@@ -170,7 +194,42 @@ export default function SettingsScreen() {
           </View>
         </View>
 
+        {/* SUPPORT */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Support</Text>
 
+          <TouchableOpacity style={styles.menuCard}>
+            <View style={styles.leftMenu}>
+              <Feather name="help-circle" size={24} color="#EF4444" />
+
+              <Text style={styles.menuText}>Help Center</Text>
+            </View>
+
+            <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={styles.menuCard}>
+            <View style={styles.leftMenu}>
+              <Ionicons name="document-text-outline" size={24} color="#EF4444" />
+
+              <Text style={styles.menuText}>Terms & Conditions</Text>
+            </View>
+
+            <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={styles.menuCard}>
+            <View style={styles.leftMenu}>
+              <FontAwesome5 name="shield-alt" size={22} color="#EF4444" />
+
+              <Text style={styles.menuText}>Privacy Policy</Text>
+            </View>
+
+            <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
+          </TouchableOpacity>
+        </View>
 
         {/* LOGOUT */}
         <TouchableOpacity style={styles.logoutButton} onPress={handleSignOut}>
@@ -209,6 +268,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderBottomLeftRadius: 35,
     borderBottomRightRadius: 35,
+  },
+  
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   profileContainer: {

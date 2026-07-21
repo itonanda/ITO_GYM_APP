@@ -8,6 +8,9 @@ import {
   searchUsers
 } from "../services/userService.js";
 
+//var jwt = require("jsonwebtoken");
+//var bcrypt = require("bcryptjs");
+
 export const addUser = async (req, res) => {
   try {
     const userData = req.body;
@@ -17,6 +20,37 @@ export const addUser = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+
+/*
+export const addUser = async (req, res) => {
+  try {
+    const userData = req.body;
+    //const { email, password } = req.body; // Extract data
+    // Check if user already exists in database
+    //let user = await User.fetchUserByEmail({ email });
+    //if (user) return res.status(400).json({ msg: 'User already exists' });
+
+    // Then secure the password before saving
+    //const salt = await bcrypt.genSalt(10); // Generating the salt(unique string) for hashing
+    //const hashedPassword = await bcrypt.hash(password, salt); // Hashing the password, which can't be unhashed
+
+    // Now create new user with hashed password
+    //user = new User({ email, password: hashedPassword });
+    const newUser = await createUser({
+      //UserId: userData.userid,
+      email: userData.email,
+      //email: req.body.email,
+      password: bcrypt.hashSync(userData.password, 8),
+      //password: bcrypt.hashSync(req.body.password, 8),
+    })
+    
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+*/
 
 export const fetchUsers = async (req, res) => {
   try {
@@ -29,9 +63,8 @@ export const fetchUsers = async (req, res) => {
 
 export const fetchUserById = async (req, res) => {
   try {
-    const { id_user } = req.params;
-    console.log(id_user);
-    const user = await getUserById(id_user);
+    const { id } = req.params;
+    const user = await getUserById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }

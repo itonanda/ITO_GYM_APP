@@ -36,7 +36,7 @@ const { width } = Dimensions.get('window');
 interface ItemData {
   profiles : any;
   class_title: any;
-  booking_class: any;
+  class_booking: any;
   
   id_class_schedule: Int32;
   title: string; // Replace with your actual table column schemas
@@ -44,7 +44,7 @@ interface ItemData {
   end_time: string;
   available_quota: Int32;
   quota: Int32;
-  highlight: false;
+  highlight: boolean;
 }
 
 interface UsersData {
@@ -194,6 +194,7 @@ export default function MemberClassScheduleScreen() {
       const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time&order=asc`);
       const data = await response.json();
       setItemsToday(data);
+      // console.log(data);
     } catch (error) {
       console.error('Error fetching list data:', error);
     } finally {
@@ -271,7 +272,32 @@ export default function MemberClassScheduleScreen() {
   return apiISOString.slice(0,5); 
 };
 
+const handlePress = (item: any) => {
+    // Condition check before pushing
+    if (item.class_booking.highlight = true) {
+      router.push({
+        pathname: '/(tabs)/(member)/class_detail_update',
+        params: { id_class_schedule: item.id_class_schedule },
+      });
+    } else {
+      router.push({
+        pathname: '/(tabs)/(member)/class_detail',
+        params: { id_class_schedule: item.id_class_schedule },
+      });
+    }
+  };
+
+  const checkSchedule = () =>{
+    
+    if(itemsToday){
+
+    }else{
+      
+    }
+  };
+
   const TodayScreen = () => (
+    
     <View style={styles.todayScreen}>
         <FlatList
           data={itemsToday}
@@ -294,6 +320,7 @@ export default function MemberClassScheduleScreen() {
                   //   userId: 99
                   // }
                 })
+                
               }>       
                 <View style={styles.classCard}>
                   <Image
@@ -302,18 +329,18 @@ export default function MemberClassScheduleScreen() {
                     style={styles.classImage}
                   />
                   
-                  <View key={item.id_class_schedule} style={[styles.cardContent, item.highlight && styles.highlightCard]}>
+                  <View key={item.id_class_schedule} style={[styles.cardContent, item.class_booking.highlight && styles.highlightCard]}>
                     <View>
-                      <Text style={styles.classTitle}>{item.class_title?.title}</Text>
-                      
+                      <Text style={styles.classTitle}>{item.class_title.title}</Text>
+                      {/* <Text>{item.class_booking.highlight}</Text> */}
                       {/* <Text style={styles.classTime}>{item.start_time_class}-{item.end_time_class}</Text> */}
                       <Text style={styles.classTime}>{extractTimeHHMM(item.start_time)} - {extractTimeHHMM(item.end_time)}</Text>
-                      <Text style={[styles.classTrainer, item.highlight && { color: "#fff" }]}>
+                      <Text style={[styles.classTrainer, item.class_booking.highlight && { color: "#fff" }]}>
                         By {item.profiles?.full_name}
                       </Text>
                     </View>
                     {/* <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.quota_class}</Text> */}
-                    <Text style={[styles.classQuota, item.highlight && { color: "#fff" }]}>{item.available_quota}/{item.quota}</Text>
+                    <Text style={[styles.classQuota, item.class_booking.highlight && { color: "#fff" }]}>{item.available_quota}/{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>

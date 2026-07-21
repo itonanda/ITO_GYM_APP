@@ -1,4 +1,7 @@
-import { supabaseAnon, supabaseServiceRole } from "../config/supabaseConfig.js";
+import supabase from "../config/supabaseClient.js";
+//var bcrypt = require("bcryptjs");
+import bcrypt from 'bcryptjs';
+//const bcrypt = require('bcryptjs');
 
 export const createUser = async (userData) => {
   //const hash = bcrypt.hashSync(userData.password, 8)
@@ -25,13 +28,11 @@ export const getUsers = async () => {
   return data;
 };
 
-export const getUserById = async (id_user) => {
-  console.log(id_user);
-  // const { data, error } = await supabaseAnon
-  const { data, error } = await supabaseServiceRole
-    .from("profiles")
+export const getUserById = async (id) => {
+  const { data, error } = await supabase
+    .from("users")
     .select("*")
-    .eq("id", id_user)
+    .eq("id", id)
     .single();
 
   if (error) throw new Error(error.message);

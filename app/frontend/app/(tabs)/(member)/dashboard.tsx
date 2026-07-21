@@ -455,12 +455,12 @@ export default function MemberDashboardScreen() {
             </View>
             <Text style={styles.menuText}>Leaderboard</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/chat')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/chat')}>
             <View style={styles.menuIcon}>
               <Ionicons name="chatbubble-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Chat</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/promo')}>
             <View style={styles.menuIcon}>
               <Ionicons name="gift-outline" size={24} color="#333" />
@@ -703,7 +703,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   menuItem: {
     width: width / 4.5,

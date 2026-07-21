@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
+import membershipRoutes from "./routes/membershipRoutes.js";
 import authorization from "./middlewares/authorization.js";
 
 import { swaggerUi, specs } from "./config/swagger.js";
@@ -29,9 +30,11 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.use("/auth", authRoutes);
-app.use("/class", classRoutes);
 app.use("/", authorization);
+app.use("/auth", authRoutes);
+app.use("/", userRoutes);
+app.use("/class", classRoutes);
+app.use("/membership", membershipRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

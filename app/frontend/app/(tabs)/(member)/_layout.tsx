@@ -31,6 +31,8 @@ export default function MemberLayout() {
       <Stack.Screen name="chat" options={{ headerShown: false }} />
       <Stack.Screen name="leaderboard" options={{ headerShown: false }} />
       <Stack.Screen name="notification" options={{ headerShown: false }} />
+      <Stack.Screen name="edit_profile" options={{ headerShown: false }} />
+      <Stack.Screen name="change_password" options={{ headerShown: false }} />
       <StatusBar style="auto" />
     </Stack>
     

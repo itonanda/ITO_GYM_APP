@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -78,7 +78,25 @@ const classDataPromo = [
   },
 ];
 
+interface ItemData {
+  profiles : any;
+  id : string;
+  full_name : string;
 
+  class_title: any;
+  id_class_title: string;
+  title: string; // Replace with your actual table column schemas
+  
+  class_schedule : any;
+  id_class_schedule: string;
+  start_time: string;
+  end_time: string;
+  available_quota: string;
+  quota: string;
+  highlight: false;
+
+  booking_class: any;
+}
 
 export default function GuestDashboardScreen() {
   const router = useRouter();
@@ -112,6 +130,40 @@ export default function GuestDashboardScreen() {
     viewAreaCoveragePercentThreshold: 50,
   };
 
+  // Accesses both route params
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  // const { accessToken, email } = useLocalSearchParams();
+  // const { accessToken } = useGlobalSearchParams();
+  // console.log(accessToken);
+
+  // GET DATA
+    const [items, setItems] = useState<ItemData[]>([]);
+    // const [loading, setLoading] = useState<boolean>(true);
+    // const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      fetchDataClassToday();
+    }, []);
+
+    const fetchDataClassToday = async () => {
+      try {
+        // const response = await fetch(`${apiURL}/class/schedule_today`);
+        const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time&order=asc`);
+        const data = await response.json();
+        const datalimit = data.slice(0,3);
+        setItems(datalimit);
+      } catch (error) {
+        console.error('Error fetching list data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const extractTimeHHMM = (apiISOString: string) => {
+      // Extracts the "14:30" part from "14:30:00"
+      return apiISOString.slice(0,5);
+    };
 
   return (
     <View style={styles.container}>
@@ -141,7 +193,7 @@ export default function GuestDashboardScreen() {
         {/* ================= AVAILABLE CLASS ================= */}
         <Text style={styles.sectionTitle}>Available Classes</Text>
 
-        <FlatList
+        {/* <FlatList
           ref={flatListRef}
           data={classDataToday}
           horizontal
@@ -167,6 +219,50 @@ export default function GuestDashboardScreen() {
                       </Text>
                     </View>
                     <Text style={styles.classQuota}>{item.quota}</Text>
+                  </View>
+                </View>
+            </TouchableOpacity>
+          )}
+        /> */}
+
+        <FlatList
+          // ref={flatListRef}
+          data={items}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id_class_schedule.toString()}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewConfig}
+          renderItem={({ item }) => (
+            <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
+              onPress={() =>
+                // router.push(
+                //   item.highlight
+                //     ? '/(tabs)/(member)/class_detail_update'
+                //     : '/(tabs)/(member)/class_detail'
+                // )
+                router.push({
+                  pathname: '/(tabs)/(guest)/class_detail',
+                  params: { id_class_schedule: item.id_class_schedule }
+                })
+              }>       
+                <View style={styles.classCard}>
+                  <Image
+                    // source={{ uri: item.image }}
+                    source={{ uri: 'https://media.gettyimages.com/id/1059616710/photo/young-woman-exercising-on-treadmill.jpg?s=2048x2048&w=gi&k=20&c=vDIxPW48WJILe5PhY6U4UOisRvflllLe6Fd1qQfNgjY=' }}
+                    style={styles.classImage}
+                  />
+                  
+                  <View key={item.id_class_schedule} style={styles.cardContent}>
+                    <View>
+                      <Text style={styles.classTitle}>{item.class_title?.title}</Text>
+                      <Text style={styles.classTime}>{extractTimeHHMM(item.start_time)}-{extractTimeHHMM(item.end_time)}</Text>
+                      <Text style={[styles.classTrainer]}>
+                        By {item.profiles.full_name}
+                      </Text>
+                    </View>
+                    <Text style={[styles.classQuota]}>{item.available_quota}/{item.quota}</Text>
                   </View>
                 </View>
             </TouchableOpacity>
@@ -204,10 +300,8 @@ export default function GuestDashboardScreen() {
           </View>
         </TouchableOpacity>
         
-
-
         {/* ================= Iklan Banner / Event Banner ================= */}
-        {/* <FlatList
+        <FlatList
           ref={flatListRefPromo}
           data={classDataPromo}
           horizontal
@@ -232,10 +326,10 @@ export default function GuestDashboardScreen() {
                 </View>
             </TouchableOpacity>
           )}
-        /> */}
+        />
 
         {/* ================= DOT INDICATOR  PROMO================= */}
-        {/* <View style={styles.dotContainer}>
+        <View style={styles.dotContainer}>
           {classDataPromo.map((_, index) => (
             <View
               key={index}
@@ -245,7 +339,7 @@ export default function GuestDashboardScreen() {
               ]}
             />
           ))}
-        </View> */}
+        </View>
       </ScrollView>
     </View>
   );

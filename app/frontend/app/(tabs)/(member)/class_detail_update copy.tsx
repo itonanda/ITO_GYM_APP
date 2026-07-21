@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,35 +18,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
 
-// STATE API
-const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  
-interface ItemData {
-  profiles : any;
-  full_name : string;
 
-  class_title: any;
-  booking_class: any;
-  
-  id_class_schedule: string;
-  title: string; // Replace with your actual table column schemas
-  start_time: string;
-  end_time: string;
-  descriptions : string;
-  available_quota: string;
-  quota: string;
-  list: String;
-  highlight: false;
-}
-
-export default function GuestViewClassDetailScreen() {
+export default function MemberClassDetailUpdateScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
@@ -62,38 +42,6 @@ export default function GuestViewClassDetailScreen() {
     viewAreaCoveragePercentThreshold: 50,
   };
 
-  // GET DATA
-// Accesses both route params ([id]) and query params (?name=John)
-  const { id_class_schedule } = useLocalSearchParams();
-  // const [items, setItems] = useState<ItemData[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
-  const [items, setData] = useState<ItemData | null>(null);
-  const [loading, setLoading] = useState(true);
-  // const { accessToken } = useGlobalSearchParams();
-
-  useEffect(() => {
-    fetchDataClassDetail();
-  }, []);
-
-  const fetchDataClassDetail = async () => {
-    try {
-      const response = await fetch(`${apiURL}/class/schedule/${id_class_schedule}`);
-      // const response = await fetch(`${apiURL}/class/schedule_today`);
-      const data = await response.json();
-      // setItems(data);
-      setData(data);
-      // console.log(data);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const extractTimeHHMM = (apiISOString: string) => {
-    // Extracts the "14:30" part from "2026-06-23T14:30:00.000Z"
-    return apiISOString.slice(0,5); 
-  };
 
   return (
     <View style={styles.container}>
@@ -118,11 +66,11 @@ export default function GuestViewClassDetailScreen() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 120 }}
             >
-                {/* <View style={styles.content}>
-                    {/* CARD TOP
+                <View style={styles.content}>
+                    {/* CARD TOP */}
                     <View style={styles.cardTop}>
                         <View style={styles.headerTop}>
-                            {/* ================= HEADER TOP=================
+                            {/* ================= HEADER TOP================= */}
                             <View style={styles.headerRow}>
                                 <View style={styles.headerRowTop}>
                                 <View style={styles.headerRowTopRight}>
@@ -144,11 +92,11 @@ export default function GuestViewClassDetailScreen() {
                         </View> 
                     </View>
 
-                    {/* CARD CENTER
+                    {/* CARD CENTER */}
                     <View style={styles.CardCenter}>
-                        {/* ================= DETAIL CLASS =================
+                        {/* ================= DETAIL CLASS ================= */}
                             <View style={styles.headerDetail}>
-                            {/* --------- Warm Up ---------
+                            {/* --------- Warm Up --------- */}
                             <View>
                                 <View style={styles.headerDetailRow}>
                                 <View style={styles.headerRowDetail}>
@@ -171,7 +119,7 @@ export default function GuestViewClassDetailScreen() {
                                 </View>
                             </View>
                             
-                            {/* --------- Exercise 1 ---------
+                            {/* --------- Exercise 1 --------- */}
                             <View>
                                 <View style={styles.headerDetailRow}>
                                 <View style={styles.headerRowDetail}>
@@ -194,7 +142,7 @@ export default function GuestViewClassDetailScreen() {
                                 </View>
                             </View>
             
-                            {/* --------- Exercise 2 ---------
+                            {/* --------- Exercise 2 --------- */}
                             <View>
                                 <View style={styles.headerDetailRow}>
                                 <View style={styles.headerRowDetail}>
@@ -222,7 +170,7 @@ export default function GuestViewClassDetailScreen() {
                                 </View>
                             </View>
             
-                            {/* --------- Exercise 3 --------- 
+                            {/* --------- Exercise 3 --------- */}
                             <View>
                                 <View style={styles.headerDetailRow}>
                                 <View style={styles.headerRowDetail}>
@@ -252,7 +200,7 @@ export default function GuestViewClassDetailScreen() {
                                 </View>
                             </View>
             
-                            {/* --------- Exercise 4 --------- 
+                            {/* --------- Exercise 4 --------- */}
                             <View>
                                 <View style={styles.headerDetailRow}>
                                 <View style={styles.headerRowDetail}>
@@ -277,67 +225,8 @@ export default function GuestViewClassDetailScreen() {
                             </View>
                         </View>
                     </View>
-                </View> */}
+                </View>
 
-                {items && (
-                  <View style={styles.content}>
-                      {/* CARD TOP */}
-                      <View style={styles.cardTop}>
-                          <View style={styles.headerTop}>
-                              {/* ================= HEADER TOP================= */}
-                              <View style={styles.headerRow}>
-                                  <View style={styles.headerRowTop}>
-                                  <View style={styles.headerRowTopRight}>
-                                      <Text style={styles.headerTitleDetail}>{items.class_title.title}</Text>
-                                      {/* <Text style={styles.headerSubTitleDetail}>{items.start_time_class}-{items.end_time_class}</Text>  */}
-                                      <Text style={styles.headerSubTitleDetail}>{extractTimeHHMM(items.start_time)} - {extractTimeHHMM(items.end_time)}</Text> 
-                                  </View>
-                                  </View>
-                                  <View style={styles.headerRowTop}>
-                                  <View style={styles.headerRowTopLeft}>
-                                      <View style={styles.avatar}>
-                                      <Ionicons name="person-circle-outline" size={100} color="#000"/>
-                                      </View>
-                                      <Text style={styles.headerSubTitleDetail}>{items.profiles.full_name}</Text> 
-                                  </View>
-                                  </View>
-                              </View>
-                  
-                              <Text style={{fontSize:16, color:'#F02727', fontStyle:'italic', marginBottom:10}}>{items.descriptions} .....</Text>
-                          </View> 
-                      </View>
-  
-                      {/* CARD CENTER */}
-                      <View style={styles.CardCenter}>
-                          {/* ================= DETAIL CLASS ================= */}
-                              <View style={styles.headerDetail}>
-                              {/* --------- Warm Up --------- */}
-                              <View>
-                                  <View style={styles.headerDetailRow}>
-                                  <View style={styles.headerRowDetail}>
-                                      <View style={styles.headerRowDetailRight}>
-                                      <View style={styles.iconTemp}>
-                                          <Ionicons name="thermometer-outline" size={40} color="#8A0404"/>
-                                      </View>
-                                      </View>
-                                  </View>
-                                  <View style={styles.headerRowDetail}>
-                                      <View style={styles.headerRowDetailLeft}>
-                                      <Text style={styles.headerTitleDetail}>Workout Of The Day</Text>
-                                      {/* <Text></Text> */}
-                                      <Text style={styles.headerSubTitleDetail}>
-                                          {items.list}
-                                      </Text>
-                                      </View>
-                                  </View>
-                                  </View>
-                              </View>
-                          </View>
-                      </View>
-                  </View>
-  
-                )}
-                              
                 {/* BOTTOM BAR */}
                 <LinearGradient
                   colors={["#FFFFFF", "#FFFFFF"]}
@@ -347,21 +236,18 @@ export default function GuestViewClassDetailScreen() {
                 >
                   {/* PAGE */}
                   <LinearGradient
-                      colors={["#f4afafa4", "#f4afaf"]}
+                      colors={["#98eb98", "#78fa78"]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 0, y: 1 }}
                       style={styles.bottomBarPageBox}
                   >
-                    {/* <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
-                        2/15
-                    </Text> */}
-                    <Text style={{fontSize:16, color:'#E01F26', fontStyle:"italic",fontWeight:'bold'}}>
-                        {items?.available_quota}/{items?.quota}
+                    <Text style={{fontSize:16, color:'#08b208', fontStyle:"italic",fontWeight:'bold'}}>
+                      2/15
                     </Text>
                   </LinearGradient>
 
                   {/* BUTTON */}
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/membership_plan')}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_cancel')}>
                     <LinearGradient
                       colors={["#E82528", "#9A0006"]}
                       start={{ x: 0, y: 0 }}
@@ -369,7 +255,7 @@ export default function GuestViewClassDetailScreen() {
                       style={styles.bottomBarBookButton}
                     >
                       <Text style={{fontSize:16, color:'#000', fontStyle:"italic",fontWeight:'bold'}}>
-                          Book
+                        Cancel
                       </Text>
                     </LinearGradient>
                   </TouchableOpacity>

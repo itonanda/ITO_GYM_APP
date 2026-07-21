@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,13 +18,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
-
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
 
 const { width } = Dimensions.get('window');
 
@@ -48,36 +45,12 @@ const paymentMethods = [
   },
 ];
 
-// STATE API
-const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-interface UsersData {
-  id_user : string;
-  full_name : string;
-  email : string;
-}
-
-interface ItemsData {
-  id_membership_plan : string;
-  title : string;
-  price : string;
-  description : string;
-}
-
-// Call this function when the user initiates a checkout or transaction
-const handleCreateTransaction = () => {
-  const transactionId = `TXN-${uuidv4().replace(/-/g, '').toUpperCase()}`;
-  console.log("Generated Transaction ID:", transactionId);
-  
-  // Example output: TXN-9B1DEB4D3B7D4BAD9DDD2B0D0B3D36D0
-  return transactionId;
-};
 
 export default function CheckOutPaymentMethodScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("1");
   //const [selected, setSelected] = useState<number | null>(null);
   
   const handleNext = () => {
@@ -90,17 +63,11 @@ export default function CheckOutPaymentMethodScreen() {
       `You selected ${selectedMethod?.title}`,
       [
         {
-          //text: "OK",
+          text: "OK",
           onPress: () => {
-            const id_transaction = `TXN-${uuidv4().replace(/-/g, '').toUpperCase()}`;
-            console.log("Generated Transaction ID:", id_transaction);
             // pindah screen sesuai payment
             if (selectedMethod?.title === "QRIS") {
-              // router.push("/(tabs)/(member)/check_out_qr");
-              router.push({
-              pathname: '/(tabs)/(member)/check_out_qr',
-              params: { id_transaction: id_transaction, id_user: users?.id_user, id_membership_plan: id_membership_plan, membership_date: membership_date, paymentMethod: selectedMethod?.title}
-            })
+              router.push("/(tabs)/(member)/check_out_qr");
             } else if (selectedMethod?.title === "Gopay") {
               router.push("/(tabs)/(member)/check_out_gopay");
             } else if (selectedMethod?.title === "BCA Transfer") {
@@ -124,59 +91,6 @@ export default function CheckOutPaymentMethodScreen() {
     viewAreaCoveragePercentThreshold: 50,
   };
 
-  // GET DATA
-  // Accesses both route params ([id]) and query params (?name=John)
-  const [items, setItems] = useState<ItemsData | null>(null);
-  const [users, setUsers] = useState<UsersData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { accessToken, id_membership_plan, membership_date } = useGlobalSearchParams();
-  console.log(membership_date);
-
-
-  useEffect(() => {
-      fetchDataUser();
-      fetchDataMembershipPlans();
-    }, []);
-    
-  const fetchDataUser = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/profile`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataUser = await responseUser.json();
-      setUsers(dataUser);
-      // console.log(dataUser);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataMembershipPlans = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/membership/plans/${id_membership_plan}`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataMembershipPlans = await responseUser.json();
-      setItems(dataMembershipPlans);
-      console.log(dataMembershipPlans);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -209,9 +123,7 @@ export default function CheckOutPaymentMethodScreen() {
                     style={styles.card}
                   >
                     <Text style={styles.payTitle}>Complete Your Payment</Text>
-                    {items && (
-                    <Text style={styles.amount}>Rp. {items.price}</Text>
-                    )}
+                    <Text style={styles.amount}>Rp 900.000</Text>
 
                     <View style={styles.divider} />
 
@@ -219,7 +131,7 @@ export default function CheckOutPaymentMethodScreen() {
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Final payment deadline</Text>
                       <View style={styles.statusBadge}>
-                        <Text style={styles.statusText}>{membership_date}</Text>
+                        <Text style={styles.statusText}>27 Juni 2027</Text>
                       </View>
                     </View>
                   </LinearGradient>
@@ -233,14 +145,10 @@ export default function CheckOutPaymentMethodScreen() {
                 {/* ================= Payment Metohd ================= */}
                 <View style={styles.headerPaymentMetohd}>
                     <View style={styles.cardPaymentMetohd}>
-                        <FlatList
-                          data={paymentMethods}
-                          scrollEnabled={false}
-                          keyExtractor={(item) => item.id}
-                          renderItem={({ item }) => {
-                            const active = selected === item.id;
-
-                            return (
+                          {paymentMethods.map((item) => {
+                          const active = selected === item.id;
+              
+                          return (
                               <TouchableOpacity
                               key={item.id}
                               activeOpacity={0.8}
@@ -249,6 +157,7 @@ export default function CheckOutPaymentMethodScreen() {
                                   active && styles.paymentItemActivePaymentMetohd,
                               ]}
                               onPress={() => setSelected(item.id)}
+                              //onPress={() => router.replace('/(tabs)/CheckOutQR')}
                               >
                                   <View style={styles.leftContentPaymentMetohd}>
                                       <View
@@ -283,9 +192,8 @@ export default function CheckOutPaymentMethodScreen() {
                                       {active && <View style={styles.radioInnerPaymentMetohd} />}
                                   </View>
                               </TouchableOpacity>
-                            );
-                          }}
-                        />
+                          );
+                          })}
                     </View>                        
                 </View>
             </ScrollView>

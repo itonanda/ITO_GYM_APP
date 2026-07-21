@@ -163,3 +163,16 @@ export const signOutService = async (token) => {
     // res.clearCookie('sb-access-token');
    return ;
 };
+
+export const changePasswordService = async (userData) => {
+// const { data, error } = await supabaseServiceRole.auth.updateUser(
+    const { data, error } = await supabaseServiceRole.auth.admin.updateUserById(
+    userData.id_user,  
+    {
+      password: userData.password
+    });
+  // console.log(userData.id_user);
+  // console.log(userData.password);
+  if (error) throw new Error(error.message);
+  return data;
+};

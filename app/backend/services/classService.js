@@ -26,7 +26,11 @@ export const scheduleTodayService = async () => {
         class_booking (
           id_class_booking,
           id_user,
-          id_class_schedule
+          id_class_schedule,
+          updated_at,
+          updated_by,
+          status,
+          highlight
         )
       `//);
       )
@@ -142,7 +146,11 @@ export const scheduleTodaySortByOrderService = async (sortBy,sortOrder) => {
         class_booking (
           id_class_booking,
           id_user,
-          id_class_schedule
+          id_class_schedule,
+          updated_at,
+          updated_by,
+          status,
+          highlight
         )
       `//);
       )
@@ -190,7 +198,11 @@ export const scheduleTomorrowSortByOrderService = async (sortBy,sortOrder) => {
         class_booking (
           id_class_booking,
           id_user,
-          id_class_schedule
+          id_class_schedule,
+          updated_at,
+          updated_by,
+          status,
+          highlight
         )
       `//);
       )
@@ -206,7 +218,7 @@ export const bookingClassService = async (Data) => {
   .from("class_booking")
   .insert({
     id_user:Data[0].id_user,
-    id_class_schedule:Data[1].id_class_schedule,
+    id_class_schedule:Data[1].id_class_schedule
     // user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   })
   .select();
@@ -240,20 +252,22 @@ export const fetchBookingByIdService = async (id_user) => {
         )
       `//);
       )
-    .eq("id_user", id_user)
+    .eq("id_user", id_user);
     // .single();
   if (error) throw new Error(error.message);
   return data;
 };
 
-export const updateAvailableQuotaClassByIdService = async (Data) => {
-  const value = Data[1].available_quota-1;
+export const updateAvailableQuotaClassByIdService = async (UpdateData) => {
+  const value = UpdateData[1].available_quota-1;
+  // console.log(value);
   const { data, error } = await supabaseServiceRole
     .from("class_schedule")
     .update({
         available_quota: value
       })
-    .eq("id_class_schedule", Data[1].id_class_schedule);
+    .eq("id_class_schedule", UpdateData[1].id_class_schedule)
+    .select();
   if (error) throw new Error(error.message);
   return data;
 };

@@ -64,11 +64,24 @@ export default function SignInScreen() {
 
         //   // setLoading(false);
         // }
+        console.log(data);
+        // console.log(data.session.user_metadata.role);
+        // console.log(data.session.user.user_metadata.role);
+        // console.log(data.user.user_metadata.role);
+
+        if(data.user.user_metadata.role === "coach"){
+            router.replace({
+            pathname: '../(tabs)/(coach)/dashboard',
+            // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+            params: { accessToken: data.session.access_token }
+          });
+        }else if(data.user.user_metadata.role === "member"){
           router.replace({
             pathname: '../(tabs)/(member)/dashboard',
             // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
             params: { accessToken: data.session.access_token }
           });
+          }
         })
         .catch(error => {
           console.error('Error:', error);

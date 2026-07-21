@@ -76,6 +76,7 @@ router.get('/profile', authenticate, (req, res) => {
     // message: 'Secure data accessed successfully!',
     id_user: req.user.id,
     email: req.user.email,
+    phone: req.user.phone,
     // fullname: req.profiles.fullname
     full_name: req.user.user_metadata.full_name,
     // name: req.user.user_metadata.name,

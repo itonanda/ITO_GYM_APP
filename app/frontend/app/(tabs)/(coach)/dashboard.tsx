@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,10 +12,9 @@ import {
 } from 'react-native';
 import { ViewToken } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from "expo-linear-gradient";
-import { useLocalSearchParams } from 'expo-router';
 import { Calendar } from "react-native-calendars";
 
 const { width } = Dimensions.get('window');
@@ -97,6 +96,31 @@ const workoutSchedule: Record<string, any[]> = {
   ],
 };
 
+interface ItemData {
+  profiles : any;
+  id : string;
+  full_name : string;
+
+  class_title: any;
+  id_class_title: string;
+  title: string; // Replace with your actual table column schemas
+  
+  class_schedule : any;
+  id_class_schedule: string;
+  start_time: string;
+  end_time: string;
+  available_quota: string;
+  quota: string;
+  highlight: false;
+
+  booking_class: any;
+}
+
+interface UsersData {
+  id_user : string
+  full_name : string;
+  email : string;
+}
 
 export default function CoachDashboardScreen() {
   const router = useRouter();
@@ -124,6 +148,62 @@ export default function CoachDashboardScreen() {
     selectedColor: "#E82528",
   };
 
+  // Accesses both route params
+    const apiURL = process.env.EXPO_PUBLIC_API_URL;
+    // const { accessToken, email } = useLocalSearchParams();
+    const { accessToken } = useGlobalSearchParams();
+    // console.log(accessToken);
+  
+    // GET DATA
+      const [items, setItems] = useState<ItemData[]>([]);
+      const [users, setUsers] = useState<UsersData | null>(null);
+      // const [loading, setLoading] = useState<boolean>(true);
+      const [loading, setLoading] = useState(true);
+    
+      useEffect(() => {
+        fetchDataClassToday();
+        fetchDataUser();
+      }, []);
+  
+      const fetchDataClassToday = async () => {
+        try {
+          // const response = await fetch(`${apiURL}/class/schedule_today`);
+          const response = await fetch(`${apiURL}/class/schedule_today_list?sortBy=start_time&order=asc`);
+          const data = await response.json();
+          const datalimit = data.slice(0,3);
+          setItems(datalimit);
+        } catch (error) {
+          console.error('Error fetching list data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      const fetchDataUser = async () => {
+        try {
+          // console.log(accessToken);
+          const responseUser = await fetch(`${apiURL}/profile`, {
+          method: 'GET',
+          headers: {
+            'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+            'Content-Type': 'application/json',
+          }
+        });
+          const dataUser = await responseUser.json();
+          setUsers(dataUser);
+          // console.log(dataUser);
+        } catch (error) {
+          console.error('Error fetching list data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+    const extractTimeHHMM = (apiISOString: string) => {
+    // Extracts the "14:30" part from "14:30:00"
+    return apiISOString.slice(0,5);
+    };
+  
 
   return (
     <View style={styles.container}>
@@ -143,7 +223,9 @@ export default function CoachDashboardScreen() {
           </TouchableOpacity>
           
           <View style={{marginLeft:10}}>
-            <Text style={styles.headerTitle}>Coach Bahlil</Text>
+            {users && (
+              <Text style={styles.headerTitle}>{users.full_name}</Text>
+            )}
           </View>
         </View>
         <Ionicons name="notifications-outline" size={24} color="#fff"/>

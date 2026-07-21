@@ -173,7 +173,7 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
   } finally {
     setLoading(false);
   }
-  };
+};
 
   const fetchDataBookingClass = async () => {
     try {
@@ -203,53 +203,7 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
     // Extracts the "14:30" part from "2026-06-23T14:30:00.000Z"
     return apiISOString.slice(0,5); 
   };
-  
-  const handleBookingClassCancel = () => {
-    return Alert.alert(
-      "Confirmation", // Judul Pop-up
-      // "Apakah Anda yakin ingin menghapus data ini?", // Pesan Pop-up
-      // "Are you sure you want to cancel this booking? This action cannot be undone.?", // Pesan Pop-up
-      "Are you sure you want to cancel this booking?", // Pesan Pop-up
-      [
-        // Tombol No
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        // Tombol Yes
-        {
-          text: "Yes",
-          style: "destructive", // Opsional: Tampilan merah untuk peringatan
-          onPress: () => {
-            console.log("Data dihapus!");
-            // Masukkan fungsi 'Yes' Anda di sini
-            fetch(`${apiURL}/class/booking_class_cancel`, {
-              method: 'POST',
-              headers: {
-                // authorization: "Bearer YOUR_KEY",
-                'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-                'Content-Type': 'application/json',
-              },
-              // body: JSON.stringify({ 
-              //     users, items 
-              // }),
-            })
-              .then(response => response.json())
-              .then(data => {
-                router.replace({
-                  pathname: '/booking_cancel',
-                  // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
-                });
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              });
-          },
-        },
-      ]
-    );
-  };
-  
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -306,14 +260,13 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
                             // if (!item.highlight) return null;
             
                             return (
-                                // <TouchableOpacity key={item.id_class_booking} style={styles.headerCard} activeOpacity={1} onPress={() => 
-                                //   // router.replace('/class_detail_update')
-                                //   router.push({
-                                //     pathname: '/(tabs)/(member)/class_detail_update',
-                                //     params: { id_class_booking: item.id_class_booking },
-                                //   })
-                                // }>    
-                                <View>    
+                                <TouchableOpacity key={item.id_class_booking} style={styles.headerCard} activeOpacity={1} onPress={() => 
+                                  // router.replace('/class_detail_update')
+                                  router.push({
+                                    pathname: '/(tabs)/(member)/class_detail_update',
+                                    params: { id_class_booking: item.id_class_booking, id_class_schedule: item.class_schedule.id_class_schedule },
+                                  })
+                                }>       
                                     <View style={styles.cardBookingClass}>
                                         {/* Date Box */}
                                         <View style={styles.dateContainer}>
@@ -334,11 +287,8 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
                                         <Text style={styles.time}>{extractTimeHHMM(item.class_schedule.start_time)}-{extractTimeHHMM(item.class_schedule.end_time)}</Text>
                                         <Text style={styles.author}>By {item.class_schedule.profiles.full_name}</Text>
                                         </View>
-                                        <TouchableOpacity key={item.id_class_booking} onPress={handleBookingClassCancel}> 
-                                          <Ionicons name="trash" size={34} color="#E11F27" />
-                                        </TouchableOpacity>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             );
                             }}
                         />

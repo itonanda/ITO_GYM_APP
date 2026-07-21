@@ -34,7 +34,6 @@ export default function SettingsScreen() {
   const [notificationEnabled, setNotificationEnabled] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
-  
   // Accesses both route params
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const { accessToken } = useGlobalSearchParams();
@@ -79,7 +78,7 @@ export default function SettingsScreen() {
       .then(response => response.json())
       .then(response => {
       if(!response.error){
-          router.navigate('../') // Use router.navigate for general navigation
+          router.navigate('/') // Use router.navigate for general navigation
       }
       })
       .catch(error => {
@@ -127,7 +126,17 @@ export default function SettingsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
 
-          <TouchableOpacity style={styles.menuCard}>
+          {users && (
+          <TouchableOpacity style={styles.menuCard} onPress={() =>
+              router.push({
+                pathname: '/(tabs)/(member)/edit_profile',
+                params: { id_user: users.id_user },
+                // state: { 
+                //   token: 'super-secret-token-12345',
+                //   userId: 99
+                // }
+              })
+            }>
             <View style={styles.leftMenu}>
               <Ionicons name="person-outline" size={24} color="#EF4444" />
 
@@ -136,9 +145,18 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
-
-
-          <TouchableOpacity style={styles.menuCard}>
+          )}
+          {users && (
+          <TouchableOpacity style={styles.menuCard}onPress={() =>
+              router.push({
+                pathname: '/(tabs)/(member)/change_password',
+                params: { id_user: users.id_user },
+                // state: { 
+                //   token: 'super-secret-token-12345',
+                //   userId: 99
+                // }
+              })
+            }>
             <View style={styles.leftMenu}>
               <MaterialIcons name="key" size={24} color="#EF4444" />
 
@@ -147,6 +165,7 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
+          )}
         </View>
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
@@ -73,7 +73,21 @@ const membershipPlans = [
   },
 ];
 
+// STATE API
+const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
+interface UsersData {
+  id_user : string;
+  full_name : string;
+  email : string;
+}
+
+interface ItemsData {
+  id_membership_plan : string;
+  title : string;
+  price : string;
+  description : string;
+}
 
 export default function MembershipPlanScreen() {
   const router = useRouter();
@@ -81,7 +95,14 @@ export default function MembershipPlanScreen() {
   const flatListRef = useRef(null);
   const [selected, setSelected] = useState("");
   //const [selected, setSelected] = useState<number | null>(null);
-  
+
+  // GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+  const [items, setItems] = useState<ItemsData[]>([]);
+  const [users, setUsers] = useState<UsersData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { accessToken, userId, name, email } = useGlobalSearchParams();
+
   // const handleNext = () => {
   //   const selectedMethod = membershipPlans.find(
   //     (item) => item.id === selected
@@ -102,8 +123,8 @@ export default function MembershipPlanScreen() {
   // };
 
   const handleNext = () => {
-    const selectedMethod = membershipPlans.find(
-      (item) => item.id === selected
+    const selectedMethod = items.find(
+      (item) => item.id_membership_plan === selected
     );
 
     // Belum memilih membership
@@ -123,7 +144,12 @@ export default function MembershipPlanScreen() {
         {
           text: "OK",
           onPress: () => {
-            router.push("/(tabs)/(member)/check_out");
+            // router.push("/(tabs)/(member)/check_out");
+            router.push({
+              pathname: '/(tabs)/(member)/check_out',
+              params: { id_membership_plan: selected }
+            })
+            
           },
         },
       ]
@@ -141,7 +167,51 @@ export default function MembershipPlanScreen() {
     const viewConfig = {
     viewAreaCoveragePercentThreshold: 50,
   };
+  
+  useEffect(() => {
+      fetchDataUser();
+      fetchDataMembershipPlans();
+    }, []);
+    
+  const fetchDataUser = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const fetchDataMembershipPlans = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/membership/plans`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataMembershipPlans = await responseUser.json();
+      setItems(dataMembershipPlans);
+      console.log(dataMembershipPlans);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -170,7 +240,7 @@ export default function MembershipPlanScreen() {
                                             
                 {/* ================= Membership Plan ================= */}
                 <View style={styles.headerMembershipPlans}>
-                    <FlatList
+                    {/* <FlatList
                       data={membershipPlans}
                       scrollEnabled={false}
                       keyExtractor={(item) => item.id}
@@ -226,6 +296,87 @@ export default function MembershipPlanScreen() {
                                         • {benefit}
                                       </Text>
                                     ))}
+                                  </View>
+                                }
+                              </View>
+                              
+                              <View>
+                                <View
+                                    style={[
+                                    styles.radioOuterMembershipPlans,
+                                    active && styles.radioOuterActiveMembershipPlans,
+                                    ]}
+                                >
+                                    {active && <View style={styles.radioInnerMembershipPlans} />}                                      
+                                </View>
+                              </View>  
+                          </TouchableOpacity>
+                        );
+                      }}
+                      contentContainerStyle={styles.cardMembershipPlans}
+                    /> */}
+
+                    <FlatList
+                      data={items}
+                      scrollEnabled={false}
+                      keyExtractor={(item) => item.id_membership_plan}
+                      renderItem={({ item }) => {
+                        const active = selected === item.id_membership_plan;
+
+                        return (
+                          <TouchableOpacity
+                            key={item.id_membership_plan}
+                            activeOpacity={0.8}
+                            style={[
+                                styles.membershipItemMembershipPlans,
+                                active && styles.membershipItemActiveMembershipPlans,
+                            ]}
+                            onPress={() => setSelected(item.id_membership_plan)}
+                          >
+                              <View style={styles.leftContentMembershipPlans}>
+                                <View style={styles.leftContentMembershipPlansTitle}>
+                                  <View
+                                  style={[
+                                      styles.iconContainerMembershipPlans,
+                                      active && styles.iconContainerActiveMembershipPlans,
+                                  ]}
+                                  >
+                                    <Ionicons
+                                        name="card-outline"
+                                        size={22}
+                                        color={active ? "#FFFFFF" : "#E31E24"}
+                                    />
+                                  </View>
+
+                                  <View>
+                                      <Text
+                                        style={[
+                                            styles.membershipTextMembershipPlans,
+                                            active && styles.membershipTextActiveMembershipPlans,
+                                        ]}
+                                      >
+                                        {item.title}
+                                      </Text>
+
+                                      {item.price !== "" && (
+                                        <Text style={styles.planPrice}>Rp. {item.price}</Text>
+                                      )}
+                                  </View>                                                   
+                                </View>
+                                
+                                {active && 
+                                  <View>
+                                    <View style={styles.divider} />
+                                    {/* {item.benefits.map((benefit, index) => (
+                                      <Text key={index} style={styles.benefit}>
+                                        • {benefit}
+                                      </Text>
+                                    ))} */}
+                                    
+                                      <Text style={styles.benefit}>
+                                        {item.description}
+                                      </Text>
+                                    
                                   </View>
                                 }
                               </View>

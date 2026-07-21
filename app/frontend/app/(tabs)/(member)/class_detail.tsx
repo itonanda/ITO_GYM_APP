@@ -18,19 +18,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
-import { useLocalSearchParams } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
 // STATE API
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+const apiURL = process.env.EXPO_PUBLIC_API_URL;
   
 interface ItemData {
   profiles : any;
@@ -40,7 +39,7 @@ interface ItemData {
   booking_class: any;
   
   id_class_schedule: Int32;
-  titile: string; // Replace with your actual table column schemas
+  title: string; // Replace with your actual table column schemas
   start_time: string;
   end_time: string;
   descriptions : string;
@@ -55,6 +54,7 @@ interface UsersData {
   full_name : string;
   email : string;
 }
+
 export default function MemberClassDetailScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -146,6 +146,7 @@ export default function MemberClassDetailScreen() {
         method: 'POST',
         headers: {
           // authorization: "Bearer YOUR_KEY",
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
           'Content-Type': 'application/json',
         },
         // body: JSON.stringify({ 
