@@ -75,6 +75,15 @@ export default function MembershipPageScreen() {
     )}
   };
 
+  const handlePaymentHistory = () => {
+    {users &&(
+      router.push({
+        pathname: '/payment_history',
+        params: { id_user: users.id_user }
+      })
+    )}
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -153,7 +162,8 @@ export default function MembershipPageScreen() {
                         </View>
                         <Text style={styles.menuText}>Billing</Text>
                         </TouchableOpacity> */}
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/payment_history')}>
+                        {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/payment_history')}> */}
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={handlePaymentHistory}>
                         <View style={styles.menuIcon}>
                             <Ionicons name="card-outline" size={24} color="#333" />
                         </View>

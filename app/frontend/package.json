@@ -64,8 +64,9 @@
   },
   "private": true,
   "expo": {
-    "name": "doms",
-    "slug": "doms",
+    "name": "DOMS Project",
+    "slug": "doms-project",
+    "scheme": "myapp",
     "plugins": [
       [
         "expo-image-picker",

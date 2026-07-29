@@ -304,6 +304,11 @@ const handlePress = (item: any) => {
           keyExtractor={(item) => item.id_class_schedule.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
+          ListEmptyComponent={
+            <View style={{ padding: 20, alignItems: 'center' }}>
+              <Text>No class schedule found</Text>
+            </View>
+          }
           renderItem={({ item }) => (
             <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>

@@ -4,7 +4,8 @@ import {
   signIn,
   signInData,
   signOut,
-  changePassword
+  changePassword,
+  changeProfile
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -14,6 +15,7 @@ router.post("/signin", signIn);
 router.post("/sign-in", signInData);
 router.post("/signout", signOut);
 router.post("/change_password", changePassword);
+router.post("/change_profile", changeProfile);
 
 // Protected Route
 // router.get("/secure-data", secureData);

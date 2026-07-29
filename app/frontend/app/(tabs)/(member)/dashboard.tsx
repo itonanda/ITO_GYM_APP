@@ -21,6 +21,9 @@ import { useLocalSearchParams } from 'expo-router';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
 
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+
 const { width } = Dimensions.get('window');
 
 /* ================= DATA ================= */
@@ -190,10 +193,25 @@ export default function MemberDashboardScreen() {
     // const [loading, setLoading] = useState<boolean>(true);
     // const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-  
+    // const [session, setSession] = useState<Session | null>(null);
+
     useEffect(() => {
       fetchDataClassToday();
       fetchDataUser();
+
+      // // Check current session on page load
+      // supabase.auth.getSession().then(({ data: { session } }) => {
+      //   setSession(session);
+      // });
+
+      // const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      // if (event === 'SIGNED_IN') {
+      //   // Redirect to the Dashboard/Home screen
+      // } else if (event === 'SIGNED_OUT') {
+      //   // Redirect to the Login screen
+      // }
+      // });
+    //  return () => subscription.unsubscribe();
     }, []);
 
     const fetchDataClassToday = async () => {
@@ -330,7 +348,7 @@ export default function MemberDashboardScreen() {
         
 
         {/* ================= AVAILABLE CLASS ================= */}
-        <Text style={styles.sectionTitle}>Available Classes</Text>
+        {/* <Text style={styles.sectionTitle}>Available Classes</Text> */}
 
         {/* <FlatList
           ref={flatListRef}
@@ -380,7 +398,14 @@ export default function MemberDashboardScreen() {
           keyExtractor={(item) => item.id_class_schedule.toString()}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewConfig}
+          // ListEmptyComponent={
+          //   <View style={{ padding: 20, alignItems: 'center' }}>
+          //     <Text>No class schedule found</Text>
+          //   </View>
+          // }
           renderItem={({ item }) => (
+            <View>
+            <Text style={styles.sectionTitle}>Available Classes</Text>
             <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
                 // router.push(
@@ -412,11 +437,23 @@ export default function MemberDashboardScreen() {
                   </View>
                 </View>
             </TouchableOpacity>
+            <View style={styles.dotContainer}>
+              {classDataToday.map((_, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.dot,
+                    activeIndex === index && styles.activeDot,
+                  ]}
+                />
+              ))}
+            </View>
+            </View>
           )}
         />
 
         {/* ================= DOT INDICATOR CLASS================= */}
-        <View style={styles.dotContainer}>
+        {/* <View style={styles.dotContainer}>
           {classDataToday.map((_, index) => (
             <View
               key={index}
@@ -426,7 +463,7 @@ export default function MemberDashboardScreen() {
               ]}
             />
           ))}
-        </View>
+        </View> */}
 
 
         {/* ================= Menu Grid ================= */}

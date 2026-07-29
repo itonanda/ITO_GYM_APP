@@ -44,7 +44,7 @@ export default function CheckOutBCATransferScreen() {
 
       //------------------------------------------------------
       //Sementara biar bisa keliatan Screen Payment sukses
-      router.replace('/(tabs)/(member)/check_out_payment_success')
+      // router.replace('/(tabs)/(member)/check_out_payment_success')
       //------------------------------------------------------
   };
 

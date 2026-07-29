@@ -176,3 +176,24 @@ export const changePasswordService = async (userData) => {
   if (error) throw new Error(error.message);
   return data;
 };
+
+export const changeProfileService = async (userData) => {
+// const { data, error } = await supabaseServiceRole.auth.updateUser(
+    const { data, error } = await supabaseServiceRole.auth.admin.updateUserById(
+    userData.id_user,  
+    {
+      email:userData.email,
+      phone:userData.phone,
+      user_metadata: { full_name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
+    });
+
+    // .from('profiles')
+    // .update({ full_name, avatar_url, updated_at: new Date() })
+    // .eq('id', userData.id_user)
+    // .select();
+
+  // console.log(userData.id_user);
+  // console.log(userData.password);
+  if (error) throw new Error(error.message);
+  return data;
+};

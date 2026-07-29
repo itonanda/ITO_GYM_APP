@@ -320,6 +320,11 @@ export default function MembershipPlanScreen() {
                       data={items}
                       scrollEnabled={false}
                       keyExtractor={(item) => item.id_membership_plan}
+                      ListEmptyComponent={
+                        <View style={{ padding: 20, alignItems: 'center' }}>
+                          <Text>No membership plan found</Text>
+                        </View>
+                      }
                       renderItem={({ item }) => {
                         const active = selected === item.id_membership_plan;
 

@@ -45,6 +45,13 @@ interface ItemsData {
   description : string;
 }
 
+interface PaymentData {
+  id_payment_method : string;
+  title : string;
+  image_logo : string;
+  image_qr : string;
+}
+
 export default function CheckOutQRScreen() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -101,7 +108,6 @@ export default function CheckOutQRScreen() {
       console.log(error);
       Alert.alert("Error", "Gagal menyimpan QR");
     }
-
     
       //------------------------------------------------------
       //Sementara biar bisa keliatan Screen Payment sukses
@@ -113,6 +119,7 @@ export default function CheckOutQRScreen() {
   // Accesses both route params ([id]) and query params (?name=John)
   const [items, setItems] = useState<ItemsData | null>(null);
   const [users, setUsers] = useState<UsersData | null>(null);
+  const [payment, setPayment] = useState<PaymentData | null>(null);
   const [loading, setLoading] = useState(true);
   const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
   console.log(id_user);
@@ -124,6 +131,8 @@ export default function CheckOutQRScreen() {
   useEffect(() => {
       fetchDataUser();
       fetchDataMembershipPlans();
+      fetchDataPaymentMethod();
+      // CheckOutPayment();
     }, []);
     
   const fetchDataUser = async () => {
@@ -164,6 +173,49 @@ export default function CheckOutQRScreen() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchDataPaymentMethod = async () => {
+    try {
+      // console.log(accessToken);
+      const responsPayment = await fetch(`${apiURL}/payment/method/${paymentMethod}`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataPaymentMethod = await responsPayment.json();
+      setPayment(dataPaymentMethod);
+      console.log(dataPaymentMethod);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const CheckOutPayment = () => {
+     fetch(`${apiURL}/payment/checkout`, {
+        method: 'POST',
+        headers: {
+          // authorization: "Bearer YOUR_KEY",
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_user, id_membership_plan, id_payment_method:payment?.id_payment_method, id_transaction }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          router.replace({
+            pathname: '/(tabs)/(member)/check_out_payment_success',
+            // // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+            // params: { accessToken: data.session.access_token }
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
   };
   
   return (
@@ -261,7 +313,18 @@ export default function CheckOutQRScreen() {
                           <Text style={styles.buttonTextSaveQR}>Save QR</Text>
                         </LinearGradient>
                       </TouchableOpacity>
-                                
+                      
+                      <TouchableOpacity activeOpacity={0.8} onPress={CheckOutPayment}>
+                        <LinearGradient
+                            colors={["#E82528", "#9A0006"]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            style={styles.buttonSaveQR}
+                          >
+                          <Text style={styles.buttonTextSaveQR}>Confirmation Payment</Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+
                       {/*<View style={styles.infoContainer}>
                           <View style={styles.infoItem}>
                               <Ionicons

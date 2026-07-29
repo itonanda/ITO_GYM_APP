@@ -6,7 +6,9 @@ import {
   scheduleTomorrowSortByOrderService,
   bookingClassService,
   fetchBookingByIdService,
-  updateAvailableQuotaClassByIdService
+  updateAvailableQuotaClassByIdService,
+  cancelBookingClassService,
+  updateCancelAvailableQuotaClassByIdService,
 } from "../services/classService.js";
 
 export const scheduleToday = async (req, res) => {
@@ -128,5 +130,27 @@ export const fetchBookingById = async (req, res) => {
      res.status(200).json(fetchBookingById);
    } catch (error) {
      res.status(500).json({ error: error.message });
+   }
+};
+
+export const cancelBookingClass = async (req, res) => {
+  try {
+     const CancelData = req.body;
+     const bookingClass = await cancelBookingClassService(CancelData);
+     res.status(200).json({ message: 'Cancel Booking Class successfully', bookingClass});
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+    //  console.log(error);
+    //  console.log(error.message);
+   }
+
+   try {
+     const CancelData = req.body;
+     const updateAvailableQuotaClass = await updateCancelAvailableQuotaClassByIdService(CancelData);
+     return res.status(200).json({ message: 'Update Quota cancel successfully', updateAvailableQuotaClass});
+   } catch (error) {
+     res.status(500).json({ error: error.message });
+    //  console.log(error);
+    //  console.log(error.message);
    }
 };

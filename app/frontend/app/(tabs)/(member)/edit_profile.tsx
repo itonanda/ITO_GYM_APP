@@ -460,7 +460,70 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
     : 'https://placeholder.com';
 // const avatarUri = avatarUrl;
 
-  
+  const handleChangeProfile = () => {
+      // if(oldPassword.length === 0) {
+      //     Alert.alert('Attention','Please enter both old password');
+      //     return;
+      // }
+      // else if
+    //   if(password.length === 0) {
+    //       Alert.alert('Attention','Please enter both password');
+    //       return;
+    //   }
+    //   if(password.length < 8) {
+    //       Alert.alert('Attention','Please enter both password must be at least 8 characters long.');
+    //       return;
+    //   }
+    //   if(confirmPassword.length === 0) {
+    //       Alert.alert('Attention','Please enter both confirm password');
+    //       return;
+    //   }
+    //   if(confirmPassword.length < 8) {
+    //       Alert.alert('Attention','Please enter both confirm password must be at least 8 characters long.');
+    //       return;
+    //   }
+      // else {
+        // fetch(`${apiURL}/auth/signin`, {
+        console.log(id_user,
+            email,
+            fullName,
+            birthDateJSON,
+            gender,
+            phone,
+            emergencyContactNo,
+            emergencyContactName,);
+        fetch(`${apiURL}/auth/change_profile`, {
+          method: 'POST',
+          headers: {
+            // authorization: "Bearer YOUR_KEY",
+            'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            id_user,
+            email,
+            fullName,
+            birthDateJSON,
+            gender,
+            phone,
+            emergencyContactNo,
+            emergencyContactName, 
+          }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            router.replace({
+              pathname: '/(tabs)/(member)/setting',
+              // // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+              // params: { accessToken: data.session.access_token }
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      // }
+    };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -790,7 +853,7 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
             )}
         
         {/* Change Password Button */}
-        <TouchableOpacity style={styles.buttonSave} onPress={handleEditProfile}>
+        <TouchableOpacity style={styles.buttonSave} onPress={handleChangeProfile}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </ScrollView>

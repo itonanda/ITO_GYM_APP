@@ -29,8 +29,7 @@ export const scheduleTodayService = async () => {
           id_class_schedule,
           updated_at,
           updated_by,
-          status,
-          highlight
+          status
         )
       `//);
       )
@@ -149,8 +148,7 @@ export const scheduleTodaySortByOrderService = async (sortBy,sortOrder) => {
           id_class_schedule,
           updated_at,
           updated_by,
-          status,
-          highlight
+          status
         )
       `//);
       )
@@ -201,8 +199,7 @@ export const scheduleTomorrowSortByOrderService = async (sortBy,sortOrder) => {
           id_class_schedule,
           updated_at,
           updated_by,
-          status,
-          highlight
+          status
         )
       `//);
       )
@@ -235,7 +232,10 @@ export const fetchBookingByIdService = async (id_user) => {
         id_user,
         updated_at,
         updated_by,
-        status,
+        class_status (
+          id_class_status,
+          title
+        ),
         class_schedule (
           id_class_schedule,
           start_time,
@@ -253,6 +253,7 @@ export const fetchBookingByIdService = async (id_user) => {
       `//);
       )
     .eq("id_user", id_user);
+    // .eq("id_class_status", "1");
     // .single();
   if (error) throw new Error(error.message);
   return data;
@@ -267,6 +268,33 @@ export const updateAvailableQuotaClassByIdService = async (UpdateData) => {
         available_quota: value
       })
     .eq("id_class_schedule", UpdateData[1].id_class_schedule)
+    .select();
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+
+export const cancelBookingClassService = async (CancelData) => {
+  const { data, error } = await supabaseServiceRole
+    .from("class_booking")
+    .update({
+        status: 2
+      })
+    .eq("id_class_booking", CancelData[1].id_class_booking)
+    .select();
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const updateCancelAvailableQuotaClassByIdService = async (CancelData) => {
+  const value = CancelData[1].available_quota+1;
+  // console.log(value);
+  const { data, error } = await supabaseServiceRole
+    .from("class_schedule")
+    .update({
+        available_quota: value
+      })
+    .eq("id_class_schedule", CancelData[1].id_class_schedule)
     .select();
   if (error) throw new Error(error.message);
   return data;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,49 +18,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
-
-// STATE API
-const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-interface UsersData {
-  id_user : string;
-  full_name : string;
-  email : string;
-}
-
-interface ItemsData {
-  id_membership_plan : string;
-  title : string;
-  price : string;
-  description : string;
-}
-
-interface PaymentData {
-  id_payments : string;
-  id_user : string;
-  
-  membership_plan : any;
-  id_membership_plan : string;
-  title : string;
-  price : string;
-
-  payment_method : any;
-  id_payment_method : string;
-  // title: string;
-  image_logo : string;
-  image_qr : string;
-  
-  id_transaction : string;
-  date : string;
-  payment_status : any;
-  // status : string;
-}
 
 // ========== DATA ==========
 const paymentData = [
@@ -92,65 +55,6 @@ const paymentData = [
 
 export default function PaymentHistoryScreen() {
   const router = useRouter();
-
-  // GET DATA
-    // Accesses both route params ([id]) and query params (?name=John)
-    const [items, setItems] = useState<ItemsData | null>(null);
-    const [users, setUsers] = useState<UsersData | null>(null);
-    const [payment, setPayment] = useState<PaymentData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
-    console.log(accessToken);
-    console.log(id_user);
-    // console.log(id_membership_plan);
-    // console.log(membership_date);
-    // console.log(paymentMethod);
-    // console.log(id_transaction);
-  
-    useEffect(() => {
-        fetchDataUser();
-        fetchDataPayment();
-      }, []);
-      
-    const fetchDataUser = async () => {
-      try {
-        // console.log(accessToken);
-        const responseUser = await fetch(`${apiURL}/profile`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataUser = await responseUser.json();
-        setUsers(dataUser);
-        // console.log(dataUser);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    const fetchDataPayment = async () => {
-      try {
-        // console.log(accessToken);
-        const responsPayment = await fetch(`${apiURL}/payment/history/${id_user}`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataPayment = await responsPayment.json();
-        setPayment(dataPayment);
-        console.log(dataPayment);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
   const renderItem = ({ item }: any) => (
     <LinearGradient
@@ -223,71 +127,15 @@ export default function PaymentHistoryScreen() {
         </LinearGradient>    
 
         {/* List */}
-        
         <FlatList
-          data={payment}
-          scrollEnabled={false}
-          keyExtractor={(item) => item.id_payments}
-          // renderItem={renderItem}
-          // showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-              padding: 30,
-          }}
-          renderItem={({ item }) => {
-
-            return (
-              <LinearGradient
-              colors={["#f7f0f0", "#f7f2f2"]}
-              style={styles.cardHistory}
-              >
-                  <TouchableOpacity activeOpacity={0.8}>
-                  <View style={styles.topRowHistory}>
-                      <View style={styles.iconContainerHistory}>
-                      <Ionicons
-                          name="card-outline"
-                          size={26}
-                          color="#9A0006"
-                      />
-                      </View>
-                      <View style={{ flex: 1 }}>
-                      <Text style={styles.titleHistory}>{item.membership_plan.title}</Text>
-
-                      <Text style={styles.methodHistory}>
-                          {item.payment_method.title}
-                      </Text>
-                      </View>
-                      <Text
-                      style={[
-                          styles.statusHistory,
-                          {
-                          color:
-                              item.payment_status.title === "SUCCESS"
-                              ? "#22C55E"
-                              : "#FACC15",
-                          },
-                      ]}
-                      >
-                      {item.payment_status.title}
-                      </Text>
-                  </View>
-
-                  <View style={styles.dividerHistory} />
-
-                  <View style={styles.bottomRowHistory}>
-                      <View>
-                      <Text style={styles.labelHistory}>Date</Text>
-                      <Text style={styles.dateHistory}>{item.date}</Text>
-                      </View>
-                      <Text style={styles.amountHistory}>
-                        Rp. {item.membership_plan.price}
-                      </Text>
-                  </View>
-                  </TouchableOpacity>
-              </LinearGradient>
-            );
-          }}
+        data={paymentData}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+            padding: 30,
+        }}
         />
-        
     </View>
   );
 }

@@ -35,14 +35,14 @@ export default function BookingCancelScreen() {
 
         {/*============ Member Dashboard ============*/}
         <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 50}}>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/dashboard')}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_class')}>
           <LinearGradient
               colors={["#E82528", "#9A0006"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
               style={styles.homeButton}
             >
-            <Text style={styles.homeText}>Back to Home</Text>
+            <Text style={styles.homeText}>Done</Text>
           </LinearGradient>
         </TouchableOpacity>
         </View> 

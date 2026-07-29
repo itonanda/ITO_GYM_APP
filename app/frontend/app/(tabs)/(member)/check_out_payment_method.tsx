@@ -92,8 +92,10 @@ export default function CheckOutPaymentMethodScreen() {
         {
           //text: "OK",
           onPress: () => {
+            // Generated Transaction ID
             const id_transaction = `TXN-${uuidv4().replace(/-/g, '').toUpperCase()}`;
             console.log("Generated Transaction ID:", id_transaction);
+
             // pindah screen sesuai payment
             if (selectedMethod?.title === "QRIS") {
               // router.push("/(tabs)/(member)/check_out_qr");

@@ -203,7 +203,7 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
     // Extracts the "14:30" part from "2026-06-23T14:30:00.000Z"
     return apiISOString.slice(0,5); 
   };
-  
+
   const handleBookingClassCancel = () => {
     return Alert.alert(
       "Confirmation", // Judul Pop-up
@@ -223,16 +223,16 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
           onPress: () => {
             console.log("Data dihapus!");
             // Masukkan fungsi 'Yes' Anda di sini
-            fetch(`${apiURL}/class/booking_class_cancel`, {
+            fetch(`${apiURL}/class/booking_class/cancel`, {
               method: 'POST',
               headers: {
                 // authorization: "Bearer YOUR_KEY",
                 'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
                 'Content-Type': 'application/json',
               },
-              // body: JSON.stringify({ 
-              //     users, items 
-              // }),
+              body: JSON.stringify({ 
+                  users, items 
+              }),
             })
               .then(response => response.json())
               .then(data => {
@@ -418,6 +418,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 20,
     borderWidth: 2,
+    marginBottom: 10,
   },
 
   // DATE

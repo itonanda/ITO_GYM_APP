@@ -6,7 +6,8 @@ import {
   sendbyEmailService,
   generateLinkService,
   inviteByEmailService,
-  changePasswordService
+  changePasswordService,
+  changeProfileService
 } from "../services/authService.js";
 
 export const signUp = async (req, res) => {
@@ -190,6 +191,23 @@ export const changePassword = async (req, res) => {
     console.log(changePassword);
     if (error) return res.status(400).json({ success: false, error: error.message });
     res.status(200).json({ success: true, message: 'Change Password successfully', changePassword });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const changeProfile = async (req, res) => {
+  try {
+    const userData = req.body;
+    // 1. Validate inputs
+    // if (!userData.password || !userData.confirmPassword) {
+    // if (!userData.password) {
+    //   return res.status(400).json({ error: 'Password are required' });
+    // }
+    const changeProfile = await changeProfileService(userData);
+    console.log(changeProfile);
+    if (error) return res.status(400).json({ success: false, error: error.message });
+    res.status(200).json({ success: true, message: 'Change Profile successfully', changeProfile });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
