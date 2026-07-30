@@ -10,6 +10,9 @@ export default function CoachLayout() {
       <Stack.Screen name="setting" options={{ headerShown: false }} />
       <Stack.Screen name="edit_profile" options={{ headerShown: false }} />
       <Stack.Screen name="change_password" options={{ headerShown: false }} />
+      <Stack.Screen name="add_class" options={{ headerShown: false }} />
+      <Stack.Screen name="edit_class" options={{ headerShown: false }} />
+      <Stack.Screen name="participants" options={{ headerShown: false }} />
       {/* <StatusBar style="auto" /> */}
     </Stack>
     

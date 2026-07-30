@@ -285,16 +285,22 @@ export default function CoachDashboardScreen() {
                 </Text>
               ) : (
                 selectedWorkouts.map((item) => (
-                  <TouchableOpacity key={item.id} style={styles.cardClassDate}>
+                  <TouchableOpacity key={item.id} style={styles.cardClassDate} onPress={() => router.replace('/edit_class')}>
                     <View>
                       <Text style={styles.titleClassDate}>{item.title}</Text>
                       <Text style={styles.timeClassDate}>{item.time}</Text>
+                      <View style={{marginTop: 10}}>
+                        <Text style={styles.slotClassDate}>{item.booked}/{item.total}</Text>
+                      </View>
                     </View>
-
-                    <Text style={styles.slotClassDate
-                    }>
-                      {item.booked}/{item.total}
-                    </Text>
+                    <View style={{flexDirection: "row", gap:5}}>
+                      <TouchableOpacity style={styles.actionButton} onPress={() => router.replace('/participants')}>
+                          <Ionicons name="eye" size={22} color="#7e1212"/>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.actionButton}>
+                          <Ionicons name="trash" size={22} color="#7e1212"/>
+                      </TouchableOpacity>
+                    </View>                    
                   </TouchableOpacity>
 
                 ))
@@ -310,23 +316,11 @@ export default function CoachDashboardScreen() {
 
           {/* ================= Menu Grid ================= */}
           <View style={styles.menuContainer}>
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/add_class')}>
               <View style={styles.menuIcon}>
                 <Ionicons name="add-circle" size={24} color="#fff" />
               </View>
               <Text style={styles.menuText}>Add Class</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
-              <View style={styles.menuIcon}>
-                <Ionicons name="people" size={24} color="#fff" />
-              </View>
-              <Text style={styles.menuText}>Members</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
-              <View style={styles.menuIcon}>
-                <Ionicons name="clipboard" size={24} color="#fff" />
-              </View>
-              <Text style={styles.menuText}>Attendance</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/+not-found')}>
               <View style={styles.menuIcon}>
@@ -455,7 +449,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-
+  actionButton: {
+    width: 35,
+    height: 35,
+    borderRadius: 20,
+    backgroundColor: "rgba(189, 15, 15, 0.42)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   
   //=========== Menu Grid ===========
   menuContainer: {
