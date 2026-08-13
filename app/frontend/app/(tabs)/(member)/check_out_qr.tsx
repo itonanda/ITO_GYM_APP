@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -26,6 +27,7 @@ import QRCode from "react-native-qrcode-svg";
 import ViewShot from "react-native-view-shot";
 import { captureRef } from 'react-native-view-shot';
 import * as MediaLibrary from "expo-media-library";
+import * as Clipboard from 'expo-clipboard';
 
 const { width } = Dimensions.get('window');
 
@@ -54,6 +56,8 @@ interface PaymentData {
 
 export default function CheckOutQRScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const onViewableItemsChanged = useRef(
@@ -108,7 +112,7 @@ export default function CheckOutQRScreen() {
       console.log(error);
       Alert.alert("Error", "Gagal menyimpan QR");
     }
-    
+
       //------------------------------------------------------
       //Sementara biar bisa keliatan Screen Payment sukses
       //router.replace('/(tabs)/(member)/check_out_payment_success')
@@ -119,7 +123,7 @@ export default function CheckOutQRScreen() {
   // Accesses both route params ([id]) and query params (?name=John)
   const [items, setItems] = useState<ItemsData | null>(null);
   const [users, setUsers] = useState<UsersData | null>(null);
-  const [payment, setPayment] = useState<PaymentData | null>(null);
+  const [paymentMethodItems, setPaymentMethodItems] = useState<PaymentData | null>(null);
   const [loading, setLoading] = useState(true);
   const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
   console.log(id_user);
@@ -132,6 +136,7 @@ export default function CheckOutQRScreen() {
       fetchDataUser();
       fetchDataMembershipPlans();
       fetchDataPaymentMethod();
+      // fetchDataPaymentStatus();
       // CheckOutPayment();
     }, []);
     
@@ -186,7 +191,7 @@ export default function CheckOutQRScreen() {
       }
     });
       const dataPaymentMethod = await responsPayment.json();
-      setPayment(dataPaymentMethod);
+      setPaymentMethodItems(dataPaymentMethod);
       console.log(dataPaymentMethod);
     } catch (error) {
       console.error('Error fetching list data:', error);
@@ -194,6 +199,26 @@ export default function CheckOutQRScreen() {
       setLoading(false);
     }
   };
+
+  // const fetchDataPaymentStatus = async () => {
+  //   try {
+  //     // console.log(accessToken);
+  //     const responsPayment = await fetch(`${apiURL}/payment/status/${paymentMethod}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+  //       'Content-Type': 'application/json',
+  //     }
+  //   });
+  //     const dataPaymentMethod = await responsPayment.json();
+  //     setPaymentStatusItems(dataPaymentMethod);
+  //     console.log(dataPaymentMethod);
+  //   } catch (error) {
+  //     console.error('Error fetching list data:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const CheckOutPayment = () => {
      fetch(`${apiURL}/payment/checkout`, {
@@ -203,19 +228,24 @@ export default function CheckOutQRScreen() {
           'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id_user, id_membership_plan, id_payment_method:payment?.id_payment_method, id_transaction }),
+        body: JSON.stringify({ id_user, id_membership_plan, id_payment_method:paymentMethodItems?.id_payment_method, id_transaction, id_payment_status :1, date: membership_date }),
       })
         .then(response => response.json())
         .then(data => {
           router.replace({
             pathname: '/(tabs)/(member)/check_out_payment_success',
-            // // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+            params: { paymentMethod, id_transaction, price: items?.price, membership_date }
             // params: { accessToken: data.session.access_token }
           });
         })
         .catch(error => {
           console.error('Error:', error);
         });
+  };
+  
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(JSON.stringify(id_transaction));
+    Alert.alert("Sukses", "ID Transaksi berhasil disalin!");
   };
   
   return (
@@ -227,7 +257,8 @@ export default function CheckOutQRScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/check_out_payment_method')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/check_out_payment_method')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -264,14 +295,17 @@ export default function CheckOutQRScreen() {
                       </View>
 
                       <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>Transaction ID</Text>
-                        <Text style={styles.detailValue}>{id_transaction}</Text>
+                        <Text style={styles.detailLabel}>ID Transaction</Text>
+                        {/* <Text style={styles.detailValue}>{id_transaction}</Text> */}
+                        <TouchableOpacity onPress={copyToClipboard} style={styles.touchable}>
+                          <Text style={styles.detailValue} numberOfLines={1} ellipsizeMode="tail"> {id_transaction}</Text>
+                        </TouchableOpacity>
                       </View>
 
                       <View style={styles.detailRow}>
                         <Text style={styles.detailLabel}>Status</Text>
                         <View style={styles.statusBadge}>
-                          <Text style={styles.statusText}>Waiting Payment</Text>
+                          <Text style={styles.statusText}>Pending</Text>
                         </View>
                       </View>
                     </View>
@@ -465,6 +499,10 @@ const styles = StyleSheet.create({
     color: "#111",
     fontSize: 14,
     fontWeight: "600",
+  },
+   touchable: {
+    flexShrink: 1, // Membantu pembungkus tombol menyusut sesuai sisa layar
+    maxWidth: '50%'
   },
   statusBadge: {
     backgroundColor: "#FFF3D6",

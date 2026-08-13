@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -57,6 +56,7 @@ interface ItemData {
   
   class_schedule : any;
   id_class_schedule: string;
+  date:string;
   start_time: string;
   end_time: string;
   available_quota: string;
@@ -72,9 +72,8 @@ interface UsersData {
   email : string;
 }
 
-export default function AddClassScreen() {
+export default function ListClassScreen() {
   const router = useRouter();
-  const navigation = useNavigation();
 
   // STATE API
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
@@ -130,27 +129,47 @@ export default function AddClassScreen() {
 
   // Accesses both route params
   // const { accessToken, email } = useLocalSearchParams();
-  const { accessToken } = useGlobalSearchParams();
+  const { accessToken, id_user } = useGlobalSearchParams();
   // console.log(accessToken);
 
   // GET DATA
-    const [itemsTitleName, setItemsTitleName] = useState<ItemData[]>([]);
+    const [items, setItems] = useState<ItemData[]>([]);
     const [users, setUsers] = useState<UsersData | null>(null);
-    const [id_user, setIdUser] = useState('');
+    // const [id_user, setIdUser] = useState('');
     // const [loading, setLoading] = useState<boolean>(true);
     const [loading, setLoading] = useState(true);
-    // console.log(id_user);
+    console.log(id_user);
+
     useEffect(() => {
-      fetchDataClassName();
       fetchDataUser();
+    //   fetchDataClassName();
+    //  return () => controller.abort(); // Cancels the request if component unmounts
+    }, []);
+
+    useEffect(() => {
+    //   fetchDataUser();
+      fetchDataClassName();
+      // Setup an interval to refresh every 10 seconds
+        // const intervalId = setInterval(fetchDataClassName, 2000); 
+
+        // // Clean up the interval when the component unmounts
+        // return () => clearInterval(intervalId); 
     }, []);
 
     const fetchDataClassName = async () => {
       try {
+        setLoading(true);
         // const response = await fetch(`${apiURL}/class/schedule_today`);
-        const response = await fetch(`${apiURL}/class/title_class`);
+        // const response = await fetch(`${apiURL}/class/schedule_coach/${id_user}`);
+        const response = await fetch(`${apiURL}/class/schedule_coach/${id_user}`, {
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        }
+      });
         const data = await response.json();
-        setItemsTitleName(data);
+        setItems(data);
         console.log(data);
       } catch (error) {
         console.error('Error fetching list data:', error);
@@ -171,7 +190,7 @@ export default function AddClassScreen() {
       });
         const dataUser = await responseUser.json();
         setUsers(dataUser);
-        setIdUser(dataUser.id_user);
+        // setIdUser(dataUser.id_user);
         // console.log(dataUser);
       } catch (error) {
         console.error('Error fetching list data:', error);
@@ -201,9 +220,9 @@ export default function AddClassScreen() {
   const startTimeJSON = startTime.toLocaleTimeString('en-US', { hour12: false });
   const endTimeJSON = endTime.toLocaleTimeString('en-US', { hour12: false });
 
-  // console.log(timeJSONISO);
-  // console.log(startTimeJSON);
-  // console.log(endTimeJSON);
+  console.log(timeJSONISO);
+  console.log(startTimeJSON);
+  console.log(endTimeJSON);
 
   // SUBMIT
   const handleSubmit = () => {
@@ -222,7 +241,7 @@ export default function AddClassScreen() {
         .then(response => response.json())
         .then(data => {
            Alert.alert('Success', 'Add Class berhasil!');
-           router.replace('/(tabs)/(coach)/dashboard');
+           router.replace('/dashboard');
         })
         .catch(error => {
           console.error('Error:', error);
@@ -273,214 +292,53 @@ export default function AddClassScreen() {
                 marginBottom: 20,
                 }}
               >
-                {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}> */}
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
                     <Ionicons name="arrow-back" size={22} color="#7e1212"/>
                 </TouchableOpacity>
-                <Text style={styles.title}>Add Class</Text>
-              </View>       
-
-              {/* Class Name */}
-              <Text style={styles.labelClassSchedule}>Class Name*</Text>
-              <TouchableOpacity
-                style={[
-                  styles.classNameRow,
-                  errors.className && { borderColor: "red" },
-                ]}
-                onPress={() => setShowClassName(true)}
-              >
-                <Text
-                  style={[
-                    styles.classNameSelectText,
-                    !className && { color: "#999" },
-                  ]}
-                >
-                  {className || "-- Select Class Name --"}
-                </Text>
-  
-                <Text style={styles.classNameArrow}>▼</Text>
-              </TouchableOpacity>
-  
-              {errors.className && (
-                <Text style={styles.errorTextClassSchedule}>{errors.className}</Text>
-              )}
-
-              <Modal visible={showClassName} transparent animationType="fade">
-                <TouchableOpacity
-                  style={styles.classNameModalOverlay}
-                  activeOpacity={1}
-                  onPress={() => setShowClassName(false)}
-                >
-                  <View style={styles.classNameModalContainer}>
-                    <FlatList
-                      ref={flatListRef}
-                      // data={dataClassName}
-                      data={itemsTitleName}
-                      pagingEnabled
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={(item) => item.id_class_title}
-                      onViewableItemsChanged={onViewableItemsChanged}
-                      viewabilityConfig={viewConfig}
-                      renderItem={({ item }) => (
-                        <TouchableOpacity
-                          key={item.id_class_title}
-                          style={styles.classNameOption}
-                          activeOpacity={1}
-                          onPress={() => {
-                            setIdClassName(item.id_class_title);
-                            setClassName(item.title);
-                            clearError("className");
-                            setShowClassName(false);
-                          }}
-                        >
-                          <Text style={styles.classNameOptionText}>{item.title}</Text>
+                <Text style={styles.title}>List Class</Text>
+              </View>
+              <FlatList
+                data={items}
+                scrollEnabled={false}
+                keyExtractor={(item) => item.id_class_schedule.toString()}
+                // keyExtractor={(item) => item.id_class_schedule}
+                ListEmptyComponent={
+                    <View style={{ padding: 20, alignItems: 'center' }}>
+                    <Text>No data found</Text>
+                    </View>
+                }
+                renderItem={({ item }) => (
+                    // const active = selected === item.id_membership_plan;
+                    // <TouchableOpacity key={item.id_class_schedule} style={styles.cardClassDate} onPress={() => router.replace('/edit_class')}>
+                    <TouchableOpacity key={item.id_class_schedule} style={styles.cardClassDate} onPress={() => router.push({
+                        pathname: '/edit_class',
+                        params: { id_class_schedule: item.id_class_schedule },
+                        })
+                    }
+                    >
+                        <View>
+                        <Text style={styles.titleClassDate}>{item.class_title?.title}</Text>
+                        <Text style={styles.timeClassDate}>{item.date}</Text>
+                        <View style={{marginTop: 10}}>
+                            <Text style={styles.slotClassDate}>{item.available_quota}/{item.quota}</Text>
+                        </View>
+                        </View>
+                        <View style={{flexDirection: "row", gap:5}}>
+                        {/* <TouchableOpacity style={styles.actionButton} onPress={() => router.replace('/participants')}> */}
+                        <TouchableOpacity key={item.id_class_schedule} style={styles.actionButton} onPress={() => router.push({
+                            pathname: '/participants',
+                            params: { id_class_schedule: item.id_class_schedule },
+                            })
+                        }>
+                            <Ionicons name="eye" size={22} color="#7e1212"/>
                         </TouchableOpacity>
-                      )}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </Modal>
- 
-              {/* Class Date */}
-              <Text style={styles.labelClassSchedule}>Class Date*</Text>
-              <TouchableOpacity
-                style={[styles.inputClassSchedule, errors.classDateDate && { borderColor: 'red' }]}
-                onPress={() => setShowDate(true)}
-              >
-                <Text>{formatDate(classDate)}</Text>
-              </TouchableOpacity>
-              {errors.classDate && <Text style={styles.errorTextClassSchedule}>{errors.classDate}</Text>}
-              {showDate && (
-                <DateTimePicker
-                  value={classDate}
-                  mode="date"
-                  display="default"
-                  minimumDate={new Date()}
-                  onChange={onChangeDate}
+                        <TouchableOpacity style={styles.actionButton}>
+                            <Ionicons name="trash" size={22} color="#7e1212"/>
+                        </TouchableOpacity>
+                        </View>                    
+                    </TouchableOpacity>
+                )}
                 />
-              )}
-              
-              {/* Start Time and End Time */}
-              <Text style={styles.labelClassSchedule}>Start Time and End Time*</Text>
-              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                  <TouchableOpacity
-                    style={styles.bottonTime}
-                    onPress={() => setShowStartPicker(true)}
-                  >
-                    <Text style={styles.textBottonTime}>
-                      {startTime.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Text>
-                  </TouchableOpacity>
-
-                  {showStartPicker && (
-                    <DateTimePicker
-                      value={startTime}
-                      mode="time"
-                      is24Hour={true}
-                      onChange={(event, selectedTime) => {
-                        setShowStartPicker(false);
-
-                        if (selectedTime) {
-                          setStartTime(selectedTime);
-                        }
-                      }}
-                    />
-                    
-                  )}
-
-                  <View style={{padding: 16, alignContent: "center"}}>
-                    <Octicons name="dash" size={24} color="#4E0708" />
-                  </View>
-
-                  <TouchableOpacity
-                    style={styles.bottonTime}
-                    onPress={() => setShowEndPicker(true)}
-                  >
-                    <Text style={styles.textBottonTime}>
-                      {endTime.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Text>
-                  </TouchableOpacity>
-
-                  {showEndPicker && (
-                    <DateTimePicker
-                      value={endTime}
-                      mode="time"
-                      is24Hour={true}
-                      onChange={(event, selectedTime) => {
-                        setShowEndPicker(false);
-
-                        if (selectedTime) {
-                          setEndTime(selectedTime);
-                        }
-                      }}
-                    />
-                  )}
-              </View>        
-              
-              {/* Description */}
-              <Text style={styles.labelClassSchedule}>Description*</Text>
-              <TextInput
-                style={[{ 
-                  borderWidth: 1,
-                  borderColor: "#D9D9DD",
-                  borderRadius: 10,
-                  padding: 12,
-                  minHeight: 80,
-                  backgroundColor: "#F7F7F7",
-                  textAlignVertical: "top"}, errors.description && { borderColor: 'red' }]}
-                  placeholder="Enter Description"
-                  value={descriptions}
-                  onChangeText={setDescriptions}
-                  multiline
-                  numberOfLines={5}
-                  textAlignVertical="top"
-              />
-              {errors.description && <Text style={styles.errorTextClassSchedule}>{errors.description}</Text>}
-
-              {/* List Class or Activity Plan */}
-              <Text style={styles.labelClassSchedule}>Activity Plan*</Text>
-              <TextInput
-                style={[{
-                  borderWidth: 1,
-                  borderColor: "#D9D9DD",
-                  borderRadius: 10,
-                  padding: 12,
-                  minHeight: 180,
-                  backgroundColor: "#F7F7F7",
-                  textAlignVertical: "top"}, errors.list && { borderColor: 'red' }]}
-                  placeholder="Enter Activity Plan..."
-                  value={list}
-                  onChangeText={setList}
-                  multiline
-                  numberOfLines={10}
-                  textAlignVertical="top"
-              />
-              {errors.list && <Text style={styles.errorTextClassSchedule}>{errors.list}</Text>}
-
-              {/* Quota */}
-              <Text style={styles.labelClassSchedule}>Quota*</Text>
-              <TextInput
-                style={[styles.inputClassSchedule, errors.quota && { borderColor: 'red' }]}
-                placeholder="Quota"
-                value={quota}
-                onChangeText={setQuota}
-                keyboardType="number-pad"
-                maxLength={3}
-              />
-              {errors.quota && <Text style={styles.errorTextClassSchedule}>{errors.quota}</Text>}
-
-
-              {/* Button */}
-              <TouchableOpacity style={styles.buttonClassSchedule} onPress={handleSubmit}>
-                <Text style={styles.buttonTextClassSchedule}>Submit</Text>
-              </TouchableOpacity>
-
             </View>
           </ScrollView>
       </LinearGradient>
@@ -616,5 +474,44 @@ const styles = StyleSheet.create({
     fontSize: 14, 
     fontWeight: "bold", 
     color: "#fff"
+  },
+
+  cardClassDate: {
+    borderWidth: 1,
+    borderColor: "#555",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#eee",
+  },
+
+  titleClassDate: {
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "italic",
+  },
+
+  timeClassDate: {
+    marginTop: 5,
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#666",
+  },
+
+  slotClassDate: {
+    color: "red",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  actionButton: {
+    width: 35,
+    height: 35,
+    borderRadius: 20,
+    backgroundColor: "rgba(189, 15, 15, 0.42)",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

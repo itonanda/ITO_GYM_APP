@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -18,7 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,9 +30,32 @@ import * as Clipboard from "expo-clipboard";
 
 const { width } = Dimensions.get('window');
 
+// STATE API
+const apiURL = process.env.EXPO_PUBLIC_API_URL;
+
+interface UsersData {
+  id_user : string;
+  full_name : string;
+  email : string;
+}
+
+interface ItemsData {
+  id_membership_plan : string;
+  title : string;
+  price : string;
+  description : string;
+}
+
+interface PaymentData {
+  id_payment_method : string;
+  title : string;
+  image_logo : string;
+  image_qr : string;
+}
 
 export default function CheckOutBCATransferScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
 
   const vaNumber = "88081234567890";
 
@@ -48,6 +72,135 @@ export default function CheckOutBCATransferScreen() {
       //------------------------------------------------------
   };
 
+  // GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+  const [items, setItems] = useState<ItemsData | null>(null);
+  const [users, setUsers] = useState<UsersData | null>(null);
+  const [paymentMethodItems, setPaymentMethodItems] = useState<PaymentData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
+  console.log(id_user);
+  console.log(id_membership_plan);
+  console.log(membership_date);
+  console.log(paymentMethod);
+  console.log(id_transaction);
+
+  useEffect(() => {
+      fetchDataUser();
+      fetchDataMembershipPlans();
+      fetchDataPaymentMethod();
+      // fetchDataPaymentStatus();
+      // CheckOutPayment();
+    }, []);
+    
+  const fetchDataUser = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDataMembershipPlans = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/membership/plans/${id_membership_plan}`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataMembershipPlans = await responseUser.json();
+      setItems(dataMembershipPlans);
+      console.log(dataMembershipPlans);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDataPaymentMethod = async () => {
+    try {
+      // console.log(accessToken);
+      const responsPayment = await fetch(`${apiURL}/payment/method/${paymentMethod}`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataPaymentMethod = await responsPayment.json();
+      setPaymentMethodItems(dataPaymentMethod);
+      console.log(dataPaymentMethod);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // const fetchDataPaymentStatus = async () => {
+  //   try {
+  //     // console.log(accessToken);
+  //     const responsPayment = await fetch(`${apiURL}/payment/status/${paymentMethod}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+  //       'Content-Type': 'application/json',
+  //     }
+  //   });
+  //     const dataPaymentMethod = await responsPayment.json();
+  //     setPaymentStatusItems(dataPaymentMethod);
+  //     console.log(dataPaymentMethod);
+  //   } catch (error) {
+  //     console.error('Error fetching list data:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  
+  const CheckOutPayment = () => {
+      fetch(`${apiURL}/payment/checkout`, {
+        method: 'POST',
+        headers: {
+          // authorization: "Bearer YOUR_KEY",
+          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_user, id_membership_plan, id_payment_method:paymentMethodItems?.id_payment_method, id_transaction, id_payment_status :1, date: membership_date }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          router.replace({
+            pathname: '/(tabs)/(member)/check_out_payment_success',
+            params: { paymentMethod, id_transaction, price: items?.price, membership_date }
+            // params: { accessToken: data.session.access_token }
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+  };
+  
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(JSON.stringify(id_transaction));
+    Alert.alert("Sukses", "ID Transaksi berhasil disalin!");
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#E82528" />
@@ -57,7 +210,8 @@ export default function CheckOutBCATransferScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/check_out_payment_method')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/check_out_payment_method')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -84,13 +238,35 @@ export default function CheckOutBCATransferScreen() {
                       <Text style={styles.titleTransfer}>
                         Complete Your Payment
                       </Text>
-            
+                      {items && (
                       <Text style={styles.amountTransfer}>
-                        Rp 900.000
+                        Rp. {items.price}
                       </Text>
-            
+                      )}
                       <View style={styles.divider} />
             
+                      {/* DETAIL */}
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Payment Method</Text>
+                        <Text style={styles.detailValue}>{paymentMethod}</Text>
+                      </View>
+
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>ID Transaction</Text>
+                        {/* <Text style={styles.detailValue}>{id_transaction}</Text> */}
+                        <TouchableOpacity onPress={copyToClipboard} style={styles.touchable}>
+                          <Text style={styles.detailValue} numberOfLines={1} ellipsizeMode="tail"> {id_transaction}</Text>
+                        </TouchableOpacity>
+                      </View>
+
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Status</Text>
+                        <View style={styles.statusBadge}>
+                          <Text style={styles.statusText}>Pending</Text>
+                        </View>
+                      </View>
+                      <View style={styles.divider} />
+
                       {/* VA NUMBER */}
                       <Text style={styles.labelTransfer}>
                         Virtual Account Number
@@ -144,6 +320,17 @@ export default function CheckOutBCATransferScreen() {
                         5. Complete payment
                       </Text>
                     </View>
+
+                    <TouchableOpacity activeOpacity={0.8} onPress={CheckOutPayment}>
+                      <LinearGradient
+                          colors={["#E82528", "#9A0006"]}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 0, y: 1 }}
+                          style={styles.buttonSaveQR}
+                        >
+                        <Text style={styles.buttonTextSaveQR}>Confirmation Payment</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
     </View>
@@ -253,6 +440,38 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 14,
   },
+
+  detailRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+    alignItems: "center",
+  },
+  detailLabel: {
+    color: "#777",
+    fontSize: 14,
+  },
+  detailValue: {
+    color: "#111",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+   touchable: {
+    flexShrink: 1, // Membantu pembungkus tombol menyusut sesuai sisa layar
+    maxWidth: '50%'
+  },
+  statusBadge: {
+    backgroundColor: "#FFF3D6",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  statusText: {
+    color: "#E8A100",
+    fontWeight: "700",
+    fontSize: 12,
+  },
+
   vaContainerTransfer: {
     backgroundColor: "#F5F7FA",
     borderRadius: 16,
@@ -273,6 +492,22 @@ const styles = StyleSheet.create({
   },
   copyTextTransfer: {
     color: "#005BAC",
+    fontWeight: "700",
+  },
+
+  buttonSaveQR: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 50,
+    backgroundColor: "#E31E24",
+    paddingHorizontal: 30,
+    paddingVertical: 14,
+    borderRadius: 14,
+  },
+  buttonTextSaveQR: {
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "700",
   },
 });

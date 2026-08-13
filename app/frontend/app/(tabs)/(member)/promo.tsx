@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -72,10 +73,10 @@ const voucherData = [
   },
 ];
 
-
-
 export default function PromoScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndexPromoData, setActiveIndexPromoData] = useState(0);
   const flatListRefPromoData = useRef(null);
   const [activeIndexVoucherData, setActiveIndexVoucherData] = useState(0);
@@ -121,7 +122,8 @@ export default function PromoScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

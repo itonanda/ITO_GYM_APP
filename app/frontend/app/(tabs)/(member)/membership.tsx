@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -35,7 +36,8 @@ interface UsersData {
 
 export default function MembershipPageScreen() {
   const router = useRouter();
-  
+  const navigation = useNavigation();
+
   // GET DATA
   // Accesses both route params ([id]) and query params (?name=John)
   const [users, setUsers] = useState<UsersData | null>(null);
@@ -68,17 +70,19 @@ export default function MembershipPageScreen() {
 
   const handleBookingClass = () => {
     {users &&(
-      router.push({
-        pathname: '/booking_class',
-        params: { id_user: users.id_user }
+      // router.push({
+      router.navigate({
+        pathname: '/(tabs)/(member)/booking_class',
+        params: { accessToken, id_user: users.id_user }
       })
     )}
   };
 
   const handlePaymentHistory = () => {
     {users &&(
-      router.push({
-        pathname: '/payment_history',
+      // router.push({
+      router.navigate({
+        pathname: '/(tabs)/(member)/payment_history',
         params: { id_user: users.id_user }
       })
     )}
@@ -93,7 +97,8 @@ export default function MembershipPageScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -124,7 +129,8 @@ export default function MembershipPageScreen() {
                             </Text>
                           </View>
                           
-                          <TouchableOpacity onPress={() => router.replace('/setting')}>
+                          {/* <TouchableOpacity onPress={() => router.replace('/setting')}> */}
+                          <TouchableOpacity onPress={() => router.navigate('/(tabs)/(member)/setting')}>
                             <Image
                               source={require('../../../assets/images/user/user.png')}
                               style={styles.profileImage}
@@ -143,7 +149,8 @@ export default function MembershipPageScreen() {
                 <View style={styles.headerGrid}>
                     {/* ================= Menu Grid ================= */}
                     <View style={styles.menuContainer}>
-                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership_plan')}>
+                        {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership_plan')}> */}
+                        <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/membership_plan')}>
                         <View style={styles.menuIcon}>
                             <Ionicons name="calendar-outline" size={24} color="#333" />
                         </View>

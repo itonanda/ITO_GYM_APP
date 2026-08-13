@@ -13,6 +13,7 @@ export default function CoachLayout() {
       <Stack.Screen name="add_class" options={{ headerShown: false }} />
       <Stack.Screen name="edit_class" options={{ headerShown: false }} />
       <Stack.Screen name="participants" options={{ headerShown: false }} />
+      <Stack.Screen name="list_class" options={{ headerShown: false }} />
       {/* <StatusBar style="auto" /> */}
     </Stack>
     

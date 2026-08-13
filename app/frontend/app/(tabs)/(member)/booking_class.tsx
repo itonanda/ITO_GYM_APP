@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -101,6 +102,8 @@ const classDataBookingClass = [
 
 export default function BookingClassScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndexBookingClass, setActiveIndexBookingClass] = useState(0);
   const flatListRefBookingClass = useRef(null);
 
@@ -204,7 +207,10 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
     return apiISOString.slice(0,5); 
   };
 
-  const handleBookingClassCancel = () => {
+  const handleBookingClassCancel = (id_class_booking:string, id_class_schedule:string, available_quota:string) => {
+    console.log(id_class_schedule);
+    console.log(available_quota);
+
     return Alert.alert(
       "Confirmation", // Judul Pop-up
       // "Apakah Anda yakin ingin menghapus data ini?", // Pesan Pop-up
@@ -224,20 +230,20 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
             console.log("Data dihapus!");
             // Masukkan fungsi 'Yes' Anda di sini
             fetch(`${apiURL}/class/booking_class/cancel`, {
-              method: 'POST',
+              method: 'PUT',
               headers: {
                 // authorization: "Bearer YOUR_KEY",
                 'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ 
-                  users, items 
+                  id_class_booking, id_class_schedule, id_user, available_quota
               }),
             })
               .then(response => response.json())
               .then(data => {
                 router.replace({
-                  pathname: '/booking_cancel',
+                  pathname: '/(tabs)/(member)/booking_cancel',
                   // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
                 });
               })
@@ -259,7 +265,8 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/membership')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -334,7 +341,7 @@ const dayNumber = new Date(dateString + 'T00:00:00'); // Prevent timezone shifti
                                         <Text style={styles.time}>{extractTimeHHMM(item.class_schedule.start_time)}-{extractTimeHHMM(item.class_schedule.end_time)}</Text>
                                         <Text style={styles.author}>By {item.class_schedule.profiles.full_name}</Text>
                                         </View>
-                                        <TouchableOpacity key={item.id_class_booking} onPress={handleBookingClassCancel}> 
+                                        <TouchableOpacity key={item.id_class_booking} onPress={() => handleBookingClassCancel(item.id_class_booking, item.class_schedule.id_class_schedule, item.class_schedule.available_quota)}> 
                                           <Ionicons name="trash" size={34} color="#E11F27" />
                                         </TouchableOpacity>
                                     </View>

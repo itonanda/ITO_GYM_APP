@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -48,6 +49,8 @@ interface ItemsData {
 
 export default function CheckOutScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [selected, setSelected] = useState("1");
@@ -100,11 +103,18 @@ export default function CheckOutScreen() {
   const { accessToken, id_membership_plan } = useGlobalSearchParams();
   console.log(id_membership_plan);
 
+  // useFocusEffect(
+  // useCallback(() => {
+  //     fetchDataUser();
+  //     fetchDataMembershipPlans();
+  //    }, [])
+  // );
+
   useEffect(() => {
-      fetchDataUser();
-      fetchDataMembershipPlans();
-    }, []);
-    
+    fetchDataUser();
+    fetchDataMembershipPlans();
+  }, []);
+
   const fetchDataUser = async () => {
     try {
       // console.log(accessToken);
@@ -154,7 +164,8 @@ export default function CheckOutScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/membership_plan')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -257,9 +268,10 @@ export default function CheckOutScreen() {
           {/* BUTTON */}
           {/* <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/check_out_payment_method')}> */}
           <TouchableOpacity activeOpacity={0.8} onPress={() => 
-           router.push({
+          //  router.push({
+           router.navigate({
               pathname: '/(tabs)/(member)/check_out_payment_method',
-              params: { id_membership_plan: id_membership_plan, membership_date: JSON.stringify(formatDate(MembershipStartDate),null, 2)}
+              params: { id_membership_plan: id_membership_plan, membership_date: JSON.stringify(formatDate(MembershipStartDate),null, 2).replace(/["']/g, "")}
             })
           }>
             <LinearGradient

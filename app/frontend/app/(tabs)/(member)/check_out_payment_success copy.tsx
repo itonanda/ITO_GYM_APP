@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -19,38 +18,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
-import * as Clipboard from 'expo-clipboard';
+
 
 const { width } = Dimensions.get('window');
-
-// STATE API
-const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-interface UsersData {
-  id_user : string;
-  full_name : string;
-  email : string;
-}
-
-interface ItemsData {
-  id_membership_plan : string;
-  title : string;
-  price : string;
-  description : string;
-}
-
-interface PaymentData {
-  id_payment_method : string;
-  title : string;
-  image_logo : string;
-  image_qr : string;
-}
 
 // =========== DATA ===========
 const vaTransactionID = "TRX2026";
@@ -354,91 +330,6 @@ const downloadInvoice = async () => {
 export default function PaymentSuccessScreen() {
   const router = useRouter();
   
-  // GET DATA
-  // Accesses both route params ([id]) and query params (?name=John)
-  const [items, setItems] = useState<ItemsData | null>(null);
-  const [users, setUsers] = useState<UsersData | null>(null);
-  const [payment, setPayment] = useState<PaymentData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction, price } = useGlobalSearchParams();
-  console.log(id_user);
-  console.log(id_membership_plan);
-  console.log(membership_date);
-  console.log(paymentMethod);
-  console.log(id_transaction);
-  console.log(price);
-
-  useEffect(() => {
-      fetchDataUser();
-      // fetchDataMembershipPlans();
-      // fetchDataPaymentMethod();
-      // CheckOutPayment();
-    }, []);
-    
-  const fetchDataUser = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/profile`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataUser = await responseUser.json();
-      setUsers(dataUser);
-      // console.log(dataUser);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataMembershipPlans = async () => {
-    try {
-      // console.log(accessToken);
-      const responseUser = await fetch(`${apiURL}/membership/plans/${id_membership_plan}`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataMembershipPlans = await responseUser.json();
-      setItems(dataMembershipPlans);
-      console.log(dataMembershipPlans);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataPaymentMethod = async () => {
-    try {
-      // console.log(accessToken);
-      const responsPayment = await fetch(`${apiURL}/payment/method/${paymentMethod}`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-        'Content-Type': 'application/json',
-      }
-    });
-      const dataPaymentMethod = await responsPayment.json();
-      setPayment(dataPaymentMethod);
-      console.log(dataPaymentMethod);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const copyToClipboard = async () => {
-    await Clipboard.setStringAsync(JSON.stringify(id_transaction));
-    Alert.alert("Sukses", "ID Transaksi berhasil disalin!");
-  };
 
   return (
     <LinearGradient
@@ -461,37 +352,30 @@ export default function PaymentSuccessScreen() {
               {/* Title */}
               <Text style={styles.titlePayNotif}>Payment Successful</Text>
 
-              {/* <Text style={styles.subtitlePayNotif}>
-                Your membership has been activated successfully
-              </Text> */}
               <Text style={styles.subtitlePayNotif}>
-                Your membership has been payment
+                Your membership has been activated successfully
               </Text>
 
               {/* Card */}
               <View style={styles.cardPayNotif}>
                 <View style={styles.rowPayNotif}>
-                  <Text style={styles.labelPayNotif}>ID Transaction</Text>
-                  <TouchableOpacity onPress={copyToClipboard} style={styles.touchable}>
-                    <Text style={styles.valuePayNotif} numberOfLines={1} ellipsizeMode="tail"> {id_transaction}</Text>
-                  </TouchableOpacity>
-                  
+                  <Text style={styles.labelPayNotif}>Order ID</Text>
+                  <Text style={styles.valuePayNotif}>{vaTransactionID}</Text>
                 </View>
 
                 <View style={styles.rowPayNotif}>
                   <Text style={styles.labelPayNotif}>Payment Method</Text>
-                  <Text style={styles.valuePayNotif}>{paymentMethod}</Text>
+                  <Text style={styles.valuePayNotif}>{vaPaymentMethod}</Text>
                 </View>
 
                 <View style={styles.rowPayNotif}>
                   <Text style={styles.labelPayNotif}>Amount</Text>
-                  <Text style={styles.amountPayNotif}>Rp. {price}</Text>
+                  <Text style={styles.amountPayNotif}>Rp {vaprice}</Text>
                 </View>
 
                 <View style={styles.rowPayNotif}>
                   <Text style={styles.labelPayNotif}>Date</Text>
-                  {/* <Text style={styles.valuePayNotif}>{formatTanggal(today)}</Text> */}
-                  <Text style={styles.valuePayNotif}>{membership_date}</Text>
+                  <Text style={styles.valuePayNotif}>{formatTanggal(today)}</Text>
                 </View>
               </View>
 
@@ -503,9 +387,9 @@ export default function PaymentSuccessScreen() {
 
               <TouchableOpacity
                 style={styles.homeButtonPayNotif}
-                onPress={() => router.replace('/(tabs)/(member)/membership')}
+                onPress={() => router.replace('/dashboard')}
               >
-                <Text style={styles.homeTextPayNotif}>Done</Text>
+                <Text style={styles.homeTextPayNotif}>Back To Home</Text>
               </TouchableOpacity>
           </View>
       </ScrollView>
@@ -570,10 +454,6 @@ const styles = StyleSheet.create({
   labelPayNotif: {
     color: "#7c7d7e",
     fontSize: 14,
-  },
-   touchable: {
-    flexShrink: 1, // Membantu pembungkus tombol menyusut sesuai sisa layar
-    maxWidth: '50%'
   },
   valuePayNotif: {
     color: "#2c2c2d",

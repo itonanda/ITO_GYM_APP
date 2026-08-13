@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -75,6 +76,8 @@ const handleCreateTransaction = () => {
 
 export default function CheckOutPaymentMethodScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [selected, setSelected] = useState("");
@@ -99,14 +102,25 @@ export default function CheckOutPaymentMethodScreen() {
             // pindah screen sesuai payment
             if (selectedMethod?.title === "QRIS") {
               // router.push("/(tabs)/(member)/check_out_qr");
-              router.push({
+              // router.push({
+              router.navigate({
               pathname: '/(tabs)/(member)/check_out_qr',
               params: { id_transaction: id_transaction, id_user: users?.id_user, id_membership_plan: id_membership_plan, membership_date: membership_date, paymentMethod: selectedMethod?.title}
             })
             } else if (selectedMethod?.title === "Gopay") {
-              router.push("/(tabs)/(member)/check_out_gopay");
+              // router.push("/(tabs)/(member)/check_out_gopay");
+              // router.push({
+              router.navigate({
+              pathname: '/(tabs)/(member)/check_out_gopay',
+              params: { id_transaction: id_transaction, id_user: users?.id_user, id_membership_plan: id_membership_plan, membership_date: membership_date, paymentMethod: selectedMethod?.title}
+            })
             } else if (selectedMethod?.title === "BCA Transfer") {
-              router.push("/(tabs)/(member)/check_out_bca");
+              // router.push("/(tabs)/(member)/check_out_bca");
+              // router.push({
+              router.navigate({
+              pathname: '/(tabs)/(member)/check_out_bca',
+              params: { id_transaction: id_transaction, id_user: users?.id_user, id_membership_plan: id_membership_plan, membership_date: membership_date, paymentMethod: selectedMethod?.title}
+            })
             }
           },
         },
@@ -132,8 +146,11 @@ export default function CheckOutPaymentMethodScreen() {
   const [users, setUsers] = useState<UsersData | null>(null);
   const [loading, setLoading] = useState(true);
   const { accessToken, id_membership_plan, membership_date } = useGlobalSearchParams();
-  console.log(membership_date);
+  // const date_membership = JSON.parse(membership_date);
+  // const date_membership = membership_date.toLocaleString();
 
+  console.log(membership_date);
+  // console.log(date_membership);
 
   useEffect(() => {
       fetchDataUser();
@@ -189,7 +206,8 @@ export default function CheckOutPaymentMethodScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/check_out')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/check_out')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

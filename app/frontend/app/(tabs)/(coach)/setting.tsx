@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -30,7 +31,9 @@ interface UsersData {
 }
 
 export default function SettingsScreen() {
-  const router = useRouter();  
+  const router = useRouter();
+  const navigation = useNavigation();
+
   const [notificationEnabled, setNotificationEnabled] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -79,7 +82,8 @@ export default function SettingsScreen() {
       .then(response => response.json())
       .then(response => {
       if(!response.error){
-          router.navigate('../') // Use router.navigate for general navigation
+          // router.navigate('/') // Use router.navigate for general navigation
+          router.replace('/') // Use router.navigate for general navigation
       }
       })
       .catch(error => {
@@ -101,6 +105,8 @@ export default function SettingsScreen() {
         style={styles.header}
       >
         {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}>
+            <TouchableOpacity style={styles.backButton} onPress={() => router.navigate('/(tabs)/(coach)/dashboard')}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity> */}
         <View style={styles.profileContainer}>
@@ -120,7 +126,7 @@ export default function SettingsScreen() {
               {users.email}
             </Text>
             )}
-            <Text style={styles.profileStatus}>Active</Text>
+            {/* <Text style={styles.profileStatus}>Active</Text> */}
           </View>
         </View>
       </LinearGradient>
@@ -132,7 +138,8 @@ export default function SettingsScreen() {
 
           {users && (
           <TouchableOpacity style={styles.menuCard} onPress={() =>
-              router.push({
+              // router.push({
+              router.navigate({
                 pathname: '/(tabs)/(coach)/edit_profile',
                 params: { id_user: users.id_user },
                 // state: { 
@@ -153,7 +160,8 @@ export default function SettingsScreen() {
 
           {users && (
           <TouchableOpacity style={styles.menuCard}onPress={() =>
-              router.push({
+              // router.push({
+              router.navigate({
                 pathname: '/(tabs)/(coach)/change_password',
                 params: { id_user: users.id_user },
                 // state: { 
@@ -175,7 +183,7 @@ export default function SettingsScreen() {
 
 
         {/* PREFERENCES */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
 
           <View style={styles.menuCard}>
@@ -192,10 +200,10 @@ export default function SettingsScreen() {
               thumbColor={notificationEnabled ? '#EF4444' : '#F9FAFB'}
             />
           </View>
-        </View>
+        </View> */}
 
         {/* SUPPORT */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Support</Text>
 
           <TouchableOpacity style={styles.menuCard}>
@@ -229,7 +237,7 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* LOGOUT */}
         <TouchableOpacity style={styles.logoutButton} onPress={handleSignOut}>
@@ -239,7 +247,8 @@ export default function SettingsScreen() {
         </TouchableOpacity>
 
         {/* Back to Home */}
-        <TouchableOpacity style={styles.backtohomeButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backtohomeButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}> */}
+        <TouchableOpacity style={styles.backtohomeButton} onPress={() => router.navigate('/(tabs)/(coach)/dashboard')}>
           <Ionicons name="home-outline" size={24} color="#FFFFFF" />
 
           <Text style={styles.logoutText}>Back To Home</Text>

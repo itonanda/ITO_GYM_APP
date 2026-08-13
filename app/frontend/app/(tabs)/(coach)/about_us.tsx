@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -47,6 +48,8 @@ const layananProgram = [
 
 export default function AboutUsScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
 
@@ -75,7 +78,8 @@ export default function AboutUsScreen() {
           colors={['#E82528', '#9A0006', '#000000']}
           style={styles.heroSection}
         >
-          <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+          {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}> */}
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
               <Ionicons name="arrow-back" size={22} color="#fff"/>
           </TouchableOpacity>
           

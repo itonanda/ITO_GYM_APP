@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useMemo, useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -19,7 +18,7 @@ import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { ViewToken } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker, { CountryCode, Country } from 'react-native-country-picker-modal';
-import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
@@ -69,108 +68,11 @@ const participantsData: participantsItem[] = [
   },
 ];
 
-interface ItemData {
-  rank?: number;
-  participantClass : any;
-  profiles : any;
-  id : string;
-  full_name : string;
-
-  class_title: any;
-  users :any;
-  id_class_title: string;
-  title: string; // Replace with your actual table column schemas
-  
-  class_schedule : any;
-  id_class_schedule: string;
-  id_class_booking: string;
-  start_time: string;
-  end_time: string;
-  available_quota: string;
-  quota: string;
-  highlight: false;
-
-  booking_class: any;
-}
-
-interface UsersData {
-  id_user : string
-  full_name : string;
-  email : string;
-}
 
 export default function ParticipantsScreen() {
   const router = useRouter();
-  const navigation = useNavigation();
-
   const [searchText, setSearchText] = useState("");
 
-  // STATE API
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-  // Accesses both route params
-  // const { accessToken, email } = useLocalSearchParams();
-  const { accessToken,id_class_schedule } = useGlobalSearchParams();
-  console.log(accessToken);
-  console.log(id_class_schedule);
-
-  // GET DATA
-  const [items, setItems] = useState<ItemData[]>([]);
-  const [filerData, setFilerData] = useState<ItemData[]>([]);
-  const [users, setUsers] = useState<UsersData | null>(null);
-  const [id_user, setIdUser] = useState('');
-  // const [loading, setLoading] = useState<boolean>(true);
-  const [loading, setLoading] = useState(true);
-  // console.log(id_user);
-
-  useEffect(() => {
-    fetchDataUser();
-    fetchDataClassParticipant();
-  }, []);
-
-    const fetchDataUser = async () => {
-      try {
-        // console.log(accessToken);
-        const responseUser = await fetch(`${apiURL}/profile`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataUser = await responseUser.json();
-        setUsers(dataUser);
-        setIdUser(dataUser.id_user);
-        // console.log(dataUser);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchDataClassParticipant = async () => {
-    try {
-        // console.log(accessToken);
-        const response = await fetch(`${apiURL}/class/participant/${id_class_schedule}`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const data = await response.json();
-        // setItems(data);
-        setItems(data);
-        setFilerData(data);
-        console.log(data);
-    } catch (error) {
-      console.error('Error fetching list data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-    
   // FILTER + SORT
   const filteredParticipants = useMemo(() => {
     return [...participantsData]
@@ -195,8 +97,7 @@ export default function ParticipantsScreen() {
   const renderItemTime = ({
     item,
   }: {
-    // item: participantsItem;
-    item: ItemData;
+    item: participantsItem;
   }) => {
     return (
       <TouchableOpacity style={styles.cardLeader}>
@@ -214,17 +115,17 @@ export default function ParticipantsScreen() {
               </Text>
             </View>
 
-            {/* <Image
+            <Image
               source={{ uri: item.avatar }}
               style={styles.avatar}
-            /> */}
+            />
 
             <View>
               <Text style={styles.name}>
-                {item.users.full_name}
+                {item.name}
               </Text>
               <Text style={styles.email}>
-                {item.users.full_name}
+                {item.email}
               </Text>
             </View>
           </View>
@@ -233,25 +134,6 @@ export default function ParticipantsScreen() {
     );
   };
 
-  const handleSearch = (text : string) => {
-    // setSearchText(text);
-    if (text) {
-      const newData = items.filter(item => {
-        const itemData = item.users.full_name ? item.users.full_name.toUpperCase() : '';
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-        // return itemData.indexOf(text.toUpperCase()) > -1;
-      });
-      // setItems(newData);
-      setFilerData(newData);
-      setSearchText(text);
-    } 
-    else {
-      // setItems(items);
-      setFilerData(items);
-      setSearchText(text);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -263,8 +145,7 @@ export default function ParticipantsScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}> */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -294,73 +175,18 @@ export default function ParticipantsScreen() {
               placeholder="Search Participants..."
               placeholderTextColor="#9CA3AF"
               value={searchText}
-              // onChangeText={setSearchText}
-              // onChangeText={handleSearch}
-              onChangeText={(text) => handleSearch(text)}
+              onChangeText={setSearchText}
               style={styles.searchInput}
             />
           </View>
 
           {/* LIST */}
-          {/* <FlatList<participantsItem>
-            data={otherPlayersParticipants} */}
-          {/* <FlatList<ItemData>
-            data={items}
+          <FlatList<participantsItem>
+            data={otherPlayersParticipants}
             renderItem={renderItemTime}
-            keyExtractor={(item) => item.id_class_booking}
+            keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContent}
-          /> */}
-          <FlatList
-            data={filerData}
-            // scrollEnabled={false}
-            keyExtractor={(item) => item.id_class_booking}
-            // keyExtractor={(item) => item.id_class_schedule}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-            ListEmptyComponent={
-                <View style={{ padding: 20, alignItems: 'center' }}>
-                <Text>No data found</Text>
-                </View>
-            }
-            // renderItem={({ item }) => (
-            renderItem={({ item, index }) => {
-              return (
-              <TouchableOpacity key={item.id_class_booking} style={styles.cardLeader}>
-              <LinearGradient
-                colors={["rgba(147, 18, 18, 0.27)", "rgba(193, 18, 18, 0.85)"]}
-                style={styles.cardGradient}
-              >
-                
-                <View style={styles.leftSection}>
-                  <View
-                    style={styles.rankCircle}
-                  >
-                    <Text style={styles.rankText}>
-                      #{index+1}
-                    </Text>
-                  </View>
-
-                  <Image
-                    // source={{ uri: item.avatar }}
-                    source={require('../../../assets/images/user/guest.png')}
-                    style={styles.avatar}
-                  />
-
-                  <View>
-                    <Text style={styles.name}>
-                      {item.users.full_name}
-                    </Text>
-                    {/* <Text style={styles.email}>
-                      {item.users.full_name}
-                    </Text> */}
-                  </View>
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
-            );
-            // )}
-            }}
           />
       </View>
     </View>

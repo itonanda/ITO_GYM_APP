@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -57,6 +58,8 @@ interface UsersData {
 
 export default function MemberClassDetailScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const onViewableItemsChanged = useRef(
@@ -173,8 +176,17 @@ export default function MemberClassDetailScreen() {
           //   // body: JSON.stringify(payload), // Convert the data to a JSON string
           //   // body: JSON.stringify(dataObject), // Convert the data to a JSON string
           // })
+          // if (data.success) {
+          //   Alert.alert('Sukses', 'Data berhasil disimpan!');
+          //   router.replace({
+          //   pathname: '/booking_success',
+          //   // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
+          // });
+          // } else {
+          //   Alert.alert('Gagal', data.message);
+          // }
           router.replace({
-            pathname: '/booking_success',
+            pathname: '/(tabs)/(member)/booking_success',
             // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
           });
         })
@@ -198,7 +210,8 @@ export default function MemberClassDetailScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

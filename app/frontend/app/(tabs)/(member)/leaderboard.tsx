@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -101,6 +102,8 @@ const leaderboardData: LeaderboardItem[] = [
 
 export default function LeaderboardScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [selectedDay, setSelectedDay] = useState("time");
 
   const [searchText, setSearchText] =
@@ -367,7 +370,8 @@ export default function LeaderboardScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

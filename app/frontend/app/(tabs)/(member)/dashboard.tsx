@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -136,6 +137,7 @@ interface UsersData {
 
 export default function MemberDashboardScreen() {
   const router = useRouter();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [activeIndexPromo, setActiveIndexPromo] = useState(0);
@@ -262,7 +264,8 @@ export default function MemberDashboardScreen() {
         style={styles.header}
       >
         <View style={styles.headerLeft}>
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/(member)/membership')}>
+          {/* <TouchableOpacity onPress={() => router.replace('/(tabs)/(member)/membership')}> */}
+          <TouchableOpacity onPress={() => router.navigate('/(tabs)/(member)/membership')}>
             <Image
               source={require('../../../assets/images/user/user.png')}
               style={styles.profileImage}
@@ -271,12 +274,14 @@ export default function MemberDashboardScreen() {
           
           <View style={{marginLeft:10}}>
             {users && (
-            <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>{users.full_name}</Text>
+            // <Text style={styles.headerTitle} onPress={() => router.replace('/(tabs)/(member)/membership')}>{users.full_name}</Text>
+            <Text style={styles.headerTitle} onPress={() => router.navigate('/(tabs)/(member)/membership')}>{users.full_name}</Text>
             )}
-            <Text style={{fontSize:12,color:'#fff',fontWeight:'bold'}}>Valid until 20/12/2026</Text>
+            {/* <Text style={{fontSize:12,color:'#fff',fontWeight:'bold'}}>Valid until 20/12/2026</Text> */}
           </View>
         </View>
-        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/notification')}/>
+        {/* <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.replace('/notification')}/> */}
+        <Ionicons name="notifications-outline" size={24} color="#fff" onPress={() => router.navigate('/(tabs)/(member)/notification')}/>
       </LinearGradient>
 
       <ScrollView
@@ -301,7 +306,8 @@ export default function MemberDashboardScreen() {
                 if (!item.highlight) return null;
 
                 return (
-                  <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail_update')}>       
+                  // <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/class_detail_update')}>
+                  <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.navigate('/(tabs)/(member)/class_detail_update')}>
                     <View style={styles.cardBookingClass}>
                       {/* Date Box */}
                       <View style={styles.dateContainer}>
@@ -413,7 +419,8 @@ export default function MemberDashboardScreen() {
                 //     ? '/(tabs)/(member)/class_detail_update'
                 //     : '/(tabs)/(member)/class_detail'
                 // )
-                router.push({
+                // router.push({
+                router.navigate({
                   pathname: '/(tabs)/(member)/class_detail',
                   params: { id_class_schedule: item.id_class_schedule }
                 })
@@ -468,49 +475,57 @@ export default function MemberDashboardScreen() {
 
         {/* ================= Menu Grid ================= */}
         <View style={styles.menuContainer}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/about_us')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/about_us')}>
             <View style={styles.menuIcon}>
               <Ionicons name="information-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>About Us</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/class_schedule')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/class_schedule')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/class_schedule')}>
             <View style={styles.menuIcon}>
               <Ionicons name="calendar-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Class Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/membership')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/membership')}>
             <View style={styles.menuIcon}>
               <Ionicons name="card-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Membership</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/leaderboard')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/leaderboard')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/leaderboard')}>
             <View style={styles.menuIcon}>
               <Ionicons name="trophy-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Leaderboard</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/chat')}>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/chat')}>
             <View style={styles.menuIcon}>
               <Ionicons name="chatbubble-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Chat</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/promo')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/promo')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/promo')}>
             <View style={styles.menuIcon}>
               <Ionicons name="gift-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>Promo</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/news')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/news')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/news')}>
             <View style={styles.menuIcon}>
               <Ionicons name="newspaper-outline" size={24} color="#333" />
             </View>
             <Text style={styles.menuText}>News</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/setting')}>
+          {/* <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.replace('/setting')}> */}
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => router.navigate('/(tabs)/(member)/setting')}>
             <View style={styles.menuIcon}>
               <Ionicons name="settings-outline" size={24} color="#333" />
             </View>
@@ -530,7 +545,8 @@ export default function MemberDashboardScreen() {
           onViewableItemsChanged={onViewableItemsChangedPromo}
           viewabilityConfig={viewConfigPromo}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/+not-found')}>       
+            // <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/+not-found')}>
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.navigate('/+not-found')}>
                 <View style={styles.classCard}>
                   <View style={styles.cardContent}>
                     <View>

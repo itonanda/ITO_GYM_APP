@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -78,7 +79,8 @@ export default function SettingsScreen() {
       .then(response => response.json())
       .then(response => {
       if(!response.error){
-          router.navigate('/') // Use router.navigate for general navigation
+          // router.navigate('/') // Use router.navigate for general navigation
+          router.replace('/') // Use router.navigate for general navigation
       }
       })
       .catch(error => {
@@ -116,7 +118,7 @@ export default function SettingsScreen() {
               {users.email}
             </Text>
             )}
-            <Text style={styles.profileStatus}>Active</Text>
+            {/* <Text style={styles.profileStatus}>Active</Text> */}
           </View>
         </View>
       </LinearGradient>
@@ -128,7 +130,8 @@ export default function SettingsScreen() {
 
           {users && (
           <TouchableOpacity style={styles.menuCard} onPress={() =>
-              router.push({
+              // router.push({
+              router.navigate({
                 pathname: '/(tabs)/(member)/edit_profile',
                 params: { id_user: users.id_user },
                 // state: { 
@@ -148,7 +151,8 @@ export default function SettingsScreen() {
           )}
           {users && (
           <TouchableOpacity style={styles.menuCard}onPress={() =>
-              router.push({
+              // router.push({
+              router.navigate({
                 pathname: '/(tabs)/(member)/change_password',
                 params: { id_user: users.id_user },
                 // state: { 
@@ -170,7 +174,7 @@ export default function SettingsScreen() {
 
 
         {/* PREFERENCES */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
 
           <View style={styles.menuCard}>
@@ -187,11 +191,11 @@ export default function SettingsScreen() {
               thumbColor={notificationEnabled ? '#EF4444' : '#F9FAFB'}
             />
           </View>
-        </View>
+        </View> */}
 
 
         {/* SUPPORT */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Support</Text>
 
           <TouchableOpacity style={styles.menuCard}>
@@ -225,7 +229,7 @@ export default function SettingsScreen() {
 
             <Ionicons name="chevron-forward" size={22} color="#9CA3AF" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
 
         {/* LOGOUT */}

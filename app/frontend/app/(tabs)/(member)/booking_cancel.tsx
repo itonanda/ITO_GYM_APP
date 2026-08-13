@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -14,17 +15,62 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
 
+// STATE API
+const apiURL = process.env.EXPO_PUBLIC_API_URL;
+interface UsersData {
+  id_user : string;
+  full_name : string;
+  email : string;
+}
 
 export default function BookingCancelScreen() {
   const router = useRouter();
   
+  // GET DATA
+  // Accesses both route params ([id]) and query params (?name=John)
+  const [users, setUsers] = useState<UsersData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { accessToken, userId, name, email } = useGlobalSearchParams();
+
+  useEffect(() => {
+      fetchDataUser();
+    }, []);
+    
+  const fetchDataUser = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
+      }
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
+  const handleBookingClass = () => {
+    {users &&(
+      router.replace({
+        pathname: '/(tabs)/(member)/booking_class',
+        params: { id_user: users.id_user }
+      })
+    )}
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -35,7 +81,8 @@ export default function BookingCancelScreen() {
 
         {/*============ Member Dashboard ============*/}
         <View style={{justifyContent:'flex-end', alignItems:'flex-end', marginTop: 50}}>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_class')}>
+        {/* <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/booking_class')}> */}
+          <TouchableOpacity activeOpacity={0.8} onPress={handleBookingClass}>
           <LinearGradient
               colors={["#E82528", "#9A0006"]}
               start={{ x: 0, y: 0 }}

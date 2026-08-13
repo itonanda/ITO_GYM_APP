@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   Alert,
   View,
@@ -49,6 +50,7 @@ interface AvatarProps {
 export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps) {
 // export default function EditProfileScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
 
   // STATE FORM
   const [fullName, setFullName] = useState("");
@@ -61,7 +63,8 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
 
   // DATE
   const [birthDate, setBirthDate] = useState(new Date());
-  const [birthDateFetch, setbirthDateFetch] = useState("");
+  // const [birthDateFetch, setbirthDateFetch] = useState("");
+  const [birthDateFetch, setbirthDateFetch] = useState<Date | null>(null);
   const [showDate, setShowDate] = useState(false);
 
 // FORMAT DATE
@@ -113,6 +116,7 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
   const onChangeDate = (event: any, selectedDate?: Date) => {
       setShowDate(Platform.OS === "ios");
       if (selectedDate) setBirthDate(selectedDate);
+      if (selectedDate) setbirthDateFetch(selectedDate);
     };
   
     // Phone Number
@@ -173,7 +177,7 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
         .then(response => response.json())
         .then(data => {
           router.replace({
-            pathname: '/(tabs)/(member)/setting',
+            pathname: '/(tabs)/(coach)/setting',
             // // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
             // params: { accessToken: data.session.access_token }
           });
@@ -472,7 +476,8 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
             colors={["#E82528", "#9A0006"]}
             style={styles.header}
           >
-            <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/setting')}>
+            {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/setting')}> */}
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Ionicons name="arrow-back" size={22} color="#fff"/>
             </TouchableOpacity>
             
@@ -581,7 +586,10 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
               onPress={() => setShowDate(true)}
             >
               {/* <Text>{formatDate(birthDate)}</Text> */}
-              <Text>{birthDateFetch}</Text>
+              <Text>
+                {/* {birthDateFetch} */}
+                {birthDateFetch ? new Date(birthDateFetch).toISOString().split('T')[0] : "Select a date"}
+              </Text>
             </TouchableOpacity>
 
             {errors.birthDate && (
@@ -622,6 +630,7 @@ export default function EditProfileScreen({ url, onUploadSuccess }: AvatarProps)
                       onChange={(event, date) => {
                         if (date) {
                           setBirthDate(date);
+                          setbirthDateFetch(date);
                           clearError("birthDate");
                         }
                       }}

@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -48,6 +49,8 @@ interface ItemData {
 
 export default function GuestViewClassDetailScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const onViewableItemsChanged = useRef(
@@ -104,7 +107,8 @@ export default function GuestViewClassDetailScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(guest)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
@@ -361,7 +365,8 @@ export default function GuestViewClassDetailScreen() {
                   </LinearGradient>
 
                   {/* BUTTON */}
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/membership_plan')}>
+                  {/* <TouchableOpacity activeOpacity={0.8} onPress={() => router.replace('/(tabs)/(guest)/membership_plan')}> */}
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => router.navigate('/(tabs)/(guest)/membership_plan')}>
                     <LinearGradient
                       colors={["#E82528", "#9A0006"]}
                       start={{ x: 0, y: 0 }}

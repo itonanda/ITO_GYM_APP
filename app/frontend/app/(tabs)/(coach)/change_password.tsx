@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   Alert,
   View,
@@ -24,6 +25,8 @@ interface UsersData {
 
 export default function ChangePasswordScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const [oldPassword, setOldPassword] = useState("");
   const [secureOldPassword, setSecureOldPassword] = useState(true);
@@ -94,7 +97,7 @@ export default function ChangePasswordScreen() {
         .then(response => response.json())
         .then(data => {
           router.replace({
-            pathname: '/(tabs)/(member)/setting',
+            pathname: '/(tabs)/(coach)/setting',
             // // params: { accessToken: data.session.access_token, email: data.session.email, user: data.user }
             // params: { accessToken: data.session.access_token }
           });
@@ -150,7 +153,8 @@ export default function ChangePasswordScreen() {
             colors={["#E82528", "#9A0006"]}
             style={styles.header}
           >
-            <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/setting')}>
+            {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/setting')}> */}
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Ionicons name="arrow-back" size={22} color="#fff"/>
             </TouchableOpacity>
             

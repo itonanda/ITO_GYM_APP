@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -74,20 +73,6 @@ interface UsersData {
 
 export default function EditClassScreen() {
   const router = useRouter();
-  const navigation = useNavigation();
-
-  // Helper: Combine today's date with the API time string
-  const parseTimeStringToDate = (timeStr: string): Date => {
-    const today = new Date();
-    console.log(timeStr);
-    const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-    
-    // Set time details onto today's date instance
-    today.setHours(hours, minutes, seconds || 0, 0);
-    console.log(today);
-    setStartTime(today);
-    return today;
-  };
 
   // STATE API
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
@@ -96,22 +81,17 @@ export default function EditClassScreen() {
   const [IdClassName, setIdClassName] = useState('');
   const [className, setClassName] = useState('');
   const [showClassName, setShowClassName] = useState(false);
-  const [descriptions, setDescriptions] = useState('');
+  const [descriptions, setDescriptions] = useState('For Upper body, make you more energize and feel better .....');
   const [list, setList] = useState('');
   const [quota, setQuota] = useState(''); 
-  // console.log(Number(quota));
+
   // DATE
   const [classDate, setclassDate] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
 
   // TIME
-  const [fetchStartTime, setFetchStartTime] = useState('')
-  // const [date, setDate] = useState<Date>(parseTimeStringToDate(apiTimeString));
   const [startTime, setStartTime] = useState(new Date());
-  // const [startTime, setStartTime] = useState<Date>(parseTimeStringToDate(fetchStartTime));
-  // console.log(startTime);
   const [endTime, setEndTime] = useState(new Date());
-  // const [date, setDate] = useState<Date>(parseTimeStringToDate(apiTimeString));
   const [showStartPicker, setShowStartPicker] = useState(false);
   const [showEndPicker, setShowEndPicker] = useState(false);
 
@@ -133,7 +113,7 @@ export default function EditClassScreen() {
     if (!classDate) tempErrors.classDate = 'Class Date is required.';
     if (!descriptions.trim()) tempErrors.descriptions = 'Description is required.';
     if (!list.trim()) tempErrors.list = 'List is required.';
-    if (!quota) tempErrors.quota = 'Quota is required.';
+    if (!quota.trim()) tempErrors.quota = 'Quota is required.';
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -148,53 +128,20 @@ export default function EditClassScreen() {
 
   // Accesses both route params
   // const { accessToken, email } = useLocalSearchParams();
-  const { accessToken,id_class_schedule } = useGlobalSearchParams();
+  const { accessToken } = useGlobalSearchParams();
   // console.log(accessToken);
 
   // GET DATA
-    const [items, setItems] = useState<ItemData[]>([]);
-    const [users, setUsers] = useState<UsersData | null>(null);
     const [itemsTitleName, setItemsTitleName] = useState<ItemData[]>([]);
+    const [users, setUsers] = useState<UsersData | null>(null);
     const [id_user, setIdUser] = useState('');
-    // const [fetchDateClass, setFetchDateClass] = useState('');
-    const [fetchDateClass, setFetchDateClass] = useState<Date | null>(null);
-    // const [fetchStartTime, setFetchStartTime] = useState('');
-    const [fetchEndTime, setFetchEndTime] = useState('');
-    const [fetchDescriptions, setFetchDescriptions] = useState('');
-    const [fetchActivityPlan, setFetchActivityPlan] = useState('');
-    const [fetchQuota, setFetchQuota] = useState('');
     // const [loading, setLoading] = useState<boolean>(true);
     const [loading, setLoading] = useState(true);
     // console.log(id_user);
     useEffect(() => {
-      fetchDataUser();
-      fetchDataClassDetail();
       fetchDataClassName();
+      fetchDataUser();
     }, []);
-
-     const fetchDataClassDetail = async () => {
-      try {
-        const response = await fetch(`${apiURL}/class/schedule/${id_class_schedule}`);
-        // const response = await fetch(`${apiURL}/class/schedule_today`);
-        const data = await response.json();
-        // setItems(data);
-        setItems(data);
-        setIdClassName(data.id_class_title);
-        setClassName(data.class_title.title);
-        setFetchDateClass(data.date);
-        setFetchStartTime(data.start_time);
-        setFetchEndTime(data.end_time);
-        setDescriptions(data.descriptions);
-        setList(data.list);
-        setQuota(data.quota);
-        console.log(data);
-        // console.log(data.quota);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     const fetchDataClassName = async () => {
       try {
@@ -245,80 +192,19 @@ export default function EditClassScreen() {
   console.log(apiISOString); // Output: "11:16:00"
   };
   
-  // const timeJSONISO = startTime.toISOString();
+  const timeJSONISO = startTime.toISOString();
   // const startTimeJSON = startTime.toISOString().split('T')[1].slice(0,8);
   // const endTimeJSON = endTime.toISOString().split('T')[1].slice(0,8);
   // const timeJSON = startTime.toString();
   const startTimeJSON = startTime.toLocaleTimeString('en-US', { hour12: false });
   const endTimeJSON = endTime.toLocaleTimeString('en-US', { hour12: false });
 
-  const extractTimeJSON = (apiISOString: any) => {
-    return apiISOString.toLocaleTimeString('en-US', { hour12: false });
-  };
-  // console.log(timeJSONISO);
-  // console.log(startTimeJSON);
-  // console.log(endTimeJSON);
+  console.log(timeJSONISO);
+  console.log(startTimeJSON);
+  console.log(endTimeJSON);
   
-  const extractTimeAMPM = (apiISOString: string) => {
-    // if (!apiISOString) return "";
-    // const date = new Date(apiISOString);
-    // return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    
-    // const [hourStr, minuteStr] = apiISOString.split(':');
-    // let hour = parseInt(hourStr, 10);
-    // const ampm = hour >= 12 ? 'PM' : 'AM';
-
-    // hour = hour % 12;
-    // hour = hour ? hour : 12; // the hour '0' should be '12'
-
-    // const formatted = `${hour.toString().padStart(2, '0')}:${minuteStr} ${ampm}`;
-    // Output: "08:00 AM"
-    // console.log(formatted);
-
-    // 1. Memisahkan string berdasarkan tanda titik dua
-    const [hoursStr, minutesStr] = apiISOString.split(':');
-    
-    // 2. Validasi jika format string tidak sesuai
-    if (!hoursStr || !minutesStr) return "";
-
-    // 3. Mengubah string menjadi angka
-    const hours = parseInt(hoursStr, 10);
-    const minutes = parseInt(minutesStr, 10);
-
-    // 4. Menentukan AM atau PM
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    
-    // 5. Mengonversi format 24 jam ke 12 jam
-    const displayHours = hours % 12 || 12; 
-    
-    // 6. Menggabungkan hasil dengan padding angka nol (cth: "08")
-    const displayMinutes = minutes.toString().padStart(2, '0');
-    // console.log(`${displayHours.toString().padStart(2, '0')}:${displayMinutes} ${ampm}`);
-    return `${displayHours.toString().padStart(2, '0')}:${displayMinutes} ${ampm}`;
-  };
-
-  // // Helper: Combine today's date with the API time string
-  // const parseTimeStringToDate = (timeStr: string): Date => {
-  //   const today = new Date();
-  //   const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-    
-  //   // Set time details onto today's date instance
-  //   today.setHours(hours, minutes, seconds || 0, 0);
-  //   return today;
-  // };
-
   // SUBMIT
   const handleUpdate = () => {
-    // console.log(startTimeJSON);
-    // console.log(endTimeJSON);
-    // console.log(fetchStartTime);
-    // console.log(fetchEndTime);
-    // console.log(classDateJSON);
-    // const cleanedQuota = String(quota).trim();
-    // const cleanedQuota = (quota || "").trim();
-    // if (quota && typeof quota === "string") {
-    //     cleanedQuota = quota.trim();
-    // }
     if (!validate()) {
       return;
     } else {
@@ -329,23 +215,22 @@ export default function EditClassScreen() {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id_user, id_class_schedule, IdClassName, classDateJSON, descriptions, list, quota, fetchStartTime, fetchEndTime }),
+        body: JSON.stringify({ id_user, IdClassName, classDateJSON, startTimeJSON, endTimeJSON, descriptions, list, quota }),
       })
         .then(response => response.json())
         .then(data => {
            Alert.alert('Success', 'Edit Class berhasil!');
-           router.replace('/(tabs)/(coach)/dashboard');
+           router.replace('/dashboard');
         })
         .catch(error => {
           console.error('Error:', error);
-        }); 
+        });
     }
   };
 
   const onChangeDate = (event: any, selectedDate?: Date) => {
     setShowDate(Platform.OS === 'ios');
     if (selectedDate) setclassDate(selectedDate);
-    if (selectedDate) setFetchDateClass(selectedDate);
   };
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -386,8 +271,7 @@ export default function EditClassScreen() {
                 marginBottom: 20,
                 }}
               >
-                {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(coach)/dashboard')}> */}
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
                     <Ionicons name="arrow-back" size={22} color="#7e1212"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>Edit Class</Text>
@@ -427,7 +311,7 @@ export default function EditClassScreen() {
                   <View style={styles.classNameModalContainer}>
                     <FlatList
                       ref={flatListRef}
-                      data={itemsTitleName}
+                      data={dataClassName}
                       pagingEnabled
                       showsHorizontalScrollIndicator={false}
                       keyExtractor={(item) => item.id}
@@ -439,13 +323,12 @@ export default function EditClassScreen() {
                           style={styles.classNameOption}
                           activeOpacity={1}
                           onPress={() => {
-                            setIdClassName(item.id_class_title);
-                            setClassName(item.title);
+                            setClassName(item.titleClassName);
                             clearError("className");
                             setShowClassName(false);
                           }}
                         >
-                          <Text style={styles.classNameOptionText}>{item.title}</Text>
+                          <Text style={styles.classNameOptionText}>{item.titleClassName}</Text>
                         </TouchableOpacity>
                       )}
                     />
@@ -459,12 +342,7 @@ export default function EditClassScreen() {
                 style={[styles.inputClassSchedule, errors.classDateDate && { borderColor: 'red' }]}
                 onPress={() => setShowDate(true)}
               >
-                {/* <Text>{formatDate(classDate)}</Text> */}
-                <Text>
-                  {/* {fetchDateClass} */}
-                   {/* {fetchDateClass ? fetchDateClass.toDateString() : "Select a date"} */}
-                   {fetchDateClass ? new Date(fetchDateClass).toISOString().split('T')[0] : "Select a date"}
-                </Text>
+                <Text>{formatDate(classDate)}</Text>
               </TouchableOpacity>
               {errors.classDate && <Text style={styles.errorTextClassSchedule}>{errors.classDate}</Text>}
               {showDate && (
@@ -485,13 +363,10 @@ export default function EditClassScreen() {
                     onPress={() => setShowStartPicker(true)}
                   >
                     <Text style={styles.textBottonTime}>
-                      {/* {startTime.toLocaleTimeString([], {
+                      {startTime.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
-                      })} */}
-                      {/* {fetchStartTime} */}
-                      {extractTimeAMPM(fetchStartTime)}
-                      {/* {parseTimeStringToDate(fetchStartTime)} */}
+                      })}
                     </Text>
                   </TouchableOpacity>
 
@@ -505,8 +380,6 @@ export default function EditClassScreen() {
 
                         if (selectedTime) {
                           setStartTime(selectedTime);
-                          // setFetchStartTime(selectedTime);
-                          setFetchStartTime(extractTimeJSON(selectedTime));
                         }
                       }}
                     />
@@ -521,11 +394,10 @@ export default function EditClassScreen() {
                     onPress={() => setShowEndPicker(true)}
                   >
                     <Text style={styles.textBottonTime}>
-                      {/* {endTime.toLocaleTimeString([], {
+                      {endTime.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
-                      })} */}
-                      {extractTimeAMPM(fetchEndTime)}
+                      })}
                     </Text>
                   </TouchableOpacity>
 
@@ -539,8 +411,6 @@ export default function EditClassScreen() {
 
                         if (selectedTime) {
                           setEndTime(selectedTime);
-                          // setFetchEndTime(selectedTime);
-                          setFetchEndTime(extractTimeJSON(selectedTime));
                         }
                       }}
                     />
@@ -558,12 +428,12 @@ export default function EditClassScreen() {
                   minHeight: 80,
                   backgroundColor: "#F7F7F7",
                   textAlignVertical: "top"}, errors.description && { borderColor: 'red' }]}
-                  placeholder="Enter Description"
-                  value={descriptions}
-                  onChangeText={setDescriptions}
-                  multiline
-                  numberOfLines={5}
-                  textAlignVertical="top"
+                //placeholder="Enter Description"
+                value={descriptions}
+                onChangeText={setDescriptions}
+                multiline
+                numberOfLines={5}
+                textAlignVertical="top"
               />
               {errors.description && <Text style={styles.errorTextClassSchedule}>{errors.description}</Text>}
 
@@ -578,12 +448,12 @@ export default function EditClassScreen() {
                   minHeight: 180,
                   backgroundColor: "#F7F7F7",
                   textAlignVertical: "top"}, errors.list && { borderColor: 'red' }]}
-                  placeholder="Enter Activity Plan..."
-                  value={list}
-                  onChangeText={setList}
-                  multiline
-                  numberOfLines={10}
-                  textAlignVertical="top"
+                placeholder="Enter Activity Plan..."
+                value={list}
+                onChangeText={setList}
+                multiline
+                numberOfLines={10}
+                textAlignVertical="top"
               />
               {errors.list && <Text style={styles.errorTextClassSchedule}>{errors.list}</Text>}
 
@@ -592,8 +462,8 @@ export default function EditClassScreen() {
               <TextInput
                 style={[styles.inputClassSchedule, errors.quota && { borderColor: 'red' }]}
                 placeholder="Quota"
-                value={String(quota??'')}
-                onChangeText={(text) => setQuota(text)}
+                value={quota}
+                onChangeText={setQuota}
                 keyboardType="number-pad"
                 maxLength={3}
               />

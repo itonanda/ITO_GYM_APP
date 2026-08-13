@@ -19,6 +19,9 @@ export const paymentMethodByNameService = async (paymentMethodName) => {
 };
 
 export const paymentCheckOutService = async (dataPayment) => {
+    // Get today's date in 'YYYY-MM-DD' format
+ const today = new Date().toISOString().split('T')[0];
+
   const { data, error } = await supabaseServiceRole
   .from("payments")
   .insert({
@@ -26,7 +29,10 @@ export const paymentCheckOutService = async (dataPayment) => {
     id_membership_plan:dataPayment.id_membership_plan,
     id_payment_method:dataPayment.id_payment_method,
     id_transaction:dataPayment.id_transaction,
-    status:dataPayment.status
+    id_payment_status : dataPayment.id_payment_status,
+    // date : today
+    date : dataPayment.date
+    // status:dataPayment.status
     // user_metadata: { role: userData.role, name: userData.fullName, date_of_birth: userData.birthDateJSON, gender: userData.gender, emergency_contact_phone: userData.emergencyContactNo, emergency_contact_name: userData.emergencyContactName }
   })
   .select();

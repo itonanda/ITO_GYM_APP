@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -24,9 +25,6 @@ import { Background } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get('window');
-
-
-
 
 const membershipPlans = [
   {
@@ -77,6 +75,8 @@ const membershipPlans = [
 
 export default function GuestMembershipPlanScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [selected, setSelected] = useState("");
@@ -104,7 +104,8 @@ export default function GuestMembershipPlanScreen() {
         {
           text: "OK",
           onPress: () => {
-            router.push("/(auth)/signup");
+            // router.push("/(auth)/signup");
+            router.navigate("/(auth)/signup");
           },
         },
       ]
@@ -132,7 +133,8 @@ export default function GuestMembershipPlanScreen() {
       <LinearGradient colors={["#E82528", "#9A0006"]} style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => router.replace("/dashboard")}
+          // onPress={() => router.replace('/(tabs)/(guest)/dashboard')}
+          onPress={() => navigation.goBack()}
         >
           <Ionicons name="arrow-back" size={22} color="#fff" />
         </TouchableOpacity>

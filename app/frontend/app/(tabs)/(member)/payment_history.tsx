@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -92,65 +93,66 @@ const paymentData = [
 
 export default function PaymentHistoryScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
 
   // GET DATA
-    // Accesses both route params ([id]) and query params (?name=John)
-    const [items, setItems] = useState<ItemsData | null>(null);
-    const [users, setUsers] = useState<UsersData | null>(null);
-    const [payment, setPayment] = useState<PaymentData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
-    console.log(accessToken);
-    console.log(id_user);
-    // console.log(id_membership_plan);
-    // console.log(membership_date);
-    // console.log(paymentMethod);
-    // console.log(id_transaction);
-  
-    useEffect(() => {
-        fetchDataUser();
-        fetchDataPayment();
-      }, []);
-      
-    const fetchDataUser = async () => {
-      try {
-        // console.log(accessToken);
-        const responseUser = await fetch(`${apiURL}/profile`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataUser = await responseUser.json();
-        setUsers(dataUser);
-        // console.log(dataUser);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
+  // Accesses both route params ([id]) and query params (?name=John)
+  const [items, setItems] = useState<ItemsData | null>(null);
+  const [users, setUsers] = useState<UsersData | null>(null);
+  const [payment, setPayment] = useState<PaymentData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { accessToken, id_user, id_membership_plan, membership_date, paymentMethod, id_transaction } = useGlobalSearchParams();
+  console.log(accessToken);
+  console.log(id_user);
+  // console.log(id_membership_plan);
+  // console.log(membership_date);
+  // console.log(paymentMethod);
+  // console.log(id_transaction);
+
+  useEffect(() => {
+      fetchDataUser();
+      fetchDataPayment();
+    }, []);
+    
+  const fetchDataUser = async () => {
+    try {
+      // console.log(accessToken);
+      const responseUser = await fetch(`${apiURL}/profile`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
       }
-    };
-  
-    const fetchDataPayment = async () => {
-      try {
-        // console.log(accessToken);
-        const responsPayment = await fetch(`${apiURL}/payment/history/${id_user}`, {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
-          'Content-Type': 'application/json',
-        }
-      });
-        const dataPayment = await responsPayment.json();
-        setPayment(dataPayment);
-        console.log(dataPayment);
-      } catch (error) {
-        console.error('Error fetching list data:', error);
-      } finally {
-        setLoading(false);
+    });
+      const dataUser = await responseUser.json();
+      setUsers(dataUser);
+      // console.log(dataUser);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDataPayment = async () => {
+    try {
+      // console.log(accessToken);
+      const responsPayment = await fetch(`${apiURL}/payment/history/${id_user}`, {
+      method: 'GET',
+      headers: {
+        'authorization': `Bearer ${accessToken}`, // Pass JWT token to backend
+        'Content-Type': 'application/json',
       }
-    };
+    });
+      const dataPayment = await responsPayment.json();
+      setPayment(dataPayment);
+      console.log(dataPayment);
+    } catch (error) {
+      console.error('Error fetching list data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const renderItem = ({ item }: any) => (
     <LinearGradient
@@ -213,7 +215,8 @@ export default function PaymentHistoryScreen() {
             colors={["#E82528", "#9A0006"]}
             style={styles.header}
         >
-            <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/membership')}>
+            {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/membership')}> */}
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Ionicons name="arrow-back" size={22} color="#fff"/>
             </TouchableOpacity>
             

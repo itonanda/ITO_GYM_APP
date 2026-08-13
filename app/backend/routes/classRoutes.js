@@ -7,7 +7,13 @@ import {
   scheduleTomorrowSortByOrder,
   bookingClass,
   fetchBookingById,
-  cancelBookingClass
+  cancelBookingClass,
+  fetchScheduleCoachById,
+  titleClass,
+  addClass,
+  editClass,
+  participantClass,
+  cancelScheduleClass
 } from "../controllers/classController.js";
 
 const router = express.Router();
@@ -20,6 +26,13 @@ router.get("/schedule_tomorrow_list", scheduleTomorrowSortByOrder);
 
 router.post("/booking_class", bookingClass);
 router.get("/booking/:id_user", fetchBookingById);
-router.post("/booking_class/cancel", cancelBookingClass);
+router.put("/booking_class/cancel", cancelBookingClass);
+
+router.get("/schedule_coach/:id_user", fetchScheduleCoachById);
+router.get("/title_class", titleClass);
+router.post("/add_class", addClass);
+router.post("/edit_class", editClass);
+router.get("/participant/:id_class_schedule", participantClass);
+router.put("/schedule_class/cancel", cancelScheduleClass);
 
 export default router;

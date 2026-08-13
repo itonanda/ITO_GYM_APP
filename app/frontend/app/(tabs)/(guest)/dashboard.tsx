@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -100,6 +101,7 @@ interface ItemData {
 
 export default function GuestDashboardScreen() {
   const router = useRouter();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
   const [activeIndexPromo, setActiveIndexPromo] = useState(0);
@@ -242,7 +244,8 @@ export default function GuestDashboardScreen() {
                 //     ? '/(tabs)/(member)/class_detail_update'
                 //     : '/(tabs)/(member)/class_detail'
                 // )
-                router.push({
+                // router.push({
+                router.navigate({
                   pathname: '/(tabs)/(guest)/class_detail',
                   params: { id_class_schedule: item.id_class_schedule }
                 })
@@ -283,7 +286,8 @@ export default function GuestDashboardScreen() {
         </View>
 
         {/* ================= Check Mambership Plan ================= */}
-        <TouchableOpacity style={{marginTop: 30, marginBottom: 40}} activeOpacity={1} onPress={() => router.replace('/membership_plan')}>
+        {/* <TouchableOpacity style={{marginTop: 30, marginBottom: 40}} activeOpacity={1} onPress={() => router.replace('/(tabs)/(guest)/membership_plan')}> */}
+        <TouchableOpacity style={{marginTop: 30, marginBottom: 40}} activeOpacity={1} onPress={() => router.navigate('/(tabs)/(guest)/membership_plan')}>
           <View style={styles.headerCard}>       
               <View style={styles.classCard}>
                 <View style={styles.cardContent}>
@@ -311,7 +315,8 @@ export default function GuestDashboardScreen() {
           onViewableItemsChanged={onViewableItemsChangedPromo}
           viewabilityConfig={viewConfigPromo}
           renderItem={({ item }) => (
-            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/+not-found')}>       
+            // <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.replace('/+not-found')}>
+            <TouchableOpacity key={item.id} style={styles.headerCard} activeOpacity={1} onPress={() => router.navigate('/+not-found')}>     
                 <View style={styles.classCard}>
                   <View style={styles.cardContent}>
                     <View>

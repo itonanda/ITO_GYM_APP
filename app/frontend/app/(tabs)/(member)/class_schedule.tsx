@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -150,6 +151,8 @@ const classDataTomorrow = [
 
 export default function MemberClassScheduleScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
 
@@ -275,12 +278,14 @@ export default function MemberClassScheduleScreen() {
 const handlePress = (item: any) => {
     // Condition check before pushing
     if (item.class_booking.highlight = true) {
-      router.push({
+      // router.push({
+      router.navigate({
         pathname: '/(tabs)/(member)/class_detail_update',
         params: { id_class_schedule: item.id_class_schedule },
       });
     } else {
-      router.push({
+      // router.push({
+      router.navigate({
         pathname: '/(tabs)/(member)/class_detail',
         params: { id_class_schedule: item.id_class_schedule },
       });
@@ -317,7 +322,8 @@ const handlePress = (item: any) => {
                 //     ? '/(tabs)/(member)/class_detail_update'
                 //     : '/(tabs)/(member)/class_detail/'${item.id_class_schedule}
                 // )
-                router.push({
+                // router.push({
+                router.navigate({
                   pathname: '/(tabs)/(member)/class_detail',
                   params: { id_class_schedule: item.id_class_schedule },
                   // state: { 
@@ -361,6 +367,11 @@ const handlePress = (item: any) => {
           keyExtractor={(item) => item.id_class_schedule.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 350 }}
+          ListEmptyComponent={
+            <View style={{ padding: 20, alignItems: 'center' }}>
+              <Text>No class schedule found</Text>
+            </View>
+          }
           renderItem={({ item }) => (
             <TouchableOpacity key={item.id_class_schedule} style={styles.headerCard} activeOpacity={1} 
               onPress={() =>
@@ -369,7 +380,8 @@ const handlePress = (item: any) => {
                 //     ? '/(tabs)/(member)/class_detail_update'
                 //     : '/(tabs)/(member)/class_detail/'${item.id_class_schedule}
                 // )
-                router.push({
+                // router.push({
+                router.navigate({
                   pathname: '/(tabs)/(member)/class_detail',
                   params: { id_class_schedule: item.id_class_schedule },
                   // state: { 
@@ -452,7 +464,8 @@ const handlePress = (item: any) => {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -48,13 +49,15 @@ const DataNotifications: NotificationType[] = [
 
 export default function NotificationScreen() {
   const router = useRouter();
-
+  const navigation = useNavigation();
+  
   // Item Notif
   const renderItem = ({ item }: { item: NotificationType }) => (
     <TouchableOpacity
           activeOpacity={0.7}
           onPress={() =>
-            router.push({
+            // router.push({
+            router.navigate({
               pathname: "/+not-found",
               params: {
                 id: item.id,
@@ -95,7 +98,8 @@ export default function NotificationScreen() {
         colors={["#E82528", "#9A0006"]}
         style={styles.header}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/dashboard')}>
+        {/* <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/(member)/dashboard')}> */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={22} color="#fff"/>
         </TouchableOpacity>
         
