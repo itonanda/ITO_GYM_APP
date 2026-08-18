@@ -1,7 +1,7 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -15,277 +15,59 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface Equipment {
+interface dataPlans {
   id: string;
-  name: string;
-  total: number;
-  status: "Active" | "Inactive";
-  photo: string;
+  planName: string;
+  validity: string;
+  amount: string;
 }
 
-const initialEquipmentData: Equipment[] = [
-  //const [equipmentData, setEquipmentData] = useState<Equipment[]>([
+const initialDataPlans: dataPlans[] = [
   {
     id: "1",
-    name: "Treadmill",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=15",
+    planName: "1 month",
+    validity: "1",
+    amount: "800",
   },
   {
     id: "2",
-    name: "10 lbs Dumbell",
-    total: 3,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=16",
+    planName: "3 month",
+    validity: "3",
+    amount: "2200",
   },
   {
     id: "3",
-    name: "15 lbs Dumbell",
-    total: 6,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=17",
+    planName: "6 month",
+    validity: "6",
+    amount: "4300",
   },
   {
     id: "4",
-    name: "20 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=18",
+    planName: "Annual",
+    validity: "12",
+    amount: "8500",
   },
-  {
-    id: "5",
-    name: "21 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=19",
-  },
-  {
-    id: "6",
-    name: "22 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=20",
-  },
-  {
-    id: "7",
-    name: "23 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=21",
-  },
-  {
-    id: "8",
-    name: "24 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=22",
-  },
-  {
-    id: "9",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=23",
-  },
-  {
-    id: "10",
-    name: "27 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=24",
-  },
-  {
-    id: "11",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=25",
-  },
-  {
-    id: "12",
-    name: "29 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=26",
-  },
-  {
-    id: "13",
-    name: "30 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=27",
-  },
-  {
-    id: "14",
-    name: "31 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=28",
-  },
-  {
-    id: "15",
-    name: "32 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=29",
-  },
-  {
-    id: "16",
-    name: "33 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=30",
-  },
-  {
-    id: "17",
-    name: "34 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=31",
-  },
-  {
-    id: "18",
-    name: "35 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=32",
-  },
-  {
-    id: "19",
-    name: "36 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=33",
-  },
-  {
-    id: "20",
-    name: "37 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=34",
-  },
-  {
-    id: "21",
-    name: "40 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=35",
-  },
-  {
-    id: "22",
-    name: "41 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=36",
-  },
-  {
-    id: "23",
-    name: "42 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=37",
-  },
-  {
-    id: "24",
-    name: "43 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=38",
-  },
-  {
-    id: "25",
-    name: "44 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=39",
-  },
-  {
-    id: "26",
-    name: "Exercise Bike",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=40",
-  },
-  {
-    id: "27",
-    name: "Bench Press",
-    total: 2,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=41",
-  },
-  {
-    id: "28",
-    name: "Rowing Machine",
-    total: 5,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=42",
-  },
-  {
-    id: "29",
-    name: "Pull Up Bar",
-    total: 3,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=43",
-  },
-  {
-    id: "30",
-    name: "Cable Machine",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=44",
-  },
-  {
-    id: "31",
-    name: "Smith Machine",
-    total: 2,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=45",
-  },
-  {
-    id: "32",
-    name: "Leg Press",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=46",
-  },
-  {
-    id: "33",
-    name: "Kettlebell",
-    total: 20,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=47",
-  },
-  {
-    id: "34",
-    name: "Yoga Mat",
-    total: 30,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=48",
-  },
-  //]);
 ];
 
-export default function InventoryScreen() {
+export default function NewsScreen() {
   const router = useRouter();
-  const [equipmentData, setEquipmentData] =
-    useState<Equipment[]>(initialEquipmentData);
+  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return equipmentData.filter((item) => {
-      const matchName = item.name.toLowerCase().includes(search.toLowerCase());
+    return plansData.filter((item) => {
+      const keyword = search.toLowerCase();
 
-      const matchStatus =
-        statusFilter === "All" ? true : item.status === statusFilter;
-
-      return matchName && matchStatus;
+      const matchSearch =
+        item.planName.toLowerCase().includes(keyword) ||
+        item.validity.toString().toLowerCase().includes(keyword) ||
+        item.amount.toString().toLowerCase().includes(keyword);
+      return matchSearch;
     });
-  }, [search, statusFilter]);
+  }, [search]);
 
   const totalPages = Math.ceil(filteredData.length / entries);
 
@@ -303,28 +85,18 @@ export default function InventoryScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
 
-      <Text style={[styles.dataTextList, { flex: 1, textAlign: "center" }]}>
-        {item.total}
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
+        {item.validity}
       </Text>
-
-      <Text
-        style={[
-          styles.dataTextList,
-          {
-            flex: 1.6,
-            textAlign: "center",
-            color: item.status === "Active" ? "#22C55E" : "#FACC15",
-          },
-        ]}
-      >
-        {item.status}
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
+        {item.amount}
       </Text>
 
       <View
         style={{
-          flex: 0.8,
+          flex: 1.5,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -353,80 +125,75 @@ export default function InventoryScreen() {
   );
 
   const [showModal, setShowModal] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
+  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
     null,
   );
-  const [equipmentName, setEquipmentName] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
-  const [totalNo, setTotalNo] = useState(1);
-  const [image, setImage] = useState("");
+  const [planName, setPlanName] = useState("");
+  const [validity, setValidity] = useState("");
+  const [amount, setAmount] = useState("");
 
   const handleAdd = () => {
-    setSelectedEquipment(null);
-    setEquipmentName("");
-    setTotalNo(0);
-    setStatus("Active");
-    setImage("");
+    setSelectedDataPlans(null);
+    setPlanName("");
+    setValidity("");
+    setAmount("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: Equipment) => {
-    setSelectedEquipment(item);
-    setEquipmentName(item.name);
-    setTotalNo(item.total);
-    setStatus(item.status);
-    setImage(item.photo);
+  const handleEdit = (item: dataPlans) => {
+    setSelectedDataPlans(item);
+    setPlanName(item.planName);
+    setValidity(item.validity);
+    setAmount(item.amount);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (equipmentName.trim() === "") {
-      alert("Equipment Name is required");
+    if (planName.trim() === "") {
+      alert("Member Name is required");
       return;
     }
 
-    if (selectedEquipment) {
+    if (selectedDataPlans) {
       // UPDATE
-      const updatedData = equipmentData.map((item) =>
-        item.id === selectedEquipment.id
+      const updatedData = plansData.map((item) =>
+        item.id === selectedDataPlans.id
           ? {
               ...item,
-              name: equipmentName,
-              total: totalNo,
-              status: status,
-              photo: image,
+              planName: planName,
+              validity: validity,
+              amount: amount,
             }
           : item,
       );
 
-      setEquipmentData(updatedData);
+      setPlansData(updatedData);
 
-      alert("Equipment updated successfully");
+      alert("Members updated successfully");
     } else {
       // ADD
-      const newEquipment: Equipment = {
+      const newActiveMembers: dataPlans = {
         id: Date.now().toString(),
-        name: equipmentName,
-        total: totalNo,
-        status: status,
-        photo: image,
+        planName: planName,
+        validity: validity,
+        amount: amount,
       };
 
-      setEquipmentData([...equipmentData, newEquipment]);
+      setPlansData([...plansData, newActiveMembers]);
 
-      alert("Equipment added successfully");
+      alert("Members added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = equipmentData.filter((item) => item.id !== id);
+    const data = plansData.filter((item) => item.id !== id);
 
-    setEquipmentData(data);
+    setPlansData(data);
 
-    alert("Equipment delete successfully");
+    alert("Members delete successfully");
   };
 
   const handleCancel = () => {
@@ -435,35 +202,12 @@ export default function InventoryScreen() {
   };
 
   const resetForm = () => {
-    setEquipmentName("");
-    setTotalNo(1);
-    setStatus("Active");
-    setImage("");
-    setSelectedEquipment(null);
+    setSelectedDataPlans(null);
+    setPlanName("");
+    setValidity("");
+    setAmount("");
 
     setShowModal(false);
-  };
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   return (
@@ -508,12 +252,12 @@ export default function InventoryScreen() {
             icon="inventory-2"
             title="Inventory"
             onPress={() => router.push("/inventory")}
-            active
           />
           <MenuItem
             icon="edit-square"
             title="News"
             onPress={() => router.push("/news")}
+            active
           />
           <MenuItem
             icon="credit-card"
@@ -557,12 +301,12 @@ export default function InventoryScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Equipment</Text>
-            </Pressable>
+            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add News</Text>
+            </Pressable> */}
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Manage Equipments</Text>
+              <Text style={styles.titleList}>News</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -585,77 +329,63 @@ export default function InventoryScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search equipment..."
+                    placeholder="Search ..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
                   />
-
-                  <Picker
-                    selectedValue={statusFilter}
-                    onValueChange={(value: string) => {
-                      setStatusFilter(value);
-                      setPage(1);
-                    }}
-                    style={styles.pickerSearchList}
-                  >
-                    <Picker.Item label="All Status" value="All" />
-                    <Picker.Item label="Active" value="Active" />
-                    <Picker.Item label="Inactive" value="Inactive" />
-                  </Picker>
                 </View>
               </View>
 
               {/* Header */}
-              <View style={styles.headerRowList}>
+              {/* <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Equipment Name
+                  Plan Name
                 </Text>
-
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1,
+                      flex: 2,
                       textAlign: "center",
                     },
                   ]}
                 >
-                  Total No.
+                  Validity
                 </Text>
 
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1.6,
+                      flex: 2,
                       textAlign: "center",
                     },
                   ]}
                 >
-                  Status
+                  Amount
                 </Text>
 
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 0.8,
+                      flex: 1.5,
                       textAlign: "center",
                     },
                   ]}
                 >
                   Actions
                 </Text>
-              </View>
+              </View> */}
 
               {/* Data */}
-              <FlatList
+              {/* <FlatList
                 data={currentData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-              />
+              /> */}
 
               {/* Footer */}
               <View style={styles.headerRowList} />
@@ -699,81 +429,56 @@ export default function InventoryScreen() {
                 </View>
               </View>
 
-              {/* Screen Modal */}
+              {/* -------------------------------------------------- */}
+              {/* ------------------ Screen Modal ------------------ */}
+              {/* -------------------------------------------------- */}
+
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedEquipment ? "Edit Equipment" : "Add Equipment"}
+                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
-
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-
-                  <Text style={styles.labelModal}>Equipment Name</Text>
-
-                  <TextInput
-                    value={equipmentName}
-                    onChangeText={setEquipmentName}
-                    style={styles.inputModal}
-                  />
-
+                  {/* Input Plan Name dan Validity */}
                   <View style={styles.rowModal}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.labelModal}>Status</Text>
-
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={status}
-                          onValueChange={(value) => setStatus(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="Active" value="Active" />
-                          <Picker.Item label="Inactive" value="Inactive" />
-                        </Picker>
-                      </View>
+                    <View
+                      style={{
+                        flex: 0.7,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Plan Name</Text>
+                      <TextInput
+                        value={planName}
+                        onChangeText={setPlanName}
+                        style={styles.inputModal}
+                      />
                     </View>
 
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 0.3,
                         marginLeft: 10,
                       }}
                     >
-                      <Text style={styles.labelModal}>Total No.</Text>
-
+                      <Text style={styles.labelModal}>Validity</Text>
                       <TextInput
-                        value={totalNo.toString()}
-                        onChangeText={(text) => setTotalNo(Number(text))}
-                        keyboardType="numeric"
+                        value={validity}
+                        onChangeText={setValidity}
+                        style={styles.inputModal}
+                      />
+                    </View>
+                  </View>
+                  {/* Input Amount */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.7,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Amount</Text>
+                      <TextInput
+                        value={amount}
+                        onChangeText={setAmount}
                         style={styles.inputModal}
                       />
                     </View>

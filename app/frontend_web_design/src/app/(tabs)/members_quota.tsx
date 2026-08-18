@@ -1,7 +1,7 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -15,277 +15,64 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface Equipment {
+interface dataQuota {
   id: string;
-  name: string;
-  total: number;
-  status: "Active" | "Inactive";
-  photo: string;
+  quota: string;
+  type: string;
 }
 
-const initialEquipmentData: Equipment[] = [
-  //const [equipmentData, setEquipmentData] = useState<Equipment[]>([
+const initialDataQuota: dataQuota[] = [
   {
     id: "1",
-    name: "Treadmill",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=15",
+    quota: "1",
+    type: "Member",
   },
   {
     id: "2",
-    name: "10 lbs Dumbell",
-    total: 3,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=16",
+    quota: "5",
+    type: "Open Gym",
   },
   {
     id: "3",
-    name: "15 lbs Dumbell",
-    total: 6,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=17",
+    quota: "5",
+    type: "Drop In",
   },
-  {
-    id: "4",
-    name: "20 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=18",
-  },
-  {
-    id: "5",
-    name: "21 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=19",
-  },
-  {
-    id: "6",
-    name: "22 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=20",
-  },
-  {
-    id: "7",
-    name: "23 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=21",
-  },
-  {
-    id: "8",
-    name: "24 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=22",
-  },
-  {
-    id: "9",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=23",
-  },
-  {
-    id: "10",
-    name: "27 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=24",
-  },
-  {
-    id: "11",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=25",
-  },
-  {
-    id: "12",
-    name: "29 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=26",
-  },
-  {
-    id: "13",
-    name: "30 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=27",
-  },
-  {
-    id: "14",
-    name: "31 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=28",
-  },
-  {
-    id: "15",
-    name: "32 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=29",
-  },
-  {
-    id: "16",
-    name: "33 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=30",
-  },
-  {
-    id: "17",
-    name: "34 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=31",
-  },
-  {
-    id: "18",
-    name: "35 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=32",
-  },
-  {
-    id: "19",
-    name: "36 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=33",
-  },
-  {
-    id: "20",
-    name: "37 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=34",
-  },
-  {
-    id: "21",
-    name: "40 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=35",
-  },
-  {
-    id: "22",
-    name: "41 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=36",
-  },
-  {
-    id: "23",
-    name: "42 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=37",
-  },
-  {
-    id: "24",
-    name: "43 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=38",
-  },
-  {
-    id: "25",
-    name: "44 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=39",
-  },
-  {
-    id: "26",
-    name: "Exercise Bike",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=40",
-  },
-  {
-    id: "27",
-    name: "Bench Press",
-    total: 2,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=41",
-  },
-  {
-    id: "28",
-    name: "Rowing Machine",
-    total: 5,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=42",
-  },
-  {
-    id: "29",
-    name: "Pull Up Bar",
-    total: 3,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=43",
-  },
-  {
-    id: "30",
-    name: "Cable Machine",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=44",
-  },
-  {
-    id: "31",
-    name: "Smith Machine",
-    total: 2,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=45",
-  },
-  {
-    id: "32",
-    name: "Leg Press",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=46",
-  },
-  {
-    id: "33",
-    name: "Kettlebell",
-    total: 20,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=47",
-  },
-  {
-    id: "34",
-    name: "Yoga Mat",
-    total: 30,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=48",
-  },
-  //]);
 ];
 
-export default function InventoryScreen() {
+
+const dataType = [
+  {
+    id: '1',
+    titleType: 'Member',
+  },
+  {
+    id: '2',
+    titleType: 'Open Gym',
+  },
+  {
+    id: '3',
+    titleType: 'Drop In',
+  },
+];
+
+export default function MembersQuotacreen() {
   const router = useRouter();
-  const [equipmentData, setEquipmentData] =
-    useState<Equipment[]>(initialEquipmentData);
+  const [QuotaData, setQuotaData] = useState<dataQuota[]>(initialDataQuota);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return equipmentData.filter((item) => {
-      const matchName = item.name.toLowerCase().includes(search.toLowerCase());
+    return QuotaData.filter((item) => {
+      const keyword = search.toLowerCase();
 
-      const matchStatus =
-        statusFilter === "All" ? true : item.status === statusFilter;
-
-      return matchName && matchStatus;
+      const matchSearch =
+        item.quota.toLowerCase().includes(keyword) ||
+        item.type.toString().toLowerCase().includes(keyword);
+      return matchSearch;
     });
-  }, [search, statusFilter]);
+  }, [search]);
 
   const totalPages = Math.ceil(filteredData.length / entries);
 
@@ -303,28 +90,15 @@ export default function InventoryScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.quota}</Text>
 
-      <Text style={[styles.dataTextList, { flex: 1, textAlign: "center" }]}>
-        {item.total}
-      </Text>
-
-      <Text
-        style={[
-          styles.dataTextList,
-          {
-            flex: 1.6,
-            textAlign: "center",
-            color: item.status === "Active" ? "#22C55E" : "#FACC15",
-          },
-        ]}
-      >
-        {item.status}
+      <Text style={[styles.dataTextList, { flex: 1.5, textAlign: "center" }]}>
+        {item.type}
       </Text>
 
       <View
         style={{
-          flex: 0.8,
+          flex: 1,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -352,81 +126,73 @@ export default function InventoryScreen() {
     </View>
   );
 
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
+  const [selectedDataQuota, setSelectedDataQuota] = useState<dataQuota | null>(
     null,
   );
-  const [equipmentName, setEquipmentName] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
-  const [totalNo, setTotalNo] = useState(1);
-  const [image, setImage] = useState("");
-
+  const [quota, setquota] = useState("");
+  const [type, settype] = useState("");
+  const [showType, setShowType] = useState(false);
+  
   const handleAdd = () => {
-    setSelectedEquipment(null);
-    setEquipmentName("");
-    setTotalNo(0);
-    setStatus("Active");
-    setImage("");
+    setSelectedDataQuota(null);
+    setquota("");
+    settype("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: Equipment) => {
-    setSelectedEquipment(item);
-    setEquipmentName(item.name);
-    setTotalNo(item.total);
-    setStatus(item.status);
-    setImage(item.photo);
+  const handleEdit = (item: dataQuota) => {
+    setSelectedDataQuota(item);
+    setquota(item.quota);
+    settype(item.type);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (equipmentName.trim() === "") {
-      alert("Equipment Name is required");
+    if (quota.trim() === "") {
+      alert("Name is required");
       return;
     }
 
-    if (selectedEquipment) {
+    if (selectedDataQuota) {
       // UPDATE
-      const updatedData = equipmentData.map((item) =>
-        item.id === selectedEquipment.id
+      const updatedData = QuotaData.map((item) =>
+        item.id === selectedDataQuota.id
           ? {
               ...item,
-              name: equipmentName,
-              total: totalNo,
-              status: status,
-              photo: image,
+              quota: quota,
+              type: type,
             }
           : item,
       );
 
-      setEquipmentData(updatedData);
+      setQuotaData(updatedData);
 
-      alert("Equipment updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newEquipment: Equipment = {
+      const newActiveMembers: dataQuota = {
         id: Date.now().toString(),
-        name: equipmentName,
-        total: totalNo,
-        status: status,
-        photo: image,
+        quota: quota,
+        type : type,
       };
 
-      setEquipmentData([...equipmentData, newEquipment]);
+      setQuotaData([...QuotaData, newActiveMembers]);
 
-      alert("Equipment added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = equipmentData.filter((item) => item.id !== id);
+    const data = QuotaData.filter((item) => item.id !== id);
 
-    setEquipmentData(data);
+    setQuotaData(data);
 
-    alert("Equipment delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -435,35 +201,11 @@ export default function InventoryScreen() {
   };
 
   const resetForm = () => {
-    setEquipmentName("");
-    setTotalNo(1);
-    setStatus("Active");
-    setImage("");
-    setSelectedEquipment(null);
+    setSelectedDataQuota(null);
+    setquota("");
+    settype("");
 
     setShowModal(false);
-  };
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   return (
@@ -492,8 +234,50 @@ export default function InventoryScreen() {
           <MenuItem
             icon="people"
             title="View Members"
-            onPress={() => router.push("/members")}
+            active
+            onPress={() => {
+              router.push("/members");
+              setShowSubMenu(true);
+            }}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+            {/* Sub Menu - View Members */}
+            {showSubMenu && (
+              <View style={{ marginLeft: 40 }}>
+                <MenuSubItem
+                  icon="assignment-turned-in"
+                  title="Plan"
+                  onPress={() => router.push("/members_plan")}
+                />
+                <MenuSubItem
+                  icon="assignment-ind"
+                  title="Leave"
+                  onPress={() => router.push("/members_leave")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Quota"
+                  onPress={() => router.push("/members_quota")}
+                  active
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Status"
+                  onPress={() => router.push("/members_status")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Type"
+                  onPress={() => router.push("/members_type")}
+                />
+              </View>
+            )}
           <MenuItem
             icon="fitness-center"
             title="Coaches"
@@ -508,7 +292,6 @@ export default function InventoryScreen() {
             icon="inventory-2"
             title="Inventory"
             onPress={() => router.push("/inventory")}
-            active
           />
           <MenuItem
             icon="edit-square"
@@ -537,6 +320,7 @@ export default function InventoryScreen() {
           />
         </ScrollView>
 
+
         <TouchableOpacity style={styles.logout}>
           <MaterialIcons name="logout" size={20} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>
@@ -558,11 +342,11 @@ export default function InventoryScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Equipment</Text>
+              <Text style={styles.sectionTitle}>Add Quota</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Manage Equipments</Text>
+              <Text style={styles.titleList}>Quota</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -585,62 +369,36 @@ export default function InventoryScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search equipment..."
+                    placeholder="Search Quota..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
                   />
-
-                  <Picker
-                    selectedValue={statusFilter}
-                    onValueChange={(value: string) => {
-                      setStatusFilter(value);
-                      setPage(1);
-                    }}
-                    style={styles.pickerSearchList}
-                  >
-                    <Picker.Item label="All Status" value="All" />
-                    <Picker.Item label="Active" value="Active" />
-                    <Picker.Item label="Inactive" value="Inactive" />
-                  </Picker>
                 </View>
               </View>
 
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Equipment Name
+                  Quota
                 </Text>
-
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1,
+                      flex: 0.7,
                       textAlign: "center",
                     },
                   ]}
                 >
-                  Total No.
+                  Type
                 </Text>
-
+                
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1.6,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Status
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 0.8,
+                      flex: 1.3,
                       textAlign: "center",
                     },
                   ]}
@@ -699,83 +457,71 @@ export default function InventoryScreen() {
                 </View>
               </View>
 
-              {/* Screen Modal */}
+              {/* -------------------------------------------------- */}
+              {/* ------------------ Screen Modal ------------------ */}
+              {/* -------------------------------------------------- */}
+
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedEquipment ? "Edit Equipment" : "Add Equipment"}
+                    {selectedDataQuota ? "Edit Quota" : "Add Quota"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
-
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-
-                  <Text style={styles.labelModal}>Equipment Name</Text>
-
-                  <TextInput
-                    value={equipmentName}
-                    onChangeText={setEquipmentName}
-                    style={styles.inputModal}
-                  />
-
+                  {/* Input quota */}
                   <View style={styles.rowModal}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.labelModal}>Status</Text>
-
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={status}
-                          onValueChange={(value) => setStatus(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="Active" value="Active" />
-                          <Picker.Item label="Inactive" value="Inactive" />
-                        </Picker>
-                      </View>
-                    </View>
-
                     <View
                       style={{
-                        flex: 0.7,
-                        marginLeft: 10,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Total No.</Text>
-
+                      <Text style={styles.labelModal}>Quota</Text>
                       <TextInput
-                        value={totalNo.toString()}
-                        onChangeText={(text) => setTotalNo(Number(text))}
+                        value={quota}
+                        onChangeText={(text) => setquota(text.replace(/\D/g, ""))}
                         keyboardType="numeric"
                         style={styles.inputModal}
                       />
+                    </View>
+                  </View>
+
+                  {/* Input type */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Type</Text>
+                      <TouchableOpacity
+                        style={styles.inputSelect}
+                        onPress={() => setShowType(!showType)}
+                      >
+                        <Text>{type || "Select Type"}</Text>
+
+                        <MaterialIcons
+                          name={showType ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={24}
+                        />
+                      </TouchableOpacity>
+
+                      {showType && (
+                        <FlatList
+                          data={dataType}
+                          keyExtractor={(item) => item.id}
+                          style={styles.dropdownSelect}
+                          renderItem={({ item }) => (
+                            <TouchableOpacity
+                              style={styles.itemSelect}
+                              onPress={() => {
+                                settype(item.titleType);
+                                setShowType(false);
+                              }}
+                            >
+                              <Text>{item.titleType}</Text>
+                            </TouchableOpacity>
+                          )}
+                        />
+                      )}                
                     </View>
                   </View>
 
@@ -803,7 +549,7 @@ export default function InventoryScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -817,10 +563,49 @@ export default function InventoryScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+
+
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -831,7 +616,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -843,6 +628,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -878,10 +664,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -893,6 +685,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -1033,7 +848,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -1115,11 +930,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -1127,7 +942,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -1148,7 +963,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {
@@ -1173,178 +988,37 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
-    color: "#fff",
-    fontWeight: "700",
-  },
-
-  card: {
+  inputSelect: {
+    //height: 45,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    //borderRadius: 8,
+    //paddingHorizontal: 12,
     flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    justifyContent: "space-between",
     alignItems: "center",
-  },
+    //backgroundColor: "#fff",
 
-  cardImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
-    borderRadius: 8,
-  },
-
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
-    marginBottom: 20,
-  },
-
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
-
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  input: {
+    backgroundColor: "#D9D9DD",
     height: 50,
-    backgroundColor: "#f2f2f2",
     borderRadius: 10,
     paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  //-=======================
-  titlea: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
     fontSize: 15,
-    fontWeight: "600",
   },
 
-  fileContainer: {
-    marginTop: 12,
+  dropdownSelect: {
     borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    borderColor: "#ccc",
     borderRadius: 8,
-    alignSelf: "flex-start",
+    marginTop: 5,
+    maxHeight: 180,
+    backgroundColor: "#fff",
   },
 
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
+  itemSelect: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
+
 });

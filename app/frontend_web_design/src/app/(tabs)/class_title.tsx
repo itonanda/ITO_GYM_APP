@@ -1,7 +1,7 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -15,277 +15,48 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface Equipment {
+interface dataTitle {
   id: string;
-  name: string;
-  total: number;
-  status: "Active" | "Inactive";
-  photo: string;
+  TitleName: string;
 }
 
-const initialEquipmentData: Equipment[] = [
-  //const [equipmentData, setEquipmentData] = useState<Equipment[]>([
+const initialDataTitle: dataTitle[] = [
   {
     id: "1",
-    name: "Treadmill",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=15",
+    TitleName: "Morning Class",
   },
   {
     id: "2",
-    name: "10 lbs Dumbell",
-    total: 3,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=16",
+    TitleName: "Afternoon Class",
   },
   {
     id: "3",
-    name: "15 lbs Dumbell",
-    total: 6,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=17",
+    TitleName: "Evening Class",
   },
+  
   {
     id: "4",
-    name: "20 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=18",
+    TitleName: "Night Class",
   },
-  {
-    id: "5",
-    name: "21 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=19",
-  },
-  {
-    id: "6",
-    name: "22 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=20",
-  },
-  {
-    id: "7",
-    name: "23 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=21",
-  },
-  {
-    id: "8",
-    name: "24 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=22",
-  },
-  {
-    id: "9",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=23",
-  },
-  {
-    id: "10",
-    name: "27 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=24",
-  },
-  {
-    id: "11",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=25",
-  },
-  {
-    id: "12",
-    name: "29 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=26",
-  },
-  {
-    id: "13",
-    name: "30 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=27",
-  },
-  {
-    id: "14",
-    name: "31 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=28",
-  },
-  {
-    id: "15",
-    name: "32 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=29",
-  },
-  {
-    id: "16",
-    name: "33 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=30",
-  },
-  {
-    id: "17",
-    name: "34 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=31",
-  },
-  {
-    id: "18",
-    name: "35 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=32",
-  },
-  {
-    id: "19",
-    name: "36 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=33",
-  },
-  {
-    id: "20",
-    name: "37 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=34",
-  },
-  {
-    id: "21",
-    name: "40 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=35",
-  },
-  {
-    id: "22",
-    name: "41 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=36",
-  },
-  {
-    id: "23",
-    name: "42 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=37",
-  },
-  {
-    id: "24",
-    name: "43 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=38",
-  },
-  {
-    id: "25",
-    name: "44 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=39",
-  },
-  {
-    id: "26",
-    name: "Exercise Bike",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=40",
-  },
-  {
-    id: "27",
-    name: "Bench Press",
-    total: 2,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=41",
-  },
-  {
-    id: "28",
-    name: "Rowing Machine",
-    total: 5,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=42",
-  },
-  {
-    id: "29",
-    name: "Pull Up Bar",
-    total: 3,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=43",
-  },
-  {
-    id: "30",
-    name: "Cable Machine",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=44",
-  },
-  {
-    id: "31",
-    name: "Smith Machine",
-    total: 2,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=45",
-  },
-  {
-    id: "32",
-    name: "Leg Press",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=46",
-  },
-  {
-    id: "33",
-    name: "Kettlebell",
-    total: 20,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=47",
-  },
-  {
-    id: "34",
-    name: "Yoga Mat",
-    total: 30,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=48",
-  },
-  //]);
 ];
 
-export default function InventoryScreen() {
+export default function ClassTitleScreen() {
   const router = useRouter();
-  const [equipmentData, setEquipmentData] =
-    useState<Equipment[]>(initialEquipmentData);
+  const [TitleData, setTitleData] = useState<dataTitle[]>(initialDataTitle);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return equipmentData.filter((item) => {
-      const matchName = item.name.toLowerCase().includes(search.toLowerCase());
+    return TitleData.filter((item) => {
+      const keyword = search.toLowerCase();
 
-      const matchStatus =
-        statusFilter === "All" ? true : item.status === statusFilter;
-
-      return matchName && matchStatus;
+      const matchSearch =
+        item.TitleName.toLowerCase().includes(keyword);
+      return matchSearch;
     });
-  }, [search, statusFilter]);
+  }, [search]);
 
   const totalPages = Math.ceil(filteredData.length / entries);
 
@@ -303,28 +74,11 @@ export default function InventoryScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 1, textAlign: "center" }]}>
-        {item.total}
-      </Text>
-
-      <Text
-        style={[
-          styles.dataTextList,
-          {
-            flex: 1.6,
-            textAlign: "center",
-            color: item.status === "Active" ? "#22C55E" : "#FACC15",
-          },
-        ]}
-      >
-        {item.status}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.TitleName}</Text>
 
       <View
         style={{
-          flex: 0.8,
+          flex: 0.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -352,81 +106,67 @@ export default function InventoryScreen() {
     </View>
   );
 
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
+  const [selectedDataTitle, setSelectedDataTitle] = useState<dataTitle | null>(
     null,
   );
-  const [equipmentName, setEquipmentName] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
-  const [totalNo, setTotalNo] = useState(1);
-  const [image, setImage] = useState("");
-
+  const [TitleName, setTitleName] = useState("");
+  
   const handleAdd = () => {
-    setSelectedEquipment(null);
-    setEquipmentName("");
-    setTotalNo(0);
-    setStatus("Active");
-    setImage("");
+    setSelectedDataTitle(null);
+    setTitleName("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: Equipment) => {
-    setSelectedEquipment(item);
-    setEquipmentName(item.name);
-    setTotalNo(item.total);
-    setStatus(item.status);
-    setImage(item.photo);
+  const handleEdit = (item: dataTitle) => {
+    setSelectedDataTitle(item);
+    setTitleName(item.TitleName);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (equipmentName.trim() === "") {
-      alert("Equipment Name is required");
+    if (TitleName.trim() === "") {
+      alert("Name is required");
       return;
     }
 
-    if (selectedEquipment) {
+    if (selectedDataTitle) {
       // UPDATE
-      const updatedData = equipmentData.map((item) =>
-        item.id === selectedEquipment.id
+      const updatedData = TitleData.map((item) =>
+        item.id === selectedDataTitle.id
           ? {
               ...item,
-              name: equipmentName,
-              total: totalNo,
-              status: status,
-              photo: image,
+              TitleName: TitleName,
             }
           : item,
       );
 
-      setEquipmentData(updatedData);
+      setTitleData(updatedData);
 
-      alert("Equipment updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newEquipment: Equipment = {
+      const newActiveMembers: dataTitle = {
         id: Date.now().toString(),
-        name: equipmentName,
-        total: totalNo,
-        status: status,
-        photo: image,
+        TitleName: TitleName,
       };
 
-      setEquipmentData([...equipmentData, newEquipment]);
+      setTitleData([...TitleData, newActiveMembers]);
 
-      alert("Equipment added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = equipmentData.filter((item) => item.id !== id);
+    const data = TitleData.filter((item) => item.id !== id);
 
-    setEquipmentData(data);
+    setTitleData(data);
 
-    alert("Equipment delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -435,35 +175,10 @@ export default function InventoryScreen() {
   };
 
   const resetForm = () => {
-    setEquipmentName("");
-    setTotalNo(1);
-    setStatus("Active");
-    setImage("");
-    setSelectedEquipment(null);
+    setSelectedDataTitle(null);
+    setTitleName("");
 
     setShowModal(false);
-  };
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   return (
@@ -502,13 +217,46 @@ export default function InventoryScreen() {
           <MenuItem
             icon="home-work"
             title="Class"
-            onPress={() => router.push("/class")}
+            active
+            onPress={() => setShowSubMenu(!showSubMenu)}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+            {/* Sub Menu - Class */}
+            {showSubMenu && (
+              <View style={{ marginLeft: 40 }}>
+                <MenuSubItem
+                  icon="schedule-send"
+                  title="Booking"
+                  onPress={() => router.push("/class_booking")}
+                />
+                <MenuSubItem
+                  icon="schedule"
+                  title="Schedule"
+                  onPress={() => router.push("/class_schedule")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Status"
+                  onPress={() => router.push("/class_status")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Title"
+                  onPress={() => router.push("/class_title")}
+                  active
+                />
+              </View>
+            )}
           <MenuItem
             icon="inventory-2"
             title="Inventory"
             onPress={() => router.push("/inventory")}
-            active
           />
           <MenuItem
             icon="edit-square"
@@ -537,6 +285,7 @@ export default function InventoryScreen() {
           />
         </ScrollView>
 
+
         <TouchableOpacity style={styles.logout}>
           <MaterialIcons name="logout" size={20} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>
@@ -558,11 +307,11 @@ export default function InventoryScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Equipment</Text>
+              <Text style={styles.sectionTitle}>Add Title</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Manage Equipments</Text>
+              <Text style={styles.titleList}>Title</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -585,62 +334,25 @@ export default function InventoryScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search equipment..."
+                    placeholder="Search Title..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
                   />
-
-                  <Picker
-                    selectedValue={statusFilter}
-                    onValueChange={(value: string) => {
-                      setStatusFilter(value);
-                      setPage(1);
-                    }}
-                    style={styles.pickerSearchList}
-                  >
-                    <Picker.Item label="All Status" value="All" />
-                    <Picker.Item label="Active" value="Active" />
-                    <Picker.Item label="Inactive" value="Inactive" />
-                  </Picker>
                 </View>
               </View>
 
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Equipment Name
+                  Title Name
                 </Text>
-
+                
                 <Text
                   style={[
                     styles.headerTextList,
                     {
                       flex: 1,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Total No.
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.6,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Status
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 0.8,
                       textAlign: "center",
                     },
                   ]}
@@ -699,85 +411,33 @@ export default function InventoryScreen() {
                 </View>
               </View>
 
-              {/* Screen Modal */}
+              {/* -------------------------------------------------- */}
+              {/* ------------------ Screen Modal ------------------ */}
+              {/* -------------------------------------------------- */}
+
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedEquipment ? "Edit Equipment" : "Add Equipment"}
+                    {selectedDataTitle ? "Edit Title" : "Add Title"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
-
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-
-                  <Text style={styles.labelModal}>Equipment Name</Text>
-
-                  <TextInput
-                    value={equipmentName}
-                    onChangeText={setEquipmentName}
-                    style={styles.inputModal}
-                  />
-
+                  {/* Input Title Name */}
                   <View style={styles.rowModal}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.labelModal}>Status</Text>
-
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={status}
-                          onValueChange={(value) => setStatus(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="Active" value="Active" />
-                          <Picker.Item label="Inactive" value="Inactive" />
-                        </Picker>
-                      </View>
-                    </View>
-
                     <View
                       style={{
-                        flex: 0.7,
-                        marginLeft: 10,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Total No.</Text>
-
+                      <Text style={styles.labelModal}>Title Name</Text>
                       <TextInput
-                        value={totalNo.toString()}
-                        onChangeText={(text) => setTotalNo(Number(text))}
-                        keyboardType="numeric"
+                        value={TitleName}
+                        onChangeText={setTitleName}
                         style={styles.inputModal}
                       />
                     </View>
                   </View>
+
+                  
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -803,7 +463,7 @@ export default function InventoryScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -817,10 +477,49 @@ export default function InventoryScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+
+
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -831,7 +530,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -843,6 +542,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -878,10 +578,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -893,6 +599,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -1033,7 +762,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -1115,11 +844,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -1127,7 +856,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -1148,7 +877,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {

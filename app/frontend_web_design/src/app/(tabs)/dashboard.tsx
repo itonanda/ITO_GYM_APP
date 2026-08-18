@@ -45,7 +45,7 @@ const dataActiveMembers = [
     name: "Emma Watson",
     datePaid: "2024-08-22",
     dateExpiry: "2027-08-22",
-    status: "Blocked",
+    status: "Inactive",
     avatar: "https://i.pravatar.cc/300?img=45",
   },
   {
@@ -92,7 +92,7 @@ const dataActiveCoaches = [
   {
     id: "4",
     name: "Nick Bare",
-    status: "Blocked",
+    status: "Inactive",
     avatar:
       "https://www.greatestphysiques.com/wp-content/uploads/2017/12/Nick-Bare.09.jpg",
   },
@@ -298,24 +298,9 @@ export default function DashboardScreen() {
             active
           />
           <MenuItem
-            icon="check-box"
-            title="Plan"
-            onPress={() => router.push("/plan")}
-          />
-          <MenuItem
-            icon="credit-card"
-            title="Payment"
-            onPress={() => router.push("/payment")}
-          />
-          <MenuItem
-            icon="inventory"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="groups"
-            title="Membership"
-            onPress={() => router.push("/membership")}
+            icon="people"
+            title="View Members"
+            onPress={() => router.push("/members")}
           />
           <MenuItem
             icon="fitness-center"
@@ -323,9 +308,39 @@ export default function DashboardScreen() {
             onPress={() => router.push("/coaches")}
           />
           <MenuItem
-            icon="menu-book"
+            icon="home-work"
+            title="Class"
+            onPress={() => router.push("/class")}
+          />
+          <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
+            icon="credit-card"
+            title="Payment"
+            onPress={() => router.push("/payment")}
+          />
+          <MenuItem
+            icon="discount"
+            title="Promos"
+            onPress={() => router.push("/promos")}
+          />
+          <MenuItem
+            icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
+          />
+          <MenuItem
+            icon="badge"
+            title="Profile"
+            onPress={() => router.push("/profile")}
           />
         </ScrollView>
 
@@ -607,10 +622,47 @@ export default function DashboardScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -621,10 +673,10 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
-            fontWeight: "700",
+            fontWeight: "bold",
           },
         ]}
       >
@@ -677,18 +729,43 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
-
   activeMenu: {
     backgroundColor: "#fff",
     borderRadius: 12,
     marginHorizontal: 10,
   },
-
   menuText: {
+    color: "#fff",
+  },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
     color: "#fff",
   },
 

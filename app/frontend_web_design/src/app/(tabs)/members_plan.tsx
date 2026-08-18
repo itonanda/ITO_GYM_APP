@@ -1,7 +1,7 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -15,251 +15,65 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface dataActiveMembers {
+interface dataPlans {
   id: string;
-  name: string;
-  memberId: string;
-  dateEnrolled: string;
-  dateExpiration: string;
-  status: "Active" | "Blocked";
-  photo: string;
+  planName: string;
+  day: string;
+  price: string;
+  description: string;
 }
 
-const initialDataActiveMembers: dataActiveMembers[] = [
+const initialDataPlans: dataPlans[] = [
   {
     id: "1",
-    name: "James Medalla",
-    memberId: "SFM2301N1",
-    dateEnrolled: "2024-05-11",
-    dateExpiration: "2026-05-11",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=1",
+    planName: "1 Month Unlimited Plan",
+    day: "30",
+    price: "300000",
+    description: "Open Gym Class Exercise",
   },
   {
     id: "2",
-    name: "Chris Medalla",
-    memberId: "SFM2301N2",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
+    planName: "3 Month Unlimited Plan",
+    day: "90",
+    price: "900000",
+    description: "",
   },
   {
     id: "3",
-    name: "James Chris",
-    memberId: "SFM2301N3",
-    dateEnrolled: "2024-05-13",
-    dateExpiration: "2026-05-13",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=3",
+    planName: "Open Gym Day Pass",
+    day: "30",
+    price: "250000",
+    description: "",
   },
   {
     id: "4",
-    name: "Sarah Medalla",
-    memberId: "SFM2301N4",
-    dateEnrolled: "2024-05-14",
-    dateExpiration: "2026-05-14",
-    status: "Blocked",
-    photo: "https://i.pravatar.cc/300?img=4",
-  },
-  {
-    id: "5",
-    name: "James Sarah",
-    memberId: "SFM2301N5",
-    dateEnrolled: "2024-05-15",
-    dateExpiration: "2026-05-15",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=5",
-  },
-  {
-    id: "6",
-    name: "Lee Medalla",
-    memberId: "SFM2301N6",
-    dateEnrolled: "2024-05-16",
-    dateExpiration: "2026-05-16",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=6",
-  },
-  {
-    id: "7",
-    name: "James Medalla Lee",
-    memberId: "SFM2301N7",
-    dateEnrolled: "2024-05-17",
-    dateExpiration: "2026-05-17",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=7",
-  },
-  {
-    id: "8",
-    name: "James Lee",
-    memberId: "SFM2301N8",
-    dateEnrolled: "2024-05-19",
-    dateExpiration: "2026-05-19",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=8",
-  },
-  {
-    id: "9",
-    name: "Leeoe Medalla",
-    memberId: "SFM2301N9",
-    dateEnrolled: "2024-06-12",
-    dateExpiration: "2026-06-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=9",
-  },
-  {
-    id: "10",
-    name: "James Leeber",
-    memberId: "SFM2301N10",
-    dateEnrolled: "2024-05-20",
-    dateExpiration: "2026-05-20",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=10",
-  },
-  {
-    id: "11",
-    name: "Bearto Medalla",
-    memberId: "SFM2301N11",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "12",
-    name: "James Hong",
-    memberId: "SFM2301N12",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "13",
-    name: "Hong Lee Medalla",
-    memberId: "SFM2301N13",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Blocked",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "14",
-    name: "James Medalla Chonghe",
-    memberId: "SFM2301N14",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "15",
-    name: "David Medalla",
-    memberId: "SFM2301N15",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "16",
-    name: "James David",
-    memberId: "SFM2301N16",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "17",
-    name: "Sarah Johnson",
-    memberId: "SFM2301N17",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "18",
-    name: "David Lee",
-    memberId: "SFM2301N18",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "19",
-    name: "Emma Watson",
-    memberId: "SFM2301N19",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Blocked",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "20",
-    name: "Chris Evans",
-    memberId: "SFM2301N20",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "21",
-    name: "Evans Loo",
-    memberId: "SFM2301N21",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "22",
-    name: "Evans Medalla",
-    memberId: "SFM2301N22",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
-  },
-  {
-    id: "23",
-    name: "James Chris",
-    memberId: "SFM2301N23",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=2",
+    planName: "1x Drop In",
+    day: "30",
+    price: "50000",
+    description: "",
   },
 ];
 
-export default function MemberScreen() {
+export default function MembersPlanScreen() {
   const router = useRouter();
-  const [activeMembersData, setActiveMembersData] = useState<
-    dataActiveMembers[]
-  >(initialDataActiveMembers);
+  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return activeMembersData.filter((item) => {
+    return plansData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.name.toLowerCase().includes(keyword) ||
-        item.memberId.toString().toLowerCase().includes(keyword);
-
-      const matchStatus =
-        statusFilter === "All" ? true : item.status === statusFilter;
-
-      return matchSearch && matchStatus;
+        item.planName.toLowerCase().includes(keyword) ||
+        item.day.toString().toLowerCase().includes(keyword) ||
+        item.price.toString().toLowerCase().includes(keyword) ||
+        item.description.toString().toLowerCase().includes(keyword);
+      return matchSearch;
     });
-  }, [search, statusFilter]);
+  }, [search]);
 
   const totalPages = Math.ceil(filteredData.length / entries);
 
@@ -277,27 +91,13 @@ export default function MemberScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.memberId}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
 
       <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateEnrolled}
+        {item.day}
       </Text>
       <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateExpiration}
-      </Text>
-
-      <Text
-        style={[
-          styles.dataTextList,
-          {
-            flex: 2,
-            textAlign: "center",
-            color: item.status === "Active" ? "#22C55E" : "#FACC15",
-          },
-        ]}
-      >
-        {item.status}
+        {item.price}
       </Text>
 
       <View
@@ -330,90 +130,82 @@ export default function MemberScreen() {
     </View>
   );
 
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedActiveMembers, setSelectedActiveMembers] =
-    useState<dataActiveMembers | null>(null);
-  const [MemberName, setMemberName] = useState("");
-  const [MemberId, setMemberId] = useState("");
-  const [MemberDateEnrolled, setMemberDateEnrolled] = useState("");
-  const [MemberDateExpiration, setMemberDateExpiration] = useState("");
-  const [status, setStatus] = useState<"Active" | "Blocked">("Active");
-  const [image, setImage] = useState("");
-
+  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
+    null,
+  );
+  const [planName, setPlanName] = useState("");
+  const [day, setday] = useState("");
+  const [price, setprice] = useState("");
+  const [description, setdescription] = useState("");
+  
   const handleAdd = () => {
-    setSelectedActiveMembers(null);
-    setMemberName("");
-    setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setStatus("Active");
-    setImage("");
+    setSelectedDataPlans(null);
+    setPlanName("");
+    setday("");
+    setprice("");
+    setdescription("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataActiveMembers) => {
-    setSelectedActiveMembers(item);
-    setMemberName(item.name);
-    setMemberId(item.memberId);
-    setMemberDateEnrolled(item.dateEnrolled);
-    setMemberDateExpiration(item.dateExpiration);
-    setStatus(item.status);
-    setImage(item.photo);
+  const handleEdit = (item: dataPlans) => {
+    setSelectedDataPlans(item);
+    setPlanName(item.planName);
+    setday(item.day);
+    setprice(item.price);
+    setdescription(item.description);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (MemberName.trim() === "") {
-      alert("Member Name is required");
+    if (planName.trim() === "") {
+      alert("Name is required");
       return;
     }
 
-    if (selectedActiveMembers) {
+    if (selectedDataPlans) {
       // UPDATE
-      const updatedData = activeMembersData.map((item) =>
-        item.id === selectedActiveMembers.id
+      const updatedData = plansData.map((item) =>
+        item.id === selectedDataPlans.id
           ? {
               ...item,
-              name: MemberName,
-              memberId: MemberId,
-              dateEnrolled: MemberDateEnrolled,
-              dateExpiration: MemberDateExpiration,
-              status: status,
-              photo: image,
+              planName: planName,
+              day: day,
+              price: price,
+              description: description,
             }
           : item,
       );
 
-      setActiveMembersData(updatedData);
+      setPlansData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataActiveMembers = {
+      const newActiveMembers: dataPlans = {
         id: Date.now().toString(),
-        name: MemberName,
-        memberId: MemberId,
-        dateEnrolled: MemberDateEnrolled,
-        dateExpiration: MemberDateExpiration,
-        status: status,
-        photo: image,
+        planName: planName,
+        day: day,
+        price: price,
+        description : description,
       };
 
-      setActiveMembersData([...activeMembersData, newActiveMembers]);
+      setPlansData([...plansData, newActiveMembers]);
 
-      alert("Members added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = activeMembersData.filter((item) => item.id !== id);
+    const data = plansData.filter((item) => item.id !== id);
 
-    setActiveMembersData(data);
+    setPlansData(data);
 
-    alert("Members delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -422,37 +214,13 @@ export default function MemberScreen() {
   };
 
   const resetForm = () => {
-    setSelectedActiveMembers(null);
-    setMemberName("");
-    setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setStatus("Active");
-    setImage("");
+    setSelectedDataPlans(null);
+    setPlanName("");
+    setday("");
+    setprice("");
+    setdescription("");
 
     setShowModal(false);
-  };
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   return (
@@ -479,9 +247,71 @@ export default function MemberScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
-            icon="check-box"
-            title="Plan"
-            onPress={() => router.push("/plan")}
+            icon="people"
+            title="View Members"
+            active
+            onPress={() => {
+              router.push("/members");
+              setShowSubMenu(true);
+            }}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
+          />
+            {/* Sub Menu - View Members */}
+            {showSubMenu && (
+              <View style={{ marginLeft: 40 }}>
+                <MenuSubItem
+                  icon="assignment-turned-in"
+                  title="Plan"
+                  onPress={() => router.push("/members_plan")}
+                  active
+                />
+                <MenuSubItem
+                  icon="assignment-ind"
+                  title="Leave"
+                  onPress={() => router.push("/members_leave")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Quota"
+                  onPress={() => router.push("/members_quota")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Status"
+                  onPress={() => router.push("/members_status")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Type"
+                  onPress={() => router.push("/members_type")}
+                />
+              </View>
+            )}
+          <MenuItem
+            icon="fitness-center"
+            title="Coaches"
+            onPress={() => router.push("/coaches")}
+          />
+          <MenuItem
+            icon="home-work"
+            title="Class"
+            onPress={() => router.push("/class")}
+          />
+          <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
           />
           <MenuItem
             icon="credit-card"
@@ -489,27 +319,22 @@ export default function MemberScreen() {
             onPress={() => router.push("/payment")}
           />
           <MenuItem
-            icon="inventory"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
+            icon="discount"
+            title="Promos"
+            onPress={() => router.push("/promos")}
           />
           <MenuItem
-            icon="groups"
-            title="Membership"
-            onPress={() => router.push("/membership")}
-            active
-          />
-          <MenuItem
-            icon="fitness-center"
-            title="Coaches"
-            onPress={() => router.push("/coaches")}
-          />
-          <MenuItem
-            icon="menu-book"
+            icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
           />
+          <MenuItem
+            icon="badge"
+            title="Profile"
+            onPress={() => router.push("/profile")}
+          />
         </ScrollView>
+
 
         <TouchableOpacity style={styles.logout}>
           <MaterialIcons name="logout" size={20} color="#fff" />
@@ -532,11 +357,11 @@ export default function MemberScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Member</Text>
+              <Text style={styles.sectionTitle}>Add Plan</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Gym Members</Text>
+              <Text style={styles.titleList}>Plans</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -559,32 +384,29 @@ export default function MemberScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search members..."
+                    placeholder="Search Plans..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
                   />
-
-                  <Picker
-                    selectedValue={statusFilter}
-                    onValueChange={(value: string) => {
-                      setStatusFilter(value);
-                      setPage(1);
-                    }}
-                    style={styles.pickerSearchList}
-                  >
-                    <Picker.Item label="All Status" value="All" />
-                    <Picker.Item label="Active" value="Active" />
-                    <Picker.Item label="Blocked" value="Blocked" />
-                  </Picker>
                 </View>
               </View>
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>Name</Text>
-                <Text style={[styles.headerTextList, { flex: 2 }]}>
-                  Member ID
+                <Text style={[styles.headerTextList, { flex: 3 }]}>
+                  Plan Name
+                </Text>
+                <Text
+                  style={[
+                    styles.headerTextList,
+                    {
+                      flex: 2,
+                      textAlign: "center",
+                    },
+                  ]}
+                >
+                  Day
                 </Text>
 
                 <Text
@@ -596,31 +418,7 @@ export default function MemberScreen() {
                     },
                   ]}
                 >
-                  Date Enrolled
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Expiration
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Status
+                  Price
                 </Text>
 
                 <Text
@@ -686,94 +484,73 @@ export default function MemberScreen() {
                 </View>
               </View>
 
-              {/* Screen Modal */}
+              {/* -------------------------------------------------- */}
+              {/* ------------------ Screen Modal ------------------ */}
+              {/* -------------------------------------------------- */}
+
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedActiveMembers ? "Edit Member" : "Add Member"}
+                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
-
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-
-                  <Text style={styles.labelModal}>Member Name</Text>
-                  <TextInput
-                    value={MemberName}
-                    onChangeText={setMemberName}
-                    style={styles.inputModal}
-                  />
-
+                  {/* Input Plan Name */}
                   <View style={styles.rowModal}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.labelModal}>Status</Text>
-
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={status}
-                          onValueChange={(value) => setStatus(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="Active" value="Active" />
-                          <Picker.Item label="Blocked" value="Blocked" />
-                        </Picker>
-                      </View>
-                    </View>
-
                     <View
                       style={{
-                        flex: 0.7,
-                        marginLeft: 10,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Date Enrolled</Text>
-
+                      <Text style={styles.labelModal}>Plan Name</Text>
                       <TextInput
-                        value={MemberDateEnrolled}
-                        onChangeText={setMemberDateEnrolled}
+                        value={planName}
+                        onChangeText={setPlanName}
+                        style={styles.inputModal}
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Day & Price */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.3,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Day</Text>
+                      <TextInput
+                        value={day}
+                        onChangeText={setday}
                         style={styles.inputModal}
                       />
                     </View>
 
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 0.7,                        
                         marginLeft: 10,
                       }}
                     >
-                      <Text style={styles.labelModal}>Date Expiration</Text>
-
+                      <Text style={styles.labelModal}>Price</Text>
                       <TextInput
-                        value={MemberDateExpiration}
-                        onChangeText={setMemberDateExpiration}
+                        value={price}
+                        onChangeText={setprice}
+                        style={styles.inputModal}
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input description */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Description</Text>
+                      <TextInput
+                        value={description}
+                        onChangeText={setdescription}
                         style={styles.inputModal}
                       />
                     </View>
@@ -803,7 +580,7 @@ export default function MemberScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -817,10 +594,49 @@ export default function MemberScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+
+
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -831,7 +647,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -843,6 +659,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -878,10 +695,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -893,6 +716,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -1033,7 +879,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -1094,7 +940,7 @@ const styles = StyleSheet.create({
   },
 
   titleModal: {
-    color: "#E60012",
+    color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
   },
@@ -1115,11 +961,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -1127,7 +973,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -1148,7 +994,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {
