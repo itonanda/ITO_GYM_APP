@@ -509,67 +509,25 @@ export default function MembersScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
-            icon="people"
-            title="View Members"
-            active
-            onPress={() => setShowSubMenu(!showSubMenu)}
-            rightIcon={
-              <MaterialIcons
-                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                size={22}
-                color="#ED1018"
-              />
-            }
-          />
-            {/* Sub Menu - View Members */}
-            {showSubMenu && (
-              <View style={{ marginLeft: 40 }}>
-                <MenuSubItem
-                  icon="assignment-turned-in"
-                  title="Plan"
-                  onPress={() => router.push("/members_plan")}
-                />
-                <MenuSubItem
-                  icon="assignment-ind"
-                  title="Leave"
-                  onPress={() => router.push("/members_leave")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  title="Quota"
-                  onPress={() => router.push("/members_quota")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  title="Status"
-                  onPress={() => router.push("/members_status")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  title="Type"
-                  onPress={() => router.push("/members_type")}
-                />
-              </View>
-            )}
-          <MenuItem
-            icon="fitness-center"
+            icon="supervised-user-circle"
             title="Coaches"
             onPress={() => router.push("/coaches")}
+          />
+          <MenuItem
+            icon="people"
+            title="Members"
+            onPress={() => router.push("/members")}
+            active
+          />
+          <MenuItem
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
           />
           <MenuItem
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
-          />
-          <MenuItem
-            icon="inventory-2"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            title="News"
-            onPress={() => router.push("/news")}
           />
           <MenuItem
             icon="credit-card"
@@ -582,14 +540,19 @@ export default function MembersScreen() {
             onPress={() => router.push("/promos")}
           />
           <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
-          />
-          <MenuItem
-            icon="badge"
-            title="Profile"
-            onPress={() => router.push("/profile")}
           />
         </ScrollView>
 

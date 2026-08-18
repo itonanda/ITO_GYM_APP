@@ -15,45 +15,45 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface dataBooking {
+interface dataTitle {
   id: string;
-  BookingName: string;
+  TitleName: string;
 }
 
-const initialDataBooking: dataBooking[] = [
+const initialDataTitle: dataTitle[] = [
   {
     id: "1",
-    BookingName: "Morning Class",
+    TitleName: "Morning Class",
   },
   {
     id: "2",
-    BookingName: "Afternoon Class",
+    TitleName: "Afternoon Class",
   },
   {
     id: "3",
-    BookingName: "Evening Class",
+    TitleName: "Evening Class",
   },
   
   {
     id: "4",
-    BookingName: "Night Class",
+    TitleName: "Night Class",
   },
 ];
 
-export default function ClassBookingScreen() {
+export default function ClassTitleScreen() {
   const router = useRouter();
-  const [BookingData, setBookingData] = useState<dataBooking[]>(initialDataBooking);
+  const [TitleData, setTitleData] = useState<dataTitle[]>(initialDataTitle);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return BookingData.filter((item) => {
+    return TitleData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.BookingName.toLowerCase().includes(keyword);
+        item.TitleName.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -74,7 +74,7 @@ export default function ClassBookingScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.BookingName}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.TitleName}</Text>
 
       <View
         style={{
@@ -108,53 +108,53 @@ export default function ClassBookingScreen() {
 
   const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataBooking, setSelectedDataBooking] = useState<dataBooking | null>(
+  const [selectedDataTitle, setSelectedDataTitle] = useState<dataTitle | null>(
     null,
   );
-  const [BookingName, setBookingName] = useState("");
+  const [TitleName, setTitleName] = useState("");
   
   const handleAdd = () => {
-    setSelectedDataBooking(null);
-    setBookingName("");
+    setSelectedDataTitle(null);
+    setTitleName("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataBooking) => {
-    setSelectedDataBooking(item);
-    setBookingName(item.BookingName);
+  const handleEdit = (item: dataTitle) => {
+    setSelectedDataTitle(item);
+    setTitleName(item.TitleName);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (BookingName.trim() === "") {
+    if (TitleName.trim() === "") {
       alert("Name is required");
       return;
     }
 
-    if (selectedDataBooking) {
+    if (selectedDataTitle) {
       // UPDATE
-      const updatedData = BookingData.map((item) =>
-        item.id === selectedDataBooking.id
+      const updatedData = TitleData.map((item) =>
+        item.id === selectedDataTitle.id
           ? {
               ...item,
-              BookingName: BookingName,
+              TitleName: TitleName,
             }
           : item,
       );
 
-      setBookingData(updatedData);
+      setTitleData(updatedData);
 
       alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataBooking = {
+      const newActiveMembers: dataTitle = {
         id: Date.now().toString(),
-        BookingName: BookingName,
+        TitleName: TitleName,
       };
 
-      setBookingData([...BookingData, newActiveMembers]);
+      setTitleData([...TitleData, newActiveMembers]);
 
       alert("Added successfully");
     }
@@ -162,9 +162,9 @@ export default function ClassBookingScreen() {
   };
 
   const handleDelete = (id: string) => {
-    const data = BookingData.filter((item) => item.id !== id);
+    const data = TitleData.filter((item) => item.id !== id);
 
-    setBookingData(data);
+    setTitleData(data);
 
     alert("Delete successfully");
   };
@@ -175,8 +175,8 @@ export default function ClassBookingScreen() {
   };
 
   const resetForm = () => {
-    setSelectedDataBooking(null);
-    setBookingName("");
+    setSelectedDataTitle(null);
+    setTitleName("");
 
     setShowModal(false);
   };
@@ -242,7 +242,6 @@ export default function ClassBookingScreen() {
                     icon="schedule-send"
                     title="Booking"
                     onPress={() => router.push("/class_booking")}
-                    active
                   />
                   <MenuSubItem
                     icon="assignment"
@@ -253,6 +252,7 @@ export default function ClassBookingScreen() {
                     icon="assignment"
                     title="Class Name"
                     onPress={() => router.push("/class_title")}
+                    active
                   />
                 </View>
               )}
@@ -304,12 +304,12 @@ export default function ClassBookingScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            <Pressable style={styles.addBookingBadge} onPress={handleAdd}>
-              <Text style={styles.sectionBooking}>Add Booking</Text>
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Title</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.BookingList}>Booking</Text>
+              <Text style={styles.titleList}>Title</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -332,7 +332,7 @@ export default function ClassBookingScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search Booking..."
+                    placeholder="Search Title..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -343,7 +343,7 @@ export default function ClassBookingScreen() {
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Booking Name
+                  Title Name
                 </Text>
                 
                 <Text
@@ -415,21 +415,21 @@ export default function ClassBookingScreen() {
 
               {showModal && (
                 <View style={styles.modalScreen}>
-                  <Text style={styles.BookingModal}>
-                    {selectedDataBooking ? "Edit Booking" : "Add Booking"}
+                  <Text style={styles.titleModal}>
+                    {selectedDataTitle ? "Edit Title" : "Add Title"}
                   </Text>
 
-                  {/* Input Booking Name */}
+                  {/* Input Title Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
                         flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Booking Name</Text>
+                      <Text style={styles.labelModal}>Title Name</Text>
                       <TextInput
-                        value={BookingName}
-                        onChangeText={setBookingName}
+                        value={TitleName}
+                        onChangeText={setTitleName}
                         style={styles.inputModal}
                       />
                     </View>
@@ -479,7 +479,7 @@ export default function ClassBookingScreen() {
 
 function MenuItem({
   icon,
-  Booking,
+  title,
   active = false,
   onPress,
   rightIcon,
@@ -505,7 +505,7 @@ function MenuItem({
             },
           ]}
         >
-          {Booking}
+          {title}
         </Text>
       </View>
 
@@ -514,7 +514,7 @@ function MenuItem({
   );
 }
 
-function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
   return (
     <TouchableOpacity
       style={[styles.menuSubItem, active && styles.activeMenuSub]}
@@ -535,7 +535,7 @@ function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
           },
         ]}
       >
-        {Booking}
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -649,7 +649,7 @@ const styles = StyleSheet.create({
     color: "#ED1018",
   },
 
-  addBookingBadge: {
+  addTitleBadge: {
     width: "30%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ED1018",
   },
-  sectionBookingBadge: {
+  sectionTitleBadge: {
     width: "20%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
   },
-  sectionBooking: {
+  sectionTitle: {
     fontSize: 24,
     color: "#ED1018",
     fontWeight: "700",
@@ -689,7 +689,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  BookingList: {
+  titleList: {
     color: "#fff",
     fontSize: 32,
     fontWeight: "bold",
@@ -820,7 +820,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  BookingModal: {
+  titleModal: {
     color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
@@ -955,7 +955,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  Booking: {
+  title: {
     fontSize: 28,
     fontWeight: "700",
     color: "#D71920",
@@ -1014,7 +1014,7 @@ const styles = StyleSheet.create({
   },
 
   //-=======================
-  Bookinga: {
+  titlea: {
     fontSize: 22,
     fontWeight: "700",
     marginBottom: 20,

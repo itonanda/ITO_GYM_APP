@@ -490,19 +490,34 @@ export default function InventoryScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
+            icon="supervised-user-circle"
+            title="Coaches"
+            onPress={() => router.push("/coaches")}
+          />
+          <MenuItem
             icon="people"
-            title="View Members"
+            title="Members"
             onPress={() => router.push("/members")}
           />
           <MenuItem
-            icon="fitness-center"
-            title="Coaches"
-            onPress={() => router.push("/coaches")}
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
           />
           <MenuItem
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
+          />
+          <MenuItem
+            icon="credit-card"
+            title="Payment"
+            onPress={() => router.push("/payment")}
+          />
+          <MenuItem
+            icon="discount"
+            title="Promos"
+            onPress={() => router.push("/promos")}
           />
           <MenuItem
             icon="inventory-2"
@@ -516,24 +531,9 @@ export default function InventoryScreen() {
             onPress={() => router.push("/news")}
           />
           <MenuItem
-            icon="credit-card"
-            title="Payment"
-            onPress={() => router.push("/payment")}
-          />
-          <MenuItem
-            icon="discount"
-            title="Promos"
-            onPress={() => router.push("/promos")}
-          />
-          <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
-          />
-          <MenuItem
-            icon="badge"
-            title="Profile"
-            onPress={() => router.push("/profile")}
           />
         </ScrollView>
 

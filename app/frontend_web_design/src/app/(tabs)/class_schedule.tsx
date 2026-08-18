@@ -28,6 +28,7 @@ interface dataSchedule {
   ScheduleDescriptions: string;
   ScheduleList: string;
   ScheduleQuota: string;
+  ScheduleAvailableQuota: string;
 }
 
 const initialDataSchedule: dataSchedule[] = [
@@ -42,6 +43,7 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
     ScheduleList: "Jump",
     ScheduleQuota: "20",
+    ScheduleAvailableQuota: "20",
   },
   {
     id: "2",
@@ -54,6 +56,7 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleDescriptions: "",
     ScheduleList: "Jump",
     ScheduleQuota: "15",
+    ScheduleAvailableQuota: "10",
   },
   {
     id: "3",
@@ -65,7 +68,8 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleDate: "2026-08-15",
     ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
     ScheduleList: "",
-    ScheduleQuota: "15",
+    ScheduleQuota: "15",    
+    ScheduleAvailableQuota: "9",
   },
   
   {
@@ -79,6 +83,7 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleDescriptions: "",
     ScheduleList: "Jump",
     ScheduleQuota: "20",
+    ScheduleAvailableQuota: "19",
   },
 ];
 
@@ -132,7 +137,10 @@ export default function ClassScheduleScreen() {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.ScheduleName.toLowerCase().includes(keyword);
+        item.CoachName.toLowerCase().includes(keyword) ||
+        item.CoachId.toString().toLowerCase().includes(keyword) ||
+        item.ScheduleName.toLowerCase().includes(keyword) ||
+        item.ScheduleDate.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -153,11 +161,16 @@ export default function ClassScheduleScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.ScheduleName}</Text>
+      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.CoachId}  -  {item.CoachName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2.5 }]}>{item.ScheduleName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.ScheduleDate}</Text>
+      <Text style={[styles.dataTextList, { flex: 2.5 }]}>{item.ScheduleStartTime} - {item.ScheduleEndTime}</Text>
+      <Text style={[styles.dataTextList, { flex: 1.2 }]}>{item.ScheduleAvailableQuota} / {item.ScheduleQuota}
+      </Text>
 
       <View
         style={{
-          flex: 0.7,
+          flex: 1.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -207,6 +220,7 @@ export default function ClassScheduleScreen() {
   const [ScheduleDescriptions, setScheduleDescriptions] = useState('For Upper body, make you more energize and feel better .....');
   const [ScheduleList, setScheduleList] = useState(""); 
   const [ScheduleQuota, setScheduleQuota] = useState(""); 
+  const [ScheduleAvailableQuota, setScheduleAvailableQuota] = useState(""); 
   
   const handleAdd = () => {
     setSelectedDataSchedule(null);
@@ -226,6 +240,7 @@ export default function ClassScheduleScreen() {
     setScheduleDescriptions("");
     setScheduleList("");
     setScheduleQuota("");
+    setScheduleAvailableQuota("");
 
     setShowModal(true);
   };
@@ -258,6 +273,7 @@ export default function ClassScheduleScreen() {
     setScheduleDescriptions(item.ScheduleDescriptions);
     setScheduleList(item.ScheduleList);
     setScheduleQuota(item.ScheduleQuota);
+    setScheduleAvailableQuota(item.ScheduleAvailableQuota);
 
     // Tutup dropdown member
     setShowCoachDropdown(false);
@@ -270,6 +286,22 @@ export default function ClassScheduleScreen() {
   const handleSave = () => {
     if (ScheduleName.trim() === "") {
       alert("Name is required");
+      return;
+    }
+    if (!CoachName) {
+      alert("Please select a coach name");
+      return;
+    }
+    if (ScheduleEndTime < ScheduleStartTime) {
+      alert("Invalid Time, End time cannot be earlier than start time.");
+      return;
+    }
+    if (ScheduleDate.trim() === "") {
+      alert("Date is required");
+      return;
+    }
+    if (ScheduleQuota.trim() === "") {
+      alert("Quota is required");
       return;
     }
 
@@ -288,6 +320,7 @@ export default function ClassScheduleScreen() {
               ScheduleDescriptions: ScheduleDescriptions,
               ScheduleList: ScheduleList,
               ScheduleQuota: ScheduleQuota,
+              ScheduleAvailableQuota: ScheduleAvailableQuota,
             }
           : item,
       );
@@ -308,6 +341,7 @@ export default function ClassScheduleScreen() {
         ScheduleDescriptions: ScheduleDescriptions,
         ScheduleList: ScheduleList,
         ScheduleQuota: ScheduleQuota,
+        ScheduleAvailableQuota: ScheduleAvailableQuota,
       };
 
       setScheduleData([...ScheduleData, newActiveMembers]);
@@ -348,6 +382,7 @@ export default function ClassScheduleScreen() {
     setScheduleDescriptions("");
     setScheduleList("");
     setScheduleQuota("");
+    setScheduleAvailableQuota("");
 
     setShowModal(false);
   };
@@ -423,7 +458,10 @@ export default function ClassScheduleScreen() {
             icon="home-work"
             Schedule="Class"
             active
-            onPress={() => setShowSubMenu(!showSubMenu)}
+            onPress={() => {
+              router.push("/class");
+              setShowSubMenu(true);
+            }}
             rightIcon={
               <MaterialIcons
                 name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}

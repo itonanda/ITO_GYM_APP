@@ -20,215 +20,131 @@ import PhoneInput from "../../components/PhoneInput";
 
 
 // ============ DATA ============
-interface dataActiveClass {
+interface dataSchedule {
   id: string;
-  name: string;
-  memberId: string;
-  dateEnrolled: string;
-  dateExpiration: string;
-  photo: string;
-  email: string;
-  birthDate: string;
-  dialCodePhone: string;
-  phone: string;
-  password: string;
-  dialCodeEmergencyContactNo: string;
-  emergencyContactNo: string;
-  emergencyContactName: string;
-  gender: string;
+  CoachName: string,
+  CoachId: string,
+  ScheduleName: string;
+  ScheduleStartTime: string;
+  ScheduleEndTime: string;
+  ScheduleDate: string;
+  ScheduleDescriptions: string;
+  ScheduleList: string;
+  ScheduleQuota: string;
+  ScheduleAvailableQuota: string;
 }
 
-const initialDataActiveClass: dataActiveClass[] = [
+const initialDataSchedule: dataSchedule[] = [
   {
     id: "1",
-    name: "James Medalla",
-    memberId: "SFM2301N1",
-    dateEnrolled: "2024-05-11",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "60",
-    phone: "85122233360",
-    password: "12345",
-    dialCodeEmergencyContactNo: "60",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    ScheduleName: "Morning Class",
+    ScheduleStartTime: "11:23",
+    ScheduleEndTime: "12:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
+    ScheduleList: "Jump",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "20",
   },
   {
     id: "2",
-    name: "Chris Medalla",
-    memberId: "SFM2301N2",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    photo: "https://i.pravatar.cc/300?img=2",
-    email: "Testing@gmail.com",
-    birthDate: "2000-07-10",
-    dialCodePhone: "62",
-    phone: "85122233362",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Female",
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    ScheduleName: "Afternoon Class",
+    ScheduleStartTime: "18:20",
+    ScheduleEndTime: "19:00",
+    ScheduleDate: "2026-08-15",
+    ScheduleDescriptions: "",
+    ScheduleList: "Jump",
+    ScheduleQuota: "15",
+    ScheduleAvailableQuota: "10",
   },
   {
     id: "3",
-    name: "James Chris",
-    memberId: "SFM2301N3",
-    dateEnrolled: "2024-05-13",
-    dateExpiration: "2026-05-13",
-    photo: "https://i.pravatar.cc/300?img=3",
-    email: "Testing@gmail.com",
-    birthDate: "2001-05-10",
-    dialCodePhone: "65",
-    phone: "85122233365",
-    password: "12345",
-    dialCodeEmergencyContactNo: "65",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    CoachName: "Medalla Toy",
+    CoachId: "COA2301N2",
+    ScheduleName: "Evening Class",
+    ScheduleStartTime: "05:00",
+    ScheduleEndTime: "09:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
+    ScheduleList: "",
+    ScheduleQuota: "15",    
+    ScheduleAvailableQuota: "9",
   },
+  
   {
     id: "4",
-    name: "Sarah Medalla",
-    memberId: "SFM2301N4",
-    dateEnrolled: "2024-05-14",
-    dateExpiration: "2026-05-14",
-    photo: "https://i.pravatar.cc/300?img=4",
-    email: "Testing@gmail.com",
-    birthDate: "2000-08-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Female",
+    CoachName: "James Boy",
+    CoachId: "COA2301N3",
+    ScheduleName: "Night Class",
+    ScheduleStartTime: "21:23",
+    ScheduleEndTime: "23:43",
+    ScheduleDate: "2026-08-16",
+    ScheduleDescriptions: "",
+    ScheduleList: "Jump",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "19",
+  },
+];
+
+const dataCoach = [
+  {
+    id: '1',
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
   },
   {
-    id: "5",
-    name: "James Sarah",
-    memberId: "SFM2301N5",
-    dateEnrolled: "2024-05-15",
-    dateExpiration: "2026-05-15",
-    photo: "https://i.pravatar.cc/300?img=5",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-14",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '2',
+    CoachName: "Medalla Toy",
+    CoachId: "COA2301N2",
   },
   {
-    id: "6",
-    name: "Lee Medalla",
-    memberId: "SFM2301N6",
-    dateEnrolled: "2024-05-16",
-    dateExpiration: "2026-05-16",
-    photo: "https://i.pravatar.cc/300?img=6",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '3',
+    CoachName: "James Boy",
+    CoachId: "COA2301N3",
+  },
+];
+
+const dataScheduleName = [
+  {
+    id: '1',
+    ScheduleName: "Morning Class",
   },
   {
-    id: "7",
-    name: "James Medalla Lee",
-    memberId: "SFM2301N7",
-    dateEnrolled: "2024-05-17",
-    dateExpiration: "2026-05-17",
-    photo: "https://i.pravatar.cc/300?img=7",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '2',
+    ScheduleName: "Afternoon Class",
   },
   {
-    id: "8",
-    name: "James Lee",
-    memberId: "SFM2301N8",
-    dateEnrolled: "2024-05-19",
-    dateExpiration: "2026-05-19",
-    photo: "https://i.pravatar.cc/300?img=8",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
-  },
+    id: '3',
+    ScheduleName: "Evening Class",
+  },  
   {
-    id: "9",
-    name: "Leeoe Medalla",
-    memberId: "SFM2301N9",
-    dateEnrolled: "2024-06-12",
-    dateExpiration: "2026-06-12",
-    photo: "https://i.pravatar.cc/300?img=9",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
-  },
-  {
-    id: "10",
-    name: "James Leeber",
-    memberId: "SFM2301N10",
-    dateEnrolled: "2024-05-20",
-    dateExpiration: "2026-05-20",
-    photo: "https://i.pravatar.cc/300?img=10",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '4',
+    ScheduleName: "Night Class",
   },
 ];
 
 
-export default function ClassScreen() {
+export default function ClassScheduleScreen() {
   const router = useRouter();
-  const [activeClassData, setActiveClassData] = useState<
-    dataActiveClass[]
-  >(initialDataActiveClass);
+  const [ScheduleData, setScheduleData] = useState<dataSchedule[]>(initialDataSchedule);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return activeClassData.filter((item) => {
+    return ScheduleData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.name.toLowerCase().includes(keyword) ||
-        item.memberId.toString().toLowerCase().includes(keyword);
+        item.CoachName.toLowerCase().includes(keyword) ||
+        item.CoachId.toString().toLowerCase().includes(keyword) ||
+        item.ScheduleName.toLowerCase().includes(keyword) ||
+        item.ScheduleDate.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -249,19 +165,16 @@ export default function ClassScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.memberId}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateEnrolled}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateExpiration}
+      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.CoachId}  -  {item.CoachName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2.5 }]}>{item.ScheduleName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.ScheduleDate}</Text>
+      <Text style={[styles.dataTextList, { flex: 2.5 }]}>{item.ScheduleStartTime} - {item.ScheduleEndTime}</Text>
+      <Text style={[styles.dataTextList, { flex: 1.2 }]}>{item.ScheduleAvailableQuota} / {item.ScheduleQuota}
       </Text>
 
       <View
         style={{
-          flex: 1.5,
+          flex: 1.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -289,132 +202,165 @@ export default function ClassScreen() {
     </View>
   );
 
-  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedActiveClass, setSelectedActiveClass] =
-    useState<dataActiveClass | null>(null);
-  const [MemberId, setMemberId] = useState("");
-  const [MemberDateEnrolled, setMemberDateEnrolled] = useState("");
-  const [MemberDateExpiration, setMemberDateExpiration] = useState("");
-  const [status, setStatus] = useState<"Active" | "Blocked">("Active");
-  const [image, setImage] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dialCodePhone, setDialCodePhone] = useState("62");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
-  const [emergencyContactNo, setEmergencyContactNo] = useState("");
-  const [emergencyContactName, setEmergencyContactName] = useState("");
-  const [gender, setGender] = useState("");
+  const [selectedDataSchedule, setSelectedDataSchedule] = useState<dataSchedule | null>(
+    null,
+  );
 
+  const [CoachName, setCoachName] = useState<any>(null);
+  const [showCoachDropdown, setShowCoachDropdown] = useState(false);
+  const [CoachSearch, setCoachSearch] = useState("");
+  const [CoachId, setCoachId] = useState("");  
+  const [ScheduleName, setScheduleName] = useState("");  
+  const [showScheduleName, setShowScheduleName] = useState(false);
+  const [ScheduleStartTime, setScheduleStartTime] = useState(new Date());
+  const [ScheduleEndTime, setScheduleEndTime] = useState(new Date());
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
+  const [ScheduleDate, setScheduleDate] = useState(""); 
+  const [showScheduleDate, setShowScheduleDate] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [ScheduleDescriptions, setScheduleDescriptions] = useState('For Upper body, make you more energize and feel better .....');
+  const [ScheduleList, setScheduleList] = useState(""); 
+  const [ScheduleQuota, setScheduleQuota] = useState(""); 
+  const [ScheduleAvailableQuota, setScheduleAvailableQuota] = useState(""); 
+  
   const handleAdd = () => {
-    setSelectedActiveClass(null);
-    setFullName("");
-    setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setStatus("Active");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setDialCodeEmergencyContactNo("");
-    setEmergencyContactNo("");
-    setEmergencyContactName("");
-    setGender("");
+    setSelectedDataSchedule(null);
+    setCoachName("");
+    setCoachId("");
+    setScheduleName("");
+
+    const start = new Date();
+    start.setHours(5, 0, 0, 0);
+
+    const end = new Date();
+    end.setHours(6, 0, 0, 0);
+
+    setScheduleStartTime(start);
+    setScheduleEndTime(end);
+    setScheduleDate("");
+    setScheduleDescriptions("");
+    setScheduleList("");
+    setScheduleQuota("");
+    setScheduleAvailableQuota("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataActiveClass) => {
-    setSelectedActiveClass(item);
-    setFullName(item.name);
-    setMemberId(item.memberId);
-    setMemberDateEnrolled(item.dateEnrolled);
-    setMemberDateExpiration(item.dateExpiration);
-    setImage(item.photo);
-    setEmail(item.email);
-    setBirthDate(item.birthDate);
-    setDialCodePhone(item.dialCodePhone);
-    setPhone(item.phone);
-    setPassword(item.password);
-    setDialCodeEmergencyContactNo(item.dialCodeEmergencyContactNo);
-    setEmergencyContactNo(item.emergencyContactNo);
-    setEmergencyContactName(item.emergencyContactName);
-    setGender(item.gender);
+  const handleEdit = (item: dataSchedule) => {
+    // Simpan data Leave yang sedang diedit
+    setSelectedDataSchedule(item);
+    // Cari data member berdasarkan memberId
+    const selectedCoach = dataCoach.find(
+      (Coach) => Coach.CoachId === item.CoachId
+    );
+    // Simpan object member
+    setCoachName(selectedCoach || null);
+    // Simpan member ID
+    setCoachId(item.CoachId);
+    
+    setScheduleName(item.ScheduleName);
 
+    const start = new Date();
+    const [sh, sm] = item.ScheduleStartTime.split(":");
+    start.setHours(Number(sh), Number(sm), 0, 0);
+
+    const end = new Date();
+    const [eh, em] = item.ScheduleEndTime.split(":");
+    end.setHours(Number(eh), Number(em), 0, 0);
+
+    setScheduleStartTime(start);
+    setScheduleEndTime(end);
+    setScheduleDate(item.ScheduleDate);
+    setScheduleDescriptions(item.ScheduleDescriptions);
+    setScheduleList(item.ScheduleList);
+    setScheduleQuota(item.ScheduleQuota);
+    setScheduleAvailableQuota(item.ScheduleAvailableQuota);
+
+    // Tutup dropdown member
+    setShowCoachDropdown(false);
+    setCoachSearch("");
+
+    // Buka modal Edit
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (fullName.trim() === "") {
-      alert("Member Name is required");
+    if (ScheduleName.trim() === "") {
+      alert("Name is required");
+      return;
+    }
+    if (!CoachName) {
+      alert("Please select a coach name");
+      return;
+    }
+    if (ScheduleEndTime < ScheduleStartTime) {
+      alert("Invalid Time, End time cannot be earlier than start time.");
+      return;
+    }
+    if (ScheduleDate.trim() === "") {
+      alert("Date is required");
+      return;
+    }
+    if (ScheduleQuota.trim() === "") {
+      alert("Quota is required");
       return;
     }
 
-    if (selectedActiveClass) {
+    if (selectedDataSchedule) {
       // UPDATE
-      const updatedData = activeClassData.map((item) =>
-        item.id === selectedActiveClass.id
+      const updatedData = ScheduleData.map((item) =>
+        item.id === selectedDataSchedule.id
           ? {
               ...item,
-              name: fullName,
-              memberId: MemberId,
-              dateEnrolled: MemberDateEnrolled,
-              dateExpiration: MemberDateExpiration,
-              photo: image,
-              email: email,
-              birthDate: birthDate,
-              dialCodePhone: dialCodePhone,
-              phone: phone,
-              password: password,
-              dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
-              emergencyContactNo: emergencyContactNo,
-              emergencyContactName: emergencyContactName,
-              gender: gender,
+              CoachName: CoachName,
+              CoachId: CoachId,
+              ScheduleName: ScheduleName, 
+              ScheduleStartTime: formatTime(ScheduleStartTime),
+              ScheduleEndTime: formatTime(ScheduleEndTime),
+              ScheduleDate: ScheduleDate,
+              ScheduleDescriptions: ScheduleDescriptions,
+              ScheduleList: ScheduleList,
+              ScheduleQuota: ScheduleQuota,
+              ScheduleAvailableQuota: ScheduleAvailableQuota,
             }
           : item,
       );
 
-      setActiveClassData(updatedData);
+      setScheduleData(updatedData);
 
-      alert("Class updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newActiveClass: dataActiveClass = {
+      const newActiveMembers: dataSchedule = {
         id: Date.now().toString(),
-        name: fullName,
-        memberId: MemberId,
-        dateEnrolled: MemberDateEnrolled,
-        dateExpiration: MemberDateExpiration,
-        photo: image,
-        email: email,
-        birthDate: birthDate,
-        dialCodePhone: dialCodePhone,
-        phone: phone,
-        password: password,
-        dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
-        emergencyContactNo: emergencyContactNo,
-        emergencyContactName: emergencyContactName,
-        gender: gender,
+        CoachName: CoachName,
+        CoachId: CoachId,
+        ScheduleName: ScheduleName, 
+        ScheduleStartTime: formatTime(ScheduleStartTime),
+        ScheduleEndTime: formatTime(ScheduleEndTime),
+        ScheduleDate: ScheduleDate,
+        ScheduleDescriptions: ScheduleDescriptions,
+        ScheduleList: ScheduleList,
+        ScheduleQuota: ScheduleQuota,
+        ScheduleAvailableQuota: ScheduleAvailableQuota,
       };
 
-      setActiveClassData([...activeClassData, newActiveClass]);
+      setScheduleData([...ScheduleData, newActiveMembers]);
 
-      alert("Class added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = activeClassData.filter((item) => item.id !== id);
+    const data = ScheduleData.filter((item) => item.id !== id);
 
-    setActiveClassData(data);
+    setScheduleData(data);
 
-    alert("Class delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -423,53 +369,39 @@ export default function ClassScreen() {
   };
 
   const resetForm = () => {
-    setSelectedActiveClass(null);
-    setFullName("");
-    setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setDialCodeEmergencyContactNo("");
-    setEmergencyContactNo("");
-    setEmergencyContactName("");
-    setGender("");
+    setSelectedDataSchedule(null);
+    setCoachName("");
+    setCoachId("");
+    setScheduleName("");
+
+    const start = new Date();
+    start.setHours(9, 0, 0, 0); // 09:00
+
+    const end = new Date();
+    end.setHours(10, 0, 0, 0); // 10:00
+
+    setScheduleStartTime(start);
+    setScheduleEndTime(end);
+    setScheduleDate("");
+    setScheduleDescriptions("");
+    setScheduleList("");
+    setScheduleQuota("");
+    setScheduleAvailableQuota("");
 
     setShowModal(false);
   };
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const filteredCoach = dataCoach.filter((item) => {
+    const search = CoachSearch.toLowerCase();
 
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
+    return (
+      item.CoachName.toLowerCase().includes(search) ||
+      item.CoachId.toLowerCase().includes(search)
+    );
+  });
 
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const [birthDate, setBirthDate] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
-
-  const onChangeDate = (event: any, selectedDate?: Date) => {
-    setShowPicker(false);
+  const onChangeScheduleDate = (event: any, selectedDate?: Date) => {
+    setShowScheduleDate(false);
 
     if (selectedDate) {
       setDate(selectedDate);
@@ -481,8 +413,16 @@ export default function ClassScreen() {
         "-" +
         String(selectedDate.getDate()).padStart(2, "0");
 
-      setBirthDate(formatted);
+      setScheduleDate(formatted);
     }
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
   };
 
   return (
@@ -509,62 +449,25 @@ export default function ClassScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
-            icon="people"
-            title="View Members"
-            onPress={() => router.push("/members")}
-          />
-          <MenuItem
-            icon="fitness-center"
+            icon="supervised-user-circle"
             title="Coaches"
             onPress={() => router.push("/coaches")}
           />
           <MenuItem
+            icon="people"
+            title="Members"
+            onPress={() => router.push("/members")}
+          />
+          <MenuItem
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
+          />
+          <MenuItem
             icon="home-work"
             title="Class"
+            onPress={() => router.push("/class")}
             active
-            onPress={() => setShowSubMenu(!showSubMenu)}
-            rightIcon={
-              <MaterialIcons
-                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                size={22}
-                color="#ED1018"
-              />
-            }
-          />
-            {/* Sub Menu - Class */}
-            {showSubMenu && (
-              <View style={{ marginLeft: 40 }}>
-                <MenuSubItem
-                  icon="schedule-send"
-                  title="Booking"
-                  onPress={() => router.push("/class_booking")}
-                />
-                <MenuSubItem
-                  icon="schedule"
-                  title="Schedule"
-                  onPress={() => router.push("/class_schedule")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  title="Status"
-                  onPress={() => router.push("/class_status")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  title="Title"
-                  onPress={() => router.push("/class_title")}
-                />
-              </View>
-            )}
-          <MenuItem
-            icon="inventory-2"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            title="News"
-            onPress={() => router.push("/news")}
           />
           <MenuItem
             icon="credit-card"
@@ -577,14 +480,19 @@ export default function ClassScreen() {
             onPress={() => router.push("/promos")}
           />
           <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
-          />
-          <MenuItem
-            icon="badge"
-            title="Profile"
-            onPress={() => router.push("/profile")}
           />
         </ScrollView>
 
@@ -608,12 +516,12 @@ export default function ClassScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Class</Text>
-            </Pressable> */}
+            <Pressable style={styles.addScheduleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionSchedule}>Add Schedule</Text>
+            </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Class</Text>
+              <Text style={styles.ScheduleList}>Schedule</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -636,7 +544,7 @@ export default function ClassScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search Class..."
+                    placeholder="Search Schedule..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -645,56 +553,33 @@ export default function ClassScreen() {
               </View>
 
               {/* Header */}
-              {/* <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>Name</Text>
-                <Text style={[styles.headerTextList, { flex: 2 }]}>
-                  Member ID
-                </Text>
-
+              <View style={styles.headerRowList}>
+                <Text style={[styles.headerTextList, { flex: 4 }]}>Coach Name</Text>
+                <Text style={[styles.headerTextList, { flex: 3 }]}>Schedule Name</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Date</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Time</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Quota</Text>
+                
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Enrolled
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Expiration
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.5,
+                      flex: 1,
                       textAlign: "center",
                     },
                   ]}
                 >
                   Actions
                 </Text>
-              </View> */}
+              </View>
 
               {/* Data */}
-              {/* <FlatList
+              <FlatList
                 data={currentData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-              /> */}
+              />
 
               {/* Footer */}
               <View style={styles.headerRowList} />
@@ -742,243 +627,274 @@ export default function ClassScreen() {
               {/* ------------------ Screen Modal ------------------ */}
               {/* -------------------------------------------------- */}
 
-              {/* {showModal && (
+              {showModal && (
                 <View style={styles.modalScreen}>
-                  <Text style={styles.titleModal}>
-                    {selectedActiveClass ? "Edit Member" : "Add Member"}
+                  <Text style={styles.ScheduleModal}>
+                    {selectedDataSchedule ? "Edit Schedule" : "Add Schedule"}
                   </Text>
 
-                  {/* Attach Photo Button 
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
-
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-                  {/* Input Member Name 
-                  {selectedActiveClass ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Member ID</Text>
-
-                        <TextInput
-                          value={MemberId}
-                          editable={false}
-                          style={styles.inputModal}
-                        />
-                      </View>
-
-                      <View
-                        style={{
-                          flex: 1,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  )}
-                  {/* Input Date Enrolled dan Date Expiration 
-                  {selectedActiveClass ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.7,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Enrolled</Text>
-
-                        {Platform.OS === "web" ? (
-                          <input
-                            type="date"
-                            value={MemberDateEnrolled}
-                            disabled={true}
-                            max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setMemberDateEnrolled(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
-                          />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {MemberDateEnrolled === ""
-                                  ? "Select Date"
-                                  : MemberDateEnrolled}
-                              </Text>
-                            </TouchableOpacity>
-
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                maximumDate={new Date()}
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>
-
-                      <View
-                        style={{
-                          flex: 0.7,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Expiration</Text>
-
-                        {Platform.OS === "web" ? (
-                          <input
-                            type="date"
-                            value={MemberDateExpiration}
-                            disabled={true}
-                            //max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setMemberDateExpiration(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
-                          />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {MemberDateExpiration === ""
-                                  ? "Select Date"
-                                  : MemberDateExpiration}
-                              </Text>
-                            </TouchableOpacity>
-
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal} />
-                  )}
-                  {/* Input Email dan Birth of Date 
+                  {/* Input Coach Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Email</Text>
-                      <TextInput
-                        value={email}
-                        onChangeText={setEmail}
-                        style={styles.inputModal}
-                      />
+                      <Text style={styles.labelModal}>Coach Name</Text>
+
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowCoachDropdown(!showCoachDropdown);
+    
+                          if (showCoachDropdown) {
+                            setCoachSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {CoachName
+                            ? `${CoachName.CoachId}  -  ${CoachName.CoachName}`
+                            : "--Select Coach Name--"}
+                        </Text>
+    
+                        <MaterialIcons
+                          name={showCoachDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+    
+                      {showCoachDropdown && (
+                        <View style={styles.memberDropdown}>
+    
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+    
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Member Name / ID"
+                              placeholderTextColor="#888"
+                              value={CoachSearch}
+                              onChangeText={setCoachSearch}
+                            />
+    
+                            {CoachSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setCoachSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+    
+                          {/* COACH LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >
+                            {filteredCoach.length > 0 ? (
+                              filteredCoach.map((item) => (
+                                <TouchableOpacity
+                                  key={item.id}
+                                  style={styles.memberItem}
+                                  onPress={() => {
+                                    setCoachName(item);
+                                    setShowCoachDropdown(false);
+                                    setCoachSearch("");
+                                  }}
+                                >
+                                  <Text style={styles.memberItemText}>
+                                    {item.CoachId}  -  {item.CoachName}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            ) : (
+                              <View style={styles.noResult}>
+                                <Text style={styles.noResultText}>
+                                  Coach not found
+                                </Text>
+                              </View>
+                            )}
+                          </ScrollView>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+
+                  {/* Input Schedule Name */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Schedule Name</Text>
+                      <TouchableOpacity
+                        style={styles.inputSelect}
+                        onPress={() => setShowScheduleName(!showScheduleName)}
+                      >
+                        <Text>{ScheduleName || "Select Type"}</Text>
+
+                        <MaterialIcons
+                          name={showScheduleName ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={24}
+                        />
+                      </TouchableOpacity>
+
+                      {showScheduleName && (
+                        <FlatList
+                          data={dataScheduleName}
+                          keyExtractor={(item) => item.id}
+                          style={styles.dropdownSelect}
+                          renderItem={({ item }) => (
+                            <TouchableOpacity
+                              style={styles.itemSelect}
+                              onPress={() => {
+                                setScheduleName(item.ScheduleName);
+                                setShowScheduleName(false);
+                              }}
+                            >
+                              <Text>{item.ScheduleName}</Text>
+                            </TouchableOpacity>
+                          )}
+                        />
+                      )}      
+                    </View>
+                  </View>
+
+                  {/* Input Start Time dan End Time */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Start Time</Text>
+
+                      {Platform.OS === "web" ? (
+                        <input
+                          type="time"
+                          value={formatTime(ScheduleStartTime)}
+                          onChange={(e) => {
+                            const [h, m] = e.target.value.split(":");
+                            const date = new Date(ScheduleStartTime);
+                            date.setHours(Number(h), Number(m), 0, 0);
+                            setScheduleStartTime(date);
+                          }}
+                          style={{
+                            width: "100%",
+                            height: "50px",
+                            borderRadius: "12px",
+                            border: "1px solid #D9D9DD",
+                            backgroundColor: "#D9D9DD",
+                            padding: "0 15px",
+                            fontSize: "16px",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <TouchableOpacity
+                            style={styles.inputModal}
+                            onPress={() => setShowStartTimePicker(true)}
+                          >
+                            <Text>{formatTime(ScheduleStartTime)}</Text>
+                            <Ionicons name="time-outline" size={22} color="#777" />
+                          </TouchableOpacity>
+
+                          {showStartTimePicker && (
+                            <DateTimePicker
+                              value={ScheduleStartTime}
+                              mode="time"
+                              is24Hour
+                              display="default"
+                              onChange={(event, selectedTime) => {
+                                setShowStartTimePicker(false);
+                                if (selectedTime) setScheduleStartTime(selectedTime);
+                              }}
+                            />
+                          )}
+                        </>
+                      )}
                     </View>
 
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                         marginLeft: 10,
                       }}
                     >
-                      <Text style={styles.labelModal}>Birth of Date</Text>
+                      <Text style={styles.labelModal}>End Time</Text>
 
                       {Platform.OS === "web" ? (
                         <input
+                          type="time"
+                          value={formatTime(ScheduleEndTime)}
+                          onChange={(e) => {
+                            const [h, m] = e.target.value.split(":");
+                            const date = new Date(ScheduleEndTime);
+                            date.setHours(Number(h), Number(m), 0, 0);
+                            setScheduleEndTime(date);
+                          }}
+                          style={{
+                            width: "100%",
+                            height: "50px",
+                            borderRadius: "12px",
+                            border: "1px solid #D9D9DD",
+                            backgroundColor: "#D9D9DD",
+                            padding: "0 15px",
+                            fontSize: "16px",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <TouchableOpacity
+                            style={styles.inputModal}
+                            onPress={() => setShowEndTimePicker(true)}
+                          >
+                            <Text>{formatTime(ScheduleStartTime)}</Text>
+                            <Ionicons name="time-outline" size={22} color="#777" />
+                          </TouchableOpacity>
+
+                          {showEndTimePicker && (
+                            <DateTimePicker
+                              value={ScheduleEndTime}
+                              mode="time"
+                              is24Hour
+                              display="default"
+                              onChange={(event, selectedTime) => {
+                                setShowEndTimePicker(false);
+                                if (selectedTime) setScheduleEndTime(selectedTime);
+                              }}
+                            />
+                          )}
+                        </>
+                      )}
+                    </View>
+                  </View>
+
+                  {/* Input Date */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Date</Text>
+                      {Platform.OS === "web" ? (
+                        <input
                           type="date"
-                          value={birthDate}
-                          max={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setBirthDate(e.target.value)}
+                          value={ScheduleDate}
+                          //max={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setScheduleDate(e.target.value)}
                           style={{
                             paddingRight: 10,
                             paddingLeft: 10,
@@ -992,7 +908,7 @@ export default function ClassScreen() {
                       ) : (
                         <>
                           <TouchableOpacity
-                            onPress={() => setShowPicker(true)}
+                            onPress={() => setShowScheduleDate(true)}
                             style={{
                               height: 50,
                               borderWidth: 1,
@@ -1003,112 +919,84 @@ export default function ClassScreen() {
                             }}
                           >
                             <Text>
-                              {birthDate === "" ? "Select Date" : birthDate}
+                              {ScheduleDate === "" ? "Select Date" : ScheduleDate}
                             </Text>
                           </TouchableOpacity>
 
-                          {showPicker && (
+                          {showScheduleDate && (
                             <DateTimePicker
                               value={date}
                               mode="date"
                               display="default"
-                              maximumDate={new Date()}
-                              onChange={onChangeDate}
+                              //maximumDate={new Date()}
+                              minimumDate={new Date()}
+                              onChange={onChangeScheduleDate}
                             />
                           )}
                         </>
-                      )}
+                      )}   
                     </View>
                   </View>
-                  {/* Input Gender dan Phone Number 
+
+                  {/* Input Descriptions */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Gender</Text>
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={gender}
-                          onValueChange={(value) => setGender(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="-- Select Gender --" value="" />
-                          <Picker.Item label="Male" value="Male" />
-                          <Picker.Item label="Female" value="Female" />
-                        </Picker>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Phone Number</Text>
-                      
-                      <PhoneInput
-                        phone={phone}
-                        dialCodePhone={dialCodePhone}
-                        onChangePhone={setPhone}
-                        onChangeDialCode={setDialCodePhone}
-                      />                        
-                    </View>
-                  </View>
-                  {/* Input Emergency Contact Name dan Emergency Contact No 
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Name
-                      </Text>
-
+                      <Text style={styles.labelModal}>Descriptions</Text>
+                    
                       <TextInput
-                        value={emergencyContactName}
-                        onChangeText={setEmergencyContactName}
+                        value={ScheduleDescriptions}
+                        onChangeText={setScheduleDescriptions}
                         style={styles.inputModal}
+                        placeholder="For Upper body, make you more energize and feel better ....."
+                        placeholderTextColor="#999"
                       />
                     </View>
-
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Number
-                      </Text>
-                      
-                      <PhoneInput
-                        phone={emergencyContactNo}
-                        dialCodePhone={dialCodeEmergencyContactNo}
-                        onChangePhone={setEmergencyContactNo}
-                        onChangeDialCode={setDialCodeEmergencyContactNo}
-                      />    
-                    </View>
                   </View>
-                  {/* Input Password 
+
+                  {/* Input Activity Plan */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.5,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Password</Text>
-
+                      <Text style={styles.labelModal}>Activity Plan</Text>
+                    
                       <TextInput
-                        value={password}
-                        onChangeText={setPassword}
+                        style={styles.notesInput}
+                        placeholder="Write Activity Plan..."
+                        placeholderTextColor="#999"
+                        value={ScheduleList}
+                        onChangeText={setScheduleList}
+                        multiline
+                        numberOfLines={5}
+                        textAlignVertical="top"
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Quota */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Quota</Text>
+                    
+                      <TextInput
+                        value={ScheduleQuota}
+                        onChangeText={(text) => setScheduleQuota(text.replace(/\D/g, ""))}
+                        keyboardType="numeric"
                         style={styles.inputModal}
                       />
                     </View>
                   </View>
+                  
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -1139,7 +1027,7 @@ export default function ClassScreen() {
                     </Pressable>
                   </View>
                 </View>
-              )} */}
+              )}
             </View>
           </View>
         </View>
@@ -1349,6 +1237,37 @@ const styles = StyleSheet.create({
     //marginBottom: 15,
   },
 
+
+  addScheduleBadge: {
+    width: "30%",
+    backgroundColor: "#fff",
+    //paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 30,
+    //marginLeft: 20,
+    padding: 15,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#ED1018",
+  },
+  sectionScheduleBadge: {
+    width: "20%",
+    backgroundColor: "#fff",
+    //paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 30,
+    //marginLeft: 20,
+    padding: 15,
+    marginBottom: 15,
+  },
+  sectionSchedule: {
+    fontSize: 24,
+    color: "#ED1018",
+    fontWeight: "700",
+    textAlign: "center",
+    //marginBottom: 15,
+  },
+
   //========= Inventory List =========
   cardList: {
     backgroundColor: "#ED1018",
@@ -1358,6 +1277,13 @@ const styles = StyleSheet.create({
     padding: 25,
     marginTop: 20,
     marginBottom: 20,
+  },
+  
+  ScheduleList: {
+    color: "#fff",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 25,
   },
   titleList: {
     color: "#fff",
@@ -1478,6 +1404,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  
   // ====================== Show Modal Screen ================================
   modalScreen: {
     position: "absolute",
@@ -1490,7 +1417,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  titleModal: {
+  ScheduleModal: {
     color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
@@ -1568,5 +1495,160 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 25,
     paddingVertical: 10,
+  },
+
+   
+ //================================= Schedule =================================
+   notesInput: {
+      minHeight: 110,
+      backgroundColor: "#D9D9DD",
+      borderWidth: 1,
+      borderColor: "#DDDDDD",
+      borderRadius: 8,
+      padding: 14,
+      fontSize: 15,
+      color: "#222",
+      marginBottom: 20,
+    },
+
+    inputSelect: {
+      //height: 45,
+      borderWidth: 1,
+      borderColor: "#ccc",
+      //borderRadius: 8,
+      //paddingHorizontal: 12,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      //backgroundColor: "#fff",
+
+      backgroundColor: "#D9D9DD",
+      height: 50,
+      borderRadius: 10,
+      paddingHorizontal: 15,
+      fontSize: 15,
+    },
+
+    dropdownSelect: {
+      borderWidth: 1,
+      borderColor: "#ccc",
+      borderRadius: 8,
+      marginTop: 5,
+      maxHeight: 180,
+      backgroundColor: "#fff",
+    },
+
+    itemSelect: {
+      padding: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: "#eee",
+    },
+
+
+    memberSelect: {
+      height: 50,
+      backgroundColor: "#D9D9DD",
+      borderRadius: 12,
+      paddingHorizontal: 20,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 15,
+    },
+
+    memberSelectText: {
+      fontSize: 15,
+      color: "#111",
+    },
+
+    arrow: {
+      fontSize: 25,
+      color: "#111",
+    },
+
+    memberDropdown: {
+      backgroundColor: "#D9D9DD",
+      borderWidth: 1,
+      borderColor: "#D5D5D5",
+      borderRadius: 12,
+      marginTop: 8,
+      overflow: "hidden",
+    },
+
+    searchContainer: {
+      height: 50,
+      flexDirection: "row",
+      alignItems: "center",
+      paddingHorizontal: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: "#DDDDDD",
+    },
+
+    searchIcon: {
+      fontSize: 16,
+      marginRight: 8,
+    },
+
+    searchInput: {
+      flex: 1,
+      height: 48,
+      fontSize: 15,
+      color: "#111",
+      outlineStyle: "none" as any,
+    },
+
+    clearSearch: {
+      fontSize: 15,
+      color: "#777",
+      paddingHorizontal: 8,
+    },
+
+    memberList: {
+      maxHeight: 250,
+    },
+
+    memberItem: {
+      minHeight: 55,
+      justifyContent: "center",
+      paddingHorizontal: 18,
+      borderBottomWidth: 1,
+      borderBottomColor: "#EEEEEE",
+    },
+
+    memberItemText: {
+      fontSize: 15,
+      color: "#111",
+    },
+
+    noResult: {
+      padding: 20,
+      alignItems: "center",
+    },
+
+    noResultText: {
+      fontSize: 15,
+      color: "#888",
+    },
+
+    inputTime: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  timeText: {
+    fontSize: 16,
+    color: "#111",
+  },
+
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 8,
   },
 });

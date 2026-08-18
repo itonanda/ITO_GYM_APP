@@ -15,45 +15,61 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface dataBooking {
+interface dataQuota {
   id: string;
-  BookingName: string;
+  quota: string;
+  type: string;
 }
 
-const initialDataBooking: dataBooking[] = [
+const initialDataQuota: dataQuota[] = [
   {
     id: "1",
-    BookingName: "Morning Class",
+    quota: "1",
+    type: "Member",
   },
   {
     id: "2",
-    BookingName: "Afternoon Class",
+    quota: "5",
+    type: "Open Gym",
   },
   {
     id: "3",
-    BookingName: "Evening Class",
-  },
-  
-  {
-    id: "4",
-    BookingName: "Night Class",
+    quota: "5",
+    type: "Drop In",
   },
 ];
 
-export default function ClassBookingScreen() {
+
+const dataType = [
+  {
+    id: '1',
+    titleType: 'Member',
+  },
+  {
+    id: '2',
+    titleType: 'Open Gym',
+  },
+  {
+    id: '3',
+    titleType: 'Drop In',
+  },
+];
+
+export default function MembersQuotacreen() {
   const router = useRouter();
-  const [BookingData, setBookingData] = useState<dataBooking[]>(initialDataBooking);
+  const [QuotaData, setQuotaData] = useState<dataQuota[]>(initialDataQuota);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return BookingData.filter((item) => {
+    return QuotaData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.BookingName.toLowerCase().includes(keyword);
+        item.quota.toLowerCase().includes(keyword) ||
+        item.type.toString().toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -74,11 +90,15 @@ export default function ClassBookingScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.BookingName}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.quota}</Text>
+
+      <Text style={[styles.dataTextList, { flex: 1.5, textAlign: "center" }]}>
+        {item.type}
+      </Text>
 
       <View
         style={{
-          flex: 0.7,
+          flex: 1,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -108,53 +128,59 @@ export default function ClassBookingScreen() {
 
   const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataBooking, setSelectedDataBooking] = useState<dataBooking | null>(
+  const [selectedDataQuota, setSelectedDataQuota] = useState<dataQuota | null>(
     null,
   );
-  const [BookingName, setBookingName] = useState("");
+  const [quota, setquota] = useState("");
+  const [type, settype] = useState("");
+  const [showType, setShowType] = useState(false);
   
   const handleAdd = () => {
-    setSelectedDataBooking(null);
-    setBookingName("");
+    setSelectedDataQuota(null);
+    setquota("");
+    settype("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataBooking) => {
-    setSelectedDataBooking(item);
-    setBookingName(item.BookingName);
+  const handleEdit = (item: dataQuota) => {
+    setSelectedDataQuota(item);
+    setquota(item.quota);
+    settype(item.type);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (BookingName.trim() === "") {
+    if (quota.trim() === "") {
       alert("Name is required");
       return;
     }
 
-    if (selectedDataBooking) {
+    if (selectedDataQuota) {
       // UPDATE
-      const updatedData = BookingData.map((item) =>
-        item.id === selectedDataBooking.id
+      const updatedData = QuotaData.map((item) =>
+        item.id === selectedDataQuota.id
           ? {
               ...item,
-              BookingName: BookingName,
+              quota: quota,
+              type: type,
             }
           : item,
       );
 
-      setBookingData(updatedData);
+      setQuotaData(updatedData);
 
       alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataBooking = {
+      const newActiveMembers: dataQuota = {
         id: Date.now().toString(),
-        BookingName: BookingName,
+        quota: quota,
+        type : type,
       };
 
-      setBookingData([...BookingData, newActiveMembers]);
+      setQuotaData([...QuotaData, newActiveMembers]);
 
       alert("Added successfully");
     }
@@ -162,9 +188,9 @@ export default function ClassBookingScreen() {
   };
 
   const handleDelete = (id: string) => {
-    const data = BookingData.filter((item) => item.id !== id);
+    const data = QuotaData.filter((item) => item.id !== id);
 
-    setBookingData(data);
+    setQuotaData(data);
 
     alert("Delete successfully");
   };
@@ -175,8 +201,9 @@ export default function ClassBookingScreen() {
   };
 
   const resetForm = () => {
-    setSelectedDataBooking(null);
-    setBookingName("");
+    setSelectedDataQuota(null);
+    setquota("");
+    settype("");
 
     setShowModal(false);
   };
@@ -217,14 +244,9 @@ export default function ClassBookingScreen() {
           <MenuItem
             icon="card-membership"
             title="Membership"
-            onPress={() => router.push("/membership")}
-          />
-          <MenuItem
-            icon="home-work"
-            title="Class"
             active
             onPress={() => {
-              router.push("/class");
+              router.push("/membership");
               setShowSubMenu(true);
             }}
             rightIcon={
@@ -235,27 +257,42 @@ export default function ClassBookingScreen() {
               />
             }
           />
-              {/* Sub Menu - Class */}
+              {/* Sub Menu - View Membership */}
               {showSubMenu && (
                 <View style={{ marginLeft: 40 }}>
                   <MenuSubItem
-                    icon="schedule-send"
-                    title="Booking"
-                    onPress={() => router.push("/class_booking")}
+                    icon="assignment-turned-in"
+                    title="Plan"
+                    onPress={() => router.push("/membership_plan")}
+                  />
+                  <MenuSubItem
+                    icon="assignment-ind"
+                    title="Leave"
+                    onPress={() => router.push("/membership_leave")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Quota"
+                    onPress={() => router.push("/membership_quota")}
                     active
                   />
                   <MenuSubItem
                     icon="assignment"
                     title="Status"
-                    onPress={() => router.push("/class_status")}
+                    onPress={() => router.push("/membership_status")}
                   />
                   <MenuSubItem
                     icon="assignment"
-                    title="Class Name"
-                    onPress={() => router.push("/class_title")}
+                    title="Type"
+                    onPress={() => router.push("/membership_type")}
                   />
                 </View>
               )}
+          <MenuItem
+            icon="home-work"
+            title="Class"
+            onPress={() => router.push("/class")}
+          />
           <MenuItem
             icon="credit-card"
             title="Payment"
@@ -304,12 +341,12 @@ export default function ClassBookingScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            <Pressable style={styles.addBookingBadge} onPress={handleAdd}>
-              <Text style={styles.sectionBooking}>Add Booking</Text>
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Quota</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.BookingList}>Booking</Text>
+              <Text style={styles.titleList}>Quota</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -332,7 +369,7 @@ export default function ClassBookingScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search Booking..."
+                    placeholder="Search Quota..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -343,14 +380,25 @@ export default function ClassBookingScreen() {
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Booking Name
+                  Quota
+                </Text>
+                <Text
+                  style={[
+                    styles.headerTextList,
+                    {
+                      flex: 0.7,
+                      textAlign: "center",
+                    },
+                  ]}
+                >
+                  Type
                 </Text>
                 
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1,
+                      flex: 1.3,
                       textAlign: "center",
                     },
                   ]}
@@ -415,27 +463,67 @@ export default function ClassBookingScreen() {
 
               {showModal && (
                 <View style={styles.modalScreen}>
-                  <Text style={styles.BookingModal}>
-                    {selectedDataBooking ? "Edit Booking" : "Add Booking"}
+                  <Text style={styles.titleModal}>
+                    {selectedDataQuota ? "Edit Quota" : "Add Quota"}
                   </Text>
 
-                  {/* Input Booking Name */}
+                  {/* Input quota */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
                         flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Booking Name</Text>
+                      <Text style={styles.labelModal}>Quota</Text>
                       <TextInput
-                        value={BookingName}
-                        onChangeText={setBookingName}
+                        value={quota}
+                        onChangeText={(text) => setquota(text.replace(/\D/g, ""))}
+                        keyboardType="numeric"
                         style={styles.inputModal}
                       />
                     </View>
                   </View>
 
-                  
+                  {/* Input type */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Type</Text>
+                      <TouchableOpacity
+                        style={styles.inputSelect}
+                        onPress={() => setShowType(!showType)}
+                      >
+                        <Text>{type || "Select Type"}</Text>
+
+                        <MaterialIcons
+                          name={showType ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={24}
+                        />
+                      </TouchableOpacity>
+
+                      {showType && (
+                        <FlatList
+                          data={dataType}
+                          keyExtractor={(item) => item.id}
+                          style={styles.dropdownSelect}
+                          renderItem={({ item }) => (
+                            <TouchableOpacity
+                              style={styles.itemSelect}
+                              onPress={() => {
+                                settype(item.titleType);
+                                setShowType(false);
+                              }}
+                            >
+                              <Text>{item.titleType}</Text>
+                            </TouchableOpacity>
+                          )}
+                        />
+                      )}                
+                    </View>
+                  </View>
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -479,7 +567,7 @@ export default function ClassBookingScreen() {
 
 function MenuItem({
   icon,
-  Booking,
+  title,
   active = false,
   onPress,
   rightIcon,
@@ -505,7 +593,7 @@ function MenuItem({
             },
           ]}
         >
-          {Booking}
+          {title}
         </Text>
       </View>
 
@@ -514,7 +602,7 @@ function MenuItem({
   );
 }
 
-function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
   return (
     <TouchableOpacity
       style={[styles.menuSubItem, active && styles.activeMenuSub]}
@@ -535,7 +623,7 @@ function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
           },
         ]}
       >
-        {Booking}
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -649,7 +737,7 @@ const styles = StyleSheet.create({
     color: "#ED1018",
   },
 
-  addBookingBadge: {
+  addTitleBadge: {
     width: "30%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -661,7 +749,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ED1018",
   },
-  sectionBookingBadge: {
+  sectionTitleBadge: {
     width: "20%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -671,7 +759,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
   },
-  sectionBooking: {
+  sectionTitle: {
     fontSize: 24,
     color: "#ED1018",
     fontWeight: "700",
@@ -689,7 +777,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  BookingList: {
+  titleList: {
     color: "#fff",
     fontSize: 32,
     fontWeight: "bold",
@@ -820,7 +908,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  BookingModal: {
+  titleModal: {
     color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
@@ -900,178 +988,37 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
-    color: "#fff",
-    fontWeight: "700",
-  },
-
-  card: {
+  inputSelect: {
+    //height: 45,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    //borderRadius: 8,
+    //paddingHorizontal: 12,
     flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    justifyContent: "space-between",
     alignItems: "center",
-  },
+    //backgroundColor: "#fff",
 
-  cardImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
-    borderRadius: 8,
-  },
-
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-
-  Booking: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
-    marginBottom: 20,
-  },
-
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
-
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  input: {
+    backgroundColor: "#D9D9DD",
     height: 50,
-    backgroundColor: "#f2f2f2",
     borderRadius: 10,
     paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  //-=======================
-  Bookinga: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
     fontSize: 15,
-    fontWeight: "600",
   },
 
-  fileContainer: {
-    marginTop: 12,
+  dropdownSelect: {
     borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    borderColor: "#ccc",
     borderRadius: 8,
-    alignSelf: "flex-start",
+    marginTop: 5,
+    maxHeight: 180,
+    backgroundColor: "#fff",
   },
 
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
+  itemSelect: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
+
 });

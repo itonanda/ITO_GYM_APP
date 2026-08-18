@@ -234,29 +234,24 @@ export default function PaymentScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
+            icon="supervised-user-circle"
+            title="Coaches"
+            onPress={() => router.push("/coaches")}
+          />
+          <MenuItem
             icon="people"
-            title="View Members"
+            title="Members"
             onPress={() => router.push("/members")}
           />
           <MenuItem
-            icon="fitness-center"
-            title="Coaches"
-            onPress={() => router.push("/coaches")}
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
           />
           <MenuItem
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
-          />
-          <MenuItem
-            icon="inventory-2"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            title="News"
-            onPress={() => router.push("/news")}
           />
           <MenuItem
             icon="credit-card"
@@ -270,14 +265,19 @@ export default function PaymentScreen() {
             onPress={() => router.push("/promos")}
           />
           <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
-          />
-          <MenuItem
-            icon="badge"
-            title="Profile"
-            onPress={() => router.push("/profile")}
           />
         </ScrollView>
 

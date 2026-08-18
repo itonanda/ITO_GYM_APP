@@ -14,15 +14,17 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Modal,
 } from "react-native";
 import PhoneInput from "../../components/PhoneInput";
 
 
 // ============ DATA ============
-interface dataActiveCoaches {
+interface dataActiveMembership {
   id: string;
   name: string;
-  coachId: string;
+  memberId: string;
+  dateEnrolled: string;
   dateExpiration: string;
   photo: string;
   email: string;
@@ -30,14 +32,18 @@ interface dataActiveCoaches {
   dialCodePhone: string;
   phone: string;
   password: string;
+  dialCodeEmergencyContactNo: string;
+  emergencyContactNo: string;
+  emergencyContactName: string;
   gender: string;
 }
 
-const initialDataActiveCoaches: dataActiveCoaches[] = [
+const initialDataActiveMembership: dataActiveMembership[] = [
   {
     id: "1",
     name: "James Medalla",
-    coachId: "SFM2301N1",
+    memberId: "SFM2301N1",
+    dateEnrolled: "2024-05-11",
     dateExpiration: "2026-05-11",
     photo: "https://i.pravatar.cc/300?img=1",
     email: "Testing@gmail.com",
@@ -45,53 +51,184 @@ const initialDataActiveCoaches: dataActiveCoaches[] = [
     dialCodePhone: "60",
     phone: "85122233360",
     password: "12345",
+    dialCodeEmergencyContactNo: "60",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
     gender: "Male",
   },
   {
     id: "2",
     name: "Chris Medalla",
-    coachId: "SFM2301N2",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
+    memberId: "SFM2301N2",
+    dateEnrolled: "2024-05-12",
+    dateExpiration: "2026-05-12",
+    photo: "https://i.pravatar.cc/300?img=2",
     email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
+    birthDate: "2000-07-10",
     dialCodePhone: "62",
     phone: "85122233362",
     password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
     gender: "Female",
   },
   {
     id: "3",
     name: "James Chris",
-    coachId: "SFM2301N3",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
+    memberId: "SFM2301N3",
+    dateEnrolled: "2024-05-13",
+    dateExpiration: "2026-05-13",
+    photo: "https://i.pravatar.cc/300?img=3",
     email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
+    birthDate: "2001-05-10",
     dialCodePhone: "65",
     phone: "85122233365",
     password: "12345",
+    dialCodeEmergencyContactNo: "65",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "4",
+    name: "Sarah Medalla",
+    memberId: "SFM2301N4",
+    dateEnrolled: "2024-05-14",
+    dateExpiration: "2026-05-14",
+    photo: "https://i.pravatar.cc/300?img=4",
+    email: "Testing@gmail.com",
+    birthDate: "2000-08-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Female",
+  },
+  {
+    id: "5",
+    name: "James Sarah",
+    memberId: "SFM2301N5",
+    dateEnrolled: "2024-05-15",
+    dateExpiration: "2026-05-15",
+    photo: "https://i.pravatar.cc/300?img=5",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-14",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "6",
+    name: "Lee Medalla",
+    memberId: "SFM2301N6",
+    dateEnrolled: "2024-05-16",
+    dateExpiration: "2026-05-16",
+    photo: "https://i.pravatar.cc/300?img=6",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "7",
+    name: "James Medalla Lee",
+    memberId: "SFM2301N7",
+    dateEnrolled: "2024-05-17",
+    dateExpiration: "2026-05-17",
+    photo: "https://i.pravatar.cc/300?img=7",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "8",
+    name: "James Lee",
+    memberId: "SFM2301N8",
+    dateEnrolled: "2024-05-19",
+    dateExpiration: "2026-05-19",
+    photo: "https://i.pravatar.cc/300?img=8",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "9",
+    name: "Leeoe Medalla",
+    memberId: "SFM2301N9",
+    dateEnrolled: "2024-06-12",
+    dateExpiration: "2026-06-12",
+    photo: "https://i.pravatar.cc/300?img=9",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  },
+  {
+    id: "10",
+    name: "James Leeber",
+    memberId: "SFM2301N10",
+    dateEnrolled: "2024-05-20",
+    dateExpiration: "2026-05-20",
+    photo: "https://i.pravatar.cc/300?img=10",
+    email: "Testing@gmail.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "62",
+    phone: "85122233300",
+    password: "12345",
+    dialCodeEmergencyContactNo: "62",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
     gender: "Male",
   },
 ];
 
-export default function CoachesScreen() {
+
+export default function MembershipScreen() {
   const router = useRouter();
-  const [activeCoachesData, setActiveCoachesData] = useState<
-    dataActiveCoaches[]
-  >(initialDataActiveCoaches);
+  const [activeMembershipData, setActiveMembershipData] = useState<
+    dataActiveMembership[]
+  >(initialDataActiveMembership);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return activeCoachesData.filter((item) => {
+    return activeMembershipData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
         item.name.toLowerCase().includes(keyword) ||
-        item.coachId.toString().toLowerCase().includes(keyword);
+        item.memberId.toString().toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -113,10 +250,10 @@ export default function CoachesScreen() {
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
       <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.coachId}</Text>
+      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.memberId}</Text>
 
       <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        +{item.dialCodePhone} {item.phone}
+        {item.dateEnrolled}
       </Text>
       <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
         {item.dateExpiration}
@@ -152,25 +289,31 @@ export default function CoachesScreen() {
     </View>
   );
 
+  const [showSubMenu, setShowSubMenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [selectedActiveCoaches, setSelectedActiveCoaches] =
-    useState<dataActiveCoaches | null>(null);
-  const [CoachId, setCoachId] = useState("");
-  const [CoachDateExpiration, setCoachDateExpiration] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
+  const [selectedActiveMembership, setSelectedActiveMembership] =
+    useState<dataActiveMembership | null>(null);
+  const [MemberId, setMemberId] = useState("");
+  const [MemberDateEnrolled, setMemberDateEnrolled] = useState("");
+  const [MemberDateExpiration, setMemberDateExpiration] = useState("");
+  const [status, setStatus] = useState<"Active" | "Blocked">("Active");
   const [image, setImage] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [dialCodePhone, setDialCodePhone] = useState("62");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
+  const [emergencyContactNo, setEmergencyContactNo] = useState("");
+  const [emergencyContactName, setEmergencyContactName] = useState("");
   const [gender, setGender] = useState("");
 
   const handleAdd = () => {
-    setSelectedActiveCoaches(null);
+    setSelectedActiveMembership(null);
     setFullName("");
-    setCoachId("");
-    setCoachDateExpiration("");
+    setMemberId("");
+    setMemberDateEnrolled("");
+    setMemberDateExpiration("");
     setStatus("Active");
     setImage("");
     setEmail("");
@@ -178,22 +321,29 @@ export default function CoachesScreen() {
     setDialCodePhone("");
     setPhone("");
     setPassword("");
+    setDialCodeEmergencyContactNo("");
+    setEmergencyContactNo("");
+    setEmergencyContactName("");
     setGender("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataActiveCoaches) => {
-    setSelectedActiveCoaches(item);
+  const handleEdit = (item: dataActiveMembership) => {
+    setSelectedActiveMembership(item);
     setFullName(item.name);
-    setCoachId(item.coachId);
-    setCoachDateExpiration(item.dateExpiration);
+    setMemberId(item.memberId);
+    setMemberDateEnrolled(item.dateEnrolled);
+    setMemberDateExpiration(item.dateExpiration);
     setImage(item.photo);
     setEmail(item.email);
     setBirthDate(item.birthDate);
     setDialCodePhone(item.dialCodePhone);
     setPhone(item.phone);
     setPassword(item.password);
+    setDialCodeEmergencyContactNo(item.dialCodeEmergencyContactNo);
+    setEmergencyContactNo(item.emergencyContactNo);
+    setEmergencyContactName(item.emergencyContactName);
     setGender(item.gender);
 
     setShowModal(true);
@@ -205,58 +355,66 @@ export default function CoachesScreen() {
       return;
     }
 
-    if (selectedActiveCoaches) {
+    if (selectedActiveMembership) {
       // UPDATE
-      const updatedData = activeCoachesData.map((item) =>
-        item.id === selectedActiveCoaches.id
+      const updatedData = activeMembershipData.map((item) =>
+        item.id === selectedActiveMembership.id
           ? {
               ...item,
               name: fullName,
-              coachId: CoachId,
-              dateExpiration: CoachDateExpiration,
+              memberId: MemberId,
+              dateEnrolled: MemberDateEnrolled,
+              dateExpiration: MemberDateExpiration,
               photo: image,
               email: email,
               birthDate: birthDate,
               dialCodePhone: dialCodePhone,
               phone: phone,
               password: password,
+              dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
+              emergencyContactNo: emergencyContactNo,
+              emergencyContactName: emergencyContactName,
               gender: gender,
             }
           : item,
       );
 
-      setActiveCoachesData(updatedData);
+      setActiveMembershipData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Membership updated successfully");
     } else {
       // ADD
-      const newActiveCoaches: dataActiveCoaches = {
+      const newActiveMembership: dataActiveMembership = {
         id: Date.now().toString(),
         name: fullName,
-        coachId: CoachId,
-        dateExpiration: CoachDateExpiration,
+        memberId: MemberId,
+        dateEnrolled: MemberDateEnrolled,
+        dateExpiration: MemberDateExpiration,
         photo: image,
         email: email,
         birthDate: birthDate,
         dialCodePhone: dialCodePhone,
         phone: phone,
         password: password,
+        dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
+        emergencyContactNo: emergencyContactNo,
+        emergencyContactName: emergencyContactName,
         gender: gender,
       };
 
-      setActiveCoachesData([...activeCoachesData, newActiveCoaches]);
+      setActiveMembershipData([...activeMembershipData, newActiveMembership]);
 
-      alert("Members added successfully");
+      alert("Membership added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = activeCoachesData.filter((item) => item.id !== id);
+    const data = activeMembershipData.filter((item) => item.id !== id);
 
-    setActiveCoachesData(data);
+    setActiveMembershipData(data);
 
-    alert("Members delete successfully");
+    alert("Membership delete successfully");
   };
 
   const handleCancel = () => {
@@ -265,16 +423,20 @@ export default function CoachesScreen() {
   };
 
   const resetForm = () => {
-    setSelectedActiveCoaches(null);
+    setSelectedActiveMembership(null);
     setFullName("");
-    setCoachId("");
-    setCoachDateExpiration("");
+    setMemberId("");
+    setMemberDateEnrolled("");
+    setMemberDateExpiration("");
     setImage("");
     setEmail("");
     setBirthDate("");
     setDialCodePhone("");
     setPhone("");
     setPassword("");
+    setDialCodeEmergencyContactNo("");
+    setEmergencyContactNo("");
+    setEmergencyContactName("");
     setGender("");
 
     setShowModal(false);
@@ -350,7 +512,6 @@ export default function CoachesScreen() {
             icon="supervised-user-circle"
             title="Coaches"
             onPress={() => router.push("/coaches")}
-            active
           />
           <MenuItem
             icon="people"
@@ -360,8 +521,46 @@ export default function CoachesScreen() {
           <MenuItem
             icon="card-membership"
             title="Membership"
-            onPress={() => router.push("/membership")}
+            active
+            onPress={() => setShowSubMenu(!showSubMenu)}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+              {/* Sub Menu - View Membership */}
+              {showSubMenu && (
+                <View style={{ marginLeft: 40 }}>
+                  <MenuSubItem
+                    icon="assignment-turned-in"
+                    title="Plan"
+                    onPress={() => router.push("/membership_plan")}
+                  />
+                  <MenuSubItem
+                    icon="assignment-ind"
+                    title="Leave"
+                    onPress={() => router.push("/membership_leave")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Quota"
+                    onPress={() => router.push("/membership_quota")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Status"
+                    onPress={() => router.push("/membership_status")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Type"
+                    onPress={() => router.push("/membership_type")}
+                  />
+                </View>
+              )}
           <MenuItem
             icon="home-work"
             title="Class"
@@ -415,11 +614,11 @@ export default function CoachesScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Coach</Text>
+              <Text style={styles.sectionTitle}>Add Membership</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Manage Coaches</Text>
+              <Text style={styles.titleList}>Membership</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -442,7 +641,7 @@ export default function CoachesScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search Coaches..."
+                    placeholder="Search Membership..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -454,7 +653,7 @@ export default function CoachesScreen() {
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>Name</Text>
                 <Text style={[styles.headerTextList, { flex: 2 }]}>
-                  Coach ID
+                  Member ID
                 </Text>
 
                 <Text
@@ -466,7 +665,7 @@ export default function CoachesScreen() {
                     },
                   ]}
                 >
-                  Contact
+                  Date Enrolled
                 </Text>
 
                 <Text
@@ -551,7 +750,7 @@ export default function CoachesScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedActiveCoaches ? "Edit Coach" : "Add Coach"}
+                    {selectedActiveMembership ? "Edit Member" : "Add Member"}
                   </Text>
 
                   {/* Attach Photo Button */}
@@ -586,17 +785,17 @@ export default function CoachesScreen() {
                     <View style={styles.imagePlaceholderModal}></View>
                   )}
                   {/* Input Member Name */}
-                  {selectedActiveCoaches ? (
+                  {selectedActiveMembership ? (
                     <View style={styles.rowModal}>
                       <View
                         style={{
                           flex: 0.5,
                         }}
                       >
-                        <Text style={styles.labelModal}>Coach ID</Text>
+                        <Text style={styles.labelModal}>Member ID</Text>
 
                         <TextInput
-                          value={CoachId}
+                          value={MemberId}
                           editable={false}
                           style={styles.inputModal}
                         />
@@ -604,7 +803,7 @@ export default function CoachesScreen() {
 
                       <View
                         style={{
-                          flex: 0.5,
+                          flex: 1,
                           marginLeft: 10,
                         }}
                       >
@@ -632,24 +831,24 @@ export default function CoachesScreen() {
                       </View>
                     </View>
                   )}
-                  {/* Input Contact dan Date Expiration */}
-                  {selectedActiveCoaches ? (
+                  {/* Input Date Enrolled dan Date Expiration */}
+                  {selectedActiveMembership ? (
                     <View style={styles.rowModal}>
                       <View
                         style={{
-                          flex: 0.5,
+                          flex: 0.7,
                         }}
                       >
-                        <Text style={styles.labelModal}>Date Expiration</Text>
+                        <Text style={styles.labelModal}>Date Enrolled</Text>
 
                         {Platform.OS === "web" ? (
                           <input
                             type="date"
-                            value={CoachDateExpiration}
+                            value={MemberDateEnrolled}
                             disabled={true}
-                            //max={new Date().toISOString().split("T")[0]}
+                            max={new Date().toISOString().split("T")[0]}
                             onChange={(e) =>
-                              setCoachDateExpiration(e.target.value)
+                              setMemberDateEnrolled(e.target.value)
                             }
                             style={{
                               paddingRight: 10,
@@ -675,9 +874,69 @@ export default function CoachesScreen() {
                               }}
                             >
                               <Text>
-                                {CoachDateExpiration === ""
+                                {MemberDateEnrolled === ""
                                   ? "Select Date"
-                                  : CoachDateExpiration}
+                                  : MemberDateEnrolled}
+                              </Text>
+                            </TouchableOpacity>
+
+                            {showPicker && (
+                              <DateTimePicker
+                                value={date}
+                                mode="date"
+                                display="default"
+                                maximumDate={new Date()}
+                                onChange={onChangeDate}
+                              />
+                            )}
+                          </>
+                        )}
+                      </View>
+
+                      <View
+                        style={{
+                          flex: 0.7,
+                          marginLeft: 10,
+                        }}
+                      >
+                        <Text style={styles.labelModal}>Date Expiration</Text>
+
+                        {Platform.OS === "web" ? (
+                          <input
+                            type="date"
+                            value={MemberDateExpiration}
+                            disabled={true}
+                            //max={new Date().toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              setMemberDateExpiration(e.target.value)
+                            }
+                            style={{
+                              paddingRight: 10,
+                              paddingLeft: 10,
+                              border: "1px solid #ccc",
+                              backgroundColor: "#D9D9DD",
+                              height: 50,
+                              borderRadius: 10,
+                              fontSize: 15,
+                            }}
+                          />
+                        ) : (
+                          <>
+                            <TouchableOpacity
+                              onPress={() => setShowPicker(true)}
+                              style={{
+                                height: 50,
+                                borderWidth: 1,
+                                borderColor: "#ccc",
+                                borderRadius: 10,
+                                justifyContent: "center",
+                                paddingHorizontal: 15,
+                              }}
+                            >
+                              <Text>
+                                {MemberDateExpiration === ""
+                                  ? "Select Date"
+                                  : MemberDateExpiration}
                               </Text>
                             </TouchableOpacity>
 
@@ -692,47 +951,85 @@ export default function CoachesScreen() {
                           </>
                         )}
                       </View>
-
-                      <View
-                        style={{
-                          flex: 0.5,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Contact</Text>
-
-                        <PhoneInput
-                          phone={phone}
-                          dialCodePhone={dialCodePhone}
-                          onChangePhone={setPhone}
-                          onChangeDialCode={setDialCodePhone}
-                        />  
-                      </View>
                     </View>
                   ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Contact</Text>
-                        
-                        <PhoneInput
-                          phone={phone}
-                          dialCodePhone={dialCodePhone}
-                          onChangePhone={setPhone}
-                          onChangeDialCode={setDialCodePhone}
-                        />  
-                      </View>
-                    </View>
+                    <View style={styles.rowModal} />
                   )}
-
-                  {/* Input Gender dan Password */}
+                  {/* Input Email dan Birth of Date */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.5,
+                        flex: 0.7,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Email</Text>
+                      <TextInput
+                        value={email}
+                        onChangeText={setEmail}
+                        style={styles.inputModal}
+                      />
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 0.7,
+                        marginLeft: 10,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Birth of Date</Text>
+
+                      {Platform.OS === "web" ? (
+                        <input
+                          type="date"
+                          value={birthDate}
+                          max={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setBirthDate(e.target.value)}
+                          style={{
+                            paddingRight: 10,
+                            paddingLeft: 10,
+                            border: "1px solid #ccc",
+                            backgroundColor: "#D9D9DD",
+                            height: 50,
+                            borderRadius: 10,
+                            fontSize: 15,
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <TouchableOpacity
+                            onPress={() => setShowPicker(true)}
+                            style={{
+                              height: 50,
+                              borderWidth: 1,
+                              borderColor: "#ccc",
+                              borderRadius: 10,
+                              justifyContent: "center",
+                              paddingHorizontal: 15,
+                            }}
+                          >
+                            <Text>
+                              {birthDate === "" ? "Select Date" : birthDate}
+                            </Text>
+                          </TouchableOpacity>
+
+                          {showPicker && (
+                            <DateTimePicker
+                              value={date}
+                              mode="date"
+                              display="default"
+                              maximumDate={new Date()}
+                              onChange={onChangeDate}
+                            />
+                          )}
+                        </>
+                      )}
+                    </View>
+                  </View>
+                  {/* Input Gender dan Phone Number */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.7,
                       }}
                     >
                       <Text style={styles.labelModal}>Gender</Text>
@@ -751,8 +1048,61 @@ export default function CoachesScreen() {
 
                     <View
                       style={{
-                        flex: 0.5,
+                        flex: 0.7,
                         marginLeft: 10,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Phone Number</Text>
+                      
+                      <PhoneInput
+                        phone={phone}
+                        dialCodePhone={dialCodePhone}
+                        onChangePhone={setPhone}
+                        onChangeDialCode={setDialCodePhone}
+                      />                        
+                    </View>
+                  </View>
+                  {/* Input Emergency Contact Name dan Emergency Contact No */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.7,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>
+                        Emergency Contact Name
+                      </Text>
+
+                      <TextInput
+                        value={emergencyContactName}
+                        onChangeText={setEmergencyContactName}
+                        style={styles.inputModal}
+                      />
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 0.7,
+                        marginLeft: 10,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>
+                        Emergency Contact Number
+                      </Text>
+                      
+                      <PhoneInput
+                        phone={emergencyContactNo}
+                        dialCodePhone={dialCodeEmergencyContactNo}
+                        onChangePhone={setEmergencyContactNo}
+                        onChangeDialCode={setDialCodeEmergencyContactNo}
+                      />    
+                    </View>
+                  </View>
+                  {/* Input Password */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.5,
                       }}
                     >
                       <Text style={styles.labelModal}>Password</Text>
@@ -789,7 +1139,7 @@ export default function CoachesScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -803,10 +1153,47 @@ export default function CoachesScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -817,7 +1204,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -864,10 +1251,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -879,6 +1272,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -1158,6 +1574,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 10,
   },
-
- 
 });

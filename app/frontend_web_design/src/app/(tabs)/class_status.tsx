@@ -192,24 +192,32 @@ export default function ClassStatusScreen() {
         <ScrollView showsVerticalScrollIndicator={false}>
           <MenuItem
             icon="dashboard"
-            Status="Dashboard"
+            title="Dashboard"
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
-            icon="people"
-            Status="View Members"
-            onPress={() => router.push("/members")}
-          />
-          <MenuItem
-            icon="fitness-center"
-            Status="Coaches"
+            icon="supervised-user-circle"
+            title="Coaches"
             onPress={() => router.push("/coaches")}
           />
           <MenuItem
+            icon="people"
+            title="Members"
+            onPress={() => router.push("/members")}
+          />
+          <MenuItem
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
+          />
+          <MenuItem
             icon="home-work"
-            Status="Class"
+            title="Class"
             active
-            onPress={() => setShowSubMenu(!showSubMenu)}
+            onPress={() => {
+              router.push("/class");
+              setShowSubMenu(true);
+            }}
             rightIcon={
               <MaterialIcons
                 name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -218,61 +226,51 @@ export default function ClassStatusScreen() {
               />
             }
           />
-            {/* Sub Menu - Class */}
-            {showSubMenu && (
-              <View style={{ marginLeft: 40 }}>
-                <MenuSubItem
-                  icon="schedule-send"
-                  Status="Booking"
-                  onPress={() => router.push("/class_booking")}
-                />
-                <MenuSubItem
-                  icon="schedule"
-                  Status="Schedule"
-                  onPress={() => router.push("/class_schedule")}
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  Status="Status"
-                  onPress={() => router.push("/class_status")}
-                  active
-                />
-                <MenuSubItem
-                  icon="assignment"
-                  Status="Title"
-                  onPress={() => router.push("/class_title")}
-                />
-              </View>
-            )}
-          <MenuItem
-            icon="inventory-2"
-            Status="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            Status="News"
-            onPress={() => router.push("/news")}
-          />
+              {/* Sub Menu - Class */}
+              {showSubMenu && (
+                <View style={{ marginLeft: 40 }}>
+                  <MenuSubItem
+                    icon="schedule-send"
+                    title="Booking"
+                    onPress={() => router.push("/class_booking")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Status"
+                    onPress={() => router.push("/class_status")}
+                    active
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Class Name"
+                    onPress={() => router.push("/class_title")}
+                  />
+                </View>
+              )}
           <MenuItem
             icon="credit-card"
-            Status="Payment"
+            title="Payment"
             onPress={() => router.push("/payment")}
           />
           <MenuItem
             icon="discount"
-            Status="Promos"
+            title="Promos"
             onPress={() => router.push("/promos")}
           />
           <MenuItem
-            icon="auto-stories"
-            Status="Report"
-            onPress={() => router.push("/report")}
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
           />
           <MenuItem
-            icon="badge"
-            Status="Profile"
-            onPress={() => router.push("/profile")}
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
+            icon="auto-stories"
+            title="Report"
+            onPress={() => router.push("/report")}
           />
         </ScrollView>
 
