@@ -3,6 +3,8 @@ import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import {
+  Alert,
+  Platform,
   FlatList,
   Image,
   Pressable,
@@ -13,30 +15,141 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 // ============ DATA ============
 interface dataBooking {
   id: string;
-  BookingName: string;
+  memberName: string;
+  memberId: string;
+  CoachName: string,
+  CoachId: string,
+  // ScheduleName: string;
+  // ScheduleStartTime: string;
+  // ScheduleEndTime: string;
+  // ScheduleDate: string;
+  // ScheduleQuota: string;
+  // ScheduleAvailableQuota: string;
 }
 
 const initialDataBooking: dataBooking[] = [
   {
     id: "1",
-    BookingName: "Morning Class",
+    memberName: "James Medalla",
+    memberId: "SFM2301N1",
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    // ScheduleName: "Morning Class",
+    // ScheduleStartTime: "11:23",
+    // ScheduleEndTime: "12:43",
+    // ScheduleDate: "2026-08-15",
+    // ScheduleQuota: "20",
+    // ScheduleAvailableQuota: "20",
   },
   {
     id: "2",
-    BookingName: "Afternoon Class",
+    memberName: "Chris Medalla",
+    memberId: "SFM2301N2",
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    // ScheduleName: "Afternoon Class",
+    // ScheduleStartTime: "18:20",
+    // ScheduleEndTime: "19:00",
+    // ScheduleDate: "2026-08-15",
+    // ScheduleQuota: "15",
+    // ScheduleAvailableQuota: "10",
   },
   {
     id: "3",
-    BookingName: "Evening Class",
+    memberName: "James Chris",
+    memberId: "SFM2301N3",
+    CoachName: "Medalla Toy",
+    CoachId: "COA2301N2",
+    // ScheduleName: "Evening Class",
+    // ScheduleStartTime: "05:00",
+    // ScheduleEndTime: "09:43",
+    // ScheduleDate: "2026-08-15",
+    // ScheduleQuota: "15",    
+    // ScheduleAvailableQuota: "9",
   },
   
   {
     id: "4",
-    BookingName: "Night Class",
+    memberName: "James Medalla",
+    memberId: "SFM2301N1",
+    CoachName: "James Boy",
+    CoachId: "COA2301N3",
+    // ScheduleName: "Night Class",
+    // ScheduleStartTime: "21:23",
+    // ScheduleEndTime: "23:43",
+    // ScheduleDate: "2026-08-16",
+    // ScheduleQuota: "20",
+    // ScheduleAvailableQuota: "19",
+  },
+];
+
+const dataMember = [
+  {
+    id: '1',
+    memberName: "James Medalla",
+    memberId: "SFM2301N1",
+  },
+  {
+    id: '2',
+    memberName: "Chris Medalla",
+    memberId: "SFM2301N2",
+  },
+  {
+    id: '3',
+    memberName: "James Chris",
+    memberId: "SFM2301N3",
+  },
+];
+
+const dataSchedule = [
+  {
+    id: '1',
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    ScheduleName: "Morning Class",
+    ScheduleStartTime: "11:23",
+    ScheduleEndTime: "12:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "20",
+  },
+  {
+    id: '2',
+    CoachName: "Bahlil",
+    CoachId: "COA2301N1",
+    ScheduleName: "Afternoon Class",
+    ScheduleStartTime: "18:20",
+    ScheduleEndTime: "19:00",
+    ScheduleDate: "2026-08-15",
+    ScheduleQuota: "15",
+    ScheduleAvailableQuota: "10",
+  },
+  {
+    id: '3',
+    CoachName: "Medalla Toy",
+    CoachId: "COA2301N2",
+    ScheduleName: "Evening Class",
+    ScheduleStartTime: "05:00",
+    ScheduleEndTime: "09:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleQuota: "15",    
+    ScheduleAvailableQuota: "9",
+  },
+  {
+    id: '4',
+    CoachName: "James Boy",
+    CoachId: "COA2301N3",
+    ScheduleName: "Night Class",
+    ScheduleStartTime: "21:23",
+    ScheduleEndTime: "23:43",
+    ScheduleDate: "2026-08-16",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "19",
   },
 ];
 
@@ -53,7 +166,12 @@ export default function ClassBookingScreen() {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.BookingName.toLowerCase().includes(keyword);
+        item.memberName.toLowerCase().includes(keyword) ||
+        item.memberId.toString().toLowerCase().includes(keyword) ||
+        item.CoachName.toLowerCase().includes(keyword) ||
+        item.CoachId.toString().toLowerCase().includes(keyword) ;
+        // item.ScheduleName.toLowerCase().includes(keyword) ||
+        // item.ScheduleDate.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -74,7 +192,8 @@ export default function ClassBookingScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.BookingName}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.memberId}  -  {item.memberName}</Text>
+      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   -   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}</Text>
 
       <View
         style={{
@@ -111,25 +230,45 @@ export default function ClassBookingScreen() {
   const [selectedDataBooking, setSelectedDataBooking] = useState<dataBooking | null>(
     null,
   );
-  const [BookingName, setBookingName] = useState("");
+
   
   const handleAdd = () => {
     setSelectedDataBooking(null);
-    setBookingName("");
+    setMemberName("");
+    setmemberId("");
+    setCoachName("");
+    setCoachId("");
 
+    
     setShowModal(true);
   };
 
   const handleEdit = (item: dataBooking) => {
     setSelectedDataBooking(item);
-    setBookingName(item.BookingName);
+    // Cari data member berdasarkan memberId
+    const selectedMember = dataMember.find(
+      (member) => member.memberId === item.memberId
+    );
+    // Simpan object member
+    setMemberName(selectedMember || null);
+    // Simpan member ID
+    setmemberId(item.memberId);
+
+    // Cari data coach berdasarkan coachId
+    const selectedCoach = dataSchedule.find(
+      (Coach) => Coach.CoachId === item.CoachId
+    );
+    // Simpan object coach
+    setCoachName(selectedCoach || null);
+    // Simpan coach ID
+    setCoachId(item.CoachId);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (BookingName.trim() === "") {
-      alert("Name is required");
+    if (!memberName) {
+      alert("Please select a member name");
       return;
     }
 
@@ -139,7 +278,10 @@ export default function ClassBookingScreen() {
         item.id === selectedDataBooking.id
           ? {
               ...item,
-              BookingName: BookingName,
+              memberName: memberName,
+              memberId: memberId,              
+              CoachName: CoachName,
+              CoachId: CoachId,
             }
           : item,
       );
@@ -151,7 +293,10 @@ export default function ClassBookingScreen() {
       // ADD
       const newActiveMembers: dataBooking = {
         id: Date.now().toString(),
-        BookingName: BookingName,
+        memberName: memberName,
+        memberId: memberId,   
+        CoachName: CoachName,
+        CoachId: CoachId,
       };
 
       setBookingData([...BookingData, newActiveMembers]);
@@ -176,10 +321,43 @@ export default function ClassBookingScreen() {
 
   const resetForm = () => {
     setSelectedDataBooking(null);
-    setBookingName("");
+    setMemberName("");
+    setmemberId("");
+    setCoachName("");
+    setCoachId("");
 
     setShowModal(false);
   };
+
+  const [memberName, setMemberName] = useState<any>(null);
+  const [showMemberDropdown, setShowMemberDropdown] = useState(false);
+  const [memberSearch, setMemberSearch] = useState("");
+  const [memberId, setmemberId] = useState("");
+
+  const filteredMembers = dataMember.filter((item) => {
+    const search = memberSearch.toLowerCase();
+
+    return (
+      item.memberName.toLowerCase().includes(search) ||
+      item.memberId.toLowerCase().includes(search)
+    );
+  });
+
+
+  const [CoachName, setCoachName] = useState<any>(null);
+  const [showCoachDropdown, setShowCoachDropdown] = useState(false);
+  const [CoachSearch, setCoachSearch] = useState("");
+  const [CoachId, setCoachId] = useState("");
+
+  const filteredCoach = dataSchedule.filter((item) => {
+    const search = CoachSearch.toLowerCase();
+
+    return (
+      item.CoachName.toLowerCase().includes(search) ||
+      item.CoachId.toLowerCase().includes(search)
+    );
+  });
+
 
   return (
     <View style={styles.container}>
@@ -235,7 +413,7 @@ export default function ClassBookingScreen() {
               />
             }
           />
-              {/* Sub Menu - Class */}
+              {/* Sub Menu - View Class */}
               {showSubMenu && (
                 <View style={{ marginLeft: 40 }}>
                   <MenuSubItem
@@ -252,7 +430,7 @@ export default function ClassBookingScreen() {
                   <MenuSubItem
                     icon="assignment"
                     title="Class Name"
-                    onPress={() => router.push("/class_title")}
+                    onPress={() => router.push("/class_name")}
                   />
                 </View>
               )}
@@ -304,8 +482,8 @@ export default function ClassBookingScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            <Pressable style={styles.addBookingBadge} onPress={handleAdd}>
-              <Text style={styles.sectionBooking}>Add Booking</Text>
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Booking</Text>
             </Pressable>
 
             <View style={styles.cardList}>
@@ -342,9 +520,8 @@ export default function ClassBookingScreen() {
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Booking Name
-                </Text>
+                <Text style={[styles.headerTextList, { flex: 3 }]}>Member Name</Text>
+                <Text style={[styles.headerTextList, { flex: 3.5 }]}>Schedule</Text>
                 
                 <Text
                   style={[
@@ -419,21 +596,181 @@ export default function ClassBookingScreen() {
                     {selectedDataBooking ? "Edit Booking" : "Add Booking"}
                   </Text>
 
-                  {/* Input Booking Name */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 1,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Booking Name</Text>
-                      <TextInput
-                        value={BookingName}
-                        onChangeText={setBookingName}
-                        style={styles.inputModal}
-                      />
+                  {/* SELECT MEMBER NAME */}
+                  <Text style={styles.label}>
+                    Member Name
+                  </Text>
+
+                  <TouchableOpacity
+                    style={styles.memberSelect}
+                    onPress={() => {
+                      setShowMemberDropdown(!showMemberDropdown);
+
+                      if (showMemberDropdown) {
+                        setMemberSearch("");
+                      }
+                    }}
+                  >
+                    <Text style={styles.memberSelectText}>
+                      {memberName
+                        ? `${memberName.memberId}  -  ${memberName.memberName}`
+                        : "--Select Member Name--"}
+                    </Text>
+
+                    <MaterialIcons
+                      name={showMemberDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                      size={20}
+                      color="#777"
+                    />
+                  </TouchableOpacity>
+
+                  {showMemberDropdown && (
+                    <View style={styles.memberDropdown}>
+
+                      {/* SEARCH */}
+                      <View style={styles.searchContainer}>
+                        <Text style={styles.searchIcon}>
+                          🔍
+                        </Text>
+
+                        <TextInput
+                          style={styles.searchInput}
+                          placeholder="Search Member Name / ID"
+                          placeholderTextColor="#888"
+                          value={memberSearch}
+                          onChangeText={setMemberSearch}
+                        />
+
+                        {memberSearch.length > 0 && (
+                          <TouchableOpacity
+                            onPress={() => setMemberSearch("")}
+                          >
+                            <Text style={styles.clearSearch}>
+                              ✕
+                            </Text>
+                          </TouchableOpacity>
+                        )}
+                      </View>
+
+                      {/* MEMBER LIST */}
+                      <ScrollView
+                        style={styles.memberList}
+                        nestedScrollEnabled
+                      >
+                        {filteredMembers.length > 0 ? (
+                          filteredMembers.map((item) => (
+                            <TouchableOpacity
+                              key={item.id}
+                              style={styles.memberItem}
+                              onPress={() => {
+                                setMemberName(item);
+                                setShowMemberDropdown(false);
+                                setMemberSearch("");
+                              }}
+                            >
+                              <Text style={styles.memberItemText}>
+                                {item.memberId}  -  {item.memberName}
+                              </Text>
+                            </TouchableOpacity>
+                          ))
+                        ) : (
+                          <View style={styles.noResult}>
+                            <Text style={styles.noResultText}>
+                              Member not found
+                            </Text>
+                          </View>
+                        )}
+                      </ScrollView>
                     </View>
-                  </View>
+                  )}
+
+                  {/* SELECT SCHEDULE DETAIL */}
+                  <Text style={styles.label}>
+                    Schedule
+                  </Text>
+
+                  <TouchableOpacity
+                    style={styles.memberSelect}
+                    onPress={() => {
+                      setShowCoachDropdown(!showCoachDropdown);
+
+                      if (showCoachDropdown) {
+                        setCoachSearch("");
+                      }
+                    }}
+                  >
+                    <Text style={styles.memberSelectText}>
+                      {CoachName
+                        ? `${CoachName.CoachId}  -  ${CoachName.CoachName}`
+                        : "--Select Schedule--"}
+                    </Text>
+
+                    <MaterialIcons
+                      name={showCoachDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                      size={20}
+                      color="#777"
+                    />
+                  </TouchableOpacity>
+
+                  {showCoachDropdown && (
+                    <View style={styles.memberDropdown}>
+
+                      {/* SEARCH */}
+                      <View style={styles.searchContainer}>
+                        <Text style={styles.searchIcon}>
+                          🔍
+                        </Text>
+
+                        <TextInput
+                          style={styles.searchInput}
+                          placeholder="Search Schedule"
+                          placeholderTextColor="#888"
+                          value={CoachSearch}
+                          onChangeText={setCoachSearch}
+                        />
+
+                        {CoachSearch.length > 0 && (
+                          <TouchableOpacity
+                            onPress={() => setCoachSearch("")}
+                          >
+                            <Text style={styles.clearSearch}>
+                              ✕
+                            </Text>
+                          </TouchableOpacity>
+                        )}
+                      </View>
+
+                      {/* SCHEDULE LIST */}
+                      <ScrollView
+                        style={styles.memberList}
+                        nestedScrollEnabled
+                      >
+                        {filteredCoach.length > 0 ? (
+                          filteredCoach.map((item) => (
+                            <TouchableOpacity
+                              key={item.id}
+                              style={styles.memberItem}
+                              onPress={() => {
+                                setCoachName(item);
+                                setShowCoachDropdown(false);
+                                setCoachSearch("");
+                              }}
+                            >
+                              <Text style={styles.memberItemText}>
+                                {item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   -   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}
+                              </Text>
+                            </TouchableOpacity>
+                          ))
+                        ) : (
+                          <View style={styles.noResult}>
+                            <Text style={styles.noResultText}>
+                              Schedule not found
+                            </Text>
+                          </View>
+                        )}
+                      </ScrollView>
+                    </View>
+                  )}
 
                   
 
@@ -479,7 +816,7 @@ export default function ClassBookingScreen() {
 
 function MenuItem({
   icon,
-  Booking,
+  title,
   active = false,
   onPress,
   rightIcon,
@@ -505,7 +842,7 @@ function MenuItem({
             },
           ]}
         >
-          {Booking}
+          {title}
         </Text>
       </View>
 
@@ -514,7 +851,7 @@ function MenuItem({
   );
 }
 
-function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
   return (
     <TouchableOpacity
       style={[styles.menuSubItem, active && styles.activeMenuSub]}
@@ -535,7 +872,7 @@ function MenuSubItem({ icon, Booking, active = false, onPress }: any) {
           },
         ]}
       >
-        {Booking}
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -649,7 +986,7 @@ const styles = StyleSheet.create({
     color: "#ED1018",
   },
 
-  addBookingBadge: {
+  addTitleBadge: {
     width: "30%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -661,7 +998,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ED1018",
   },
-  sectionBookingBadge: {
+  sectionTitleBadge: {
     width: "20%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -671,7 +1008,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
   },
-  sectionBooking: {
+  sectionTitle: {
     fontSize: 24,
     color: "#ED1018",
     fontWeight: "700",
@@ -689,7 +1026,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  BookingList: {
+  titleList: {
     color: "#fff",
     fontSize: 32,
     fontWeight: "bold",
@@ -820,7 +1157,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  BookingModal: {
+  titleModal: {
     color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
@@ -899,179 +1236,205 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 10,
   },
-
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
+  
+  BookingList: {
     color: "#fff",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 25,
+  },
+  
+  BookingModal: {
+    color: "#5a050c",
     fontWeight: "700",
+    fontSize: 32,
   },
 
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    alignItems: "center",
+
+  //================================= Member Id dan Name =================================
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#E60012",
+    marginBottom: 8,
+    marginTop: 5,
   },
 
-  cardImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
+  inputLeave: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#DDDDDD",
     borderRadius: 8,
-  },
-
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
+    paddingHorizontal: 14,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
   },
 
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
+  inputText: {
+    fontSize: 14,
+    color: "#222",
   },
 
-  Booking: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
+  placeholderLeave: {
+    color: "#999",
+  },
+
+  dropdown: {
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#DDDDDD",
+    borderRadius: 8,
+    marginTop: -8,
+    marginBottom: 15,
+    overflow: "hidden",
+  },
+
+  reasonItem: {
+    height: 48,
+    paddingHorizontal: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#EEEEEE",
+  },
+
+  reasonText: {
+    fontSize: 14,
+    color: "#333",
+  },
+
+  notesInput: {
+    minHeight: 110,
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#DDDDDD",
+    borderRadius: 8,
+    padding: 14,
+    fontSize: 14,
+    color: "#222",
     marginBottom: 20,
   },
 
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
-
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
+  inputSelect: {
+    //height: 45,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    //borderRadius: 8,
+    //paddingHorizontal: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
+    //backgroundColor: "#fff",
 
-  input: {
+    backgroundColor: "#D9D9DD",
     height: 50,
-    backgroundColor: "#f2f2f2",
     borderRadius: 10,
     paddingHorizontal: 15,
+    fontSize: 14,
+  },
+
+  dropdownSelect: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginTop: 5,
+    maxHeight: 180,
+    backgroundColor: "#fff",
+  },
+
+  itemSelect: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+
+
+  memberSelect: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 15,
   },
 
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
+  memberSelectText: {
+    fontSize: 14,
+    color: "#111",
   },
 
-  cancelBtn: {
+  arrow: {
+    fontSize: 25,
+    color: "#111",
+  },
+
+  memberDropdown: {
+    backgroundColor: "#D9D9DD",
     borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  //-=======================
-  Bookinga: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  fileContainer: {
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
+    borderColor: "#D5D5D5",
     borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
+    marginTop: 8,
+    overflow: "hidden",
   },
 
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignSelf: "flex-start",
+  searchContainer: {
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
   },
 
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
+  searchIcon: {
+    fontSize: 16,
+    marginRight: 8,
+  },
+
+  searchInput: {
+    flex: 1,
+    height: 48,
+    fontSize: 14,
+    color: "#111",
+    outlineStyle: "none" as any,
+  },
+
+  clearSearch: {
+    fontSize: 14,
+    color: "#777",
+    paddingHorizontal: 8,
+  },
+
+  memberList: {
+    maxHeight: 250,
+  },
+
+  memberItem: {
+    minHeight: 55,
+    justifyContent: "center",
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EEEEEE",
+  },
+
+  memberItemText: {
+    fontSize: 14,
+    color: "#111",
+  },
+
+  noResult: {
+    padding: 20,
+    alignItems: "center",
+  },
+
+  noResultText: {
+    fontSize: 14,
+    color: "#888",
   },
 });

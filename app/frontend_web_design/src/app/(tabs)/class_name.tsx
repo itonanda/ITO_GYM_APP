@@ -251,7 +251,7 @@ export default function ClassTitleScreen() {
                   <MenuSubItem
                     icon="assignment"
                     title="Class Name"
-                    onPress={() => router.push("/class_title")}
+                    onPress={() => router.push("/class_name")}
                     active
                   />
                 </View>
@@ -305,11 +305,11 @@ export default function ClassTitleScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Title</Text>
+              <Text style={styles.sectionTitle}>Add Class Name</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Title</Text>
+              <Text style={styles.titleList}>Class Name</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -332,7 +332,7 @@ export default function ClassTitleScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search Title..."
+                    placeholder="Search Class Name..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -343,7 +343,7 @@ export default function ClassTitleScreen() {
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Title Name
+                  Class Name
                 </Text>
                 
                 <Text
@@ -416,7 +416,7 @@ export default function ClassTitleScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedDataTitle ? "Edit Title" : "Add Title"}
+                    {selectedDataTitle ? "Edit Class Name" : "Add Class Name"}
                   </Text>
 
                   {/* Input Title Name */}
@@ -426,7 +426,7 @@ export default function ClassTitleScreen() {
                         flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Title Name</Text>
+                      <Text style={styles.labelModal}>Class Name</Text>
                       <TextInput
                         value={TitleName}
                         onChangeText={setTitleName}

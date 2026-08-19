@@ -289,7 +289,7 @@ export default function MembershipScreen() {
     </View>
   );
 
-  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedActiveMembership, setSelectedActiveMembership] =
     useState<dataActiveMembership | null>(null);

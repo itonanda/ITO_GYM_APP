@@ -190,88 +190,88 @@ export default function ClassStatusScreen() {
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <MenuItem
-            icon="dashboard"
-            title="Dashboard"
-            onPress={() => router.push("/dashboard")}
-          />
-          <MenuItem
-            icon="supervised-user-circle"
-            title="Coaches"
-            onPress={() => router.push("/coaches")}
-          />
-          <MenuItem
-            icon="people"
-            title="Members"
-            onPress={() => router.push("/members")}
-          />
-          <MenuItem
-            icon="card-membership"
-            title="Membership"
-            onPress={() => router.push("/membership")}
-          />
-          <MenuItem
-            icon="home-work"
-            title="Class"
-            active
-            onPress={() => {
-              router.push("/class");
-              setShowSubMenu(true);
-            }}
-            rightIcon={
-              <MaterialIcons
-                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                size={22}
-                color="#ED1018"
-              />
-            }
-          />
-              {/* Sub Menu - Class */}
-              {showSubMenu && (
-                <View style={{ marginLeft: 40 }}>
-                  <MenuSubItem
-                    icon="schedule-send"
-                    title="Booking"
-                    onPress={() => router.push("/class_booking")}
-                  />
-                  <MenuSubItem
-                    icon="assignment"
-                    title="Status"
-                    onPress={() => router.push("/class_status")}
-                    active
-                  />
-                  <MenuSubItem
-                    icon="assignment"
-                    title="Class Name"
-                    onPress={() => router.push("/class_title")}
-                  />
-                </View>
-              )}
-          <MenuItem
-            icon="credit-card"
-            title="Payment"
-            onPress={() => router.push("/payment")}
-          />
-          <MenuItem
-            icon="discount"
-            title="Promos"
-            onPress={() => router.push("/promos")}
-          />
-          <MenuItem
-            icon="inventory-2"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            title="News"
-            onPress={() => router.push("/news")}
-          />
-          <MenuItem
-            icon="auto-stories"
-            title="Report"
-            onPress={() => router.push("/report")}
-          />
+        <MenuItem
+          icon="dashboard"
+          title="Dashboard"
+          onPress={() => router.push("/dashboard")}
+        />
+        <MenuItem
+          icon="supervised-user-circle"
+          title="Coaches"
+          onPress={() => router.push("/coaches")}
+        />
+        <MenuItem
+          icon="people"
+          title="Members"
+          onPress={() => router.push("/members")}
+        />
+        <MenuItem
+          icon="card-membership"
+          title="Membership"
+          onPress={() => router.push("/membership")}
+        />
+        <MenuItem
+          icon="home-work"
+          title="Class"
+          active
+          onPress={() => {
+            router.push("/class");
+            setShowSubMenu(true);
+          }}
+          rightIcon={
+            <MaterialIcons
+              name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+              size={22}
+              color="#ED1018"
+            />
+          }
+        />
+            {/* Sub Menu - Class */}
+            {showSubMenu && (
+              <View style={{ marginLeft: 40 }}>
+                <MenuSubItem
+                  icon="schedule-send"
+                  title="Booking"
+                  onPress={() => router.push("/class_booking")}
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Status"
+                  onPress={() => router.push("/class_status")}
+                  active
+                />
+                <MenuSubItem
+                  icon="assignment"
+                  title="Class Name"
+                  onPress={() => router.push("/class_name")}
+                />
+              </View>
+            )}
+        <MenuItem
+          icon="credit-card"
+          title="Payment"
+          onPress={() => router.push("/payment")}
+        />
+        <MenuItem
+          icon="discount"
+          title="Promos"
+          onPress={() => router.push("/promos")}
+        />
+        <MenuItem
+          icon="inventory-2"
+          title="Inventory"
+          onPress={() => router.push("/inventory")}
+        />
+        <MenuItem
+          icon="edit-square"
+          title="News"
+          onPress={() => router.push("/news")}
+        />
+        <MenuItem
+          icon="auto-stories"
+          title="Report"
+          onPress={() => router.push("/report")}
+        />
         </ScrollView>
 
 
@@ -295,12 +295,12 @@ export default function ClassStatusScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            <Pressable style={styles.addStatusBadge} onPress={handleAdd}>
-              <Text style={styles.sectionStatus}>Add Status</Text>
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Status</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.StatusList}>Status</Text>
+              <Text style={styles.titleList}>Status</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -406,7 +406,7 @@ export default function ClassStatusScreen() {
 
               {showModal && (
                 <View style={styles.modalScreen}>
-                  <Text style={styles.StatusModal}>
+                  <Text style={styles.titleModal}>
                     {selectedDataStatus ? "Edit Status" : "Add Status"}
                   </Text>
 
@@ -470,7 +470,7 @@ export default function ClassStatusScreen() {
 
 function MenuItem({
   icon,
-  Status,
+  title,
   active = false,
   onPress,
   rightIcon,
@@ -496,7 +496,7 @@ function MenuItem({
             },
           ]}
         >
-          {Status}
+          {title}
         </Text>
       </View>
 
@@ -505,7 +505,7 @@ function MenuItem({
   );
 }
 
-function MenuSubItem({ icon, Status, active = false, onPress }: any) {
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
   return (
     <TouchableOpacity
       style={[styles.menuSubItem, active && styles.activeMenuSub]}
@@ -526,7 +526,7 @@ function MenuSubItem({ icon, Status, active = false, onPress }: any) {
           },
         ]}
       >
-        {Status}
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -640,7 +640,7 @@ const styles = StyleSheet.create({
     color: "#ED1018",
   },
 
-  addStatusBadge: {
+  addTitleBadge: {
     width: "30%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -652,7 +652,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ED1018",
   },
-  sectionStatusBadge: {
+  sectionTitleBadge: {
     width: "20%",
     backgroundColor: "#fff",
     //paddingHorizontal: 15,
@@ -662,7 +662,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
   },
-  sectionStatus: {
+  sectionTitle: {
     fontSize: 24,
     color: "#ED1018",
     fontWeight: "700",
@@ -680,7 +680,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  StatusList: {
+  titleList: {
     color: "#fff",
     fontSize: 32,
     fontWeight: "bold",
@@ -811,7 +811,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  StatusModal: {
+  titleModal: {
     color: "#5a050c",
     fontWeight: "700",
     fontSize: 32,
@@ -946,7 +946,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  Status: {
+  title: {
     fontSize: 28,
     fontWeight: "700",
     color: "#D71920",
@@ -1005,7 +1005,7 @@ const styles = StyleSheet.create({
   },
 
   //-=======================
-  Statusa: {
+  titlea: {
     fontSize: 22,
     fontWeight: "700",
     marginBottom: 20,

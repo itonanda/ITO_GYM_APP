@@ -398,11 +398,15 @@ export default function DashboardScreen() {
                 <Feather name="search" size={20} color="#fff" />
               </View>
 
-              <View style={styles.memberRowTitle}>
-                <View style={{ flex: 1 }} />
+              <View style={styles.memberRowTitle}>                
+                <Text style={[styles.headerTextList, { flex: 4 }]}>Member Name</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Date paid</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Date Expiry</Text>
+                <Text style={[styles.headerTextList, { flex: 1 }]}>Status</Text>
+                {/* <View style={{ flex: 1 }} />
                 <Text style={styles.memberTitle}>Date paid</Text>
                 <Text style={styles.memberTitle}>Date Expiry</Text>
-                <Text style={styles.memberTitle}>Status</Text>
+                <Text style={styles.memberTitle}>Status</Text> */}
               </View>
 
               <FlatList
@@ -411,7 +415,29 @@ export default function DashboardScreen() {
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <View style={styles.memberRow}>
-                    <View
+                    <Text style={[styles.dataTextList, { flex: 4 }]}>
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <TouchableOpacity>
+                          <Image
+                            source={{ uri: item.avatar }}
+                            style={styles.memberAvatar}
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.memberName}>{item.name}</Text>
+                      </View>                      
+                    </Text>
+                    <Text style={[styles.dataTextList, { flex: 2 }]}>
+                      <Text style={styles.memberDate}>{item.datePaid}</Text>
+                    </Text>
+                    <Text style={[styles.dataTextList, { flex: 2 }]}>
+                      <Text style={styles.memberDate}>{item.dateExpiry}</Text>
+                    </Text>
+                    <Text style={[styles.dataTextList, { flex: 1 }]}>
+                      <View style={styles.activeBadge}>
+                        <Text style={styles.activeText}>{item.status}</Text>
+                      </View>
+                    </Text>
+                    {/* <View
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <TouchableOpacity>
@@ -427,7 +453,7 @@ export default function DashboardScreen() {
                     </View>
                     <View style={styles.activeBadge}>
                       <Text style={styles.activeText}>{item.status}</Text>
-                    </View>
+                    </View> */}
                   </View>
                 )}
               />
@@ -859,12 +885,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  
+  headerTextList: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  
+  dataTextList: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "500",
+  },
 
   memberRowTitle: {
     flexDirection: "row",
-    //alignItems: "center",
+    alignItems: "center",
     marginTop: 25,
-    marginHorizontal: 40,
+    //marginHorizontal: 40,
   },
 
   memberTitle: {

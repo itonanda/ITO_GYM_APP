@@ -162,11 +162,11 @@ export default function MembersLeaveScreen() {
   const handleAdd = () => {
     setSelecteddataLeave(null);
     setMemberName("");
-    setmemberId(""),
-    setStartDate(""),
-    setEndDate(""),
-    setReason(""),
-    setNotes(""),
+    setmemberId("");
+    setStartDate("");
+    setEndDate("");
+    setReason("");
+    setNotes("");
 
     setShowModal(true);
   };
@@ -279,11 +279,11 @@ export default function MembersLeaveScreen() {
   const resetForm = () => {
     setSelecteddataLeave(null);
     setMemberName("");
-    setmemberId(""),
-    setStartDate(""),
-    setEndDate(""),
-    setReason(""),
-    setNotes(""),
+    setmemberId("");
+    setStartDate("");
+    setEndDate("");
+    setReason("");
+    setNotes("");
 
     setShowModal(false);
   };

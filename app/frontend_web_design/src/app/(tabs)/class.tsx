@@ -466,9 +466,36 @@ export default function ClassScheduleScreen() {
           <MenuItem
             icon="home-work"
             title="Class"
-            onPress={() => router.push("/class")}
             active
+            onPress={() => setShowSubMenu(!showSubMenu)}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+              {/* Sub Menu - View Class */}
+              {showSubMenu && (
+                <View style={{ marginLeft: 40 }}>
+                  <MenuSubItem
+                    icon="schedule-send"
+                    title="Booking"
+                    onPress={() => router.push("/class_booking")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Status"
+                    onPress={() => router.push("/class_status")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Class Name"
+                    onPress={() => router.push("/class_name")}
+                  />
+                </View>
+              )}
           <MenuItem
             icon="credit-card"
             title="Payment"
