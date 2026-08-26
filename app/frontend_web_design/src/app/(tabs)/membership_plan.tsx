@@ -549,9 +549,14 @@ export default function MembersPlanScreen() {
                     >
                       <Text style={styles.labelModal}>Description</Text>
                       <TextInput
+                        style={styles.notesInput}
+                        placeholder="Write description..."
+                        placeholderTextColor="#999"
                         value={description}
                         onChangeText={setdescription}
-                        style={styles.inputModal}
+                        multiline
+                        numberOfLines={5}
+                        textAlignVertical="top"
                       />
                     </View>
                   </View>
@@ -1132,65 +1137,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  //-=======================
-  titlea: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  fileContainer: {
-    marginTop: 12,
+  notesInput: {
+    minHeight: 110,
+    backgroundColor: "#D9D9DD",
     borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    borderColor: "#DDDDDD",
     borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
+    padding: 14,
+    fontSize: 14,
+    color: "#222",
+    marginBottom: 20,
   },
 });
