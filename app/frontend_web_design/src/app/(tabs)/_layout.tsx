@@ -18,6 +18,9 @@ export default function RootLayout() {
       <Stack.Screen name="class_booking" options={{ headerShown: false }} />
       <Stack.Screen name="class_status" options={{ headerShown: false }} />
       <Stack.Screen name="class_name" options={{ headerShown: false }} />
+      <Stack.Screen name="payment" options={{ headerShown: false }} />
+      <Stack.Screen name="payment_method" options={{ headerShown: false }} />
+      <Stack.Screen name="payment_status" options={{ headerShown: false }} />
 
 
 
@@ -26,7 +29,6 @@ export default function RootLayout() {
       
       <Stack.Screen name="inventory" options={{ headerShown: false }} />
       <Stack.Screen name="news" options={{ headerShown: false }} />
-      <Stack.Screen name="payment" options={{ headerShown: false }} />
       <Stack.Screen name="promos" options={{ headerShown: false }} />
       <Stack.Screen name="report" options={{ headerShown: false }} />
       <Stack.Screen name="profile" options={{ headerShown: false }} />

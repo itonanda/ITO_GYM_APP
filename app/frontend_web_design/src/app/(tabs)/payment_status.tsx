@@ -15,56 +15,40 @@ import {
 } from "react-native";
 
 // ============ DATA ============
-interface dataPlans {
+interface dataStatus {
   id: string;
-  planName: string;
-  validity: string;
-  amount: string;
+  StatusName: string;
 }
 
-const initialDataPlans: dataPlans[] = [
+const initialDataStatus: dataStatus[] = [
   {
     id: "1",
-    planName: "1 month",
-    validity: "1",
-    amount: "800",
+    StatusName: "Pending",
   },
   {
     id: "2",
-    planName: "3 month",
-    validity: "3",
-    amount: "2200",
+    StatusName: "Successced",
   },
   {
     id: "3",
-    planName: "6 month",
-    validity: "6",
-    amount: "4300",
-  },
-  {
-    id: "4",
-    planName: "Annual",
-    validity: "12",
-    amount: "8500",
+    StatusName: "Failed",
   },
 ];
 
-export default function PaymentScreen() {
+export default function PaymentStatusScreen() {
   const router = useRouter();
-  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
+  const [StatusData, setStatusData] = useState<dataStatus[]>(initialDataStatus);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return plansData.filter((item) => {
+    return StatusData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.planName.toLowerCase().includes(keyword) ||
-        item.validity.toString().toLowerCase().includes(keyword) ||
-        item.amount.toString().toLowerCase().includes(keyword);
+        item.StatusName.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -85,18 +69,11 @@ export default function PaymentScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.validity}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.amount}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.StatusName}</Text>
 
       <View
         style={{
-          flex: 1.5,
+          flex: 0.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -126,75 +103,65 @@ export default function PaymentScreen() {
 
   const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
+  const [selectedDataStatus, setSelectedDataStatus] = useState<dataStatus | null>(
     null,
   );
-  const [planName, setPlanName] = useState("");
-  const [validity, setValidity] = useState("");
-  const [amount, setAmount] = useState("");
-
+  const [StatusName, setStatusName] = useState("");
+  
   const handleAdd = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelectedDataStatus(null);
+    setStatusName("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataPlans) => {
-    setSelectedDataPlans(item);
-    setPlanName(item.planName);
-    setValidity(item.validity);
-    setAmount(item.amount);
+  const handleEdit = (item: dataStatus) => {
+    setSelectedDataStatus(item);
+    setStatusName(item.StatusName);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (planName.trim() === "") {
-      alert("Member Name is required");
+    if (StatusName.trim() === "") {
+      alert("Name is required");
       return;
     }
 
-    if (selectedDataPlans) {
+    if (selectedDataStatus) {
       // UPDATE
-      const updatedData = plansData.map((item) =>
-        item.id === selectedDataPlans.id
+      const updatedData = StatusData.map((item) =>
+        item.id === selectedDataStatus.id
           ? {
               ...item,
-              planName: planName,
-              validity: validity,
-              amount: amount,
+              StatusName: StatusName,
             }
           : item,
       );
 
-      setPlansData(updatedData);
+      setStatusData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataPlans = {
+      const newActiveMembers: dataStatus = {
         id: Date.now().toString(),
-        planName: planName,
-        validity: validity,
-        amount: amount,
+        StatusName: StatusName,
       };
 
-      setPlansData([...plansData, newActiveMembers]);
+      setStatusData([...StatusData, newActiveMembers]);
 
-      alert("Members added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
   const handleDelete = (id: string) => {
-    const data = plansData.filter((item) => item.id !== id);
+    const data = StatusData.filter((item) => item.id !== id);
 
-    setPlansData(data);
+    setStatusData(data);
 
-    alert("Members delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -203,10 +170,8 @@ export default function PaymentScreen() {
   };
 
   const resetForm = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelectedDataStatus(null);
+    setStatusName("");
 
     setShowModal(false);
   };
@@ -258,7 +223,10 @@ export default function PaymentScreen() {
             icon="credit-card"
             title="Payment"
             active
-            onPress={() => setShowSubMenu(!showSubMenu)}
+            onPress={() => {
+              router.push("/payment");
+              setShowSubMenu(true);
+            }}
             rightIcon={
               <MaterialIcons
                 name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -279,6 +247,7 @@ export default function PaymentScreen() {
                     icon="assignment"
                     title="Status"
                     onPress={() => router.push("/payment_status")}
+                    active
                   />
                 </View>
               )}
@@ -304,6 +273,7 @@ export default function PaymentScreen() {
           />
         </ScrollView>
 
+
         <TouchableOpacity style={styles.logout}>
           <MaterialIcons name="logout" size={20} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>
@@ -324,12 +294,12 @@ export default function PaymentScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add News</Text>
-            </Pressable> */}
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Status</Text>
+            </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Payment</Text>
+              <Text style={styles.titleList}>Status</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -352,7 +322,7 @@ export default function PaymentScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search ..."
+                    placeholder="Search Status..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -361,54 +331,31 @@ export default function PaymentScreen() {
               </View>
 
               {/* Header */}
-              {/* <View style={styles.headerRowList}>
+              <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Plan Name
+                  Status Name
                 </Text>
+                
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Validity
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Amount
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.5,
+                      flex: 1,
                       textAlign: "center",
                     },
                   ]}
                 >
                   Actions
                 </Text>
-              </View> */}
+              </View>
 
               {/* Data */}
-              {/* <FlatList
+              <FlatList
                 data={currentData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-              /> */}
+              />
 
               {/* Footer */}
               <View style={styles.headerRowList} />
@@ -459,53 +406,26 @@ export default function PaymentScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
+                    {selectedDataStatus ? "Edit Status" : "Add Status"}
                   </Text>
 
-                  {/* Input Plan Name dan Validity */}
+                  {/* Input Status Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Plan Name</Text>
+                      <Text style={styles.labelModal}>Status Name</Text>
                       <TextInput
-                        value={planName}
-                        onChangeText={setPlanName}
+                        value={StatusName}
+                        onChangeText={setStatusName}
                         style={styles.inputModal}
                       />
                     </View>
+                  </View>
 
-                    <View
-                      style={{
-                        flex: 0.3,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Validity</Text>
-                      <TextInput
-                        value={validity}
-                        onChangeText={setValidity}
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
-                  {/* Input Amount */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Amount</Text>
-                      <TextInput
-                        value={amount}
-                        onChangeText={setAmount}
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
+                  
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -531,7 +451,7 @@ export default function PaymentScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -544,6 +464,7 @@ export default function PaymentScreen() {
     </View>
   );
 }
+
 
 
 function MenuItem({
@@ -967,5 +888,180 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 25,
     paddingVertical: 10,
+  },
+
+  //=============================================================
+  containera: {
+    flex: 1,
+    padding: 20,
+  },
+
+  addButton: {
+    backgroundColor: "#D71920",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    alignSelf: "flex-start",
+  },
+
+  addText: {
+    color: "#fff",
+    fontWeight: "700",
+  },
+
+  card: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+
+  cardImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 15,
+  },
+
+  editBtn: {
+    backgroundColor: "#eee",
+    padding: 10,
+    borderRadius: 8,
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modal: {
+    width: 600,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 20,
+  },
+
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#D71920",
+    marginBottom: 20,
+  },
+
+  attachText: {
+    color: "#4F46E5",
+    marginBottom: 15,
+  },
+
+  previewImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  placeholder: {
+    width: 150,
+    height: 150,
+    backgroundColor: "#ddd",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  input: {
+    height: 50,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 10,
+  },
+
+  cancelBtn: {
+    borderWidth: 1,
+    borderColor: "#D71920",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+
+  saveBtn: {
+    backgroundColor: "#D4AF37",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+
+  //-=======================
+  titlea: {
+    fontSize: 22,
+    fontWeight: "700",
+    marginBottom: 20,
+    color: "#1E293B",
+  },
+
+  attachButton: {
+    backgroundColor: "#2563EB",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignSelf: "flex-start",
+  },
+
+  attachTexta: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "600",
+  },
+
+  fileContainer: {
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: "#FFFFFF",
+  },
+
+  fileText: {
+    color: "#475569",
+  },
+
+  previewContainer: {
+    marginTop: 20,
+  },
+
+  previewImagea: {
+    width: 250,
+    height: 250,
+    borderRadius: 12,
+    resizeMode: "cover",
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+  },
+
+  removeButton: {
+    marginTop: 12,
+    backgroundColor: "#DC2626",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+  },
+
+  removeText: {
+    color: "#fff",
+    fontWeight: "600",
   },
 });

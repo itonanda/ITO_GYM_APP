@@ -22,14 +22,15 @@ interface dataBooking {
   id: string;
   memberName: string;
   memberId: string;
-  CoachName: string,
-  CoachId: string,
-  // ScheduleName: string;
-  // ScheduleStartTime: string;
-  // ScheduleEndTime: string;
-  // ScheduleDate: string;
-  // ScheduleQuota: string;
-  // ScheduleAvailableQuota: string;
+  ClassScheduleId: string;
+  CoachName: string;
+  CoachId: string;
+  ScheduleName: string;
+  ScheduleStartTime: string;
+  ScheduleEndTime: string;
+  ScheduleDate: string;
+  ScheduleQuota: string;
+  ScheduleAvailableQuota: string;
 }
 
 const initialDataBooking: dataBooking[] = [
@@ -37,54 +38,71 @@ const initialDataBooking: dataBooking[] = [
     id: "1",
     memberName: "James Medalla",
     memberId: "SFM2301N1",
+    ClassScheduleId: "CS01",
     CoachName: "Bahlil",
     CoachId: "COA2301N1",
-    // ScheduleName: "Morning Class",
-    // ScheduleStartTime: "11:23",
-    // ScheduleEndTime: "12:43",
-    // ScheduleDate: "2026-08-15",
-    // ScheduleQuota: "20",
-    // ScheduleAvailableQuota: "20",
+    ScheduleName: "Morning Class",
+    ScheduleStartTime: "11:23",
+    ScheduleEndTime: "12:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "20",
   },
   {
     id: "2",
     memberName: "Chris Medalla",
     memberId: "SFM2301N2",
+    ClassScheduleId: "CS02",
     CoachName: "Bahlil",
     CoachId: "COA2301N1",
-    // ScheduleName: "Afternoon Class",
-    // ScheduleStartTime: "18:20",
-    // ScheduleEndTime: "19:00",
-    // ScheduleDate: "2026-08-15",
-    // ScheduleQuota: "15",
-    // ScheduleAvailableQuota: "10",
+    ScheduleName: "Afternoon Class",
+    ScheduleStartTime: "18:20",
+    ScheduleEndTime: "19:00",
+    ScheduleDate: "2026-08-16",
+    ScheduleQuota: "15",
+    ScheduleAvailableQuota: "10",
   },
   {
     id: "3",
     memberName: "James Chris",
     memberId: "SFM2301N3",
+    ClassScheduleId: "CS03",
     CoachName: "Medalla Toy",
     CoachId: "COA2301N2",
-    // ScheduleName: "Evening Class",
-    // ScheduleStartTime: "05:00",
-    // ScheduleEndTime: "09:43",
-    // ScheduleDate: "2026-08-15",
-    // ScheduleQuota: "15",    
-    // ScheduleAvailableQuota: "9",
-  },
-  
+    ScheduleName: "Evening Class",
+    ScheduleStartTime: "05:00",
+    ScheduleEndTime: "09:43",
+    ScheduleDate: "2026-08-15",
+    ScheduleQuota: "15",    
+    ScheduleAvailableQuota: "9",
+  },  
   {
     id: "4",
     memberName: "James Medalla",
     memberId: "SFM2301N1",
+    ClassScheduleId: "CS04",
     CoachName: "James Boy",
     CoachId: "COA2301N3",
-    // ScheduleName: "Night Class",
-    // ScheduleStartTime: "21:23",
-    // ScheduleEndTime: "23:43",
-    // ScheduleDate: "2026-08-16",
-    // ScheduleQuota: "20",
-    // ScheduleAvailableQuota: "19",
+    ScheduleName: "Night Class",
+    ScheduleStartTime: "20:23",
+    ScheduleEndTime: "21:43",
+    ScheduleDate: "2026-08-16",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "19",
+  },
+  {
+    id: "5",
+    memberName: "James Medalla",
+    memberId: "SFM2301N1",
+    ClassScheduleId: "CS05",
+    CoachName: "James Boy",
+    CoachId: "COA2301N3",
+    ScheduleName: "Night Class",
+    ScheduleStartTime: "21:23",
+    ScheduleEndTime: "23:43",
+    ScheduleDate: "2026-08-16",
+    ScheduleQuota: "20",
+    ScheduleAvailableQuota: "19",
   },
 ];
 
@@ -109,6 +127,7 @@ const dataMember = [
 const dataSchedule = [
   {
     id: '1',
+    ClassScheduleId: "CS01",
     CoachName: "Bahlil",
     CoachId: "COA2301N1",
     ScheduleName: "Morning Class",
@@ -120,6 +139,7 @@ const dataSchedule = [
   },
   {
     id: '2',
+    ClassScheduleId: "CS02",
     CoachName: "Bahlil",
     CoachId: "COA2301N1",
     ScheduleName: "Afternoon Class",
@@ -131,22 +151,24 @@ const dataSchedule = [
   },
   {
     id: '3',
+    ClassScheduleId: "CS03",
     CoachName: "Medalla Toy",
     CoachId: "COA2301N2",
     ScheduleName: "Evening Class",
     ScheduleStartTime: "05:00",
     ScheduleEndTime: "09:43",
-    ScheduleDate: "2026-08-15",
+    ScheduleDate: "2026-08-16",
     ScheduleQuota: "15",    
     ScheduleAvailableQuota: "9",
   },
   {
     id: '4',
+    ClassScheduleId: "CS04",
     CoachName: "James Boy",
     CoachId: "COA2301N3",
     ScheduleName: "Night Class",
-    ScheduleStartTime: "21:23",
-    ScheduleEndTime: "23:43",
+    ScheduleStartTime: "20:23",
+    ScheduleEndTime: "21:43",
     ScheduleDate: "2026-08-16",
     ScheduleQuota: "20",
     ScheduleAvailableQuota: "19",
@@ -169,9 +191,9 @@ export default function ClassBookingScreen() {
         item.memberName.toLowerCase().includes(keyword) ||
         item.memberId.toString().toLowerCase().includes(keyword) ||
         item.CoachName.toLowerCase().includes(keyword) ||
-        item.CoachId.toString().toLowerCase().includes(keyword) ;
-        // item.ScheduleName.toLowerCase().includes(keyword) ||
-        // item.ScheduleDate.toLowerCase().includes(keyword);
+        item.CoachId.toString().toLowerCase().includes(keyword) ||
+        item.ScheduleName.toLowerCase().includes(keyword) ||
+        item.ScheduleDate.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -192,12 +214,12 @@ export default function ClassBookingScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.memberId}  -  {item.memberName}</Text>
-      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   -   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}</Text>
+      <Text style={[styles.dataTextList, { flex: 2.5 }]}>{item.memberId}  -  {item.memberName}</Text>
+      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   {"\n"}-   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}</Text>
 
       <View
         style={{
-          flex: 0.7,
+          flex: 1,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -236,8 +258,15 @@ export default function ClassBookingScreen() {
     setSelectedDataBooking(null);
     setMemberName("");
     setmemberId("");
+    setClassScheduleId("");
     setCoachName("");
     setCoachId("");
+    setScheduleName("");
+    setScheduleQuota("");
+    setScheduleAvailableQuota("");
+    setScheduleStartTime("");
+    setScheduleEndTime("");
+    setScheduleDate("");
 
     
     setShowModal(true);
@@ -254,15 +283,29 @@ export default function ClassBookingScreen() {
     // Simpan member ID
     setmemberId(item.memberId);
 
-    // Cari data coach berdasarkan coachId
+
+    // Cari data coach berdasarkan class Schedule
     const selectedCoach = dataSchedule.find(
-      (Coach) => Coach.CoachId === item.CoachId
+      (Coach) => Coach.ClassScheduleId === item.ClassScheduleId
     );
     // Simpan object coach
     setCoachName(selectedCoach || null);
     // Simpan coach ID
     setCoachId(item.CoachId);
 
+    setScheduleName(item.ScheduleName);
+    setScheduleQuota(item.ScheduleQuota);
+    setScheduleAvailableQuota(item.ScheduleAvailableQuota);
+
+    setScheduleStartTime(item.ScheduleStartTime);
+    setScheduleEndTime(item.ScheduleEndTime);
+    setScheduleDate(item.ScheduleDate);
+
+    // Tutup dropdown member
+    setShowCoachDropdown(false);
+    setCoachSearch("");
+
+    // Buka modal Edit
     setShowModal(true);
   };
 
@@ -279,9 +322,16 @@ export default function ClassBookingScreen() {
           ? {
               ...item,
               memberName: memberName,
-              memberId: memberId,              
+              memberId: memberId,     
+              ClassScheduleId: ClassScheduleId,         
               CoachName: CoachName,
               CoachId: CoachId,
+              ScheduleName: ScheduleName,
+              ScheduleQuota: ScheduleQuota,
+              ScheduleAvailableQuota: ScheduleAvailableQuota,
+              ScheduleStartTime: ScheduleStartTime,
+              ScheduleEndTime: ScheduleEndTime,
+              ScheduleDate: ScheduleDate,
             }
           : item,
       );
@@ -294,9 +344,16 @@ export default function ClassBookingScreen() {
       const newActiveMembers: dataBooking = {
         id: Date.now().toString(),
         memberName: memberName,
-        memberId: memberId,   
+        memberId: memberId,
+        ClassScheduleId: ClassScheduleId,
         CoachName: CoachName,
         CoachId: CoachId,
+        ScheduleName: ScheduleName,
+        ScheduleQuota: ScheduleQuota,
+        ScheduleAvailableQuota: ScheduleAvailableQuota,
+        ScheduleStartTime: ScheduleStartTime,
+        ScheduleEndTime: ScheduleEndTime,
+        ScheduleDate: ScheduleDate,
       };
 
       setBookingData([...BookingData, newActiveMembers]);
@@ -325,6 +382,12 @@ export default function ClassBookingScreen() {
     setmemberId("");
     setCoachName("");
     setCoachId("");
+    setScheduleName("");
+    setScheduleQuota("");
+    setScheduleAvailableQuota("");
+    setScheduleStartTime("");
+    setScheduleEndTime("");
+    setScheduleDate("");
 
     setShowModal(false);
   };
@@ -344,19 +407,38 @@ export default function ClassBookingScreen() {
   });
 
 
+  const [ClassScheduleId, setClassScheduleId] = useState("");
   const [CoachName, setCoachName] = useState<any>(null);
   const [showCoachDropdown, setShowCoachDropdown] = useState(false);
   const [CoachSearch, setCoachSearch] = useState("");
   const [CoachId, setCoachId] = useState("");
+  
+  const [ScheduleName, setScheduleName] = useState(""); 
+  const [ScheduleQuota, setScheduleQuota] = useState(""); 
+  const [ScheduleAvailableQuota, setScheduleAvailableQuota] = useState(""); 
+
+  const [ScheduleStartTime, setScheduleStartTime] = useState(""); 
+  const [ScheduleEndTime, setScheduleEndTime] = useState(""); 
+  const [ScheduleDate, setScheduleDate] = useState(""); 
 
   const filteredCoach = dataSchedule.filter((item) => {
     const search = CoachSearch.toLowerCase();
 
     return (
       item.CoachName.toLowerCase().includes(search) ||
-      item.CoachId.toLowerCase().includes(search)
+      item.CoachId.toLowerCase().includes(search) ||
+      item.ScheduleName.toLowerCase().includes(search) ||
+      item.ScheduleDate.toLowerCase().includes(search)
     );
   });
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
 
 
   return (
@@ -520,8 +602,8 @@ export default function ClassBookingScreen() {
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>Member Name</Text>
-                <Text style={[styles.headerTextList, { flex: 3.5 }]}>Schedule</Text>
+                <Text style={[styles.headerTextList, { flex: 2.5 }]}>Member Name</Text>
+                <Text style={[styles.headerTextList, { flex: 4 }]}>Schedule</Text>
                 
                 <Text
                   style={[
@@ -701,7 +783,7 @@ export default function ClassBookingScreen() {
                   >
                     <Text style={styles.memberSelectText}>
                       {CoachName
-                        ? `${CoachName.CoachId}  -  ${CoachName.CoachName}`
+                        ? `${CoachName.CoachId}  -  ${CoachName.CoachName}  -  ${CoachName.ScheduleName}  -  ${CoachName.ScheduleDate}  -  ${CoachName.ScheduleStartTime}-${CoachName.ScheduleEndTime}  -  ${CoachName.ScheduleAvailableQuota}/${CoachName.ScheduleQuota}`
                         : "--Select Schedule--"}
                     </Text>
 
@@ -1103,6 +1185,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 15,
     alignItems: "center",
+    gap: 10,
   },
   dataTextList: {
     color: "#fff",
