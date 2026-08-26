@@ -7,6 +7,8 @@ import {
   modifyUser,
   removeUser,
   findUsers,
+  fetchMembers,
+  fetchCoaches
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -18,5 +20,7 @@ router.get("/users/:id_user", fetchUserById);
 // router.put("/users/:id", modifyUser);
 router.delete("/users/:id", removeUser);
 router.get("/users/email/:email", fetchUserByEmail);
+router.get("/members", fetchMembers);
+router.get("/coaches", fetchCoaches);
 
 export default router;

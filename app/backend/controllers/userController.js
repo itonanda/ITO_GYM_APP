@@ -5,7 +5,9 @@ import {
   getUserByEmail,
   updateUser,
   deleteUser,
-  searchUsers
+  searchUsers,
+  getMembers,
+  getCoaches
 } from "../services/userService.js";
 
 export const addUser = async (req, res) => {
@@ -85,6 +87,24 @@ export const findUsers = async (req, res) => {
       return res.status(400).json({ error: "Search query is required" });
     }
     const users = await searchUsers(query);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const fetchMembers = async (req, res) => {
+  try {
+    const users = await getMembers();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const fetchCoaches = async (req, res) => {
+  try {
+    const users = await getCoaches();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });

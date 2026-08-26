@@ -79,3 +79,37 @@ export const searchUsers = async (query) => {
   if (error) throw new Error(error.message);
   return data;
 };
+
+export const getMembers = async () => {
+  const { data, error } = await supabaseServiceRole
+  .from("profiles")
+  .select("*")
+  // .select('id, email, user_metadata')
+  // .eq('user_metadata->>role', 'member');
+  .eq('role', 'member');
+
+  if (error) throw new Error(error.message);
+  return data;
+  
+  // // Fetch all users using the Admin API
+  // const { data: { users }, error } = await supabaseServiceRole.auth.admin.listUsers()
+  
+  // if (error) throw error
+
+  // // Filter the list by metadata role
+  // const members = users.filter(user => user.user_metadata?.role === 'member')
+  
+  // return members
+};
+
+export const getCoaches = async () => {
+  // const { data, error } = await supabaseServiceRole.from("users").select("*").eq("user.user_metadata.role", coach);
+
+   const { data, error } = await supabaseServiceRole
+  .from("profiles")
+  .select("*")
+  .eq('role', 'coach');
+
+  if (error) throw new Error(error.message);
+  return data;
+};
