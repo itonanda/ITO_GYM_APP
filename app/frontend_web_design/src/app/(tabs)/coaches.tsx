@@ -176,6 +176,7 @@ export default function CoachesScreen() {
   const [dialCodePhone, setDialCodePhone] = useState("62");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
   const [emergencyContactNo, setEmergencyContactNo] = useState("");
   const [emergencyContactName, setEmergencyContactName] = useState("");
@@ -880,11 +881,31 @@ export default function CoachesScreen() {
                     >
                       <Text style={styles.labelModal}>Password</Text>
 
-                      <TextInput
-                        value={password}
-                        onChangeText={setPassword}
-                        style={styles.inputModal}
-                      />
+                      <View style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        backgroundColor: "#D9D9DD",
+                        borderRadius: 10,}}
+                      >
+                        <TextInput
+                          value={password}
+                          onChangeText={setPassword}
+                          style={{flex: 1, height: 50, fontSize: 15, paddingHorizontal: 12}}
+                          secureTextEntry={!showPassword}
+                          placeholder="Password"
+                        />
+
+                        <TouchableOpacity
+                          onPress={() => setShowPassword(!showPassword)}
+                          style={{paddingHorizontal: 12, justifyContent: "center", alignItems: "center"}}
+                        >
+                          <Ionicons
+                            name={showPassword ? "eye-off-outline" : "eye-outline"}
+                            size={22}
+                            color="#000"
+                          />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
             

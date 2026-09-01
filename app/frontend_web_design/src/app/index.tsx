@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 export default function LoginScreen() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
 
   return (
@@ -42,12 +44,33 @@ export default function LoginScreen() {
 
         <Text style={[styles.label, { marginTop: 18 }]}>Password</Text>
 
-        <TextInput
+        {/* <TextInput
           secureTextEntry
           value={password}
           onChangeText={setPassword}
           style={styles.input}
-        />
+        /> */}
+
+        <View style={[styles.input, {flexDirection: "row", alignItems: "center"}]}>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            style={{flex: 1, height: 58 }}
+            secureTextEntry={!showPassword}
+            placeholder="Password"
+          />
+
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={{paddingHorizontal: 12, justifyContent: "center", alignItems: "center"}}
+          >
+            <Ionicons
+              name={showPassword ? "eye-off-outline" : "eye-outline"}
+              size={22}
+              color="#000"
+            />
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.row}>
           <TouchableOpacity

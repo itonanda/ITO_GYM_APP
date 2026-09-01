@@ -31876,3 +31876,1347 @@
 {"_e":"metro:client_log","_t":1787711634104,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
 {"_e":"metro:client_log","_t":1787711634541,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
 {"_e":"metro:client_log","_t":1787711634602,"level":"warn","data":["Image: style.tintColor is deprecated. Please use props.tintColor."]}
+{"_e":"root:init","_t":1787718691093,"format":"v0-jsonl","version":"56.1.13"}
+{"_e":"env:mode","_t":1787718691099,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1787718691108,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1787718693006,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1787718694858,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1787718717574,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1787718722410,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787718722411,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787718722413,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787718722413,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718722413,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718722419,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718722419,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718722521,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718722521,"id":"3","progress":0.060701533291325355,"total":69,"current":17}
+{"_e":"metro:bundling:progress","_t":1787718722621,"id":"2","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1787718722621,"id":"3","progress":0.060701533291325355,"total":69,"current":17}
+{"_e":"metro:bundling:progress","_t":1787718722721,"id":"2","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1787718722721,"id":"3","progress":0.1923668821175746,"total":171,"current":75}
+{"_e":"metro:bundling:progress","_t":1787718722821,"id":"2","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1787718722821,"id":"3","progress":0.3054016620498616,"total":190,"current":105}
+{"_e":"metro:bundling:progress","_t":1787718722924,"id":"2","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1787718722924,"id":"3","progress":0.3054016620498616,"total":263,"current":118}
+{"_e":"metro:bundling:progress","_t":1787718723048,"id":"2","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1787718723048,"id":"3","progress":0.3054016620498616,"total":287,"current":127}
+{"_e":"metro:bundling:progress","_t":1787718723147,"id":"2","progress":0.08650519031141869,"total":143,"current":25}
+{"_e":"metro:bundling:progress","_t":1787718723147,"id":"3","progress":0.3054016620498616,"total":287,"current":127}
+{"_e":"metro:bundling:progress","_t":1787718723247,"id":"2","progress":0.09765625,"total":160,"current":50}
+{"_e":"metro:bundling:progress","_t":1787718723247,"id":"3","progress":0.3054016620498616,"total":287,"current":127}
+{"_e":"metro:bundling:progress","_t":1787718723347,"id":"2","progress":0.09765625,"total":200,"current":56}
+{"_e":"metro:bundling:progress","_t":1787718723347,"id":"3","progress":0.3054016620498616,"total":287,"current":127}
+{"_e":"metro:bundling:progress","_t":1787718723447,"id":"2","progress":0.09765625,"total":200,"current":56}
+{"_e":"metro:bundling:progress","_t":1787718723447,"id":"3","progress":0.3054016620498616,"total":418,"current":194}
+{"_e":"metro:bundling:progress","_t":1787718723547,"id":"2","progress":0.09765625,"total":200,"current":56}
+{"_e":"metro:bundling:progress","_t":1787718723547,"id":"3","progress":0.3054016620498616,"total":451,"current":212}
+{"_e":"metro:bundling:progress","_t":1787718723647,"id":"2","progress":0.09765625,"total":200,"current":56}
+{"_e":"metro:bundling:progress","_t":1787718723647,"id":"3","progress":0.3054016620498616,"total":509,"current":254}
+{"_e":"metro:bundling:progress","_t":1787718723748,"id":"2","progress":0.09765625,"total":200,"current":56}
+{"_e":"metro:bundling:progress","_t":1787718723748,"id":"3","progress":0.3054016620498616,"total":549,"current":268}
+{"_e":"metro:bundling:progress","_t":1787718723851,"id":"2","progress":0.20835249664078492,"total":333,"current":152}
+{"_e":"metro:bundling:progress","_t":1787718723851,"id":"3","progress":0.3054016620498616,"total":549,"current":268}
+{"_e":"metro:bundling:progress","_t":1787718723951,"id":"2","progress":0.26012922718204284,"total":349,"current":178}
+{"_e":"metro:bundling:progress","_t":1787718723952,"id":"3","progress":0.3054016620498616,"total":549,"current":268}
+{"_e":"metro:bundling:progress","_t":1787718724051,"id":"2","progress":0.26012922718204284,"total":349,"current":178}
+{"_e":"metro:bundling:progress","_t":1787718724051,"id":"3","progress":0.3054016620498616,"total":596,"current":316}
+{"_e":"metro:bundling:progress","_t":1787718724157,"id":"2","progress":0.2793502823119408,"total":403,"current":213}
+{"_e":"metro:bundling:progress","_t":1787718724157,"id":"3","progress":0.3054016620498616,"total":596,"current":316}
+{"_e":"metro:bundling:progress","_t":1787718724258,"id":"2","progress":0.2793502823119408,"total":403,"current":213}
+{"_e":"metro:bundling:progress","_t":1787718724258,"id":"3","progress":0.3327668875076839,"total":605,"current":349}
+{"_e":"metro:bundling:progress","_t":1787718724358,"id":"2","progress":0.28574674466256855,"total":492,"current":263}
+{"_e":"metro:bundling:progress","_t":1787718724358,"id":"3","progress":0.3327668875076839,"total":605,"current":349}
+{"_e":"metro:bundling:progress","_t":1787718724458,"id":"2","progress":0.28574674466256855,"total":534,"current":282}
+{"_e":"metro:bundling:progress","_t":1787718724459,"id":"3","progress":0.3327668875076839,"total":605,"current":349}
+{"_e":"metro:bundling:progress","_t":1787718724601,"id":"2","progress":0.35491172476233585,"total":611,"current":364}
+{"_e":"metro:bundling:progress","_t":1787718724601,"id":"3","progress":0.3327668875076839,"total":605,"current":349}
+{"_e":"metro:bundling:progress","_t":1787718724701,"id":"2","progress":0.35491172476233585,"total":611,"current":364}
+{"_e":"metro:bundling:progress","_t":1787718724701,"id":"3","progress":0.45889698231009357,"total":744,"current":504}
+{"_e":"metro:bundling:progress","_t":1787718724801,"id":"2","progress":0.35491172476233585,"total":611,"current":364}
+{"_e":"metro:bundling:progress","_t":1787718724801,"id":"3","progress":0.4815730700657957,"total":794,"current":551}
+{"_e":"metro:bundling:progress","_t":1787718724901,"id":"2","progress":0.36035406931718306,"total":678,"current":407}
+{"_e":"metro:bundling:progress","_t":1787718724901,"id":"3","progress":0.4815730700657957,"total":794,"current":551}
+{"_e":"metro:bundling:progress","_t":1787718725004,"id":"2","progress":0.36035406931718306,"total":678,"current":407}
+{"_e":"metro:bundling:progress","_t":1787718725004,"id":"3","progress":0.5135829073791937,"total":847,"current":607}
+{"_e":"metro:bundling:progress","_t":1787718725103,"id":"2","progress":0.45135687363618326,"total":710,"current":477}
+{"_e":"metro:bundling:progress","_t":1787718725103,"id":"3","progress":0.5135829073791937,"total":847,"current":607}
+{"_e":"metro:bundling:progress","_t":1787718725203,"id":"2","progress":0.47914679442710145,"total":744,"current":515}
+{"_e":"metro:bundling:progress","_t":1787718725203,"id":"3","progress":0.5135829073791937,"total":847,"current":607}
+{"_e":"metro:bundling:progress","_t":1787718725307,"id":"2","progress":0.47914679442710145,"total":744,"current":515}
+{"_e":"metro:bundling:progress","_t":1787718725307,"id":"3","progress":0.5625,"total":852,"current":639}
+{"_e":"metro:bundling:progress","_t":1787718725407,"id":"2","progress":0.48629957271141405,"total":793,"current":553}
+{"_e":"metro:bundling:progress","_t":1787718725407,"id":"3","progress":0.5625,"total":852,"current":639}
+{"_e":"metro:bundling:progress","_t":1787718725512,"id":"2","progress":0.48629957271141405,"total":793,"current":553}
+{"_e":"metro:bundling:progress","_t":1787718725512,"id":"3","progress":0.5702123400932587,"total":927,"current":700}
+{"_e":"metro:bundling:progress","_t":1787718725612,"id":"2","progress":0.5722018987654185,"total":854,"current":646}
+{"_e":"metro:bundling:progress","_t":1787718725612,"id":"3","progress":0.5702123400932587,"total":927,"current":700}
+{"_e":"metro:bundling:progress","_t":1787718725715,"id":"2","progress":0.5722018987654185,"total":854,"current":646}
+{"_e":"metro:bundling:progress","_t":1787718725715,"id":"3","progress":0.5702123400932587,"total":991,"current":707}
+{"_e":"metro:bundling:progress","_t":1787718725815,"id":"2","progress":0.5783593867767126,"total":881,"current":670}
+{"_e":"metro:bundling:progress","_t":1787718725815,"id":"3","progress":0.5702123400932587,"total":991,"current":707}
+{"_e":"metro:bundling:progress","_t":1787718725916,"id":"2","progress":0.5859928390671213,"total":887,"current":679}
+{"_e":"metro:bundling:progress","_t":1787718725916,"id":"3","progress":0.5702123400932587,"total":991,"current":707}
+{"_e":"metro:bundling:progress","_t":1787718726018,"id":"2","progress":0.5859928390671213,"total":887,"current":679}
+{"_e":"metro:bundling:progress","_t":1787718726018,"id":"3","progress":0.5822652382111841,"total":1110,"current":847}
+{"_e":"metro:bundling:progress","_t":1787718726125,"id":"2","progress":0.6229319553383449,"total":987,"current":779}
+{"_e":"metro:bundling:progress","_t":1787718726125,"id":"3","progress":0.5822652382111841,"total":1110,"current":847}
+{"_e":"metro:bundling:progress","_t":1787718726226,"id":"2","progress":0.6229319553383449,"total":987,"current":779}
+{"_e":"metro:bundling:progress","_t":1787718726226,"id":"3","progress":0.6071676350066721,"total":1164,"current":907}
+{"_e":"metro:bundling:progress","_t":1787718726359,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726359,"id":"3","progress":0.6071676350066721,"total":1164,"current":907}
+{"_e":"metro:bundling:progress","_t":1787718726459,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726459,"id":"3","progress":0.6299885276475048,"total":1178,"current":935}
+{"_e":"metro:bundling:progress","_t":1787718726559,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726559,"id":"3","progress":0.6397375166643,"total":1219,"current":975}
+{"_e":"metro:bundling:progress","_t":1787718726660,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726660,"id":"3","progress":0.6833607944900416,"total":1298,"current":1073}
+{"_e":"metro:bundling:progress","_t":1787718726770,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726770,"id":"3","progress":0.7089382903094225,"total":1310,"current":1103}
+{"_e":"metro:bundling:progress","_t":1787718726869,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726869,"id":"3","progress":0.7345076551634402,"total":1315,"current":1127}
+{"_e":"metro:bundling:progress","_t":1787718726969,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718726969,"id":"3","progress":0.7874563752942132,"total":1332,"current":1182}
+{"_e":"metro:bundling:progress","_t":1787718727069,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718727069,"id":"3","progress":0.8133244373034136,"total":1355,"current":1222}
+{"_e":"metro:bundling:progress","_t":1787718727169,"id":"2","progress":0.6326391410942959,"total":997,"current":793}
+{"_e":"metro:bundling:progress","_t":1787718727169,"id":"3","progress":0.8328652571240703,"total":1419,"current":1295}
+{"_e":"metro:bundling:progress","_t":1787718727269,"id":"2","progress":0.8461592975732903,"total":1223,"current":1125}
+{"_e":"metro:bundling:progress","_t":1787718727269,"id":"3","progress":0.8328652571240703,"total":1419,"current":1295}
+{"_e":"metro:bundling:progress","_t":1787718727370,"id":"2","progress":0.8461592975732903,"total":1223,"current":1125}
+{"_e":"metro:bundling:progress","_t":1787718727370,"id":"3","progress":0.8519734060769241,"total":1455,"current":1343}
+{"_e":"metro:bundling:progress","_t":1787718727469,"id":"2","progress":0.9426700140421661,"total":1272,"current":1235}
+{"_e":"metro:bundling:progress","_t":1787718727469,"id":"3","progress":0.8519734060769241,"total":1455,"current":1343}
+{"_e":"metro:bundling:progress","_t":1787718727569,"id":"2","progress":0.9426700140421661,"total":1272,"current":1235}
+{"_e":"metro:bundling:progress","_t":1787718727569,"id":"3","progress":0.9659710921587207,"total":1515,"current":1489}
+{"_e":"metro:bundling:progress","_t":1787718727669,"id":"2","progress":0.9907834592962786,"total":1299,"current":1293}
+{"_e":"metro:bundling:progress","_t":1787718727669,"id":"3","progress":0.9659710921587207,"total":1515,"current":1489}
+{"_e":"metro:bundling:progress","_t":1787718727770,"id":"2","progress":0.9907834592962786,"total":1305,"current":1295}
+{"_e":"metro:bundling:progress","_t":1787718727770,"id":"3","progress":0.9659710921587207,"total":1515,"current":1489}
+{"_e":"metro:bundling:progress","_t":1787718727875,"id":"2","progress":0.9907834592962786,"total":1305,"current":1295}
+{"_e":"metro:bundling:progress","_t":1787718727875,"id":"3","progress":0.999,"total":1544,"current":1544}
+{"_e":"metro:bundling:done","_t":1787718727971,"id":"3","total":1544,"ms":5557.5299}
+{"_e":"metro:bundling:progress","_t":1787718727971,"id":"2","progress":0.9907834592962786,"total":1305,"current":1295}
+{"_e":"metro:bundling:progress","_t":1787718728088,"id":"2","progress":0.9984761906975015,"total":1312,"current":1311}
+{"_e":"metro:bundling:progress","_t":1787718728841,"id":"2","progress":0.999,"total":1312,"current":1312}
+{"_e":"metro:bundling:done","_t":1787718728987,"id":"2","total":1312,"ms":6577.3842}
+{"_e":"metro:bundling:started","_t":1787718729018,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787718729018,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718729021,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787718729122,"id":"4","progress":0.16747813395200908,"total":303,"current":124}
+{"_e":"metro:bundling:progress","_t":1787718729221,"id":"4","progress":0.34154157530780904,"total":539,"current":315}
+{"_e":"metro:bundling:progress","_t":1787718729321,"id":"4","progress":0.5504682622268471,"total":806,"current":598}
+{"_e":"metro:bundling:progress","_t":1787718729421,"id":"4","progress":0.768420099592576,"total":940,"current":824}
+{"_e":"metro:bundling:progress","_t":1787718729521,"id":"4","progress":0.8143581781464678,"total":1158,"current":1045}
+{"_e":"metro:bundling:done","_t":1787718729681,"id":"4","total":1158,"ms":663.1678}
+{"_e":"metro:client_log","_t":1787718730022,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787718730023,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787718730152,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787718730153,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787718731152,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787718731206,"level":"warn","data":["Image: style.tintColor is deprecated. Please use props.tintColor."]}
+{"_e":"metro:bundling:started","_t":1787727532822,"id":"o","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787727532823,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787727532823,"id":"p","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787727532823,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727532823,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727532825,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727532825,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533024,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533024,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533263,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533263,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533363,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533363,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533468,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533468,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533568,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533568,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533668,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533668,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533768,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533768,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533868,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533868,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533970,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727533970,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534070,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534070,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534170,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534170,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534270,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534270,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534370,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534370,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534470,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534470,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534583,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534583,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534683,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534683,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534783,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534783,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534886,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534886,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534991,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727534991,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727535202,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727535202,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727535303,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727535303,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787727535339,"id":"p","total":1,"ms":2515.6624}
+{"_e":"metro:bundling:progress","_t":1787727535339,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536128,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536228,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536328,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536428,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536528,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536628,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536729,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536833,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727536999,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787727537064,"id":"o","total":1,"ms":4241.2613}
+{"_e":"metro:bundling:started","_t":1787727537093,"id":"q","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787727537094,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787727537100,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787727537182,"id":"q","total":1,"ms":88.1943}
+{"_e":"metro:client_log","_t":1787727537480,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787727537480,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787727537617,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787727537620,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787727537635,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787728098112,"id":"z","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728098112,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787728098112,"id":"10","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787728098112,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098112,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098114,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098114,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098333,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098333,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098544,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098544,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098648,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098648,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098748,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098748,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098848,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098848,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098950,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728098950,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099050,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099050,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099150,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099150,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099252,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099252,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099353,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099353,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099453,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099453,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099554,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099554,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099656,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099656,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099762,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099762,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099862,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099862,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099963,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728099963,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100063,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100063,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100163,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100163,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100276,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100276,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100678,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100678,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728100812,"id":"z","total":1,"ms":2700.1352}
+{"_e":"metro:bundling:progress","_t":1787728100812,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728100848,"id":"10","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728100880,"id":"10","total":1,"ms":2767.7681}
+{"_e":"metro:bundling:started","_t":1787728101649,"id":"11","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728101649,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728101650,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728102095,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728102203,"id":"11","total":1,"ms":553.8641}
+{"_e":"metro:client_log","_t":1787728102531,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787728102531,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787728102658,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787728102659,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787728102672,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787728324695,"id":"19","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728324695,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787728324695,"id":"1a","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787728324695,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728324695,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728324696,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728324696,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728324802,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728324803,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728325093,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728325093,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728325211,"id":"19","total":1,"ms":515.6855}
+{"_e":"metro:bundling:progress","_t":1787728325211,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728325244,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728325302,"id":"1a","total":1,"ms":606.6968}
+{"_e":"metro:bundling:started","_t":1787728326007,"id":"1b","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728326008,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728326088,"id":"1b","total":1,"ms":80.6982}
+{"_e":"metro:client_log","_t":1787728326378,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787728326378,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787728326509,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787728326509,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787728326509,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787728594919,"id":"1k","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728594920,"id":"1k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787728594920,"id":"1l","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787728594920,"id":"1k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728594920,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728594920,"id":"1k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728594920,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728595025,"id":"1k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728595025,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728595354,"id":"1k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728595354,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728595465,"id":"1k","total":1,"ms":545.524}
+{"_e":"metro:bundling:progress","_t":1787728595465,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787728595555,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728595586,"id":"1l","total":1,"ms":665.9633}
+{"_e":"metro:bundling:started","_t":1787728596299,"id":"1m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787728596299,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787728596382,"id":"1m","total":1,"ms":83.4307}
+{"_e":"metro:client_log","_t":1787728596739,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787728596739,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787728596870,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787728596871,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787728596880,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787729371919,"id":"1v","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787729371920,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787729371920,"id":"1w","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787729371920,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729371920,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729371921,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729371921,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729372026,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729372026,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729372328,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729372328,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787729372445,"id":"1v","total":1,"ms":525.4115}
+{"_e":"metro:bundling:progress","_t":1787729372445,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787729372506,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787729372540,"id":"1w","total":1,"ms":620.5994}
+{"_e":"metro:bundling:started","_t":1787729373513,"id":"1x","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787729373513,"id":"1x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787729373593,"id":"1x","total":1,"ms":80.2333}
+{"_e":"metro:client_log","_t":1787729373890,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787729373890,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787729374009,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787729374011,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787729374018,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787731777707,"id":"2k","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787731777707,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787731777707,"id":"2l","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787731777707,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777708,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777708,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777708,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777811,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777811,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777946,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731777946,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778089,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778089,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778152,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778152,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778253,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778253,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778353,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778353,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778454,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778454,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778554,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778554,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778655,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778655,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778755,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778755,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778855,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778855,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778955,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731778955,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779061,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779061,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779207,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779207,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779457,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779457,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731779486,"id":"2k","total":1,"ms":1778.429}
+{"_e":"metro:bundling:progress","_t":1787731779486,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731779561,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731779598,"id":"2l","total":1,"ms":1890.279}
+{"_e":"metro:bundling:started","_t":1787731780312,"id":"2m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787731780312,"id":"2m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731780326,"id":"2m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731780421,"id":"2m","total":1,"ms":108.6935}
+{"_e":"metro:client_log","_t":1787731780739,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787731780739,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787731780867,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787731780868,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787731780876,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787731893943,"id":"2v","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787731893943,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787731893943,"id":"2w","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787731893943,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731893943,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731893945,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731893945,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894125,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894125,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894271,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894271,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894371,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894371,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894472,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894472,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894572,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894572,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894675,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894675,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894774,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894774,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894874,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894875,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894974,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731894974,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895074,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895074,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895174,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895174,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895274,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895274,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895374,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895374,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895474,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895474,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895574,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895574,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895674,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895674,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895774,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895774,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895890,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895890,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731895999,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731896000,"id":"2w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731896071,"id":"2w","total":1,"ms":2127.7477}
+{"_e":"metro:bundling:progress","_t":1787731896071,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731896175,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897018,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731897129,"id":"2v","total":1,"ms":3186.7074}
+{"_e":"metro:bundling:started","_t":1787731897156,"id":"2x","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787731897156,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897159,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897260,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897323,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897423,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897523,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897624,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787731897737,"id":"2x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787731897832,"id":"2x","total":1,"ms":675.3524}
+{"_e":"metro:client_log","_t":1787731898163,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787731898163,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787731898298,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787731898298,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787731898322,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787731898462,"level":"warn","data":["Cannot record touch end without a touch start.\n","Touch End: {\"identifier\":0,\"pageX\":500,\"pageY\":100,\"timestamp\":4546.300000000745}\n","Touch Bank: []"]}
+{"_e":"metro:bundling:started","_t":1787734652952,"id":"3a","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787734652953,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787734652953,"id":"3b","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787734652953,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734652953,"id":"3b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734652953,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734652954,"id":"3b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653057,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653057,"id":"3b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653289,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653289,"id":"3b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653491,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734653491,"id":"3b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787734653515,"id":"3b","total":1,"ms":562.2343}
+{"_e":"metro:bundling:progress","_t":1787734653515,"id":"3a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787734654250,"id":"3a","total":1,"ms":1297.6793}
+{"_e":"metro:bundling:started","_t":1787734654276,"id":"3c","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787734654276,"id":"3c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787734654277,"id":"3c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787734654348,"id":"3c","total":1,"ms":71.5142}
+{"_e":"metro:client_log","_t":1787734654639,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787734654639,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787734654766,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787734654766,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787734654773,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1787735146373,"id":"3l","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787735146373,"id":"3l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1787735146373,"id":"3m","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1787735146373,"id":"3l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146373,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146375,"id":"3l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146375,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146477,"id":"3l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146477,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146694,"id":"3l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146694,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787735146815,"id":"3l","total":1,"ms":441.4169}
+{"_e":"metro:bundling:progress","_t":1787735146815,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735146843,"id":"3m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787735146881,"id":"3m","total":1,"ms":507.6639}
+{"_e":"metro:bundling:started","_t":1787735147631,"id":"3n","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1787735147631,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735147632,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1787735147986,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787735148051,"id":"3n","total":1,"ms":420.6907}
+{"_e":"metro:client_log","_t":1787735148342,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1787735148342,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1787735148471,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1787735148471,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1787735148487,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"root:init","_t":1788230847737,"format":"v0-jsonl","version":"56.1.13"}
+{"_e":"env:mode","_t":1788230847746,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1788230847768,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1788230851340,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\src\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1788230854817,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":true,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1788230885774,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1788230889515,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788230889515,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788230889517,"id":"3","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788230889517,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889517,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889562,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889562,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889662,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889663,"id":"3","progress":0.010000000000000002,"total":2,"current":1}
+{"_e":"metro:bundling:progress","_t":1788230889818,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230889818,"id":"3","progress":0.017777777777777778,"total":15,"current":2}
+{"_e":"metro:bundling:progress","_t":1788230889936,"id":"2","progress":0.09,"total":5,"current":3}
+{"_e":"metro:bundling:progress","_t":1788230889936,"id":"3","progress":0.017777777777777778,"total":15,"current":2}
+{"_e":"metro:bundling:progress","_t":1788230890040,"id":"2","progress":0.09,"total":5,"current":3}
+{"_e":"metro:bundling:progress","_t":1788230890040,"id":"3","progress":0.1162190082644628,"total":44,"current":15}
+{"_e":"metro:bundling:progress","_t":1788230890095,"id":"2","progress":0.09,"total":20,"current":6}
+{"_e":"metro:bundling:progress","_t":1788230890095,"id":"3","progress":0.1162190082644628,"total":44,"current":15}
+{"_e":"metro:bundling:progress","_t":1788230890203,"id":"2","progress":0.09,"total":20,"current":6}
+{"_e":"metro:bundling:progress","_t":1788230890203,"id":"3","progress":0.1162190082644628,"total":137,"current":34}
+{"_e":"metro:bundling:progress","_t":1788230890838,"id":"2","progress":0.09,"total":20,"current":6}
+{"_e":"metro:bundling:progress","_t":1788230890838,"id":"3","progress":0.1162190082644628,"total":137,"current":35}
+{"_e":"metro:bundling:progress","_t":1788230890938,"id":"2","progress":0.09,"total":156,"current":43}
+{"_e":"metro:bundling:progress","_t":1788230890938,"id":"3","progress":0.1162190082644628,"total":137,"current":35}
+{"_e":"metro:bundling:progress","_t":1788230891039,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891039,"id":"3","progress":0.1162190082644628,"total":137,"current":35}
+{"_e":"metro:bundling:progress","_t":1788230891140,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891140,"id":"3","progress":0.1162190082644628,"total":282,"current":82}
+{"_e":"metro:bundling:progress","_t":1788230891245,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891245,"id":"3","progress":0.18684703433922997,"total":310,"current":134}
+{"_e":"metro:bundling:progress","_t":1788230891498,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891498,"id":"3","progress":0.1896462018730489,"total":310,"current":135}
+{"_e":"metro:bundling:progress","_t":1788230891601,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891601,"id":"3","progress":0.1896462018730489,"total":311,"current":135}
+{"_e":"metro:bundling:progress","_t":1788230891823,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891823,"id":"3","progress":0.19123044633533567,"total":311,"current":136}
+{"_e":"metro:bundling:progress","_t":1788230891925,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230891925,"id":"3","progress":0.2068691103541309,"total":321,"current":146}
+{"_e":"metro:bundling:progress","_t":1788230892208,"id":"2","progress":0.19898596693579396,"total":204,"current":91}
+{"_e":"metro:bundling:progress","_t":1788230892208,"id":"3","progress":0.20971263865839812,"total":321,"current":147}
+{"_e":"metro:bundling:progress","_t":1788230892309,"id":"2","progress":0.337473687727622,"total":346,"current":201}
+{"_e":"metro:bundling:progress","_t":1788230892309,"id":"3","progress":0.20971263865839812,"total":321,"current":147}
+{"_e":"metro:bundling:progress","_t":1788230892409,"id":"2","progress":0.337473687727622,"total":346,"current":201}
+{"_e":"metro:bundling:progress","_t":1788230892409,"id":"3","progress":0.2795882606312162,"total":452,"current":239}
+{"_e":"metro:bundling:progress","_t":1788230892510,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230892510,"id":"3","progress":0.2795882606312162,"total":452,"current":239}
+{"_e":"metro:bundling:progress","_t":1788230892624,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230892624,"id":"3","progress":0.3147434812757755,"total":549,"current":308}
+{"_e":"metro:bundling:progress","_t":1788230892976,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230892976,"id":"3","progress":0.3167905879542536,"total":549,"current":309}
+{"_e":"metro:bundling:progress","_t":1788230893077,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230893077,"id":"3","progress":0.32653061224489793,"total":553,"current":316}
+{"_e":"metro:bundling:progress","_t":1788230893186,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230893186,"id":"3","progress":0.3286005317044299,"total":553,"current":317}
+{"_e":"metro:bundling:progress","_t":1788230893286,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230893286,"id":"3","progress":0.35958054183578664,"total":572,"current":343}
+{"_e":"metro:bundling:progress","_t":1788230893386,"id":"2","progress":0.34530768413221385,"total":388,"current":228}
+{"_e":"metro:bundling:progress","_t":1788230893386,"id":"3","progress":0.42441392733564015,"total":680,"current":443}
+{"_e":"metro:bundling:progress","_t":1788230893486,"id":"2","progress":0.4317092363967589,"total":589,"current":387}
+{"_e":"metro:bundling:progress","_t":1788230893486,"id":"3","progress":0.42441392733564015,"total":680,"current":443}
+{"_e":"metro:bundling:progress","_t":1788230893586,"id":"2","progress":0.4317092363967589,"total":589,"current":387}
+{"_e":"metro:bundling:progress","_t":1788230893586,"id":"3","progress":0.44669764460823586,"total":790,"current":528}
+{"_e":"metro:bundling:progress","_t":1788230893691,"id":"2","progress":0.4317092363967589,"total":589,"current":387}
+{"_e":"metro:bundling:progress","_t":1788230893691,"id":"3","progress":0.44669764460823586,"total":835,"current":551}
+{"_e":"metro:bundling:progress","_t":1788230893988,"id":"2","progress":0.519536889709658,"total":659,"current":475}
+{"_e":"metro:bundling:progress","_t":1788230893988,"id":"3","progress":0.44669764460823586,"total":835,"current":551}
+{"_e":"metro:bundling:progress","_t":1788230894088,"id":"2","progress":0.519536889709658,"total":659,"current":475}
+{"_e":"metro:bundling:progress","_t":1788230894088,"id":"3","progress":0.44669764460823586,"total":845,"current":562}
+{"_e":"metro:bundling:progress","_t":1788230894188,"id":"2","progress":0.519536889709658,"total":659,"current":475}
+{"_e":"metro:bundling:progress","_t":1788230894188,"id":"3","progress":0.53497888127082,"total":942,"current":689}
+{"_e":"metro:bundling:progress","_t":1788230894289,"id":"2","progress":0.5566860855324975,"total":772,"current":576}
+{"_e":"metro:bundling:progress","_t":1788230894289,"id":"3","progress":0.53497888127082,"total":942,"current":689}
+{"_e":"metro:bundling:progress","_t":1788230894390,"id":"2","progress":0.6155922503587663,"total":831,"current":652}
+{"_e":"metro:bundling:progress","_t":1788230894390,"id":"3","progress":0.53497888127082,"total":942,"current":689}
+{"_e":"metro:bundling:progress","_t":1788230894490,"id":"2","progress":0.6155922503587663,"total":831,"current":652}
+{"_e":"metro:bundling:progress","_t":1788230894490,"id":"3","progress":0.6499985887324399,"total":996,"current":803}
+{"_e":"metro:bundling:progress","_t":1788230894590,"id":"2","progress":0.6155922503587663,"total":831,"current":652}
+{"_e":"metro:bundling:progress","_t":1788230894590,"id":"3","progress":0.6608527485008743,"total":1021,"current":830}
+{"_e":"metro:bundling:progress","_t":1788230894690,"id":"2","progress":0.6155922503587663,"total":831,"current":652}
+{"_e":"metro:bundling:progress","_t":1788230894690,"id":"3","progress":0.7289764371943503,"total":1026,"current":876}
+{"_e":"metro:bundling:progress","_t":1788230894790,"id":"2","progress":0.7267512993696388,"total":861,"current":734}
+{"_e":"metro:bundling:progress","_t":1788230894790,"id":"3","progress":0.7289764371943503,"total":1026,"current":876}
+{"_e":"metro:bundling:progress","_t":1788230894890,"id":"2","progress":0.7267512993696388,"total":861,"current":734}
+{"_e":"metro:bundling:progress","_t":1788230894890,"id":"3","progress":0.8083027767888927,"total":1060,"current":953}
+{"_e":"metro:bundling:progress","_t":1788230894990,"id":"2","progress":0.7267512993696388,"total":861,"current":734}
+{"_e":"metro:bundling:progress","_t":1788230894990,"id":"3","progress":0.8083027767888927,"total":1187,"current":1010}
+{"_e":"metro:bundling:progress","_t":1788230895098,"id":"2","progress":0.7937190082644627,"total":935,"current":833}
+{"_e":"metro:bundling:progress","_t":1788230895098,"id":"3","progress":0.8083027767888927,"total":1187,"current":1010}
+{"_e":"metro:bundling:progress","_t":1788230895776,"id":"2","progress":0.7956258400297406,"total":935,"current":834}
+{"_e":"metro:bundling:progress","_t":1788230895776,"id":"3","progress":0.8083027767888927,"total":1187,"current":1010}
+{"_e":"metro:bundling:progress","_t":1788230895876,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230895876,"id":"3","progress":0.8083027767888927,"total":1187,"current":1010}
+{"_e":"metro:bundling:progress","_t":1788230895978,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230895978,"id":"3","progress":0.8083027767888927,"total":1235,"current":1098}
+{"_e":"metro:bundling:progress","_t":1788230896078,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230896078,"id":"3","progress":0.8083027767888927,"total":1300,"current":1159}
+{"_e":"metro:bundling:progress","_t":1788230896178,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230896178,"id":"3","progress":0.8197589481373264,"total":1332,"current":1206}
+{"_e":"metro:bundling:progress","_t":1788230896279,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230896279,"id":"3","progress":0.8197589481373264,"total":1359,"current":1223}
+{"_e":"metro:bundling:progress","_t":1788230896379,"id":"2","progress":0.7956258400297406,"total":1026,"current":892}
+{"_e":"metro:bundling:progress","_t":1788230896379,"id":"3","progress":0.8543614514157585,"total":1427,"current":1319}
+{"_e":"metro:bundling:progress","_t":1788230896724,"id":"2","progress":0.8509580363971884,"total":1148,"current":1059}
+{"_e":"metro:bundling:progress","_t":1788230896724,"id":"3","progress":0.8543614514157585,"total":1427,"current":1319}
+{"_e":"metro:bundling:progress","_t":1788230896825,"id":"2","progress":0.8509580363971884,"total":1148,"current":1059}
+{"_e":"metro:bundling:progress","_t":1788230896825,"id":"3","progress":0.884433437435256,"total":1444,"current":1358}
+{"_e":"metro:bundling:progress","_t":1788230896925,"id":"2","progress":0.8735918477484484,"total":1255,"current":1173}
+{"_e":"metro:bundling:progress","_t":1788230896925,"id":"3","progress":0.884433437435256,"total":1444,"current":1358}
+{"_e":"metro:bundling:progress","_t":1788230897033,"id":"2","progress":0.8735918477484484,"total":1255,"current":1173}
+{"_e":"metro:bundling:progress","_t":1788230897033,"id":"3","progress":0.977829185702768,"total":1525,"current":1508}
+{"_e":"metro:bundling:progress","_t":1788230897159,"id":"2","progress":0.999,"total":1307,"current":1307}
+{"_e":"metro:bundling:progress","_t":1788230897159,"id":"3","progress":0.977829185702768,"total":1525,"current":1508}
+{"_e":"metro:bundling:progress","_t":1788230897294,"id":"2","progress":0.999,"total":1307,"current":1307}
+{"_e":"metro:bundling:progress","_t":1788230897294,"id":"3","progress":0.999,"total":1539,"current":1539}
+{"_e":"metro:bundling:done","_t":1788230897351,"id":"3","total":1539,"ms":7833.6328}
+{"_e":"metro:bundling:progress","_t":1788230897351,"id":"2","progress":0.999,"total":1307,"current":1307}
+{"_e":"metro:bundling:done","_t":1788230898610,"id":"2","total":1307,"ms":9094.8692}
+{"_e":"metro:bundling:started","_t":1788230898670,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788230898670,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230898675,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788230898783,"id":"4","progress":0.04000000000000001,"total":5,"current":2}
+{"_e":"metro:bundling:progress","_t":1788230898889,"id":"4","progress":0.13082842915346313,"total":47,"current":17}
+{"_e":"metro:bundling:progress","_t":1788230898991,"id":"4","progress":0.13082842915346313,"total":114,"current":20}
+{"_e":"metro:bundling:progress","_t":1788230899011,"id":"4","progress":0.13082842915346313,"total":114,"current":21}
+{"_e":"metro:bundling:progress","_t":1788230899112,"id":"4","progress":0.13082842915346313,"total":119,"current":23}
+{"_e":"metro:bundling:progress","_t":1788230899285,"id":"4","progress":0.13082842915346313,"total":119,"current":24}
+{"_e":"metro:bundling:progress","_t":1788230899385,"id":"4","progress":0.13082842915346313,"total":238,"current":82}
+{"_e":"metro:bundling:progress","_t":1788230899486,"id":"4","progress":0.1556015852300619,"total":289,"current":114}
+{"_e":"metro:bundling:progress","_t":1788230899588,"id":"4","progress":0.22020087766152427,"total":309,"current":145}
+{"_e":"metro:bundling:progress","_t":1788230899688,"id":"4","progress":0.3111160493827161,"total":450,"current":251}
+{"_e":"metro:bundling:progress","_t":1788230899791,"id":"4","progress":0.32747502422399677,"total":519,"current":297}
+{"_e":"metro:bundling:progress","_t":1788230899890,"id":"4","progress":0.4478857358537442,"total":647,"current":433}
+{"_e":"metro:bundling:progress","_t":1788230899990,"id":"4","progress":0.5024071055010332,"total":704,"current":499}
+{"_e":"metro:bundling:progress","_t":1788230900090,"id":"4","progress":0.5462335626035496,"total":801,"current":592}
+{"_e":"metro:bundling:progress","_t":1788230900194,"id":"4","progress":0.6225755446989081,"total":839,"current":662}
+{"_e":"metro:bundling:progress","_t":1788230900294,"id":"4","progress":0.6901205847193218,"total":898,"current":746}
+{"_e":"metro:bundling:progress","_t":1788230900399,"id":"4","progress":0.7556616121633327,"total":941,"current":818}
+{"_e":"metro:bundling:progress","_t":1788230900808,"id":"4","progress":0.7575103248968639,"total":941,"current":819}
+{"_e":"metro:bundling:progress","_t":1788230900913,"id":"4","progress":0.7728173043393479,"total":1067,"current":938}
+{"_e":"metro:bundling:progress","_t":1788230901206,"id":"4","progress":0.774465980786815,"total":1067,"current":939}
+{"_e":"metro:bundling:progress","_t":1788230901317,"id":"4","progress":0.8413317479191438,"total":1160,"current":1064}
+{"_e":"metro:bundling:progress","_t":1788230901401,"id":"4","progress":0.8429139417360286,"total":1160,"current":1065}
+{"_e":"metro:bundling:progress","_t":1788230901508,"id":"4","progress":0.8584348110116466,"total":1252,"current":1160}
+{"_e":"metro:bundling:progress","_t":1788230901648,"id":"4","progress":0.9461431655394141,"total":1282,"current":1247}
+{"_e":"metro:bundling:done","_t":1788230901818,"id":"4","total":1282,"ms":3148.109}
+{"_e":"metro:client_log","_t":1788230902223,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788230902224,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788230902368,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788230902369,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788230902645,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788230902719,"level":"warn","data":["Image: style.tintColor is deprecated. Please use props.tintColor."]}
+{"_e":"metro:bundling:failed","_t":1788234243616,"id":null,"message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:failed","_t":1788234243827,"id":null,"message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:failed","_t":1788234607658,"id":null,"message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:failed","_t":1788235389558,"id":null,"message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:started","_t":1788235393035,"id":"o","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235393035,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788235393035,"id":"p","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788235393035,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393035,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393036,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393036,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393241,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393241,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393539,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393539,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393639,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393639,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393739,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393739,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393839,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393839,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393941,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235393941,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394041,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394041,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394144,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394144,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394244,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394244,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394344,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394344,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394444,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394444,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394545,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394545,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394645,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394645,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394745,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394745,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394845,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394845,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394950,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235394950,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395123,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395123,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395267,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395267,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395278,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235395376,"id":"p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1788235396317,"id":"p","message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:failed","_t":1788235397267,"id":"p","message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:started","_t":1788235397677,"id":"r","platform":"web","environment":null,"entry":".expo\\static-tmp\\_error.js"}
+{"_e":"metro:bundling:progress","_t":1788235397677,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235397706,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235397806,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235397906,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398006,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398106,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398207,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1788235398280,"id":"p","message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:progress","_t":1788235398281,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398359,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398403,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398503,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398603,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398703,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398807,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235398907,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235399007,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235399119,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1788235399126,"id":"p","message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:progress","_t":1788235399127,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235399230,"id":"r","progress":0.04000000000000001,"total":7,"current":2}
+{"_e":"metro:bundling:progress","_t":1788235399334,"id":"r","progress":0.09,"total":7,"current":3}
+{"_e":"metro:bundling:progress","_t":1788235402421,"id":"r","progress":0.16000000000000003,"total":7,"current":4}
+{"_e":"metro:bundling:progress","_t":1788235402553,"id":"r","progress":0.19140625,"total":16,"current":7}
+{"_e":"metro:bundling:progress","_t":1788235402656,"id":"r","progress":0.26753864447086806,"total":29,"current":15}
+{"_e":"metro:bundling:progress","_t":1788235402758,"id":"r","progress":0.30439952437574314,"total":29,"current":16}
+{"_e":"metro:bundling:progress","_t":1788235402865,"id":"r","progress":0.31228373702422146,"total":34,"current":19}
+{"_e":"metro:bundling:progress","_t":1788235402980,"id":"r","progress":0.31228373702422146,"total":41,"current":22}
+{"_e":"metro:bundling:progress","_t":1788235403081,"id":"r","progress":0.32653061224489793,"total":49,"current":28}
+{"_e":"metro:bundling:progress","_t":1788235403194,"id":"r","progress":0.4264889629321115,"total":49,"current":32}
+{"_e":"metro:bundling:progress","_t":1788235403298,"id":"r","progress":0.4873620505517977,"total":53,"current":37}
+{"_e":"metro:bundling:progress","_t":1788235403406,"id":"r","progress":0.4873620505517977,"total":67,"current":42}
+{"_e":"metro:bundling:progress","_t":1788235403506,"id":"r","progress":0.4873620505517977,"total":75,"current":51}
+{"_e":"metro:bundling:progress","_t":1788235403606,"id":"r","progress":0.5377777777777777,"total":75,"current":55}
+{"_e":"metro:bundling:progress","_t":1788235403708,"id":"r","progress":0.5768306361160072,"total":79,"current":60}
+{"_e":"metro:bundling:progress","_t":1788235403808,"id":"r","progress":0.624295076969974,"total":81,"current":64}
+{"_e":"metro:bundling:progress","_t":1788235403913,"id":"r","progress":0.624295076969974,"total":95,"current":73}
+{"_e":"metro:bundling:progress","_t":1788235404032,"id":"r","progress":0.6334860474802165,"total":98,"current":78}
+{"_e":"metro:bundling:progress","_t":1788235404134,"id":"r","progress":0.7613417916186083,"total":102,"current":89}
+{"_e":"metro:bundling:progress","_t":1788235404242,"id":"r","progress":0.8344119822485206,"total":104,"current":95}
+{"_e":"metro:bundling:progress","_t":1788235404342,"id":"r","progress":0.8344119822485206,"total":118,"current":103}
+{"_e":"metro:bundling:progress","_t":1788235404449,"id":"r","progress":0.8858131487889274,"total":119,"current":112}
+{"_e":"metro:bundling:progress","_t":1788235404549,"id":"r","progress":0.9349771190492453,"total":121,"current":117}
+{"_e":"metro:bundling:progress","_t":1788235404654,"id":"r","progress":0.9521982310093653,"total":124,"current":121}
+{"_e":"metro:bundling:progress","_t":1788235404749,"id":"r","progress":0.9680020811654527,"total":124,"current":122}
+{"_e":"metro:bundling:progress","_t":1788235404861,"id":"r","progress":0.9692326182320773,"total":129,"current":127}
+{"_e":"metro:bundling:progress","_t":1788235406082,"id":"r","progress":0.9845562165735232,"total":129,"current":128}
+{"_e":"metro:bundling:progress","_t":1788235406287,"id":"r","progress":0.999,"total":129,"current":129}
+{"_e":"metro:bundling:progress","_t":1788235406388,"id":"r","progress":0.999,"total":133,"current":133}
+{"_e":"metro:bundling:done","_t":1788235406636,"id":"r","total":133,"ms":8958.9846}
+{"_e":"metro:bundling:started","_t":1788235456146,"id":"w","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235456146,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788235456146,"id":"x","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788235456146,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456146,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456147,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456147,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456339,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456339,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456564,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456565,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456667,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456667,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456767,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456767,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456867,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456867,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456967,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235456967,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457068,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457068,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457168,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457168,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457268,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457268,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457370,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457370,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457472,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457472,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457572,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457572,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457674,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457674,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457774,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457774,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457875,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457875,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457977,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235457977,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458077,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458077,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458187,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458187,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458290,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458290,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458399,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458399,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458503,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458503,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458563,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458563,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458679,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458679,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458700,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458700,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235458733,"id":"x","total":1,"ms":2586.5314}
+{"_e":"metro:bundling:progress","_t":1788235458733,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235458838,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235459567,"id":"w","total":1,"ms":3421.3031}
+{"_e":"metro:bundling:started","_t":1788235459620,"id":"y","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235459620,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235459624,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235459738,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235459831,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235459932,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460032,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460134,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460234,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460335,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460434,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460535,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460650,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460750,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235460850,"id":"y","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235460933,"id":"y","total":1,"ms":1313.6033}
+{"_e":"metro:client_log","_t":1788235461299,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788235461300,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788235461505,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235461506,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788235461506,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235461506,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235461506,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788235461506,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235461530,"level":"warn","data":["An error occurred in the <div> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:bundling:failed","_t":1788235519676,"id":"p","message":"Unable to resolve module  from D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx:  could not be found within the project or in these directories:\n  node_modules\n  79 |     id: \"3\",\n  80 |     methodName: \"Transfer Bank BCA\",\n> 81 |     photoQR: require(\"\"),\n     |              ^^^^^^^^^^^\n  82 |     accountNumber: \"11111222223333\",\n  83 |     photoLogo: require(\"@/assets/payment/logo_BCA.png\"),\n  84 |     name: \"James Chris\",","importStack":"Import stack:\n\n src\\app\\(tabs)\\payment_method.tsx\n | import \"\"\n\n src\\app (require.context)\n","filename":null,"targetModuleName":"","originModulePath":"D:\\DATA ITO\\Github\\DOMS\\ITO_GYM_APP\\app\\frontend_web_design\\src\\app\\(tabs)\\payment_method.tsx"}
+{"_e":"metro:bundling:started","_t":1788235522503,"id":"16","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235522503,"id":"16","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788235522503,"id":"17","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788235522503,"id":"16","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522503,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522504,"id":"16","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522504,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522532,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788235522655,"id":"19","platform":"web","environment":null,"entry":".expo\\static-tmp\\_error.js"}
+{"_e":"metro:bundling:progress","_t":1788235522655,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522656,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235522765,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235522783,"id":"19","total":1,"ms":128.0181}
+{"_e":"metro:bundling:started","_t":1788235619873,"id":"1e","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235619873,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788235619873,"id":"1f","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788235619873,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235619873,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235619874,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235619874,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235619983,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235619983,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235620428,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235620428,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235620533,"id":"1e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235620533,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235620567,"id":"1e","total":1,"ms":693.9716}
+{"_e":"metro:bundling:progress","_t":1788235620567,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235620637,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235620674,"id":"1f","total":1,"ms":800.6842}
+{"_e":"metro:bundling:started","_t":1788235621440,"id":"1g","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788235621440,"id":"1g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235621441,"id":"1g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788235621926,"id":"1g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788235622004,"id":"1g","total":1,"ms":563.9288}
+{"_e":"metro:client_log","_t":1788235622327,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788235622327,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788235622455,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235622539,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788235622539,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235622539,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235622539,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788235622540,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235622564,"level":"warn","data":["An error occurred in the <div> component.\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.\n"]}
+{"_e":"metro:client_log","_t":1788235725743,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788235725743,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788235725749,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788236950112,"id":"1v","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788236950113,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788236950113,"id":"1w","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788236950113,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950114,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950114,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950114,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950220,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950220,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950866,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236950867,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788236951018,"id":"1v","total":1,"ms":905.8345}
+{"_e":"metro:bundling:progress","_t":1788236951019,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788236951086,"id":"1w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788236951154,"id":"1w","total":1,"ms":1040.2073}
+{"_e":"metro:bundling:started","_t":1788236952400,"id":"1x","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788236952401,"id":"1x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788236952531,"id":"1x","total":1,"ms":130.882}
+{"_e":"metro:client_log","_t":1788236953098,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788236953098,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788236953248,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788236953249,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788236953249,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788237121384,"id":"24","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788237121384,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788237121384,"id":"25","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788237121384,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788237121384,"id":"25","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788237121477,"id":"25","total":1,"ms":93.0566}
+{"_e":"metro:bundling:progress","_t":1788237121477,"id":"24","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788237122020,"id":"24","total":1,"ms":636.5391}
+{"_e":"metro:bundling:started","_t":1788237122050,"id":"26","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788237122050,"id":"26","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788237122128,"id":"26","total":1,"ms":78.3263}
+{"_e":"metro:client_log","_t":1788237122631,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788237122631,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788237122713,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788237122714,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788237122720,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788243513757,"id":"2k","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788243513757,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788243513757,"id":"2l","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788243513757,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243513757,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243513758,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243513758,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243513934,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243513934,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514103,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514103,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514203,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514203,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514310,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514310,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514410,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514410,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514512,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514512,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514612,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514612,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514712,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514712,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514812,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514812,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514913,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243514913,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515013,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515013,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515118,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515118,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515218,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515218,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515322,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515322,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515424,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515424,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515537,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515537,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515636,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515636,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515737,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515737,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515837,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515837,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515937,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243515937,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243516040,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243516040,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243516173,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243516173,"id":"2l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243516203,"id":"2l","total":1,"ms":2446.0712}
+{"_e":"metro:bundling:progress","_t":1788243516203,"id":"2k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243517190,"id":"2k","total":1,"ms":3433.3422}
+{"_e":"metro:bundling:started","_t":1788243517228,"id":"2m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788243517228,"id":"2m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243517230,"id":"2m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243517325,"id":"2m","total":1,"ms":96.3605}
+{"_e":"metro:client_log","_t":1788243517643,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788243517643,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788243517955,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788243517956,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788243517956,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788243786049,"id":"2t","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788243786049,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788243786049,"id":"2u","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788243786049,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786049,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786050,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786050,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786162,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786162,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786604,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786604,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243786715,"id":"2t","total":1,"ms":665.7919}
+{"_e":"metro:bundling:progress","_t":1788243786715,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243786767,"id":"2u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243786834,"id":"2u","total":1,"ms":784.6705}
+{"_e":"metro:bundling:started","_t":1788243787620,"id":"2v","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788243787621,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243787622,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788243788046,"id":"2v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788243788113,"id":"2v","total":1,"ms":492.6151}
+{"_e":"metro:client_log","_t":1788243788425,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788243788425,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788243788539,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788243788539,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788243788671,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788243838558,"level":"warn","data":["Image: style.resizeMode is deprecated. Please use props.resizeMode."]}
+{"_e":"metro:bundling:started","_t":1788244267469,"id":"32","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788244267469,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788244267470,"id":"33","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788244267470,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267470,"id":"33","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267471,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267471,"id":"33","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267576,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267576,"id":"33","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267618,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244267618,"id":"33","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788244267666,"id":"33","total":1,"ms":196.1436}
+{"_e":"metro:bundling:progress","_t":1788244267667,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788244268825,"id":"32","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788244268933,"id":"32","total":1,"ms":1463.6882}
+{"_e":"metro:bundling:started","_t":1788244268970,"id":"34","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788244268970,"id":"34","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788244269070,"id":"34","total":1,"ms":99.8617}
+{"_e":"metro:client_log","_t":1788244269486,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788244269486,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788244269637,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788244269637,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788244269812,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788244679742,"level":"warn","data":["Image: style.resizeMode is deprecated. Please use props.resizeMode."]}
+{"_e":"metro:bundling:started","_t":1788247167251,"id":"3n","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247167251,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788247167251,"id":"3o","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788247167251,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167251,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167252,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167252,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167360,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167360,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167481,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167481,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167617,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167617,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167693,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167694,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167793,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167793,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167893,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167893,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167993,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247167993,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168093,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168093,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168193,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168193,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168293,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168293,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168397,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168397,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168521,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168521,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168637,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168637,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247168684,"id":"3o","total":1,"ms":1432.2279}
+{"_e":"metro:bundling:progress","_t":1788247168684,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247168789,"id":"3n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247169580,"id":"3n","total":1,"ms":2328.5043}
+{"_e":"metro:bundling:started","_t":1788247169622,"id":"3p","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247169623,"id":"3p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247169624,"id":"3p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247169708,"id":"3p","total":1,"ms":85.9196}
+{"_e":"metro:client_log","_t":1788247170015,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788247170015,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788247170125,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247170127,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788247170143,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247174267,"level":"warn","data":["Image: style.resizeMode is deprecated. Please use props.resizeMode."]}
+{"_e":"metro:bundling:started","_t":1788247293669,"id":"40","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247293669,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788247293669,"id":"41","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788247293669,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247293669,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247293671,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247293671,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247293922,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247293922,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294116,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294116,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294216,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294216,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294324,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294324,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294424,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294424,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294526,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294526,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294627,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294627,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294728,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294728,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294830,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294830,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294930,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247294930,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295031,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295031,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295131,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295131,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295247,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295247,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295350,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295350,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295453,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295453,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295553,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295553,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295653,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295654,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295753,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295753,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295854,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295854,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295954,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247295954,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296054,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296054,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296154,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296154,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296255,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296255,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296354,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296354,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296483,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296483,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296586,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296587,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296701,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296701,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296819,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247296819,"id":"41","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247296857,"id":"41","total":1,"ms":3188.2272}
+{"_e":"metro:bundling:progress","_t":1788247296857,"id":"40","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247297736,"id":"40","total":1,"ms":4066.9319}
+{"_e":"metro:bundling:started","_t":1788247297770,"id":"42","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247297770,"id":"42","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247297771,"id":"42","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247298153,"id":"42","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247298212,"id":"42","total":1,"ms":442.3193}
+{"_e":"metro:client_log","_t":1788247298531,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788247298532,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788247298739,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247298739,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788247298739,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788247465667,"id":"4a","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247465667,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788247465667,"id":"4b","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788247465667,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465667,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465668,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465668,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465841,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465841,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465990,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247465990,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466092,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466092,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466195,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466195,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466295,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466295,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466395,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466395,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466495,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466495,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466595,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466595,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466695,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466695,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466795,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466795,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466896,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466896,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466996,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247466996,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467096,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467096,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467197,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467197,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467297,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467297,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467397,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467397,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467497,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467497,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467608,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467608,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467724,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247467724,"id":"4b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247467769,"id":"4b","total":1,"ms":2102.028}
+{"_e":"metro:bundling:progress","_t":1788247467769,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247468426,"id":"4a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247468476,"id":"4a","total":1,"ms":2809.1299}
+{"_e":"metro:bundling:started","_t":1788247468517,"id":"4c","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247468518,"id":"4c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247468597,"id":"4c","total":1,"ms":79.2598}
+{"_e":"metro:client_log","_t":1788247468933,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788247468933,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788247469044,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247469044,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788247469139,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788247493362,"id":"4k","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247493362,"id":"4k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788247493363,"id":"4l","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788247493363,"id":"4k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247493363,"id":"4l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247493363,"id":"4k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247493363,"id":"4l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247493421,"id":"4l","total":1,"ms":58.8573}
+{"_e":"metro:bundling:progress","_t":1788247493422,"id":"4k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788247493524,"id":"4k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247493899,"id":"4k","total":1,"ms":536.5366}
+{"_e":"metro:bundling:started","_t":1788247493933,"id":"4m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788247493933,"id":"4m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788247494013,"id":"4m","total":1,"ms":79.6081}
+{"_e":"metro:client_log","_t":1788247494305,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788247494305,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788247494413,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247494413,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788247494526,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788247669160,"level":"warn","data":["Image: style.resizeMode is deprecated. Please use props.resizeMode."]}
+{"_e":"metro:bundling:started","_t":1788248972049,"id":"5b","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788248972049,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788248972050,"id":"5c","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788248972050,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972050,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972051,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972051,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972287,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972287,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972513,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972513,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972615,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972615,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972738,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972738,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972838,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972838,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972939,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248972939,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973039,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973039,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973141,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973141,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973246,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973246,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973346,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973346,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973455,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973455,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973555,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973555,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973655,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973655,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973755,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973755,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973855,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973855,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973955,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248973955,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974055,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974055,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974155,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974155,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974255,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974255,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974355,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974355,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974455,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974455,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974556,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974556,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974656,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974657,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974763,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248974763,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248975032,"id":"5b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248975032,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788248975166,"id":"5b","total":1,"ms":3116.4592}
+{"_e":"metro:bundling:progress","_t":1788248975166,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248975193,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788248975343,"id":"5c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788248975376,"id":"5c","total":1,"ms":3326.0019}
+{"_e":"metro:bundling:started","_t":1788248976279,"id":"5d","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788248976280,"id":"5d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788248976370,"id":"5d","total":1,"ms":90.0731}
+{"_e":"metro:client_log","_t":1788248976677,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788248976677,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788248976786,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788248976869,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788248976869,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:bundling:started","_t":1788249338978,"id":"5o","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788249338979,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:started","_t":1788249338979,"id":"5p","platform":"web","environment":"node","entry":"node_modules\\expo\\node_modules\\@expo\\cli\\node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:progress","_t":1788249338979,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249338979,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249338979,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249338979,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339080,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339080,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339404,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339404,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339735,"id":"5o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339735,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788249339850,"id":"5o","total":1,"ms":871.7504}
+{"_e":"metro:bundling:progress","_t":1788249339850,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249339924,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1788249340024,"id":"5p","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788249340059,"id":"5p","total":1,"ms":1080.6793}
+{"_e":"metro:bundling:started","_t":1788249340747,"id":"5q","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:progress","_t":1788249340747,"id":"5q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1788249340828,"id":"5q","total":1,"ms":80.9048}
+{"_e":"metro:client_log","_t":1788249341133,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1788249341133,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1788249341238,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788249341238,"level":"warn","data":["[Layout children]: No route named \"(auth)\" exists in nested children:","[\"index\", \"(tabs)\"]"]}
+{"_e":"metro:client_log","_t":1788250706944,"level":"warn","data":["Unknown child element passed to Stack: function StatusBar({\n    style,\n    hideTransitionAnimation,\n    animated,\n    hidden\n  }) {\n    // Pick appropriate default value depending on current theme, so if we are\n    // locked to light mode we don't end up with a light status bar\n    const colorScheme = (0, useColorScheme.default)();\n    const barStyle = React.default.useMemo(() => styleToBarStyle(style, colorScheme), [style, colorScheme]);\n    return (0, _reactJsxRuntime.jsx)(NativeStatusBar.default, {\n      animated: animated,\n      hidden: hidden,\n      barStyle: barStyle,\n      showHideTransition: hideTransitionAnimation === 'none' ? undefined : hideTransitionAnimation\n    });\n  }"]}
+{"_e":"metro:client_log","_t":1788250707002,"level":"warn","data":["Image: style.tintColor is deprecated. Please use props.tintColor."]}

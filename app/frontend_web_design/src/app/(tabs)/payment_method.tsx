@@ -14,81 +14,41 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ImageSourcePropType,
 } from "react-native";
 import PhoneInput from "../../components/PhoneInput";
-import { ImageSourcePropType } from "react-native";
 
 
 // ============ DATA ============
 interface dataActiveMethod {
   id: string;
   methodName: string;
-  imageQR: ImageSourcePropType | null;
+  photoQR: ImageSourcePropType | null;
   accountNumber: string;
-  imageLogo: ImageSourcePropType | null;
-  name: string;
-  coachId: string;
-  dateExpiration: string;
-  photo: string;
-  email: string;
-  birthDate: string;
-  dialCodePhone: string;
-  phone: string;
-  password: string;
-  gender: string;
+  photoLogo: ImageSourcePropType | null;
 }
 
 const initialDataActiveMethod: dataActiveMethod[] = [
   {
     id: "1",
     methodName: "QRIS",
-    imageQR: require("../../../assets/payment/payment_QR.png"),
+    photoQR: require("@/assets/payment/payment_QR.png"),
     accountNumber: "",
-    imageLogo: require("../../../assets/payment/logo_QR.png"),
-    name: "James Medalla",
-    coachId: "SFM2301N1",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "60",
-    phone: "85122233360",
-    password: "12345",
-    gender: "Male",
+    photoLogo: require("@/assets/payment/logo_QR.png"),
   },
   {
     id: "2",
     methodName: "Gopay",
-    imageQR: require("../../../assets/payment/payment_Gopay.png"),
+    photoQR: require("@/assets/payment/payment_Gopay.png"),
     accountNumber: "",
-    imageLogo: require("../../../assets/payment/logo_Gopay.png"),
-    name: "Chris Medalla",
-    coachId: "SFM2301N2",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233362",
-    password: "12345",
-    gender: "Female",
+    photoLogo: require("@/assets/payment/logo_Gopay.png"),
   },
   {
     id: "3",
     methodName: "Transfer Bank BCA",
-    imageQR: "",
-    accountNumber: "",
-    imageLogo: require("../../../assets/payment/logo_BCA.png"),
-    name: "James Chris",
-    coachId: "SFM2301N3",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "65",
-    phone: "85122233365",
-    password: "12345",
-    gender: "Male",
+    photoQR: null,
+    accountNumber: "11111222223333",
+    photoLogo: require("@/assets/payment/logo_BCA.png"),
   },
 ];
 
@@ -107,8 +67,7 @@ export default function PaymentMethodScreen() {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.name.toLowerCase().includes(keyword) ||
-        item.coachId.toString().toLowerCase().includes(keyword);
+        item.methodName.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -129,19 +88,11 @@ export default function PaymentMethodScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.coachId}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        +{item.dialCodePhone} {item.phone}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateExpiration}
-      </Text>
-
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.methodName}</Text>
+      
       <View
         style={{
-          flex: 1.5,
+          flex: 0.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -177,44 +128,16 @@ export default function PaymentMethodScreen() {
 
   
   const [methodName, setmethodName] = useState("");
-  const [imageQR, setimageQR] = useState<ImageSourcePropType | null>(null);
-  // const [imageQR, setimageQR] = useState("");
   const [accountNumber, setaccountNumber] = useState("");
-  const [imageLogo, setimageLogo] = useState<ImageSourcePropType | null>(null);
-  // const [imageLogo, setimageLogo] = useState("");
               
-              
-  const [CoachId, setCoachId] = useState("");
-  const [CoachDateExpiration, setCoachDateExpiration] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
-  const [image, setImage] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dialCodePhone, setDialCodePhone] = useState("62");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
 
   const handleAdd = () => {
     setSelectedActiveMethod(null);
     setmethodName("");
-    setimageQR(null);
+    setImageQR(null);
     setaccountNumber("");
-    setimageLogo(null);
+    setImageLogo(null);
 
-
-
-    setFullName("");
-    setCoachId("");
-    setCoachDateExpiration("");
-    setStatus("Active");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setGender("");
 
     setShowModal(true);
   };
@@ -222,30 +145,17 @@ export default function PaymentMethodScreen() {
   const handleEdit = (item: dataActiveMethod) => {
     setSelectedActiveMethod(item);
     setmethodName(item.methodName);
-    setimageQR(item.imageQR);
+    setImageQR(item.photoQR);
     setaccountNumber(item.accountNumber);
-    setimageLogo(item.imageLogo);
+    setImageLogo(item.photoLogo);
 
-
-
-
-    setFullName(item.name);
-    setCoachId(item.coachId);
-    setCoachDateExpiration(item.dateExpiration);
-    setImage(item.photo);
-    setEmail(item.email);
-    setBirthDate(item.birthDate);
-    setDialCodePhone(item.dialCodePhone);
-    setPhone(item.phone);
-    setPassword(item.password);
-    setGender(item.gender);
-
+    
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (fullName.trim() === "") {
-      alert("Member Name is required");
+    if (methodName.trim() === "") {
+      alert("Method Name is required");
       return;
     }
 
@@ -256,19 +166,9 @@ export default function PaymentMethodScreen() {
           ? {
               ...item,
               methodName: methodName,
-              imageQR: imageQR,
+              photoQR: imageQR,
               accountNumber: accountNumber,
-              imageLogo: imageLogo,
-              name: fullName,
-              coachId: CoachId,
-              dateExpiration: CoachDateExpiration,
-              photo: image,
-              email: email,
-              birthDate: birthDate,
-              dialCodePhone: dialCodePhone,
-              phone: phone,
-              password: password,
-              gender: gender,
+              photoLogo: imageLogo,
             }
           : item,
       );
@@ -281,19 +181,9 @@ export default function PaymentMethodScreen() {
       const newActiveMethod: dataActiveMethod = {
         id: Date.now().toString(),        
         methodName: methodName,
-        imageQR: imageQR,
+        photoQR: imageQR,
         accountNumber: accountNumber,
-        imageLogo: imageLogo,
-        name: fullName,
-        coachId: CoachId,
-        dateExpiration: CoachDateExpiration,
-        photo: image,
-        email: email,
-        birthDate: birthDate,
-        dialCodePhone: dialCodePhone,
-        phone: phone,
-        password: password,
-        gender: gender,
+        photoLogo: imageLogo,
       };
 
       setActiveMethodData([...activeMethodData, newActiveMethod]);
@@ -319,47 +209,70 @@ export default function PaymentMethodScreen() {
   const resetForm = () => {
     setSelectedActiveMethod(null);
     setmethodName("");
-    setimageQR(null);
+    setImageQR(null);
     setaccountNumber("");
-    setimageLogo(null);
+    setImageLogo(null);
 
-
-
-    setFullName("");
-    setCoachId("");
-    setCoachDateExpiration("");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setGender("");
 
     setShowModal(false);
   };
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  
 
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
+  const [imageQR, setImageQR] = useState<ImageSourcePropType | null>(null);
+  const [imageLogo, setImageLogo] = useState<ImageSourcePropType | null>(null);
+
+  const fileInputQRRef = useRef<HTMLInputElement | null>(null);
+  const fileInputLogoRef = useRef<HTMLInputElement | null>(null);
+
+  // Attach QR
+  const handleAttachQR = () => {
+    fileInputQRRef.current?.click();
   };
 
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Attach Logo
+  const handleAttachLogo = () => {
+    fileInputLogoRef.current?.click();
+  };
+
+  // Pilih QR
+  const handleQRChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (file) {
+      setImageQR({ uri: URL.createObjectURL(file) });
     }
   };
+
+  // Pilih Logo
+  const handleLogoChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setImageLogo({ uri: URL.createObjectURL(file) });
+    }
+  };
+
+  // Remove QR
+  const handleRemoveQR = () => {
+    setImageQR(null);
+
+    if (fileInputQRRef.current) {
+      fileInputQRRef.current.value = "";
+    }
+  };
+
+  // Remove Logo
+  const handleRemoveLogo = () => {
+    setImageLogo(null);
+
+    if (fileInputLogoRef.current) {
+      fileInputLogoRef.current.value = "";
+    }
+  };
+
 
   const [birthDate, setBirthDate] = useState("");
   const [date, setDate] = useState(new Date());
@@ -389,7 +302,7 @@ export default function PaymentMethodScreen() {
         <View style={styles.profileSection}>
           <TouchableOpacity>
             <Image
-              source={require("../../../assets/images/user/user.png")}
+              source={require("@/assets/images/user/user.png")}
               style={styles.avatar}
             />
           </TouchableOpacity>
@@ -538,39 +451,12 @@ export default function PaymentMethodScreen() {
               {/* Header */}
               <View style={styles.headerRowList}>
                 <Text style={[styles.headerTextList, { flex: 3 }]}>Name</Text>
-                <Text style={[styles.headerTextList, { flex: 2 }]}>
-                  Coach ID
-                </Text>
 
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Contact
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Expiration
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.5,
+                      flex: 1,
                       textAlign: "center",
                     },
                   ]}
@@ -639,212 +525,126 @@ export default function PaymentMethodScreen() {
                     {selectedActiveMethod ? "Edit Method" : "Add Method"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
+                  {/* Input Method Name */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Method Name</Text>
 
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
+                      <TextInput
+                        value={methodName}
+                        onChangeText={setmethodName}
+                        style={styles.inputModal}
+                      />
+                    </View>
                   </View>
 
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-                  {/* Input Member Name */}
-                  {selectedActiveMethod ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Coach ID</Text>
+                  {/* Attach QR dan Logo */}
+                  <View style={[styles.rowModal]}>
+                    <View
+                      style={{
+                        flex: 0.5,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Attach QR</Text>
+                    
+                      <View style={{ alignItems: "center" }}>
+                        <View style={{ flexDirection: "row" }}>
+                          <TouchableOpacity onPress={handleAttachQR}>
+                            <Text style={styles.attachPhotoModal}>
+                              Attach QR ✏️
+                            </Text>
+                          </TouchableOpacity>
 
-                        <TextInput
-                          value={CoachId}
-                          editable={false}
-                          style={styles.inputModal}
-                        />
-                      </View>
+                          <Text style={styles.attachPhotoModal}> | </Text>
 
-                      <View
-                        style={{
-                          flex: 0.5,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
+                          <TouchableOpacity onPress={handleRemoveQR}>
+                            <Text style={styles.attachPhotoModal}>
+                              Remove QR ❌
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.imageBox}>
+                          {imageQR && (
+                            <Image
+                              source={imageQR}
+                              style={styles.image}
+                            />
+                          )}
+                        </View>
+
+                        {/* Input hidden untuk Web */}
+                        <input
+                          ref={fileInputQRRef}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={handleQRChange}
                         />
                       </View>
                     </View>
-                  )}
-                  {/* Input Contact dan Date Expiration */}
-                  {selectedActiveMethod ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Expiration</Text>
 
-                        {Platform.OS === "web" ? (
-                          <input
-                            type="date"
-                            value={CoachDateExpiration}
-                            disabled={true}
-                            //max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setCoachDateExpiration(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
-                          />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {CoachDateExpiration === ""
-                                  ? "Select Date"
-                                  : CoachDateExpiration}
-                              </Text>
-                            </TouchableOpacity>
+                    <View
+                      style={{
+                        flex: 0.5,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Attach Logo</Text>
 
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>
+                      <View style={{ alignItems: "center" }}>
+                        <View style={{ flexDirection: "row" }}>
+                          <TouchableOpacity onPress={handleAttachLogo}>
+                            <Text style={styles.attachPhotoModal}>
+                              Attach Logo ✏️
+                            </Text>
+                          </TouchableOpacity>
 
-                      <View
-                        style={{
-                          flex: 0.5,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Contact</Text>
+                          <Text style={styles.attachPhotoModal}> | </Text>
 
-                        <PhoneInput
-                          phone={phone}
-                          dialCodePhone={dialCodePhone}
-                          onChangePhone={setPhone}
-                          onChangeDialCode={setDialCodePhone}
-                        />  
+                          <TouchableOpacity onPress={handleRemoveLogo}>
+                            <Text style={styles.attachPhotoModal}>
+                              Remove Logo ❌
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.imageBox}>
+                          {imageLogo && (
+                            <Image
+                              source={imageLogo}
+                              style={styles.image}
+                            />
+                          )}
+                        </View>
+
+                        {/* Input hidden untuk Web */}
+                        <input
+                          ref={fileInputLogoRef}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={handleLogoChange}
+                        />
                       </View>
                     </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Contact</Text>
-                        
-                        <PhoneInput
-                          phone={phone}
-                          dialCodePhone={dialCodePhone}
-                          onChangePhone={setPhone}
-                          onChangeDialCode={setDialCodePhone}
-                        />  
-                      </View>
-                    </View>
-                  )}
+                  </View>
 
-                  {/* Input Gender dan Password */}
+                  {/* Input Account Number */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
                         flex: 0.5,
                       }}
                     >
-                      <Text style={styles.labelModal}>Gender</Text>
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={gender}
-                          onValueChange={(value) => setGender(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="-- Select Gender --" value="" />
-                          <Picker.Item label="Male" value="Male" />
-                          <Picker.Item label="Female" value="Female" />
-                        </Picker>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.5,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Password</Text>
+                      <Text style={styles.labelModal}>Account Number</Text>
 
                       <TextInput
-                        value={password}
-                        onChangeText={setPassword}
+                        value={accountNumber}
+                        onChangeText={setaccountNumber}
                         style={styles.inputModal}
                       />
                     </View>
@@ -1243,7 +1043,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  imagePlaceholderModal: {
+  imagePlaceholderModalQR: {
+    position: "absolute",
+    top: 20,
+    right: 30,
+    width: 120,
+    height: 120,
+    backgroundColor: "#FF0015",
+  },
+
+  imagePlaceholderModalLogo: {
     position: "absolute",
     top: 20,
     right: 30,
@@ -1311,5 +1120,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
- 
+  imageBox: {
+    width: 180,
+    height: 180,
+    backgroundColor: "red",
+  },
+
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
 });
