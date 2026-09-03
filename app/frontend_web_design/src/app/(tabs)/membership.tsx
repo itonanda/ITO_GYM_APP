@@ -410,11 +410,17 @@ export default function MembershipScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = activeMembershipData.filter((item) => item.id !== id);
 
     setActiveMembershipData(data);
 
-    alert("Membership delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {

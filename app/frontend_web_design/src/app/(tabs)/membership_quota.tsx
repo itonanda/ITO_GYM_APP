@@ -188,6 +188,12 @@ export default function MembersQuotacreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = QuotaData.filter((item) => item.id !== id);
 
     setQuotaData(data);

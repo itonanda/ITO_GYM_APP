@@ -44,30 +44,28 @@ export default function LoginScreen() {
 
         <Text style={[styles.label, { marginTop: 18 }]}>Password</Text>
 
-        {/* <TextInput
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          style={styles.input}
-        /> */}
-
-        <View style={[styles.input, {flexDirection: "row", alignItems: "center"}]}>
+        <View style={styles.passwordContainer}>
           <TextInput
             value={password}
             onChangeText={setPassword}
-            style={{flex: 1, height: 58 }}
+            style={styles.passwordInput}
             secureTextEntry={!showPassword}
-            placeholder="Password"
           />
 
           <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={{paddingHorizontal: 12, justifyContent: "center", alignItems: "center"}}
+            onPress={() =>
+              setShowPassword(!showPassword)
+            }
+            style={styles.eyeButton}
           >
             <Ionicons
-              name={showPassword ? "eye-off-outline" : "eye-outline"}
+              name={
+                showPassword
+                  ? "eye-off-outline"
+                  : "eye-outline"
+              }
               size={22}
-              color="#000"
+              color="#666"
             />
           </TouchableOpacity>
         </View>
@@ -198,5 +196,26 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 28,
     fontWeight: "700",
+  },
+
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: 380,
+    borderWidth: 2,
+    borderColor: "#231A72",
+    borderRadius: 6,
+    backgroundColor: "#FFF",
+  },
+
+  passwordInput: {
+    flex: 1,    
+    height: 58,
+    paddingHorizontal: 16,
+    fontSize: 15,
+  },
+
+  eyeButton: {
+    paddingHorizontal: 12,
   },
 });

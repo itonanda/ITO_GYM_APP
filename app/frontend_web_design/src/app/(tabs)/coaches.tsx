@@ -280,11 +280,17 @@ export default function CoachesScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = activeCoachesData.filter((item) => item.id !== id);
 
     setActiveCoachesData(data);
 
-    alert("Members delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -892,7 +898,6 @@ export default function CoachesScreen() {
                           onChangeText={setPassword}
                           style={{flex: 1, height: 50, fontSize: 15, paddingHorizontal: 12}}
                           secureTextEntry={!showPassword}
-                          placeholder="Password"
                         />
 
                         <TouchableOpacity

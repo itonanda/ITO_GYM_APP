@@ -161,7 +161,14 @@ export default function ClassTitleScreen() {
     resetForm();
   };
 
+
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = TitleData.filter((item) => item.id !== id);
 
     setTitleData(data);

@@ -190,11 +190,17 @@ export default function PaymentScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = plansData.filter((item) => item.id !== id);
 
     setPlansData(data);
 
-    alert("Members delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {

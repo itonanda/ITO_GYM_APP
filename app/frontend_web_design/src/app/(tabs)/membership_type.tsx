@@ -157,6 +157,12 @@ export default function MembersTypeScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = TypeData.filter((item) => item.id !== id);
 
     setTypeData(data);

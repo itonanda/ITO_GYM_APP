@@ -362,8 +362,14 @@ export default function ClassBookingScreen() {
     }
     resetForm();
   };
-
+  
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = BookingData.filter((item) => item.id !== id);
 
     setBookingData(data);

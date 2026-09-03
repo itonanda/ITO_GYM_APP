@@ -194,11 +194,17 @@ export default function PaymentMethodScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = activeMethodData.filter((item) => item.id !== id);
 
     setActiveMethodData(data);
 
-    alert("Members delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {

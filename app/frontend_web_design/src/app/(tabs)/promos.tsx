@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   FlatList,
+  Platform,
   Image,
   Pressable,
   ScrollView,
@@ -13,58 +14,65 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 // ============ DATA ============
-interface dataPlans {
+interface dataPromos {
   id: string;
-  planName: string;
-  validity: string;
-  amount: string;
+  promoName: string;
+  promoCode: string;
+  promoPrice: string;
+  promoStartDate: string;
+  promoEndDate: string;
+  promoDescription: string;
 }
 
-const initialDataPlans: dataPlans[] = [
+const initialDataPromos: dataPromos[] = [
   {
     id: "1",
-    planName: "1 month",
-    validity: "1",
-    amount: "800",
+    promoName: "New Year, New Me",
+    promoCode: "NewYear2027",
+    promoPrice: "3000000",
+    promoStartDate: "2027-01-01",
+    promoEndDate: "2027-12-31",
+    promoDescription: "Promo yang sangat efektif dijalankan pada bulan Januari untuk memanfaatkan resolusi tahun baru.",
   },
   {
     id: "2",
-    planName: "3 month",
-    validity: "3",
-    amount: "2200",
+    promoName: "Fit Resolution",
+    promoCode: "Fit3",
+    promoPrice: "800000",
+    promoStartDate: "2026-10-01",
+    promoEndDate: "2026-12-31",
+    promoDescription: "Paket langganan jangka panjang dengan harga lebih hemat untuk mendukung target kebugaran.",
   },
   {
     id: "3",
-    planName: "6 month",
-    validity: "6",
-    amount: "4300",
-  },
-  {
-    id: "4",
-    planName: "Annual",
-    validity: "12",
-    amount: "8500",
+    promoName: "Back to Gym / Rejoin Promo",
+    promoCode: "BTG",
+    promoPrice: "200000",
+    promoStartDate: "2026-11-01",
+    promoEndDate: "2026-11-30",
+    promoDescription: "Diskon biaya administrasi atau iuran bagi mantan member yang ingin aktif kembali.",
   },
 ];
 
 export default function PromosScreen() {
   const router = useRouter();
-  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
+  const [promosData, setpromosData] = useState<dataPromos[]>(initialDataPromos);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return plansData.filter((item) => {
+    return promosData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.planName.toLowerCase().includes(keyword) ||
-        item.validity.toString().toLowerCase().includes(keyword) ||
-        item.amount.toString().toLowerCase().includes(keyword);
+        item.promoName.toLowerCase().includes(keyword) ||
+        item.promoStartDate.toString().toLowerCase().includes(keyword) ||
+        item.promoEndDate.toString().toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -85,14 +93,10 @@ export default function PromosScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.validity}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.amount}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.promoName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.promoStartDate} - {item.promoEndDate}</Text>
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.promoCode}</Text>
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>Rp {item.promoPrice}</Text>
 
       <View
         style={{
@@ -125,75 +129,109 @@ export default function PromosScreen() {
   );
 
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
+  const [selecteddataPromos, setSelecteddataPromos] = useState<dataPromos | null>(
     null,
   );
-  const [planName, setPlanName] = useState("");
-  const [validity, setValidity] = useState("");
-  const [amount, setAmount] = useState("");
+
+  const [promoName, setPromoName] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [promoPrice, setPromoPrice] = useState("");
+  const [promoStartDate, setPromoStartDate] = useState("");
+  const [promoEndDate, setPromoEndDate] = useState("");
+  const [showStartDate, setShowStartDate] = useState(false);
+  const [showEndDate, setShowEndDate] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [promoDescription, setPromoDescription] = useState("");
+
 
   const handleAdd = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelecteddataPromos(null);
+    setPromoName("");
+    setPromoCode("");
+    setPromoPrice("");
+    setPromoStartDate("");
+    setPromoEndDate("");
+    setPromoDescription("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataPlans) => {
-    setSelectedDataPlans(item);
-    setPlanName(item.planName);
-    setValidity(item.validity);
-    setAmount(item.amount);
+  const handleEdit = (item: dataPromos) => {
+    setSelecteddataPromos(item);
+    setPromoName(item.promoName);
+    setPromoCode(item.promoCode);
+    setPromoPrice(item.promoPrice);
+    setPromoStartDate(item.promoStartDate);
+    setPromoEndDate(item.promoEndDate);
+    setPromoDescription(item.promoDescription);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (planName.trim() === "") {
-      alert("Member Name is required");
+    if (promoName.trim() === "") {
+      alert("Promo Name is required");
       return;
     }
 
-    if (selectedDataPlans) {
+    if (selecteddataPromos) {
       // UPDATE
-      const updatedData = plansData.map((item) =>
-        item.id === selectedDataPlans.id
+      const updatedData = promosData.map((item) =>
+        item.id === selecteddataPromos.id
           ? {
               ...item,
-              planName: planName,
-              validity: validity,
-              amount: amount,
+              promoName: promoName,
+              promoCode: promoCode,
+              promoPrice: promoPrice,
+              promoStartDate: promoStartDate,
+              promoEndDate: promoEndDate,
+              promoDescription: promoDescription,
             }
           : item,
       );
 
-      setPlansData(updatedData);
+      setpromosData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataPlans = {
+      const newActiveMembers: dataPromos = {
         id: Date.now().toString(),
-        planName: planName,
-        validity: validity,
-        amount: amount,
+        promoName: promoName,
+        promoCode: promoCode,
+        promoPrice: promoPrice,
+        promoStartDate: promoStartDate,
+        promoEndDate: promoEndDate,
+        promoDescription: promoDescription,
       };
 
-      setPlansData([...plansData, newActiveMembers]);
+      setpromosData([...promosData, newActiveMembers]);
 
-      alert("Members added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
 
+  // const handleDelete = (id: string) => {
+  //   const data = promosData.filter((item) => item.id !== id);
+
+  //   setpromosData(data);
+
+  //   alert("Delete successfully");
+  // };
+
   const handleDelete = (id: string) => {
-    const data = plansData.filter((item) => item.id !== id);
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
 
-    setPlansData(data);
+    if (!confirmDelete) return;
 
-    alert("Members delete successfully");
+    const data = promosData.filter((item) => item.id !== id);
+
+    setpromosData(data);
+
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
@@ -202,12 +240,49 @@ export default function PromosScreen() {
   };
 
   const resetForm = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelecteddataPromos(null);
+    setPromoName("");
+    setPromoCode("");
+    setPromoPrice("");
+    setPromoStartDate("");
+    setPromoEndDate("");
+    setPromoDescription("");
 
     setShowModal(false);
+  };
+
+  const onChangePromoStartDate = (event: any, selectedDate?: Date) => {
+    setShowStartDate(false);
+
+    if (selectedDate) {
+      setDate(selectedDate);
+
+      const formatted =
+        selectedDate.getFullYear() +
+        "-" +
+        String(selectedDate.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(selectedDate.getDate()).padStart(2, "0");
+
+      setPromoStartDate(formatted);
+    }
+  };
+
+  const onChangePromoEndDate = (event: any, selectedDate?: Date) => {
+    setShowEndDate(false);
+
+    if (selectedDate) {
+      setDate(selectedDate);
+
+      const formatted =
+        selectedDate.getFullYear() +
+        "-" +
+        String(selectedDate.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(selectedDate.getDate()).padStart(2, "0");
+
+      setPromoEndDate(formatted);
+    }
   };
 
   return (
@@ -301,9 +376,9 @@ export default function PromosScreen() {
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add News</Text>
-            </Pressable> */}
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+              <Text style={styles.sectionTitle}>Add Promo</Text>
+            </Pressable>
 
             <View style={styles.cardList}>
               <Text style={styles.titleList}>Promos</Text>
@@ -338,33 +413,11 @@ export default function PromosScreen() {
               </View>
 
               {/* Header */}
-              {/* <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Plan Name
-                </Text>
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Validity
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Amount
-                </Text>
+              <View style={styles.headerRowList}>
+                <Text style={[styles.headerTextList, { flex: 3 }]}>Promo Name</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Date</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Code</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Price</Text>
 
                 <Text
                   style={[
@@ -377,15 +430,15 @@ export default function PromosScreen() {
                 >
                   Actions
                 </Text>
-              </View> */}
+              </View> 
 
               {/* Data */}
-              {/* <FlatList
+              <FlatList
                 data={currentData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-              /> */}
+              />
 
               {/* Footer */}
               <View style={styles.headerRowList} />
@@ -436,53 +489,193 @@ export default function PromosScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
+                    {selecteddataPromos ? "Edit Plan" : "Add Plan"}
                   </Text>
 
-                  {/* Input Plan Name dan Validity */}
+                  {/* Input Promo Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Plan Name</Text>
+                      <Text style={styles.labelModal}>Promo Name</Text>
                       <TextInput
-                        value={planName}
-                        onChangeText={setPlanName}
+                        value={promoName}
+                        onChangeText={setPromoName}
+                        style={styles.inputModal}
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Promo Code dan Price */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 0.5,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Promo Code</Text>
+                      <TextInput
+                        value={promoCode}
+                        onChangeText={setPromoCode}
                         style={styles.inputModal}
                       />
                     </View>
 
                     <View
                       style={{
-                        flex: 0.3,
+                        flex: 0.5,
                         marginLeft: 10,
                       }}
                     >
-                      <Text style={styles.labelModal}>Validity</Text>
+                      <Text style={styles.labelModal}>Price</Text>
                       <TextInput
-                        value={validity}
-                        onChangeText={setValidity}
+                        value={promoPrice}
+                        onChangeText={(text) => setPromoPrice(text.replace(/\D/g, ""))}
+                        keyboardType="numeric"
                         style={styles.inputModal}
                       />
                     </View>
                   </View>
-                  {/* Input Amount */}
+
+                  {/* Input Start Date dan End Date */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 0.5,
                       }}
                     >
-                      <Text style={styles.labelModal}>Amount</Text>
+                      <Text style={styles.labelModal}>Start Date</Text>
+
+                      {Platform.OS === "web" ? (
+                        <input
+                          type="date"
+                          value={promoStartDate}
+                          //max={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setPromoStartDate(e.target.value)}
+                          style={{
+                            paddingRight: 10,
+                            paddingLeft: 10,
+                            border: "1px solid #ccc",
+                            backgroundColor: "#D9D9DD",
+                            height: 50,
+                            borderRadius: 10,
+                            fontSize: 15,
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <TouchableOpacity
+                            onPress={() => setShowStartDate(true)}
+                            style={{
+                              height: 50,
+                              borderWidth: 1,
+                              borderColor: "#ccc",
+                              borderRadius: 10,
+                              justifyContent: "center",
+                              paddingHorizontal: 15,
+                            }}
+                          >
+                            <Text>
+                              {promoStartDate === "" ? "Select Date" : promoStartDate}
+                            </Text>
+                          </TouchableOpacity>
+
+                          {showStartDate && (
+                            <DateTimePicker
+                              value={date}
+                              mode="date"
+                              display="default"
+                              //maximumDate={new Date()}
+                              minimumDate={new Date()}
+                              onChange={onChangePromoStartDate}
+                            />
+                          )}
+                        </>
+                      )}
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 0.5,
+                        marginLeft: 10,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>End Date</Text>
+
+                      {Platform.OS === "web" ? (
+                        <input
+                          type="date"
+                          value={promoEndDate}
+                          //max={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setPromoEndDate(e.target.value)}
+                          style={{
+                            paddingRight: 10,
+                            paddingLeft: 10,
+                            border: "1px solid #ccc",
+                            backgroundColor: "#D9D9DD",
+                            height: 50,
+                            borderRadius: 10,
+                            fontSize: 15,
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <TouchableOpacity
+                            onPress={() => setShowEndDate(true)}
+                            style={{
+                              height: 50,
+                              borderWidth: 1,
+                              borderColor: "#ccc",
+                              borderRadius: 10,
+                              justifyContent: "center",
+                              paddingHorizontal: 15,
+                            }}
+                          >
+                            <Text>
+                              {promoEndDate === "" ? "Select Date" : promoEndDate}
+                            </Text>
+                          </TouchableOpacity>
+
+                          {showEndDate && (
+                            <DateTimePicker
+                              value={date}
+                              mode="date"
+                              display="default"
+                              //maximumDate={new Date()}
+                              minimumDate={new Date()}
+                              onChange={onChangePromoEndDate}
+                            />
+                          )}
+                        </>
+                      )}
+                    </View>
+                  </View>
+                  
+                  {/* Input Description */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Promo Name</Text>
                       <TextInput
-                        value={amount}
-                        onChangeText={setAmount}
-                        style={styles.inputModal}
+                        style={styles.notesInput}
+                        placeholder="Write Description..."
+                        placeholderTextColor="#999"
+                        value={promoDescription}
+                        onChangeText={setPromoDescription}
+                        multiline
+                        numberOfLines={5}
+                        textAlignVertical="top"
                       />
                     </View>
                   </View>
+                  
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -522,10 +715,48 @@ export default function PromosScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -536,7 +767,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -548,6 +779,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -583,10 +815,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -598,6 +836,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -738,7 +999,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -820,11 +1081,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -832,7 +1093,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -853,7 +1114,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {
@@ -878,178 +1139,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
-    color: "#fff",
-    fontWeight: "700",
-  },
-
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    alignItems: "center",
-  },
-
-  cardImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
+  notesInput: {
+    minHeight: 110,
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#DDDDDD",
     borderRadius: 8,
-  },
-
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
+    padding: 14,
+    fontSize: 14,
+    color: "#222",
     marginBottom: 20,
-  },
-
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
-
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  input: {
-    height: 50,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  //-=======================
-  titlea: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  fileContainer: {
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
   },
 });

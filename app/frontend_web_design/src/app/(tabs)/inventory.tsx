@@ -422,11 +422,17 @@ export default function InventoryScreen() {
   };
 
   const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this?"
+    );
+
+    if (!confirmDelete) return;
+
     const data = equipmentData.filter((item) => item.id !== id);
 
     setEquipmentData(data);
 
-    alert("Equipment delete successfully");
+    alert("Delete successfully");
   };
 
   const handleCancel = () => {
