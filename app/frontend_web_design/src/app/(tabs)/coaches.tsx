@@ -30,6 +30,7 @@ interface dataActiveCoaches {
   dialCodePhone: string;
   phone: string;
   password: string;
+  confirmPassword: string;
   dialCodeEmergencyContactNo: string;
   emergencyContactNo: string;
   emergencyContactName: string;
@@ -48,6 +49,7 @@ const initialDataActiveCoaches: dataActiveCoaches[] = [
     dialCodePhone: "60",
     phone: "85122233360",
     password: "12345",
+    confirmPassword: "12345",
     dialCodeEmergencyContactNo: "60",
     emergencyContactNo: "85122233301",
     emergencyContactName: "Budi",
@@ -64,6 +66,7 @@ const initialDataActiveCoaches: dataActiveCoaches[] = [
     dialCodePhone: "62",
     phone: "85122233362",
     password: "12345",
+    confirmPassword: "12345",
     dialCodeEmergencyContactNo: "62",
     emergencyContactNo: "85122233301",
     emergencyContactName: "Budi",
@@ -80,6 +83,7 @@ const initialDataActiveCoaches: dataActiveCoaches[] = [
     dialCodePhone: "65",
     phone: "85122233365",
     password: "12345",
+    confirmPassword: "12345",
     dialCodeEmergencyContactNo: "65",
     emergencyContactNo: "85122233301",
     emergencyContactName: "Budi",
@@ -136,7 +140,7 @@ export default function CoachesScreen() {
 
       <View
         style={{
-          flex: 1.5,
+          flex: 2,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -147,6 +151,18 @@ export default function CoachesScreen() {
           onPress={() => handleEdit(item)}
         >
           <Text style={styles.editTextList}>Edit</Text>
+        </Pressable>
+                
+        <Pressable
+          style={{
+            backgroundColor: "#fff",
+            paddingHorizontal: 10,
+            paddingVertical: 6,
+            borderRadius: 10,
+          }}
+          onPress={() => handleEditPassword(item)}
+        >
+          <Feather name="key" size={20} color="#9a0505" />
         </Pressable>
 
         <Pressable
@@ -175,12 +191,16 @@ export default function CoachesScreen() {
   const [email, setEmail] = useState("");
   const [dialCodePhone, setDialCodePhone] = useState("62");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
   const [emergencyContactNo, setEmergencyContactNo] = useState("");
   const [emergencyContactName, setEmergencyContactName] = useState("");
   const [gender, setGender] = useState("");
+  
+  const [isEditPassword, setIsEditPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleAdd = () => {
     setSelectedActiveCoaches(null);
@@ -194,11 +214,13 @@ export default function CoachesScreen() {
     setDialCodePhone("");
     setPhone("");
     setPassword("");
+    setConfirmPassword("");
     setDialCodeEmergencyContactNo("");
     setEmergencyContactNo("");
     setEmergencyContactName("");
     setGender("");
 
+    setIsEditPassword(false);
     setShowModal(true);
   };
 
@@ -213,17 +235,58 @@ export default function CoachesScreen() {
     setDialCodePhone(item.dialCodePhone);
     setPhone(item.phone);
     setPassword(item.password);
+    setConfirmPassword(item.confirmPassword);
     setDialCodeEmergencyContactNo(item.dialCodeEmergencyContactNo);
     setEmergencyContactNo(item.emergencyContactNo);
     setEmergencyContactName(item.emergencyContactName);
     setGender(item.gender);
 
+    setIsEditPassword(false);
+    setShowModal(true);
+  };
+
+  const handleEditPassword = (item: dataActiveCoaches) => {
+    setSelectedActiveCoaches(item);
+    setFullName(item.name);
+    setCoachId(item.coachId);
+    setCoachDateExpiration(item.dateExpiration);
+    setImage(item.photo);
+    setEmail(item.email);
+    setBirthDate(item.birthDate);
+    setDialCodePhone(item.dialCodePhone);
+    setPhone(item.phone);
+    setPassword(item.password);
+    setConfirmPassword(item.confirmPassword);
+    setDialCodeEmergencyContactNo(item.dialCodeEmergencyContactNo);
+    setEmergencyContactNo(item.emergencyContactNo);
+    setEmergencyContactName(item.emergencyContactName);
+    setGender(item.gender);
+
+    setIsEditPassword(true);
     setShowModal(true);
   };
 
   const handleSave = () => {
     if (fullName.trim() === "") {
-      alert("Member Name is required");
+      alert("Name is required");
+      return;
+    }
+
+    // Validasi Password
+    if (password.trim() === "") {
+      alert("Password is required");
+      return;
+    }
+
+    // Validasi Confirm Password
+    if (confirmPassword.trim() === "") {
+      alert("Confirm Password is required");
+      return;
+    }
+
+    // Cek Password dan Confirm Password
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password must be the same");
       return;
     }
 
@@ -242,6 +305,7 @@ export default function CoachesScreen() {
               dialCodePhone: dialCodePhone,
               phone: phone,
               password: password,
+              confirmPassword: confirmPassword,
               dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
               emergencyContactNo: emergencyContactNo,
               emergencyContactName: emergencyContactName,
@@ -252,7 +316,7 @@ export default function CoachesScreen() {
 
       setActiveCoachesData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
       const newActiveCoaches: dataActiveCoaches = {
@@ -266,6 +330,7 @@ export default function CoachesScreen() {
         dialCodePhone: dialCodePhone,
         phone: phone,
         password: password,
+        confirmPassword: confirmPassword,
         dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
         emergencyContactNo: emergencyContactNo,
         emergencyContactName: emergencyContactName,
@@ -274,7 +339,7 @@ export default function CoachesScreen() {
 
       setActiveCoachesData([...activeCoachesData, newActiveCoaches]);
 
-      alert("Members added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
@@ -309,11 +374,13 @@ export default function CoachesScreen() {
     setDialCodePhone("");
     setPhone("");
     setPassword("");
+    setConfirmPassword("");
     setDialCodeEmergencyContactNo("");
     setEmergencyContactNo("");
     setEmergencyContactName("");
     setGender("");
 
+    setIsEditPassword(false);
     setShowModal(false);
   };
 
@@ -522,7 +589,7 @@ export default function CoachesScreen() {
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1.5,
+                      flex: 2,
                       textAlign: "center",
                     },
                   ]}
@@ -588,331 +655,478 @@ export default function CoachesScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedActiveCoaches ? "Edit Coach" : "Add Coach"}
+                    {isEditPassword
+                        ? "Edit Password"
+                        : selectedActiveCoaches
+                        ? "Edit Coach"
+                        : "Add Coach"}
                   </Text>
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
 
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-                  {/* Input Member Name */}
-                  {selectedActiveCoaches ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Coach ID</Text>
-
-                        <TextInput
-                          value={CoachId}
-                          editable={false}
-                          style={styles.inputModal}
-                        />
-                      </View>
-
-                      <View
-                        style={{
-                          flex: 0.5,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  )}
-                  {/* Date Expiration */}
-                  {selectedActiveCoaches ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Expiration</Text>
-
-                        {Platform.OS === "web" ? (
+                  {isEditPassword
+                    ? <View style={styles.rowModal} />
+                    : <View>
+                        <View style={{marginBottom: 100}}>
+                          {/* Attach Photo Button */}
                           <input
-                            type="date"
-                            value={CoachDateExpiration}
-                            disabled={true}
-                            //max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setCoachDateExpiration(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={pickImageWeb}
+                            style={{ display: "none" }}
                           />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {CoachDateExpiration === ""
-                                  ? "Select Date"
-                                  : CoachDateExpiration}
+
+                          <View style={{ flexDirection: "row" }}>
+                            <Pressable onPress={openFilePicker}>
+                              <Text style={styles.attachPhotoModal}>
+                                Attach Photo ✏️
                               </Text>
-                            </TouchableOpacity>
+                            </Pressable>
+                            <Text style={styles.attachPhotoModal}> | </Text>
+                            <Pressable onPress={removePhoto}>
+                              <Text style={styles.attachPhotoModal}>
+                                Remove Photo ❌
+                              </Text>
+                            </Pressable>
+                          </View>
 
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>                      
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                    </View>
-                  )}
-                  
-                  {/* Input Email dan Birth of Date */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Email</Text>
-                      <TextInput
-                        value={email}
-                        onChangeText={setEmail}
-                        style={styles.inputModal}
-                      />
-                    </View>
+                          {image ? (
+                            <Image
+                              source={{ uri: image }}
+                              style={styles.imagePlaceholderModal}
+                            />
+                          ) : (
+                            <View style={styles.imagePlaceholderModal}></View>
+                          )}
+                        </View>
+                      </View>
+                  }
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Birth of Date</Text>
-
-                      {Platform.OS === "web" ? (
-                        <input
-                          type="date"
-                          value={birthDate}
-                          max={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setBirthDate(e.target.value)}
+                  {isEditPassword
+                    ? <View style={styles.rowModal} />
+                    : selectedActiveCoaches
+                    ? <View style={styles.rowModal}>
+                        <View
                           style={{
-                            paddingRight: 10,
-                            paddingLeft: 10,
-                            border: "1px solid #ccc",
-                            backgroundColor: "#D9D9DD",
-                            height: 50,
-                            borderRadius: 10,
-                            fontSize: 15,
+                            flex: 0.5,
                           }}
-                        />
-                      ) : (
-                        <>
-                          <TouchableOpacity
-                            onPress={() => setShowPicker(true)}
+                        >
+                          <Text style={styles.labelModal}>Coach ID</Text>
+
+                          <TextInput
+                            value={CoachId}
+                            editable={false}
+                            style={styles.inputModal}
+                          />
+                        </View>
+
+                        <View
+                          style={{
+                            flex: 0.5,
+                            marginLeft: 10,
+                          }}
+                        >
+                          <Text style={styles.labelModal}>Full Name</Text>
+                          <TextInput
+                            value={fullName}
+                            onChangeText={setFullName}
+                            style={styles.inputModal}
+                          />
+                        </View>
+                      </View>
+                    : <View style={styles.rowModal}>
+                        <View
+                          style={{
+                            flex: 1,
+                          }}
+                        >
+                          <Text style={styles.labelModal}>Full Name</Text>
+                          <TextInput
+                            value={fullName}
+                            onChangeText={setFullName}
+                            style={styles.inputModal}
+                          />
+                        </View>
+                      </View>
+                  }
+
+                  {isEditPassword
+                    ? <View style={styles.rowModal} />
+                    : selectedActiveCoaches
+                    ? <View style={styles.rowModal}>
+                        <View
+                          style={{
+                            flex: 0.5,
+                          }}
+                        >
+                          <Text style={styles.labelModal}>Date Expiration</Text>
+
+                          {Platform.OS === "web" ? (
+                            <input
+                              type="date"
+                              value={CoachDateExpiration}
+                              disabled={true}
+                              //max={new Date().toISOString().split("T")[0]}
+                              onChange={(e) =>
+                                setCoachDateExpiration(e.target.value)
+                              }
+                              style={{
+                                paddingRight: 10,
+                                paddingLeft: 10,
+                                border: "1px solid #ccc",
+                                backgroundColor: "#D9D9DD",
+                                height: 50,
+                                borderRadius: 10,
+                                fontSize: 15,
+                              }}
+                            />
+                          ) : (
+                            <>
+                              <TouchableOpacity
+                                onPress={() => setShowPicker(true)}
+                                style={{
+                                  height: 50,
+                                  borderWidth: 1,
+                                  borderColor: "#ccc",
+                                  borderRadius: 10,
+                                  justifyContent: "center",
+                                  paddingHorizontal: 15,
+                                }}
+                              >
+                                <Text>
+                                  {CoachDateExpiration === ""
+                                    ? "Select Date"
+                                    : CoachDateExpiration}
+                                </Text>
+                              </TouchableOpacity>
+
+                              {showPicker && (
+                                <DateTimePicker
+                                  value={date}
+                                  mode="date"
+                                  display="default"
+                                  onChange={onChangeDate}
+                                />
+                              )}
+                            </>
+                          )}
+                        </View>                      
+                      </View>
+                    : <View style={styles.rowModal} />
+                  }
+
+                  {isEditPassword
+                    ? <View style={styles.rowModal} />
+                    : <View>
+                        {/* Input Email dan Birth of Date */}
+                        <View style={styles.rowModal}>
+                          <View
                             style={{
-                              height: 50,
-                              borderWidth: 1,
-                              borderColor: "#ccc",
-                              borderRadius: 10,
-                              justifyContent: "center",
-                              paddingHorizontal: 15,
+                              flex: 0.7,
                             }}
                           >
-                            <Text>
-                              {birthDate === "" ? "Select Date" : birthDate}
-                            </Text>
-                          </TouchableOpacity>
-
-                          {showPicker && (
-                            <DateTimePicker
-                              value={date}
-                              mode="date"
-                              display="default"
-                              maximumDate={new Date()}
-                              onChange={onChangeDate}
+                            <Text style={styles.labelModal}>Email</Text>
+                            <TextInput
+                              value={email}
+                              onChangeText={setEmail}
+                              style={styles.inputModal}
                             />
-                          )}
-                        </>
-                      )}
-                    </View>
-                  </View>
-                  {/* Input Gender dan Phone Number */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Gender</Text>
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={gender}
-                          onValueChange={(value) => setGender(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="-- Select Gender --" value="" />
-                          <Picker.Item label="Male" value="Male" />
-                          <Picker.Item label="Female" value="Female" />
-                        </Picker>
+                          </View>
+
+                          <View
+                            style={{
+                              flex: 0.7,
+                              marginLeft: 10,
+                            }}
+                          >
+                            <Text style={styles.labelModal}>Birth of Date</Text>
+
+                            {Platform.OS === "web" ? (
+                              <input
+                                type="date"
+                                value={birthDate}
+                                max={new Date().toISOString().split("T")[0]}
+                                onChange={(e) => setBirthDate(e.target.value)}
+                                style={{
+                                  paddingRight: 10,
+                                  paddingLeft: 10,
+                                  border: "1px solid #ccc",
+                                  backgroundColor: "#D9D9DD",
+                                  height: 50,
+                                  borderRadius: 10,
+                                  fontSize: 15,
+                                }}
+                              />
+                            ) : (
+                              <>
+                                <TouchableOpacity
+                                  onPress={() => setShowPicker(true)}
+                                  style={{
+                                    height: 50,
+                                    borderWidth: 1,
+                                    borderColor: "#ccc",
+                                    borderRadius: 10,
+                                    justifyContent: "center",
+                                    paddingHorizontal: 15,
+                                  }}
+                                >
+                                  <Text>
+                                    {birthDate === "" ? "Select Date" : birthDate}
+                                  </Text>
+                                </TouchableOpacity>
+
+                                {showPicker && (
+                                  <DateTimePicker
+                                    value={date}
+                                    mode="date"
+                                    display="default"
+                                    maximumDate={new Date()}
+                                    onChange={onChangeDate}
+                                  />
+                                )}
+                              </>
+                            )}
+                          </View>
+                        </View>
+                        {/* Input Gender dan Phone Number */}
+                        <View style={styles.rowModal}>
+                          <View
+                            style={{
+                              flex: 0.7,
+                            }}
+                          >
+                            <Text style={styles.labelModal}>Gender</Text>
+                            <View style={styles.pickerContainerModal}>
+                              <Picker
+                                selectedValue={gender}
+                                onValueChange={(value) => setGender(value)}
+                                style={styles.pickerContainerListModal}
+                              >
+                                <Picker.Item label="-- Select Gender --" value="" />
+                                <Picker.Item label="Male" value="Male" />
+                                <Picker.Item label="Female" value="Female" />
+                              </Picker>
+                            </View>
+                          </View>
+
+                          <View
+                            style={{
+                              flex: 0.7,
+                              marginLeft: 10,
+                            }}
+                          >
+                            <Text style={styles.labelModal}>Phone Number</Text>
+                            
+                            <PhoneInput
+                              phone={phone}
+                              dialCodePhone={dialCodePhone}
+                              onChangePhone={setPhone}
+                              onChangeDialCode={setDialCodePhone}
+                            />                        
+                          </View>
+                        </View>
+                        {/* Input Emergency Contact Name dan Emergency Contact No */}
+                        <View style={styles.rowModal}>
+                          <View
+                            style={{
+                              flex: 0.7,
+                            }}
+                          >
+                            <Text style={styles.labelModal}>
+                              Emergency Contact Name
+                            </Text>
+
+                            <TextInput
+                              value={emergencyContactName}
+                              onChangeText={setEmergencyContactName}
+                              style={styles.inputModal}
+                            />
+                          </View>
+
+                          <View
+                            style={{
+                              flex: 0.7,
+                              marginLeft: 10,
+                            }}
+                          >
+                            <Text style={styles.labelModal}>
+                              Emergency Contact Number
+                            </Text>
+                            
+                            <PhoneInput
+                              phone={emergencyContactNo}
+                              dialCodePhone={dialCodeEmergencyContactNo}
+                              onChangePhone={setEmergencyContactNo}
+                              onChangeDialCode={setDialCodeEmergencyContactNo}
+                            />    
+                          </View>
+                        </View>
                       </View>
-                    </View>
+                  }
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Phone Number</Text>
-                      
-                      <PhoneInput
-                        phone={phone}
-                        dialCodePhone={dialCodePhone}
-                        onChangePhone={setPhone}
-                        onChangeDialCode={setDialCodePhone}
-                      />                        
-                    </View>
-                  </View>
-                  {/* Input Emergency Contact Name dan Emergency Contact No */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Name
-                      </Text>
+                  {isEditPassword
+                    ? <View>
+                        {/* Input Password */}
+                        <View style={styles.rowModal}>
+                            <View
+                              style={{
+                                flex: 0.7,
+                              }}
+                            >
+                              <Text style={styles.labelModal}>Password</Text>
+                              <View style={styles.passwordContainer}>
+                                <TextInput
+                                  value={password}
+                                  onChangeText={setPassword}
+                                  style={styles.passwordInput}
+                                  secureTextEntry={!showPassword}
+                                />
 
-                      <TextInput
-                        value={emergencyContactName}
-                        onChangeText={setEmergencyContactName}
-                        style={styles.inputModal}
-                      />
-                    </View>
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    setShowPassword(!showPassword)
+                                  }
+                                  style={styles.eyeButton}
+                                >
+                                  <Ionicons
+                                    name={
+                                      showPassword
+                                        ? "eye-off-outline"
+                                        : "eye-outline"
+                                    }
+                                    size={22}
+                                    color="#666"
+                                  />
+                                </TouchableOpacity>
+                              </View>                              
+                            </View>
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Number
-                      </Text>
-                      
-                      <PhoneInput
-                        phone={emergencyContactNo}
-                        dialCodePhone={dialCodeEmergencyContactNo}
-                        onChangePhone={setEmergencyContactNo}
-                        onChangeDialCode={setDialCodeEmergencyContactNo}
-                      />    
-                    </View>
-                  </View>
-                  {/* Input Password */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.5,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Password</Text>
+                            <View
+                              style={{
+                                flex: 0.7,
+                                marginLeft: 10,
+                              }}
+                            >
+                              <Text style={styles.labelModal}>Confirm Password</Text>
+                              <View style={styles.passwordContainer}>
+                                <TextInput
+                                  value={confirmPassword}
+                                  onChangeText={setConfirmPassword}
+                                  style={styles.passwordInput}
+                                  secureTextEntry={!showConfirmPassword}
+                                />
 
-                      <View style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        backgroundColor: "#D9D9DD",
-                        borderRadius: 10,}}
-                      >
-                        <TextInput
-                          value={password}
-                          onChangeText={setPassword}
-                          style={{flex: 1, height: 50, fontSize: 15, paddingHorizontal: 12}}
-                          secureTextEntry={!showPassword}
-                        />
-
-                        <TouchableOpacity
-                          onPress={() => setShowPassword(!showPassword)}
-                          style={{paddingHorizontal: 12, justifyContent: "center", alignItems: "center"}}
-                        >
-                          <Ionicons
-                            name={showPassword ? "eye-off-outline" : "eye-outline"}
-                            size={22}
-                            color="#000"
-                          />
-                        </TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    setShowConfirmPassword(!showConfirmPassword)
+                                  }
+                                  style={styles.eyeButton}
+                                >
+                                  <Ionicons
+                                    name={
+                                      showConfirmPassword
+                                        ? "eye-off-outline"
+                                        : "eye-outline"
+                                    }
+                                    size={22}
+                                    color="#666"
+                                  />
+                                </TouchableOpacity>
+                              </View>                                 
+                            </View>
+                        </View>
                       </View>
-                    </View>
-                  </View>
+                    : selectedActiveCoaches
+                    ? <View style={styles.rowModal} />
+                    : <View>
+                        {/* Input Password */}
+                        <View style={styles.rowModal}>
+                            <View
+                              style={{
+                                flex: 0.7,
+                              }}
+                            >
+                              <Text style={styles.labelModal}>Password</Text>
+                              <View style={styles.passwordContainer}>
+                                <TextInput
+                                  value={password}
+                                  onChangeText={setPassword}
+                                  style={styles.passwordInput}
+                                  secureTextEntry={!showPassword}
+                                />
+
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    setShowPassword(!showPassword)
+                                  }
+                                  style={styles.eyeButton}
+                                >
+                                  <Ionicons
+                                    name={
+                                      showPassword
+                                        ? "eye-off-outline"
+                                        : "eye-outline"
+                                    }
+                                    size={22}
+                                    color="#666"
+                                  />
+                                </TouchableOpacity>
+                              </View>                              
+                            </View>
+
+                            <View
+                              style={{
+                                flex: 0.7,
+                                marginLeft: 10,
+                              }}
+                            >
+                              <Text style={styles.labelModal}>Confirm Password</Text>
+                              <View style={styles.passwordContainer}>
+                                <TextInput
+                                  value={confirmPassword}
+                                  onChangeText={setConfirmPassword}
+                                  style={styles.passwordInput}
+                                  secureTextEntry={!showConfirmPassword}
+                                />
+
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    setShowConfirmPassword(!showConfirmPassword)
+                                  }
+                                  style={styles.eyeButton}
+                                >
+                                  <Ionicons
+                                    name={
+                                      showConfirmPassword
+                                        ? "eye-off-outline"
+                                        : "eye-outline"
+                                    }
+                                    size={22}
+                                    color="#666"
+                                  />
+                                </TouchableOpacity>
+                              </View>                                 
+                            </View>
+                        </View>
+                      </View>
+                  }
+
+
+
+
+
+
+
+
+
+
+
+                  
+                  
+                  
+                  
+                  
+                  
             
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -1308,5 +1522,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
- 
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    backgroundColor: "#D9D9DD",
+  },
+
+  passwordInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 15,
+    fontSize: 15,
+  },
+
+  eyeButton: {
+    paddingHorizontal: 12,
+  },
 });
