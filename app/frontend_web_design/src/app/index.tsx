@@ -23,7 +23,7 @@ export default function LoginScreen() {
       {/* Logo */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("../../assets/images/bg_logo.png")}
+          source={require("@/assets/images/bg_logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -104,18 +104,19 @@ const styles = StyleSheet.create({
   },
 
   logoContainer: {
-    position: "absolute",
+    // position: "absolute",
     top: 30,
     left: 30,
   },
 
   logo: {
-    width: 300,
-    height: 100,
+    width: 200,
+    height: 80,
   },
 
   formContainer: {
-    flex: 1,
+    // flex: 1,
+    marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
   },
