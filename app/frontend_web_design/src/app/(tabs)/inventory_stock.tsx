@@ -14,260 +14,69 @@ import {
   View,
 } from "react-native";
 
+
 // ============ DATA ============
-interface Equipment {
+interface StockData {
   id: string;
   name: string;
-  total: number;
-  status: "Active" | "Inactive";
-  photo: string;
+  category: string;
+  stock: number;
+  status: "In Stock" | "Low Stock" | "Out of Stock";
+  avatar: string;
 }
 
-const initialEquipmentData: Equipment[] = [
+const initialStockData: StockData[] = [
   {
     id: "1",
-    name: "Treadmill",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=15",
+    name: "Whey Protein",
+    category: "Supplement",
+    stock: 20,
+    status: "In Stock",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2sK9rSZLToFGoYsrUTUwE68W6iiwGwIpMkQ&s",
   },
   {
     id: "2",
-    name: "10 lbs Dumbell",
-    total: 3,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=16",
+    name: "Creatine",
+    category: "Supplement",
+    stock: 5,
+    status: "Low Stock",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2sK9rSZLToFGoYsrUTUwE68W6iiwGwIpMkQ&s",
   },
   {
     id: "3",
-    name: "15 lbs Dumbell",
-    total: 6,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=17",
+    name: "Gym Towel",
+    category: "Merchandise",
+    stock: 0,
+    status: "Out of Stock",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2sK9rSZLToFGoYsrUTUwE68W6iiwGwIpMkQ&s",
   },
   {
     id: "4",
-    name: "20 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=18",
+    name: "Dumbbell 10kg",
+    category: "Equipment",
+    stock: 12,
+    status: "In Stock",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2sK9rSZLToFGoYsrUTUwE68W6iiwGwIpMkQ&s",
   },
   {
     id: "5",
-    name: "21 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=19",
-  },
-  {
-    id: "6",
-    name: "22 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=20",
-  },
-  {
-    id: "7",
-    name: "23 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=21",
-  },
-  {
-    id: "8",
-    name: "24 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=22",
-  },
-  {
-    id: "9",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=23",
-  },
-  {
-    id: "10",
-    name: "27 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=24",
-  },
-  {
-    id: "11",
-    name: "26 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=25",
-  },
-  {
-    id: "12",
-    name: "29 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=26",
-  },
-  {
-    id: "13",
-    name: "30 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=27",
-  },
-  {
-    id: "14",
-    name: "31 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=28",
-  },
-  {
-    id: "15",
-    name: "32 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=29",
-  },
-  {
-    id: "16",
-    name: "33 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=30",
-  },
-  {
-    id: "17",
-    name: "34 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=31",
-  },
-  {
-    id: "18",
-    name: "35 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=32",
-  },
-  {
-    id: "19",
-    name: "36 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=33",
-  },
-  {
-    id: "20",
-    name: "37 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=34",
-  },
-  {
-    id: "21",
-    name: "40 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=35",
-  },
-  {
-    id: "22",
-    name: "41 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=36",
-  },
-  {
-    id: "23",
-    name: "42 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=37",
-  },
-  {
-    id: "24",
-    name: "43 lbs Dumbell",
-    total: 12,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=38",
-  },
-  {
-    id: "25",
-    name: "44 lbs Dumbell",
-    total: 12,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=39",
-  },
-  {
-    id: "26",
-    name: "Exercise Bike",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=40",
-  },
-  {
-    id: "27",
-    name: "Bench Press",
-    total: 2,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=41",
-  },
-  {
-    id: "28",
-    name: "Rowing Machine",
-    total: 5,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=42",
-  },
-  {
-    id: "29",
-    name: "Pull Up Bar",
-    total: 3,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=43",
-  },
-  {
-    id: "30",
-    name: "Cable Machine",
-    total: 1,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=44",
-  },
-  {
-    id: "31",
-    name: "Smith Machine",
-    total: 2,
-    status: "Inactive",
-    photo: "https://i.pravatar.cc/300?img=45",
-  },
-  {
-    id: "32",
-    name: "Leg Press",
-    total: 4,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=46",
-  },
-  {
-    id: "33",
-    name: "Kettlebell",
-    total: 20,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=47",
-  },
-  {
-    id: "34",
-    name: "Yoga Mat",
-    total: 30,
-    status: "Active",
-    photo: "https://i.pravatar.cc/300?img=48",
+    name: "Resistance Band",
+    category: "Equipment",
+    stock: 2,
+    status: "Low Stock",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2sK9rSZLToFGoYsrUTUwE68W6iiwGwIpMkQ&s",
   },
 ];
 
-export default function InventoryEquipmentScreen() {
+export default function InventoryStockScreen() {
   const router = useRouter();
-  const [equipmentData, setEquipmentData] =
-    useState<Equipment[]>(initialEquipmentData);
+  const [StockDataData, setStockDataData] =
+    useState<StockData[]>(initialStockData);
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -275,7 +84,7 @@ export default function InventoryEquipmentScreen() {
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return equipmentData.filter((item) => {
+    return StockDataData.filter((item) => {
       const matchName = item.name.toLowerCase().includes(search.toLowerCase());
 
       const matchStatus =
@@ -301,20 +110,22 @@ export default function InventoryEquipmentScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 1, textAlign: "center" }]}>
-        {item.total}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.name}</Text>
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.category}</Text>
+      <Text style={[styles.dataTextList, { flex: 1, textAlign: "center" }]}>{item.stock}</Text>
 
       <Text
         style={[
           styles.dataTextList,
           {
-            flex: 1.6,
+            flex: 2,
             textAlign: "center",
             fontWeight: "bold",
-            color: item.status === "Active" ? "#22C55E" : "#FACC15",
+            color:  item.status === "In Stock"
+                      ? "#22C55E"
+                      : item.status === "Low Stock"
+                      ? "#F59E0B"
+                      : "#a1b3ce",
           },
         ]}
       >
@@ -323,7 +134,7 @@ export default function InventoryEquipmentScreen() {
 
       <View
         style={{
-          flex: 0.8,
+          flex: 1,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -353,70 +164,80 @@ export default function InventoryEquipmentScreen() {
 
   const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
+  const [selectedStockData, setSelectedStockData] = useState<StockData | null>(
     null,
   );
-  const [equipmentName, setEquipmentName] = useState("");
-  const [status, setStatus] = useState<"Active" | "Inactive">("Active");
-  const [totalNo, setTotalNo] = useState(1);
-  const [image, setImage] = useState("");
+
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [stock, setStock] = useState(1);
+  const [status, setStatus] = useState<"In Stock" | "Low Stock" | "Out of Stock">("In Stock");
+  const [avatar, setAvatar] = useState("");
 
   const handleAdd = () => {
-    setSelectedEquipment(null);
-    setEquipmentName("");
-    setTotalNo(0);
-    setStatus("Active");
-    setImage("");
+    setSelectedStockData(null);
+    setName("");
+    setCategory("");
+    setStock(0);
+    setStatus("In Stock");
+    setAvatar("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: Equipment) => {
-    setSelectedEquipment(item);
-    setEquipmentName(item.name);
-    setTotalNo(item.total);
+  const handleEdit = (item: StockData) => {
+    setSelectedStockData(item);
+    setName(item.name);
+    setCategory(item.category);
+    setStock(item.stock);
     setStatus(item.status);
-    setImage(item.photo);
+    setAvatar(item.avatar);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (equipmentName.trim() === "") {
-      alert("Equipment Name is required");
+    if (name.trim() === "") {
+      alert("Name is required");
+      return;
+    }
+    if (category.trim() === "") {
+      alert("Category is required");
       return;
     }
 
-    if (selectedEquipment) {
+    if (selectedStockData) {
       // UPDATE
-      const updatedData = equipmentData.map((item) =>
-        item.id === selectedEquipment.id
+      const updatedData = StockDataData.map((item) =>
+        item.id === selectedStockData.id
           ? {
               ...item,
-              name: equipmentName,
-              total: totalNo,
+              name: name,
+              category: category,
+              stock: stock,
               status: status,
-              photo: image,
+              avatar: avatar,
             }
           : item,
       );
 
-      setEquipmentData(updatedData);
+      setStockDataData(updatedData);
 
-      alert("Equipment updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newEquipment: Equipment = {
+      const newStockData: StockData = {
         id: Date.now().toString(),
-        name: equipmentName,
-        total: totalNo,
+        name: name,
+        category: category,
+        stock: stock,
         status: status,
-        photo: image,
+        avatar: avatar,
       };
 
-      setEquipmentData([...equipmentData, newEquipment]);
+      setStockDataData([...StockDataData, newStockData]);
 
-      alert("Equipment added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
@@ -428,9 +249,9 @@ export default function InventoryEquipmentScreen() {
 
     if (!confirmDelete) return;
 
-    const data = equipmentData.filter((item) => item.id !== id);
+    const data = StockDataData.filter((item) => item.id !== id);
 
-    setEquipmentData(data);
+    setStockDataData(data);
 
     alert("Delete successfully");
   };
@@ -441,36 +262,37 @@ export default function InventoryEquipmentScreen() {
   };
 
   const resetForm = () => {
-    setEquipmentName("");
-    setTotalNo(1);
-    setStatus("Active");
-    setImage("");
-    setSelectedEquipment(null);
+    setName("");
+    setCategory("");
+    setStock(0);
+    setStatus("In Stock");
+    setAvatar("");
+    setSelectedStockData(null);
 
     setShowModal(false);
   };
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+ const fileInputRef = useRef<HTMLInputElement>(null);
+ 
+   const openFilePicker = () => {
+     fileInputRef.current?.click();
+   };
+ 
+   const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
+     const file = event.target.files?.[0];
+     if (!file) return;
+ 
+     const imageUrl = URL.createObjectURL(file);
+     setAvatar(imageUrl);
+   };
+ 
+   const removePhoto = () => {
+     setAvatar("");
+ 
+     if (fileInputRef.current) {
+       fileInputRef.current.value = "";
+     }
+   };
 
   return (
     <View style={styles.container}>
@@ -529,7 +351,10 @@ export default function InventoryEquipmentScreen() {
             icon="inventory-2"
             title="Inventory"
             active
-            onPress={() => setShowSubMenu(!showSubMenu)}
+            onPress={() => {
+              router.push("/inventory");
+              setShowSubMenu(true);
+            }}
             rightIcon={
               <MaterialIcons
                 name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
@@ -545,12 +370,12 @@ export default function InventoryEquipmentScreen() {
                     icon="layers"
                     title="Equipments"
                     onPress={() => router.push("/inventory")}
-                    active
                   />
                   <MenuSubItem
                     icon="layers"
                     title="Stocks"
                     onPress={() => router.push("/inventory_stock")}
+                    active
                   />
                 </View>
               )}
@@ -587,11 +412,11 @@ export default function InventoryEquipmentScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Equipment</Text>
+              <Text style={styles.sectionTitle}>Add Item</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Manage Equipments</Text>
+              <Text style={styles.titleList}>Manage Items</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -614,7 +439,7 @@ export default function InventoryEquipmentScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search equipment..."
+                    placeholder="Search..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -629,55 +454,21 @@ export default function InventoryEquipmentScreen() {
                     style={styles.pickerSearchList}
                   >
                     <Picker.Item label="All Status" value="All" />
-                    <Picker.Item label="Active" value="Active" />
-                    <Picker.Item label="Inactive" value="Inactive" />
+                    <Picker.Item label="In Stock" value="In Stock" />
+                    <Picker.Item label="Low Stock" value="Low Stock" />
+                    <Picker.Item label="Out of Stock" value="Out of Stock" />
                   </Picker>
                 </View>
               </View>
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Equipment Name
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Total No.
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.6,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Status
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 0.8,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Actions
-                </Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Name</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center" }]}>Category</Text>
+                <Text style={[styles.headerTextList, { flex: 1, textAlign: "center" }]}>Stock</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center" }]}>Status</Text>
+                <Text style={[styles.headerTextList, { flex: 1, textAlign: "center" }]}>Actions</Text>
               </View>
-
               {/* Data */}
               <FlatList
                 data={currentData}
@@ -731,11 +522,11 @@ export default function InventoryEquipmentScreen() {
               {/* -------------------------------------------------- */}
               {/* ------------------ Screen Modal ------------------ */}
               {/* -------------------------------------------------- */}
-              
+
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedEquipment ? "Edit Equipment" : "Add Equipment"}
+                    {selectedStockData ? "Edit Item" : "Add Item"}
                   </Text>
 
                   {/* Attach Photo Button */}
@@ -761,25 +552,62 @@ export default function InventoryEquipmentScreen() {
                     </Pressable>
                   </View>
 
-                  {image ? (
+                  {avatar ? (
                     <Image
-                      source={{ uri: image }}
+                      source={{ uri: avatar }}
                       style={styles.imagePlaceholderModal}
                     />
                   ) : (
                     <View style={styles.imagePlaceholderModal}></View>
                   )}
 
-                  <Text style={styles.labelModal}>Equipment Name</Text>
-
-                  <TextInput
-                    value={equipmentName}
-                    onChangeText={setEquipmentName}
-                    style={styles.inputModal}
-                  />
-
+                  {/* Input Name dan Category */}
                   <View style={styles.rowModal}>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 0.5 }}>
+                      <Text style={styles.labelModal}>Name</Text>
+
+                      <TextInput
+                        value={name}
+                        onChangeText={setName}
+                        style={styles.inputModal}
+                      />
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 0.5,
+                        marginLeft: 10,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Category</Text>
+
+                      <TextInput
+                        value={category}
+                        onChangeText={setCategory}
+                        style={styles.inputModal}
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Stock dan Status */}
+                  <View style={styles.rowModal}>
+                    <View style={{ flex: 0.5 }}>
+                      <Text style={styles.labelModal}>Stock</Text>
+
+                      <TextInput
+                        value={stock.toString()}
+                        onChangeText={(text) => setStock(Number(text.replace(/\D/g, "")))}
+                        keyboardType="numeric"
+                        style={styles.inputModal}
+                      />
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 0.5,
+                        marginLeft: 10,
+                      }}
+                    >
                       <Text style={styles.labelModal}>Status</Text>
 
                       <View style={styles.pickerContainerModal}>
@@ -788,26 +616,11 @@ export default function InventoryEquipmentScreen() {
                           onValueChange={(value) => setStatus(value)}
                           style={styles.pickerContainerListModal}
                         >
-                          <Picker.Item label="Active" value="Active" />
-                          <Picker.Item label="Inactive" value="Inactive" />
+                          <Picker.Item label="In Stock" value="In Stock" />
+                          <Picker.Item label="Low Stock" value="Low Stock" />
+                          <Picker.Item label="Out of Stock" value="Out of Stock" />
                         </Picker>
                       </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Total No.</Text>
-
-                      <TextInput
-                        value={totalNo.toString()}
-                        onChangeText={(text) => setTotalNo(Number(text.replace(/\D/g, "")))}
-                        keyboardType="numeric"
-                        style={styles.inputModal}
-                      />
                     </View>
                   </View>
 
