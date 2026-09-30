@@ -1,10 +1,12 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import { Link, useRouter } from "expo-router";
+import React, { useMemo, useRef, useState } from "react";
 import {
   FlatList,
   Image,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -12,59 +14,85 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Modal,
 } from "react-native";
+import RichTextEditor from "@/components/RichTextEditor";
+
 
 // ============ DATA ============
-interface dataPlans {
+interface dataActiveNews {
   id: string;
-  planName: string;
-  validity: string;
-  amount: string;
+  titleName: string;  
+  description: string;  
+  picture: string  | null;
+  category: string;
+  postDate: string;
+  status: string;
 }
 
-const initialDataPlans: dataPlans[] = [
+const initialDataActiveNews: dataActiveNews[] = [
   {
     id: "1",
-    planName: "1 month",
-    validity: "1",
-    amount: "800",
+    titleName: "Lomba 20 Juli",
+    category: "Events",
+    status: "Posted",
+    description: "kompetisi tahunan yang paling dinanti: DOMS Challenge 2026!",
+    picture: "https://i.pravatar.cc/300?img=55",
+    postDate: "",
+  },
+];
+
+const dataCategory = [
+  {
+    id: '1',
+    CategoryName: "Workout",
   },
   {
-    id: "2",
-    planName: "3 month",
-    validity: "3",
-    amount: "2200",
+    id: '2',
+    CategoryName: "Nutrition",
   },
   {
-    id: "3",
-    planName: "6 month",
-    validity: "6",
-    amount: "4300",
+    id: '3',
+    CategoryName: "Events",
   },
   {
-    id: "4",
-    planName: "Annual",
-    validity: "12",
-    amount: "8500",
+    id: '4',
+    CategoryName: "Tips",
+  },
+];
+
+const dataStatus = [
+  {
+    id: '1',
+    StatusName: "Posted",
+  },
+  {
+    id: '2',
+    StatusName: "Hidden",
+  },
+  {
+    id: '3',
+    StatusName: "Pending",
   },
 ];
 
 export default function NewsScreen() {
   const router = useRouter();
-  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
+  const [activeNewsData, setActiveNewsData] = useState<
+    dataActiveNews[]
+  >(initialDataActiveNews);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return plansData.filter((item) => {
+    return activeNewsData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.planName.toLowerCase().includes(keyword) ||
-        item.validity.toString().toLowerCase().includes(keyword) ||
-        item.amount.toString().toLowerCase().includes(keyword);
+        item.titleName.toLowerCase().includes(keyword) ||
+        item.category.toString().toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -85,18 +113,13 @@ export default function NewsScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.validity}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.amount}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.titleName}</Text>
+      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.category}</Text>
+      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.status}</Text>
 
       <View
         style={{
-          flex: 1.5,
+          flex: 2,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -108,7 +131,7 @@ export default function NewsScreen() {
         >
           <Text style={styles.editTextList}>Edit</Text>
         </Pressable>
-
+        
         <Pressable
           style={{
             backgroundColor: "#fff",
@@ -124,66 +147,111 @@ export default function NewsScreen() {
     </View>
   );
 
+  
+  
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
-    null,
-  );
-  const [planName, setPlanName] = useState("");
-  const [validity, setValidity] = useState("");
-  const [amount, setAmount] = useState("");
+  const [selectedActiveNews, setSelectedActiveNews] =
+    useState<dataActiveNews | null>(null);
+  
+  
+  const [titleName, setTitleName] = useState("");
+  const [description, setDescription] = useState("");
+  const [picture, setPicture] = useState<string | null>(null);
+
+  const [category, setCategory] = useState<any>(null);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [CategorySearch, setCategorySearch] = useState("");
+  
+  const [postDate, setPostDate] = useState("");
+
+  const [status, setStatus] =  useState<any>(null);
+  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
+  const [StatusSearch, setStatusSearch] = useState("");
 
   const handleAdd = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelectedActiveNews(null);
+    setTitleName("");
+    setDescription("");
+    setPicture("");
+    setCategory("");
+    setPostDate("");
+    setStatus("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataPlans) => {
-    setSelectedDataPlans(item);
-    setPlanName(item.planName);
-    setValidity(item.validity);
-    setAmount(item.amount);
+  const handleEdit = (item: dataActiveNews) => {
+    setSelectedActiveNews(item);
+    setTitleName(item.titleName);
+    setDescription(item.description);
+    setPicture(item.picture);
+    
+    const selectedCategory = dataCategory.find(
+      (Category) => Category.CategoryName === item.category
+    );
+    setCategory(selectedCategory || null);
+
+    setPostDate(item.postDate);
+    
+    const selectedStatus = dataStatus.find(
+      (Status) => Status.StatusName === item.status
+    );
+    setStatus(selectedStatus || null);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (planName.trim() === "") {
-      alert("Member Name is required");
+    if (titleName.trim() === "") {
+      alert("Name is required");
       return;
     }
+    if (!category) {
+      alert("Please select a category name");
+      return;
+    }
+    if (!status) {
+      alert("Please select a status");
+      return;
+    }
+    
 
-    if (selectedDataPlans) {
+
+    if (selectedActiveNews) {
       // UPDATE
-      const updatedData = plansData.map((item) =>
-        item.id === selectedDataPlans.id
+      const updatedData = activeNewsData.map((item) =>
+        item.id === selectedActiveNews.id
           ? {
               ...item,
-              planName: planName,
-              validity: validity,
-              amount: amount,
+              titleName: titleName,
+              description: description,
+              picture: picture,
+              category: category,
+              postDate: postDate,
+              status: status,
             }
           : item,
       );
 
-      setPlansData(updatedData);
+      setActiveNewsData(updatedData);
 
-      alert("Members updated successfully");
+      alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataPlans = {
-        id: Date.now().toString(),
-        planName: planName,
-        validity: validity,
-        amount: amount,
+      const newActiveNews: dataActiveNews = {
+        id: Date.now().toString(),    
+          titleName: titleName,
+          description: description,
+          picture: picture,
+          category: category,
+          postDate: postDate,
+          status: status,
       };
 
-      setPlansData([...plansData, newActiveMembers]);
+      setActiveNewsData([...activeNewsData, newActiveNews]);
 
-      alert("Members added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };
@@ -195,9 +263,9 @@ export default function NewsScreen() {
 
     if (!confirmDelete) return;
 
-    const data = plansData.filter((item) => item.id !== id);
+    const data = activeNewsData.filter((item) => item.id !== id);
 
-    setPlansData(data);
+    setActiveNewsData(data);
 
     alert("Delete successfully");
   };
@@ -208,29 +276,80 @@ export default function NewsScreen() {
   };
 
   const resetForm = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+    setSelectedActiveNews(null);
+    setTitleName("");
+    setDescription("");
+    setPicture("");
+    setCategory("");
+    setPostDate("");
+    setStatus("");
 
     setShowModal(false);
   };
+
+  // Upload Image
+  const handleSelectImage = () => {
+    if (Platform.OS !== "web") return;
+
+    const input = document.createElement("input");
+
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.onchange = (event: any) => {
+      const file = event.target.files?.[0];
+
+      if (!file) return;
+
+      // Validasi ukuran maksimal 50MB
+      if (file.size > 50 * 1024 * 1024) {
+        alert("Maximum file size is 50MB");
+        return;
+      }
+
+      // if (file.size > 2 * 1024 * 1024 * 1024) {
+      //   alert("Maximum file size is 2GB");
+      //   return;
+      // }
+
+      const imageUrl = URL.createObjectURL(file);
+
+      setPicture(imageUrl);
+    };
+
+    input.click();
+  };
+
+  const filteredCategory = dataCategory.filter((item) => {
+    const search = CategorySearch.toLowerCase();
+
+    return (
+      item.CategoryName.toLowerCase().includes(search) 
+    );
+  });
+
+  const filteredStatus = dataStatus.filter((item) => {
+    const search = StatusSearch.toLowerCase();
+
+    return (
+      item.StatusName.toLowerCase().includes(search) 
+    );
+  });
 
   return (
     <View style={styles.container}>
       {/* SIDEBAR */}
       <View style={styles.sidebar}>
         <View style={styles.profileSection}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/profile")}>
             <Image
-              source={require("../../../assets/images/user/user.png")}
+              source={require("@/assets/images/user/user.png")}
               style={styles.avatar}
             />
           </TouchableOpacity>
 
-          <Text style={styles.adminName}>Fandi Wijaya</Text>
-
-          <Text style={styles.email}>fandiwijaya@doms.com</Text>
+          <Link style={styles.adminName} href={"/(tabs)/profile"}>Fandi Wijaya</Link>
+          <Link style={styles.email} href={"/(tabs)/profile"}>fandiwijaya@doms.com</Link>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -277,9 +396,31 @@ export default function NewsScreen() {
           <MenuItem
             icon="edit-square"
             title="News"
-            onPress={() => router.push("/news")}
             active
+            onPress={() => setShowSubMenu(!showSubMenu)}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+              {/* Sub Menu - News */}
+              {showSubMenu && (
+                <View style={{ marginLeft: 40 }}>
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Type"
+                    onPress={() => router.push("/news_type")}
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Status"
+                    onPress={() => router.push("/news_status")}
+                  />
+                </View>
+              )}
           <MenuItem
             icon="auto-stories"
             title="Report"
@@ -296,23 +437,23 @@ export default function NewsScreen() {
       {/* CONTENT */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* TOP BAR */}
-        <View style={styles.topBar}>
+        {/* <View style={styles.topBar}>
           <Text style={styles.feedback}>Feedback</Text>
 
           <Ionicons name="notifications" size={24} color="#ED1018" />
-        </View>
+        </View> */}
 
         {/* GRID */}
         <View style={styles.grid}>
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
+            <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
               <Text style={styles.sectionTitle}>Add News</Text>
-            </Pressable> */}
+            </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>News</Text>
+              <Text style={styles.titleList}>Published News</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -335,7 +476,7 @@ export default function NewsScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search ..."
+                    placeholder="Search News..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -344,54 +485,20 @@ export default function NewsScreen() {
               </View>
 
               {/* Header */}
-              {/* <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Plan Name
-                </Text>
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Validity
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Amount
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.5,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Actions
-                </Text>
-              </View> */}
+              <View style={styles.headerRowList}>
+                <Text style={[styles.headerTextList, { flex: 3 }]}>Title Name</Text>
+                <Text style={[styles.headerTextList, { flex: 2 }]}>Category</Text>
+                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center" }]}>Status</Text>
+                <Text style={[styles.headerTextList, { flex: 2, justifyContent: "center" }]}>Actions</Text>
+              </View>
 
               {/* Data */}
-              {/* <FlatList
+              <FlatList
                 data={currentData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-              /> */}
+              />
 
               {/* Footer */}
               <View style={styles.headerRowList} />
@@ -442,53 +549,271 @@ export default function NewsScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
+                    {selectedActiveNews ? "Edit News" : "Add News"}
                   </Text>
 
-                  {/* Input Plan Name dan Validity */}
+                  {/* Input Title Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Plan Name</Text>
+                      <Text style={styles.labelModal}>Title Name</Text>
                       <TextInput
-                        value={planName}
-                        onChangeText={setPlanName}
+                        value={titleName}
+                        onChangeText={setTitleName}
                         style={styles.inputModal}
                       />
                     </View>
+                  </View>
 
-                    <View
-                      style={{
-                        flex: 0.3,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Validity</Text>
-                      <TextInput
-                        value={validity}
-                        onChangeText={setValidity}
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
-                  {/* Input Amount */}
+                  {/* Input Category */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
-                        flex: 0.7,
+                        flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Amount</Text>
-                      <TextInput
-                        value={amount}
-                        onChangeText={setAmount}
-                        style={styles.inputModal}
+                      <Text style={styles.labelModal}>Category</Text>
+                      
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowCategoryDropdown(!showCategoryDropdown);
+    
+                          if (showCategoryDropdown) {
+                            setCategorySearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {category
+                            ? `${category.CategoryName}`
+                            : "--Select Category Name--"}
+                        </Text>
+    
+                        <MaterialIcons
+                          name={showCategoryDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+    
+                      {showCategoryDropdown && (
+                        <View style={styles.memberDropdown}>
+    
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+    
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Category"
+                              placeholderTextColor="#888"
+                              value={CategorySearch}
+                              onChangeText={setCategorySearch}
+                            />
+    
+                            {CategorySearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setCategorySearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+    
+                          {/* Category LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >
+                            {filteredCategory.length > 0 ? (
+                              filteredCategory.map((item) => (
+                                <TouchableOpacity
+                                  key={item.id}
+                                  style={styles.memberItem}
+                                  onPress={() => {
+                                    setCategory(item);
+                                    setShowCategoryDropdown(false);
+                                    setCategorySearch("");
+                                  }}
+                                >
+                                  <Text style={styles.memberItemText}>
+                                    {item.CategoryName}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            ) : (
+                              <View style={styles.noResult}>
+                                <Text style={styles.noResultText}>
+                                  Category not found
+                                </Text>
+                              </View>
+                            )}
+                          </ScrollView>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+
+                  {/* Description */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Description</Text>                      
+                      <RichTextEditor
+                        value={description}
+                        onChange={(html) => setDescription(html)}
+                        placeholder="Write news description..."
+                        minHeight={300}
                       />
                     </View>
                   </View>
+
+                  {/* Picture */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Picture</Text>  
+                        
+                      <Pressable
+                        style={styles.uploadBox}
+                        onPress={handleSelectImage}
+                      >
+                        {picture ? (
+                          <Image
+                            source={{ uri: picture }}
+                            style={styles.previewImage}
+                            resizeMode="contain"
+                          />
+                        ) : (
+                          <>
+                            <Text style={styles.uploadTitle}>
+                              Upload your files
+                            </Text>
+
+                            <Text style={styles.uploadDescription}>
+                              JPEG and PNG formats, up to 50MB
+                            </Text>
+
+                            <View style={styles.selectButton}>
+                              <Text style={styles.selectButtonText}>
+                                Select File
+                              </Text>
+                            </View>
+                          </>
+                        )}
+                      </Pressable>
+                    </View>
+                  </View>
+
+                  {/* Select Status */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Status</Text>
+                      
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowStatusDropdown(!showStatusDropdown);
+    
+                          if (showStatusDropdown) {
+                            setStatusSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {status
+                            ? `${status.StatusName}`
+                            : "--Select Status Name--"}
+                        </Text>
+    
+                        <MaterialIcons
+                          name={showCategoryDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+    
+                      {showStatusDropdown && (
+                        <View style={styles.memberDropdown}>
+    
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+    
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Status"
+                              placeholderTextColor="#888"
+                              value={StatusSearch}
+                              onChangeText={setStatusSearch}
+                            />
+    
+                            {StatusSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setStatusSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+    
+                          {/* Status LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >
+                            {filteredStatus.length > 0 ? (
+                              filteredStatus.map((item) => (
+                                <TouchableOpacity
+                                  key={item.id}
+                                  style={styles.memberItem}
+                                  onPress={() => {
+                                    setStatus(item);
+                                    setShowStatusDropdown(false);
+                                    setStatusSearch("");
+                                  }}
+                                >
+                                  <Text style={styles.memberItemText}>
+                                    {item.StatusName}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            ) : (
+                              <View style={styles.noResult}>
+                                <Text style={styles.noResultText}>
+                                  Status not found
+                                </Text>
+                              </View>
+                            )}
+                          </ScrollView>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+
+
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -514,7 +839,7 @@ export default function NewsScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -528,10 +853,47 @@ export default function NewsScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -542,7 +904,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -589,10 +951,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -604,6 +972,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -744,7 +1135,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -826,11 +1217,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -838,7 +1229,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -859,7 +1250,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {
@@ -884,178 +1275,297 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
-    color: "#fff",
-    fontWeight: "700",
-  },
-
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    alignItems: "center",
-  },
-
-  cardImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 15,
-  },
-
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
+  notesInput: {
+    minHeight: 110,
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#DDDDDD",
     borderRadius: 8,
-  },
-
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
+    padding: 14,
+    fontSize: 14,
+    color: "#222",
     marginBottom: 20,
   },
 
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
+//------------------------------------------------------------------------------
 
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  input: {
-    height: 50,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-
-  buttonRow: {
+   sectionHeader: {
     flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
+    alignItems: "center",
+    marginVertical: 8,
+    marginLeft: 5,
   },
 
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+  redBadge: {
+    backgroundColor: "#D80000",
+    height: 25,
+    minWidth: 90,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 18,
+  },
+
+  redBadgeText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+
+  radioCircle: {
+    width: 19,
+    height: 19,
+    borderWidth: 2,
+    borderColor: "#171717",
     borderRadius: 10,
+    marginLeft: 12,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+  radioInner: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#D80000",
+  },
+
+  checkCircle: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: "#222",
     borderRadius: 10,
+    marginLeft: 12,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  //-=======================
-  titlea: {
-    fontSize: 22,
+  checkText: {
+    fontSize: 13,
     fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
+    color: "#222",
   },
 
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  fileContainer: {
-    marginTop: 12,
+  editorContainer: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 7,
+    overflow: "hidden",
     borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
+    borderColor: "#E6E6E6",
+    minHeight: 280,
+  },
+
+  toolbar: {
+    height: 36,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 7,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E5E5",
     backgroundColor: "#FFFFFF",
   },
 
-  fileText: {
-    color: "#475569",
+  toolbarButton: {
+    width: 28,
+    height: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
   },
 
-  previewContainer: {
-    marginTop: 20,
+  toolbarText: {
+    fontSize: 13,
+    color: "#333",
+    fontWeight: "500",
   },
 
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
+  toolbarDivider: {
+    width: 1,
+    height: 18,
+    backgroundColor: "#DDD",
+    marginHorizontal: 3,
+  },
+
+  toolbarSpacer: {
+    flex: 1,
+  },
+
+  undoText: {
+    fontSize: 18,
+    color: "#999",
+    marginHorizontal: 5,
+  },
+
+  moreText: {
+    fontSize: 18,
+    color: "#444",
+    marginLeft: 5,
+  },
+
+  nativeEditor: {
+    minHeight: 230,
+    padding: 25,
+    fontSize: 14,
+    color: "#333",
+    textAlignVertical: "top",
+  },
+
+  uploadBox: {
+    minHeight: 110,
     borderWidth: 1,
-    borderColor: "#E2E8F0",
+    borderColor: "#D6D6D6",
+    borderStyle: "dashed",
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 3,
+    overflow: "hidden",
   },
 
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignSelf: "flex-start",
+  uploadTitle: {
+    fontSize: 13,
+    color: "#333",
+    marginBottom: 7,
   },
 
-  removeText: {
-    color: "#fff",
+  uploadDescription: {
+    fontSize: 9,
+    color: "#999",
+    marginBottom: 12,
+  },
+
+  selectButton: {
+    borderWidth: 1,
+    borderColor: "#D8D8D8",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+
+  selectButtonText: {
+    fontSize: 9,
+    color: "#444",
+  },
+
+  previewImage: {
+    width: "100%",
+    height: 180,
+  },
+
+
+
+
+
+
+
+
+  
+  memberSelect: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  memberSelectText: {
+    fontSize: 15,
+    color: "#111",
+  },
+
+  arrow: {
+    fontSize: 25,
+    color: "#111",
+  },
+
+  memberDropdown: {
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#D5D5D5",
+    borderRadius: 12,
+    marginTop: 8,
+    overflow: "hidden",
+  },
+
+  searchContainer: {
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
+  },
+
+  searchIcon: {
+    fontSize: 16,
+    marginRight: 8,
+  },
+
+  searchInput: {
+    flex: 1,
+    height: 48,
+    fontSize: 15,
+    color: "#111",
+    outlineStyle: "none" as any,
+  },
+
+  clearSearch: {
+    fontSize: 15,
+    color: "#777",
+    paddingHorizontal: 8,
+  },
+
+  memberList: {
+    maxHeight: 250,
+  },
+
+  memberItem: {
+    minHeight: 55,
+    justifyContent: "center",
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EEEEEE",
+  },
+
+  memberItemText: {
+    fontSize: 15,
+    color: "#111",
+  },
+
+  noResult: {
+    padding: 20,
+    alignItems: "center",
+  },
+
+  noResultText: {
+    fontSize: 15,
+    color: "#888",
+  },
+
+  inputTime: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  timeText: {
+    fontSize: 16,
+    color: "#111",
+  },
+
+  label: {
+    fontSize: 14,
     fontWeight: "600",
+    marginBottom: 8,
   },
 });

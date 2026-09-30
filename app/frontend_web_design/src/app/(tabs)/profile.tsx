@@ -1,10 +1,12 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import { Link, useRouter } from "expo-router";
+import React, { useMemo, useRef, useState } from "react";
 import {
   FlatList,
   Image,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -12,208 +14,180 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Modal,
+  ImageSourcePropType,
 } from "react-native";
+import PhoneInput from "@/components/PhoneInput";
+
 
 // ============ DATA ============
-interface dataPlans {
+interface dataActiveMembersProfile {
   id: string;
-  planName: string;
-  validity: string;
-  amount: string;
+  name: string;
+  memberId: string;
+  dateEnrolled: string;
+  dateExpiration: string;
+  photo: ImageSourcePropType | null;
+  email: string;
+  birthDate: string;
+  dialCodePhone: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  dialCodeEmergencyContactNo: string;
+  emergencyContactNo: string;
+  emergencyContactName: string;
+  gender: string;
 }
 
-const initialDataPlans: dataPlans[] = [
+const initialProfile: dataActiveMembersProfile = 
   {
     id: "1",
-    planName: "1 month",
-    validity: "1",
-    amount: "800",
-  },
-  {
-    id: "2",
-    planName: "3 month",
-    validity: "3",
-    amount: "2200",
-  },
-  {
-    id: "3",
-    planName: "6 month",
-    validity: "6",
-    amount: "4300",
-  },
-  {
-    id: "4",
-    planName: "Annual",
-    validity: "12",
-    amount: "8500",
-  },
-];
+    name: "Fandi Wijaya",
+    memberId: "GYM00001",
+    dateEnrolled: "2024-05-11",
+    dateExpiration: "2026-05-11",
+    photo: require("@/assets/images/user/user.png"),
+    email: "fandiwijaya@doms.com",
+    birthDate: "2000-05-10",
+    dialCodePhone: "60",
+    phone: "85122233360",
+    password: "12345",
+    confirmPassword: "12345",
+    dialCodeEmergencyContactNo: "60",
+    emergencyContactNo: "85122233301",
+    emergencyContactName: "Budi",
+    gender: "Male",
+  };
+
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const [plansData, setPlansData] = useState<dataPlans[]>(initialDataPlans);
-
-  const [search, setSearch] = useState("");
-  const [entries, setEntries] = useState(10);
-  const [page, setPage] = useState(1);
-
-  const filteredData = useMemo(() => {
-    return plansData.filter((item) => {
-      const keyword = search.toLowerCase();
-
-      const matchSearch =
-        item.planName.toLowerCase().includes(keyword) ||
-        item.validity.toString().toLowerCase().includes(keyword) ||
-        item.amount.toString().toLowerCase().includes(keyword);
-      return matchSearch;
-    });
-  }, [search]);
-
-  const totalPages = Math.ceil(filteredData.length / entries);
-
-  const currentData = useMemo(() => {
-    const startIndex = (page - 1) * entries;
-    const endIndex = startIndex + entries;
-
-    return filteredData.slice(startIndex, endIndex);
-  }, [filteredData, page, entries]);
-
-  const handleEntriesChange = (value: any) => {
-    setEntries(value);
-    setPage(1);
-  };
-
-  const renderItem = ({ item }: any) => (
-    <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.planName}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.validity}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.amount}
-      </Text>
-
-      <View
-        style={{
-          flex: 1.5,
-          alignItems: "center",
-          flexDirection: "row",
-          gap: 10,
-        }}
-      >
-        <Pressable
-          style={styles.editButtonList}
-          onPress={() => handleEdit(item)}
-        >
-          <Text style={styles.editTextList}>Edit</Text>
-        </Pressable>
-
-        <Pressable
-          style={{
-            backgroundColor: "#fff",
-            paddingHorizontal: 10,
-            paddingVertical: 6,
-            borderRadius: 10,
-          }}
-          onPress={() => handleDelete(item)}
-        >
-          <Feather name="trash" size={20} color="#9a0505" />
-        </Pressable>
-      </View>
-    </View>
-  );
-
+  
   const [showModal, setShowModal] = useState(false);
-  const [selectedDataPlans, setSelectedDataPlans] = useState<dataPlans | null>(
-    null,
-  );
-  const [planName, setPlanName] = useState("");
-  const [validity, setValidity] = useState("");
-  const [amount, setAmount] = useState("");
+  const [isEditPassword, setIsEditPassword] = useState(false);
 
-  const handleAdd = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+  const [profile, setProfile] = useState<dataActiveMembersProfile>(initialProfile);
 
-    setShowModal(true);
-  };
+  const [MemberId, setMemberId] = useState(profile.memberId);
+  const [MemberDateEnrolled, setMemberDateEnrolled] = useState(profile.dateEnrolled);
+  const [MemberDateExpiration, setMemberDateExpiration] = useState(profile.dateExpiration);
+  const [image, setImage] = useState(profile.photo);
+  const [fullName, setFullName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [dialCodePhone, setDialCodePhone] = useState("62");
+  const [phone, setPhone] = useState(profile.phone);
+  const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
+  const [emergencyContactNo, setEmergencyContactNo] = useState(profile.emergencyContactNo);
+  const [emergencyContactName, setEmergencyContactName] = useState(profile.emergencyContactName);
+  const [gender, setGender] = useState(profile.gender);
 
-  const handleEdit = (item: dataPlans) => {
-    setSelectedDataPlans(item);
-    setPlanName(item.planName);
-    setValidity(item.validity);
-    setAmount(item.amount);
+  const [password, setPassword] = useState(profile.password);
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(profile.confirmPassword);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    setShowModal(true);
-  };
-
-  const handleSave = () => {
-    if (planName.trim() === "") {
+  const handleSaveProfile = () => {    
+    if (fullName.trim() === "") {
       alert("Member Name is required");
       return;
     }
 
-    if (selectedDataPlans) {
-      // UPDATE
-      const updatedData = plansData.map((item) =>
-        item.id === selectedDataPlans.id
-          ? {
-              ...item,
-              planName: planName,
-              validity: validity,
-              amount: amount,
-            }
-          : item,
-      );
-
-      setPlansData(updatedData);
-
-      alert("Members updated successfully");
-    } else {
-      // ADD
-      const newActiveMembers: dataPlans = {
-        id: Date.now().toString(),
-        planName: planName,
-        validity: validity,
-        amount: amount,
-      };
-
-      setPlansData([...plansData, newActiveMembers]);
-
-      alert("Members added successfully");
-    }
-    resetForm();
+    setProfile((prev) => ({
+      ...prev,
+      name: fullName,
+      memberId: MemberId,
+      dateEnrolled: MemberDateEnrolled,
+      dateExpiration: MemberDateExpiration,
+      photo: image,
+      email: email,
+      birthDate: birthDate,
+      dialCodePhone: dialCodePhone,
+      phone: phone,
+      dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
+      emergencyContactNo: emergencyContactNo,
+      emergencyContactName: emergencyContactName,
+      gender: gender,
+    }));
+    // setShowEditProfile(false);
+    alert("Profile updated successfully");
   };
 
-  const handleDelete = (id: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure, you want to delete this?"
-    );
+  const handleSavePassword = () => {    
+    // Validasi Password
+    if (password.trim() === "") {
+      alert("Password is required");
+      return;
+    }
 
-    if (!confirmDelete) return;
+    // Validasi Confirm Password
+    if (confirmPassword.trim() === "") {
+      alert("Confirm Password is required");
+      return;
+    }
 
-    const data = plansData.filter((item) => item.id !== id);
+    // Cek Password dan Confirm Password
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password must be the same");
+      return;
+    }
 
-    setPlansData(data);
+    setProfile((prev) => ({
+      ...prev,
+      password: password,
+      confirmPassword: confirmPassword,
+    }));
 
-    alert("Delete successfully");
+    setShowModal(false);
+    alert("Password updated successfully");
   };
 
   const handleCancel = () => {
-    resetForm();
     setShowModal(false);
   };
+ 
 
-  const resetForm = () => {
-    setSelectedDataPlans(null);
-    setPlanName("");
-    setValidity("");
-    setAmount("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-    setShowModal(false);
+  const openFilePicker = () => {
+    fileInputRef.current?.click();
+  };
+
+  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setImage({ uri: URL.createObjectURL(file) });
+    }
+  };
+
+  const removePhoto = () => {
+    setImage(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const [birthDate, setBirthDate] = useState(profile.birthDate);
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onChangeDate = (event: any, selectedDate?: Date) => {
+    setShowPicker(false);
+
+    if (selectedDate) {
+      setDate(selectedDate);
+
+      const formatted =
+        selectedDate.getFullYear() +
+        "-" +
+        String(selectedDate.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(selectedDate.getDate()).padStart(2, "0");
+
+      setBirthDate(formatted);
+    }
   };
 
   return (
@@ -221,16 +195,15 @@ export default function ProfileScreen() {
       {/* SIDEBAR */}
       <View style={styles.sidebar}>
         <View style={styles.profileSection}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/profile")}>
             <Image
-              source={require("../../../assets/images/user/user.png")}
+              source={require("@/assets/images/user/user.png")}
               style={styles.avatar}
             />
           </TouchableOpacity>
 
-          <Text style={styles.adminName}>Fandi Wijaya</Text>
-
-          <Text style={styles.email}>fandiwijaya@doms.com</Text>
+          <Link style={styles.adminName} href={"/(tabs)/profile"}>Fandi Wijaya</Link>
+          <Link style={styles.email} href={"/(tabs)/profile"}>fandiwijaya@doms.com</Link>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -240,29 +213,24 @@ export default function ProfileScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
+            icon="supervised-user-circle"
+            title="Coaches"
+            onPress={() => router.push("/coaches")}
+          />
+          <MenuItem
             icon="people"
-            title="View Members"
+            title="Members"
             onPress={() => router.push("/members")}
           />
           <MenuItem
-            icon="fitness-center"
-            title="Coaches"
-            onPress={() => router.push("/coaches")}
+            icon="card-membership"
+            title="Membership"
+            onPress={() => router.push("/membership")}
           />
           <MenuItem
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
-          />
-          <MenuItem
-            icon="inventory-2"
-            title="Inventory"
-            onPress={() => router.push("/inventory")}
-          />
-          <MenuItem
-            icon="edit-square"
-            title="News"
-            onPress={() => router.push("/news")}
           />
           <MenuItem
             icon="credit-card"
@@ -275,15 +243,19 @@ export default function ProfileScreen() {
             onPress={() => router.push("/promos")}
           />
           <MenuItem
+            icon="inventory-2"
+            title="Inventory"
+            onPress={() => router.push("/inventory")}
+          />
+          <MenuItem
+            icon="edit-square"
+            title="News"
+            onPress={() => router.push("/news")}
+          />
+          <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
-          />
-          <MenuItem
-            icon="badge"
-            title="Profile"
-            onPress={() => router.push("/profile")}
-            active
           />
         </ScrollView>
 
@@ -296,230 +268,516 @@ export default function ProfileScreen() {
       {/* CONTENT */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* TOP BAR */}
-        <View style={styles.topBar}>
+        {/* <View style={styles.topBar}>
           <Text style={styles.feedback}>Feedback</Text>
 
           <Ionicons name="notifications" size={24} color="#ED1018" />
-        </View>
+        </View> */}
 
         {/* GRID */}
         <View style={styles.grid}>
           {/* LEFT */}
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
-            {/* <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add News</Text>
-            </Pressable> */}
+            <View style={styles.cardListProfile}>
+              <Text style={styles.titleListProfile}>Profile</Text>
 
-            <View style={styles.cardList}>
-              <Text style={styles.titleList}>Profile</Text>
+              <View style={{marginBottom: 100}}>
+                {/* Attach Photo Button */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={pickImageWeb}
+                  style={{ display: "none" }}
+                />
 
-              {/* Top Section */}
-              <View style={styles.topBarList}>
-                <View style={styles.leftSectionList}>
-                  <Text style={styles.labelList}>Show Entries</Text>
-
-                  <View style={styles.pickerWrapperList}>
-                    <Picker
-                      selectedValue={entries}
-                      onValueChange={handleEntriesChange}
-                      style={styles.pickerList}
-                    >
-                      <Picker.Item label="10" value={10} />
-                      <Picker.Item label="20" value={20} />
-                      <Picker.Item label="30" value={30} />
-                      <Picker.Item label="50" value={50} />
-                    </Picker>
-                  </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Pressable onPress={openFilePicker}>
+                    <Text style={styles.attachPhotoModal}>
+                      Attach Photo ✏️
+                    </Text>
+                  </Pressable>
+                  <Text style={styles.attachPhotoModal}> | </Text>
+                  <Pressable onPress={removePhoto}>
+                    <Text style={styles.attachPhotoModal}>
+                      Remove Photo ❌
+                    </Text>
+                  </Pressable>
                 </View>
 
-                <View style={styles.filterContainerList}>
+                {image ? (
+                  <Image
+                    source={image}
+                    style={styles.imagePlaceholderModal}
+                  />
+                ) : (
+                  <View style={styles.imagePlaceholderModal}></View>
+                )}
+              </View>
+
+              {/* Input Member Name */}
+              <View style={styles.rowModal}>
+                <View
+                  style={{
+                    flex: 0.5,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Member ID</Text>
+
                   <TextInput
-                    placeholder="Search ..."
-                    value={search}
-                    onChangeText={setSearch}
-                    style={styles.searchInputList}
+                    value={MemberId}
+                    editable={false}
+                    style={styles.inputModal}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    flex: 1,
+                    marginLeft: 10,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Full Name</Text>
+                  <TextInput
+                    value={fullName}
+                    onChangeText={setFullName}
+                    style={styles.inputModal}
                   />
                 </View>
               </View>
 
-              {/* Header */}
-              {/* <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>
-                  Plan Name
-                </Text>
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
+              {/* Input Date Enrolled dan Date Expiration */}
+              <View style={styles.rowModal}>
+                <View
+                  style={{
+                    flex: 0.7,
+                  }}
                 >
-                  Validity
-                </Text>
+                  <Text style={styles.labelModal}>Date Enrolled</Text>
 
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
+                  {Platform.OS === "web" ? (
+                    <input
+                      type="date"
+                      value={MemberDateEnrolled}
+                      disabled={true}
+                      max={new Date().toISOString().split("T")[0]}
+                      onChange={(e) =>
+                        setMemberDateEnrolled(e.target.value)
+                      }
+                      style={{
+                        paddingRight: 10,
+                        paddingLeft: 10,
+                        border: "1px solid #ccc",
+                        backgroundColor: "#D9D9DD",
+                        height: 50,
+                        borderRadius: 10,
+                        fontSize: 15,
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => setShowPicker(true)}
+                        style={{
+                          height: 50,
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 10,
+                          justifyContent: "center",
+                          paddingHorizontal: 15,
+                        }}
+                      >
+                        <Text>
+                          {MemberDateEnrolled === ""
+                            ? "Select Date"
+                            : MemberDateEnrolled}
+                        </Text>
+                      </TouchableOpacity>
+
+                      {showPicker && (
+                        <DateTimePicker
+                          value={date}
+                          mode="date"
+                          display="default"
+                          maximumDate={new Date()}
+                          onChange={onChangeDate}
+                        />
+                      )}
+                    </>
+                  )}
+                </View>
+
+                <View
+                  style={{
+                    flex: 0.7,
+                    marginLeft: 10,
+                  }}
                 >
-                  Amount
-                </Text>
+                  <Text style={styles.labelModal}>Date Expiration</Text>
 
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 1.5,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Actions
-                </Text>
-              </View> */}
+                  {Platform.OS === "web" ? (
+                    <input
+                      type="date"
+                      value={MemberDateExpiration}
+                      disabled={true}
+                      //max={new Date().toISOString().split("T")[0]}
+                      onChange={(e) =>
+                        setMemberDateExpiration(e.target.value)
+                      }
+                      style={{
+                        paddingRight: 10,
+                        paddingLeft: 10,
+                        border: "1px solid #ccc",
+                        backgroundColor: "#D9D9DD",
+                        height: 50,
+                        borderRadius: 10,
+                        fontSize: 15,
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => setShowPicker(true)}
+                        style={{
+                          height: 50,
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 10,
+                          justifyContent: "center",
+                          paddingHorizontal: 15,
+                        }}
+                      >
+                        <Text>
+                          {MemberDateExpiration === ""
+                            ? "Select Date"
+                            : MemberDateExpiration}
+                        </Text>
+                      </TouchableOpacity>
 
-              {/* Data */}
-              {/* <FlatList
-                data={currentData}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-              /> */}
-
-              {/* Footer */}
-              <View style={styles.headerRowList} />
-              <View style={styles.footerList}>
-                <Text style={styles.footerTextList}>
-                  Showing {(page - 1) * entries + 1}-
-                  {Math.min(page * entries, filteredData.length)} of{" "}
-                  {filteredData.length} entries
-                </Text>
-
-                <View style={styles.paginationList}>
-                  <Pressable
-                    style={[
-                      styles.pageButtonList,
-                      page === 1 && {
-                        opacity: 0.5,
-                      },
-                    ]}
-                    disabled={page === 1}
-                    onPress={() => setPage(page - 1)}
-                  >
-                    <Text style={{ fontWeight: "bold" }}>Previous</Text>
-                  </Pressable>
-
-                  <Text style={styles.pageNumberList}>
-                    {page} / {totalPages}
-                  </Text>
-
-                  <Pressable
-                    style={[
-                      styles.pageButtonList,
-                      page === totalPages && {
-                        opacity: 0.5,
-                      },
-                    ]}
-                    disabled={page === totalPages}
-                    onPress={() => setPage(page + 1)}
-                  >
-                    <Text style={{ fontWeight: "bold" }}>Next</Text>
-                  </Pressable>
+                      {showPicker && (
+                        <DateTimePicker
+                          value={date}
+                          mode="date"
+                          display="default"
+                          onChange={onChangeDate}
+                        />
+                      )}
+                    </>
+                  )}
                 </View>
               </View>
 
+              {/* Input Email dan Birth of Date */}
+              <View style={styles.rowModal}>
+                <View
+                  style={{
+                    flex: 0.7,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Email</Text>
+                  <TextInput
+                    value={email}
+                    onChangeText={setEmail}
+                    style={styles.inputModal}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    flex: 0.7,
+                    marginLeft: 10,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Birth of Date</Text>
+
+                  {Platform.OS === "web" ? (
+                    <input
+                      type="date"
+                      value={birthDate}
+                      max={new Date().toISOString().split("T")[0]}
+                      onChange={(e) => setBirthDate(e.target.value)}
+                      style={{
+                        paddingRight: 10,
+                        paddingLeft: 10,
+                        border: "1px solid #ccc",
+                        backgroundColor: "#D9D9DD",
+                        height: 50,
+                        borderRadius: 10,
+                        fontSize: 15,
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => setShowPicker(true)}
+                        style={{
+                          height: 50,
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 10,
+                          justifyContent: "center",
+                          paddingHorizontal: 15,
+                        }}
+                      >
+                        <Text>
+                          {birthDate === "" ? "Select Date" : birthDate}
+                        </Text>
+                      </TouchableOpacity>
+
+                      {showPicker && (
+                        <DateTimePicker
+                          value={date}
+                          mode="date"
+                          display="default"
+                          maximumDate={new Date()}
+                          onChange={onChangeDate}
+                        />
+                      )}
+                    </>
+                  )}
+                </View>
+              </View>
+
+              {/* Input Gender dan Phone Number */}
+              <View style={styles.rowModal}>
+                <View
+                  style={{
+                    flex: 0.7,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Gender</Text>
+                  <View style={styles.pickerContainerModal}>
+                    <Picker
+                      selectedValue={gender}
+                      onValueChange={(value) => setGender(value)}
+                      style={styles.pickerContainerListModal}
+                    >
+                      <Picker.Item label="-- Select Gender --" value="" />
+                      <Picker.Item label="Male" value="Male" />
+                      <Picker.Item label="Female" value="Female" />
+                    </Picker>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    flex: 0.7,
+                    marginLeft: 10,
+                  }}
+                >
+                  <Text style={styles.labelModal}>Phone Number</Text>
+                  
+                  <PhoneInput
+                    phone={phone}
+                    dialCodePhone={dialCodePhone}
+                    onChangePhone={setPhone}
+                    onChangeDialCode={setDialCodePhone}
+                  />                        
+                </View>
+              </View>
+
+              {/* Input Emergency Contact Name dan Emergency Contact No */}
+              <View style={styles.rowModal}>
+                <View
+                  style={{
+                    flex: 0.7,
+                  }}
+                >
+                  <Text style={styles.labelModal}>
+                    Emergency Contact Name
+                  </Text>
+
+                  <TextInput
+                    value={emergencyContactName}
+                    onChangeText={setEmergencyContactName}
+                    style={styles.inputModal}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    flex: 0.7,
+                    marginLeft: 10,
+                  }}
+                >
+                  <Text style={styles.labelModal}>
+                    Emergency Contact Number
+                  </Text>
+                  
+                  <PhoneInput
+                    phone={emergencyContactNo}
+                    dialCodePhone={dialCodeEmergencyContactNo}
+                    onChangePhone={setEmergencyContactNo}
+                    onChangeDialCode={setDialCodeEmergencyContactNo}
+                  />    
+                </View>
+              </View>
+             
+
+              <View style={styles.buttonRowModal}>
+                <Pressable
+                  style={styles.EditPasswordButtonModal}
+                  onPress={() => setShowModal(true)}
+                >
+                  <Feather name="key" size={20} color="#9a0505" />
+                  <Text
+                    style={{
+                      color: "#F00",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Edit Password
+                  </Text>
+                </Pressable>
+
+                <Pressable
+                  style={styles.saveButtonModal}
+                  onPress={handleSaveProfile}
+                >
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Submit
+                  </Text>
+                </Pressable>
+              </View>
+
+              
               {/* -------------------------------------------------- */}
               {/* ------------------ Screen Modal ------------------ */}
               {/* -------------------------------------------------- */}
 
-              {showModal && (
+
+              <Modal
+                visible={showModal}
+                transparent={true}
+                animationType="slide"
+                onRequestClose={() => setShowModal(false)}
+              >
                 <View style={styles.modalScreen}>
-                  <Text style={styles.titleModal}>
-                    {selectedDataPlans ? "Edit Plan" : "Add Plan"}
-                  </Text>
+                  <Text style={styles.titleModal}>Edit Password</Text>
 
-                  {/* Input Plan Name dan Validity */}
+                  {/* Input Password */}
                   <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Plan Name</Text>
-                      <TextInput
-                        value={planName}
-                        onChangeText={setPlanName}
-                        style={styles.inputModal}
-                      />
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.3,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Validity</Text>
-                      <TextInput
-                        value={validity}
-                        onChangeText={setValidity}
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
-                  {/* Input Amount */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Amount</Text>
-                      <TextInput
-                        value={amount}
-                        onChangeText={setAmount}
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
-
-                  <View style={styles.buttonRowModal}>
-                    <Pressable
-                      style={styles.cancelButtonModal}
-                      onPress={handleCancel}
-                    >
-                      <Text
+                      <View
                         style={{
-                          color: "#F00",
+                          flex: 0.7,
                         }}
                       >
-                        Cancel
-                      </Text>
-                    </Pressable>
+                        <Text style={styles.labelModal}>Password</Text>
+                        <View style={styles.passwordContainer}>
+                          <TextInput
+                            value={password}
+                            onChangeText={setPassword}
+                            style={styles.passwordInput}
+                            secureTextEntry={!showPassword}
+                          />
 
-                    <Pressable
-                      style={styles.saveButtonModal}
-                      onPress={handleSave}
-                    >
-                      <Text
+                          <TouchableOpacity
+                            onPress={() =>
+                              setShowPassword(!showPassword)
+                            }
+                            style={styles.eyeButton}
+                          >
+                            <Ionicons
+                              name={
+                                showPassword
+                                  ? "eye-off-outline"
+                                  : "eye-outline"
+                              }
+                              size={22}
+                              color="#666"
+                            />
+                          </TouchableOpacity>
+                        </View>                              
+                      </View>
+
+                      <View
                         style={{
-                          color: "#fff",
-                          fontWeight: "700",
+                          flex: 0.7,
+                          marginLeft: 10,
                         }}
                       >
-                        Save Changes
-                      </Text>
-                    </Pressable>
+                        <Text style={styles.labelModal}>Confirm Password</Text>
+                        <View style={styles.passwordContainer}>
+                          <TextInput
+                            value={confirmPassword}
+                            onChangeText={setConfirmPassword}
+                            style={styles.passwordInput}
+                            secureTextEntry={!showConfirmPassword}
+                          />
+
+                          <TouchableOpacity
+                            onPress={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            style={styles.eyeButton}
+                          >
+                            <Ionicons
+                              name={
+                                showConfirmPassword
+                                  ? "eye-off-outline"
+                                  : "eye-outline"
+                              }
+                              size={22}
+                              color="#666"
+                            />
+                          </TouchableOpacity>
+                        </View>                                 
+                      </View>
                   </View>
+
+                   <View style={styles.buttonRowModal}>
+                      <Pressable
+                        style={styles.cancelButtonModal}
+                        onPress={handleCancel}
+                      >
+                        <Text
+                          style={{
+                            color: "#F00",
+                          }}
+                        >
+                          Cancel
+                        </Text>
+                      </Pressable>
+
+                      <Pressable
+                        style={styles.saveButtonModal}
+                        onPress={handleSavePassword}
+                      >
+                        <Text
+                          style={{
+                            color: "#fff",
+                            fontWeight: "700",
+                          }}
+                        >
+                          Submit
+                        </Text>
+                      </Pressable>
+                    </View>
+
                 </View>
-              )}
+              </Modal>
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
             </View>
           </View>
         </View>
@@ -528,10 +786,47 @@ export default function ProfileScreen() {
   );
 }
 
-function MenuItem({ icon, title, active = false, onPress }: any) {
+function MenuItem({
+  icon,
+  title,
+  active = false,
+  onPress,
+  rightIcon,
+}: any) {
   return (
     <TouchableOpacity
       style={[styles.menuItem, active && styles.activeMenu]}
+      onPress={onPress}
+    >
+      <View style={styles.menuLeft}>
+        <MaterialIcons
+          name={icon}
+          size={22}
+          color={active ? "#ED1018" : "#fff"}
+        />
+
+        <Text
+          style={[
+            styles.menuText,
+            active && {
+              color: "#ED1018",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+
+      {rightIcon}
+    </TouchableOpacity>
+  );
+}
+
+function MenuSubItem({ icon, title, active = false, onPress }: any) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuSubItem, active && styles.activeMenuSub]}
       onPress={onPress}
     >
       <MaterialIcons
@@ -542,7 +837,7 @@ function MenuItem({ icon, title, active = false, onPress }: any) {
 
       <Text
         style={[
-          styles.menuText,
+          styles.menuSubText,
           active && {
             color: "#ED1018",
             fontWeight: "bold",
@@ -589,10 +884,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 52,
     gap: 15,
   },
@@ -604,6 +905,29 @@ const styles = StyleSheet.create({
   menuText: {
     color: "#fff",
   },
+
+  subMenu: {
+    color: "white",
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  menuSubItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    height: 30,
+    gap: 15,
+    marginTop: 5,
+  },
+  activeMenuSub: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 10,
+  },
+  menuSubText: {
+    color: "#fff",
+  },
+
   logout: {
     flexDirection: "row",
     gap: 10,
@@ -664,8 +988,8 @@ const styles = StyleSheet.create({
   },
 
   //========= Inventory List =========
-  cardList: {
-    backgroundColor: "#ED1018",
+  cardListProfile: {
+    backgroundColor: "#FFF",
     borderRadius: 20,
     borderWidth: 3,
     borderColor: "#f44c52",
@@ -673,8 +997,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  titleList: {
-    color: "#fff",
+  titleListProfile: {
+    color: "#ED1018",
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 25,
@@ -744,7 +1068,7 @@ const styles = StyleSheet.create({
   headerTextList: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
   dataRowList: {
     flexDirection: "row",
@@ -796,9 +1120,9 @@ const styles = StyleSheet.create({
   modalScreen: {
     position: "absolute",
     top: 140,
-    left: 20,
-    right: 20,
-    backgroundColor: "#fff",
+    left: 320,
+    right: 320,
+    backgroundColor: "#f5f5f5",
     borderRadius: 15,
     padding: 25,
     elevation: 10,
@@ -826,11 +1150,11 @@ const styles = StyleSheet.create({
   },
 
   labelModal: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#E60012",
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 5,
   },
 
   inputModal: {
@@ -838,7 +1162,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
+    fontSize: 15,
   },
 
   rowModal: {
@@ -859,13 +1183,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
   },
 
   buttonRowModal: {
     flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 30,
+    gap: 10,
+  },
+
+  EditPasswordButtonModal: {
+    borderWidth: 1,
+    borderColor: "#FF0000",
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexDirection: "row",
     gap: 10,
   },
 
@@ -884,178 +1218,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //=============================================================
-  containera: {
-    flex: 1,
-    padding: 20,
-  },
-
-  addButton: {
-    backgroundColor: "#D71920",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignSelf: "flex-start",
-  },
-
-  addText: {
-    color: "#fff",
-    fontWeight: "700",
-  },
-
-  card: {
+  passwordContainer: {
     flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
     alignItems: "center",
-  },
-
-  cardImage: {
-    width: 80,
-    height: 80,
+    borderWidth: 1,
+    borderColor: "#ddd",
     borderRadius: 10,
-    marginRight: 15,
+    backgroundColor: "#D9D9DD",
   },
 
-  editBtn: {
-    backgroundColor: "#eee",
-    padding: 10,
-    borderRadius: 8,
-  },
-
-  overlay: {
+  passwordInput: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: 600,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#D71920",
-    marginBottom: 20,
-  },
-
-  attachText: {
-    color: "#4F46E5",
-    marginBottom: 15,
-  },
-
-  previewImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  placeholder: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-
-  input: {
     height: 50,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 10,
     paddingHorizontal: 15,
-    marginBottom: 15,
-  },
-
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: "#D71920",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  saveBtn: {
-    backgroundColor: "#D4AF37",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-
-  //-=======================
-  titlea: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
-    color: "#1E293B",
-  },
-
-  attachButton: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: "flex-start",
-  },
-
-  attachTexta: {
-    color: "#fff",
     fontSize: 15,
-    fontWeight: "600",
   },
 
-  fileContainer: {
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
-  },
-
-  fileText: {
-    color: "#475569",
-  },
-
-  previewContainer: {
-    marginTop: 20,
-  },
-
-  previewImagea: {
-    width: 250,
-    height: 250,
-    borderRadius: 12,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-
-  removeButton: {
-    marginTop: 12,
-    backgroundColor: "#DC2626",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-
-  removeText: {
-    color: "#fff",
-    fontWeight: "600",
+  eyeButton: {
+    paddingHorizontal: 12,
   },
 });

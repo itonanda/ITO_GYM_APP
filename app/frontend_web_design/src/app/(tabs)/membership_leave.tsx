@@ -1,6 +1,6 @@
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   Alert,
@@ -368,16 +368,15 @@ export default function MembersLeaveScreen() {
       {/* SIDEBAR */}
       <View style={styles.sidebar}>
         <View style={styles.profileSection}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/profile")}>
             <Image
-              source={require("../../../assets/images/user/user.png")}
+              source={require("@/assets/images/user/user.png")}
               style={styles.avatar}
             />
           </TouchableOpacity>
 
-          <Text style={styles.adminName}>Fandi Wijaya</Text>
-
-          <Text style={styles.email}>fandiwijaya@doms.com</Text>
+          <Link style={styles.adminName} href={"/(tabs)/profile"}>Fandi Wijaya</Link>
+          <Link style={styles.email} href={"/(tabs)/profile"}>fandiwijaya@doms.com</Link>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -485,11 +484,11 @@ export default function MembersLeaveScreen() {
       {/* CONTENT */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* TOP BAR */}
-        <View style={styles.topBar}>
+        {/* <View style={styles.topBar}>
           <Text style={styles.feedback}>Feedback</Text>
 
           <Ionicons name="notifications" size={24} color="#ED1018" />
-        </View>
+        </View> */}
 
         {/* GRID */}
         <View style={styles.grid}>

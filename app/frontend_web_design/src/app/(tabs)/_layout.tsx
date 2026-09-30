@@ -24,14 +24,9 @@ export default function RootLayout() {
       <Stack.Screen name="promos" options={{ headerShown: false }} />
       <Stack.Screen name="inventory" options={{ headerShown: false }} />
       <Stack.Screen name="inventory_stock" options={{ headerShown: false }} />
-
-
-
-
-      
-      
-      
       <Stack.Screen name="news" options={{ headerShown: false }} />
+      <Stack.Screen name="news_type" options={{ headerShown: false }} />
+      <Stack.Screen name="news_status" options={{ headerShown: false }} />
       <Stack.Screen name="report" options={{ headerShown: false }} />
       <Stack.Screen name="profile" options={{ headerShown: false }} />
       <StatusBar style="auto" />

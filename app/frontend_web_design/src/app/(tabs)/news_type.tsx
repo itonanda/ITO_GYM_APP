@@ -4,7 +4,6 @@ import { Link, useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   FlatList,
-  Platform,
   Image,
   Pressable,
   ScrollView,
@@ -14,65 +13,46 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 // ============ DATA ============
-interface dataPromos {
+interface dataType {
   id: string;
-  promoName: string;
-  promoCode: string;
-  promoPrice: string;
-  promoStartDate: string;
-  promoEndDate: string;
-  promoDescription: string;
+  CategoryName: string;
 }
 
-const initialDataPromos: dataPromos[] = [
+const initialDataType: dataType[] = [
   {
-    id: "1",
-    promoName: "New Year, New Me",
-    promoCode: "NewYear2027",
-    promoPrice: "3000000",
-    promoStartDate: "2027-01-01",
-    promoEndDate: "2027-12-31",
-    promoDescription: "Promo yang sangat efektif dijalankan pada bulan Januari untuk memanfaatkan resolusi tahun baru.",
+    id: '1',
+    CategoryName: "Workout",
   },
   {
-    id: "2",
-    promoName: "Fit Resolution",
-    promoCode: "Fit3",
-    promoPrice: "800000",
-    promoStartDate: "2026-10-01",
-    promoEndDate: "2026-12-31",
-    promoDescription: "Paket langganan jangka panjang dengan harga lebih hemat untuk mendukung target kebugaran.",
+    id: '2',
+    CategoryName: "Nutrition",
   },
   {
-    id: "3",
-    promoName: "Back to Gym / Rejoin Promo",
-    promoCode: "BTG",
-    promoPrice: "200000",
-    promoStartDate: "2026-11-01",
-    promoEndDate: "2026-11-30",
-    promoDescription: "Diskon biaya administrasi atau iuran bagi mantan member yang ingin aktif kembali.",
+    id: '3',
+    CategoryName: "Events",
+  },
+  {
+    id: '4',
+    CategoryName: "Tips",
   },
 ];
 
-export default function PromosScreen() {
+export default function NewsTypeScreen() {
   const router = useRouter();
-  const [promosData, setpromosData] = useState<dataPromos[]>(initialDataPromos);
+  const [TypeData, setTypeData] = useState<dataType[]>(initialDataType);
 
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(10);
   const [page, setPage] = useState(1);
 
   const filteredData = useMemo(() => {
-    return promosData.filter((item) => {
+    return TypeData.filter((item) => {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.promoName.toLowerCase().includes(keyword) ||
-        item.promoStartDate.toString().toLowerCase().includes(keyword) ||
-        item.promoEndDate.toString().toLowerCase().includes(keyword);
+        item.CategoryName.toLowerCase().includes(keyword);
       return matchSearch;
     });
   }, [search]);
@@ -93,14 +73,11 @@ export default function PromosScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.promoName}</Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.promoStartDate} - {item.promoEndDate}</Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>{item.promoCode}</Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>Rp {item.promoPrice}</Text>
+      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.CategoryName}</Text>
 
       <View
         style={{
-          flex: 1.5,
+          flex: 0.7,
           alignItems: "center",
           flexDirection: "row",
           gap: 10,
@@ -128,97 +105,60 @@ export default function PromosScreen() {
     </View>
   );
 
+  const [showSubMenu, setShowSubMenu] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selecteddataPromos, setSelecteddataPromos] = useState<dataPromos | null>(
+  const [selectedDataType, setSelectedDataType] = useState<dataType | null>(
     null,
   );
-
-  const [promoName, setPromoName] = useState("");
-  const [promoCode, setPromoCode] = useState("");
-  const [promoPrice, setPromoPrice] = useState("");
-  const [promoStartDate, setPromoStartDate] = useState("");
-  const [promoEndDate, setPromoEndDate] = useState("");
-  const [showStartDate, setShowStartDate] = useState(false);
-  const [showEndDate, setShowEndDate] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [promoDescription, setPromoDescription] = useState("");
-
-
+  const [CategoryName, setCategoryName] = useState("");
+  
   const handleAdd = () => {
-    setSelecteddataPromos(null);
-    setPromoName("");
-    setPromoCode("");
-    setPromoPrice("");
-    setPromoStartDate("");
-    setPromoEndDate("");
-    setPromoDescription("");
+    setSelectedDataType(null);
+    setCategoryName("");
 
     setShowModal(true);
   };
 
-  const handleEdit = (item: dataPromos) => {
-    setSelecteddataPromos(item);
-    setPromoName(item.promoName);
-    setPromoCode(item.promoCode);
-    setPromoPrice(item.promoPrice);
-    setPromoStartDate(item.promoStartDate);
-    setPromoEndDate(item.promoEndDate);
-    setPromoDescription(item.promoDescription);
+  const handleEdit = (item: dataType) => {
+    setSelectedDataType(item);
+    setCategoryName(item.CategoryName);
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (promoName.trim() === "") {
-      alert("Promo Name is required");
+    if (CategoryName.trim() === "") {
+      alert("Name is required");
       return;
     }
 
-    if (selecteddataPromos) {
+    if (selectedDataType) {
       // UPDATE
-      const updatedData = promosData.map((item) =>
-        item.id === selecteddataPromos.id
+      const updatedData = TypeData.map((item) =>
+        item.id === selectedDataType.id
           ? {
               ...item,
-              promoName: promoName,
-              promoCode: promoCode,
-              promoPrice: promoPrice,
-              promoStartDate: promoStartDate,
-              promoEndDate: promoEndDate,
-              promoDescription: promoDescription,
+              CategoryName: CategoryName,
             }
           : item,
       );
 
-      setpromosData(updatedData);
+      setTypeData(updatedData);
 
       alert("Updated successfully");
     } else {
       // ADD
-      const newActiveMembers: dataPromos = {
+      const newActiveMembers: dataType = {
         id: Date.now().toString(),
-        promoName: promoName,
-        promoCode: promoCode,
-        promoPrice: promoPrice,
-        promoStartDate: promoStartDate,
-        promoEndDate: promoEndDate,
-        promoDescription: promoDescription,
+        CategoryName: CategoryName,
       };
 
-      setpromosData([...promosData, newActiveMembers]);
+      setTypeData([...TypeData, newActiveMembers]);
 
       alert("Added successfully");
     }
     resetForm();
   };
-
-  // const handleDelete = (id: string) => {
-  //   const data = promosData.filter((item) => item.id !== id);
-
-  //   setpromosData(data);
-
-  //   alert("Delete successfully");
-  // };
 
   const handleDelete = (id: string) => {
     const confirmDelete = window.confirm(
@@ -227,9 +167,9 @@ export default function PromosScreen() {
 
     if (!confirmDelete) return;
 
-    const data = promosData.filter((item) => item.id !== id);
+    const data = TypeData.filter((item) => item.id !== id);
 
-    setpromosData(data);
+    setTypeData(data);
 
     alert("Delete successfully");
   };
@@ -240,49 +180,10 @@ export default function PromosScreen() {
   };
 
   const resetForm = () => {
-    setSelecteddataPromos(null);
-    setPromoName("");
-    setPromoCode("");
-    setPromoPrice("");
-    setPromoStartDate("");
-    setPromoEndDate("");
-    setPromoDescription("");
+    setSelectedDataType(null);
+    setCategoryName("");
 
     setShowModal(false);
-  };
-
-  const onChangePromoStartDate = (event: any, selectedDate?: Date) => {
-    setShowStartDate(false);
-
-    if (selectedDate) {
-      setDate(selectedDate);
-
-      const formatted =
-        selectedDate.getFullYear() +
-        "-" +
-        String(selectedDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(selectedDate.getDate()).padStart(2, "0");
-
-      setPromoStartDate(formatted);
-    }
-  };
-
-  const onChangePromoEndDate = (event: any, selectedDate?: Date) => {
-    setShowEndDate(false);
-
-    if (selectedDate) {
-      setDate(selectedDate);
-
-      const formatted =
-        selectedDate.getFullYear() +
-        "-" +
-        String(selectedDate.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(selectedDate.getDate()).padStart(2, "0");
-
-      setPromoEndDate(formatted);
-    }
   };
 
   return (
@@ -336,7 +237,6 @@ export default function PromosScreen() {
             icon="discount"
             title="Promos"
             onPress={() => router.push("/promos")}
-            active
           />
           <MenuItem
             icon="inventory-2"
@@ -346,14 +246,42 @@ export default function PromosScreen() {
           <MenuItem
             icon="edit-square"
             title="News"
-            onPress={() => router.push("/news")}
+            active
+            onPress={() => {
+              router.push("/news");
+              setShowSubMenu(true);
+            }}
+            rightIcon={
+              <MaterialIcons
+                name={showSubMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                size={22}
+                color="#ED1018"
+              />
+            }
           />
+              {/* Sub Menu - News */}
+              {showSubMenu && (
+                <View style={{ marginLeft: 40 }}>
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Type"
+                    onPress={() => router.push("/news_type")}
+                    active
+                  />
+                  <MenuSubItem
+                    icon="assignment"
+                    title="Status"
+                    onPress={() => router.push("/news_status")}
+                  />
+                </View>
+              )}
           <MenuItem
             icon="auto-stories"
             title="Report"
             onPress={() => router.push("/report")}
           />
         </ScrollView>
+
 
         <TouchableOpacity style={styles.logout}>
           <MaterialIcons name="logout" size={20} color="#fff" />
@@ -376,11 +304,11 @@ export default function PromosScreen() {
           <View style={{ flex: 2 }}>
             {/* TOP SCREEN */}
             <Pressable style={styles.addTitleBadge} onPress={handleAdd}>
-              <Text style={styles.sectionTitle}>Add Promo</Text>
+              <Text style={styles.sectionTitle}>Add Type</Text>
             </Pressable>
 
             <View style={styles.cardList}>
-              <Text style={styles.titleList}>Promos</Text>
+              <Text style={styles.titleList}>Type</Text>
 
               {/* Top Section */}
               <View style={styles.topBarList}>
@@ -403,7 +331,7 @@ export default function PromosScreen() {
 
                 <View style={styles.filterContainerList}>
                   <TextInput
-                    placeholder="Search ..."
+                    placeholder="Search Type..."
                     value={search}
                     onChangeText={setSearch}
                     style={styles.searchInputList}
@@ -413,23 +341,22 @@ export default function PromosScreen() {
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>Promo Name</Text>
-                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Date</Text>
-                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Code</Text>
-                <Text style={[styles.headerTextList, { flex: 2, textAlign: "center"}]}>Price</Text>
-
+                <Text style={[styles.headerTextList, { flex: 3 }]}>
+                  Type Name
+                </Text>
+                
                 <Text
                   style={[
                     styles.headerTextList,
                     {
-                      flex: 1.5,
+                      flex: 1,
                       textAlign: "center",
                     },
                   ]}
                 >
                   Actions
                 </Text>
-              </View> 
+              </View>
 
               {/* Data */}
               <FlatList
@@ -488,192 +415,25 @@ export default function PromosScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selecteddataPromos ? "Edit Plan" : "Add Plan"}
+                    {selectedDataType ? "Edit Type" : "Add Type"}
                   </Text>
 
-                  {/* Input Promo Name */}
+                  {/* Input Type Name */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
                         flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Promo Name</Text>
+                      <Text style={styles.labelModal}>Type Name</Text>
                       <TextInput
-                        value={promoName}
-                        onChangeText={setPromoName}
+                        value={CategoryName}
+                        onChangeText={setCategoryName}
                         style={styles.inputModal}
                       />
                     </View>
                   </View>
 
-                  {/* Input Promo Code dan Price */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.5,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Promo Code</Text>
-                      <TextInput
-                        value={promoCode}
-                        onChangeText={setPromoCode}
-                        style={styles.inputModal}
-                      />
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.5,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Price</Text>
-                      <TextInput
-                        value={promoPrice}
-                        onChangeText={(text) => setPromoPrice(text.replace(/\D/g, ""))}
-                        keyboardType="numeric"
-                        style={styles.inputModal}
-                      />
-                    </View>
-                  </View>
-
-                  {/* Input Start Date dan End Date */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.5,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Start Date</Text>
-
-                      {Platform.OS === "web" ? (
-                        <input
-                          type="date"
-                          value={promoStartDate}
-                          //max={new Date().toISOString().split("T")[0]}
-                          min={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setPromoStartDate(e.target.value)}
-                          style={{
-                            paddingRight: 10,
-                            paddingLeft: 10,
-                            border: "1px solid #ccc",
-                            backgroundColor: "#D9D9DD",
-                            height: 50,
-                            borderRadius: 10,
-                            fontSize: 15,
-                          }}
-                        />
-                      ) : (
-                        <>
-                          <TouchableOpacity
-                            onPress={() => setShowStartDate(true)}
-                            style={{
-                              height: 50,
-                              borderWidth: 1,
-                              borderColor: "#ccc",
-                              borderRadius: 10,
-                              justifyContent: "center",
-                              paddingHorizontal: 15,
-                            }}
-                          >
-                            <Text>
-                              {promoStartDate === "" ? "Select Date" : promoStartDate}
-                            </Text>
-                          </TouchableOpacity>
-
-                          {showStartDate && (
-                            <DateTimePicker
-                              value={date}
-                              mode="date"
-                              display="default"
-                              //maximumDate={new Date()}
-                              minimumDate={new Date()}
-                              onChange={onChangePromoStartDate}
-                            />
-                          )}
-                        </>
-                      )}
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 0.5,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>End Date</Text>
-
-                      {Platform.OS === "web" ? (
-                        <input
-                          type="date"
-                          value={promoEndDate}
-                          //max={new Date().toISOString().split("T")[0]}
-                          min={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setPromoEndDate(e.target.value)}
-                          style={{
-                            paddingRight: 10,
-                            paddingLeft: 10,
-                            border: "1px solid #ccc",
-                            backgroundColor: "#D9D9DD",
-                            height: 50,
-                            borderRadius: 10,
-                            fontSize: 15,
-                          }}
-                        />
-                      ) : (
-                        <>
-                          <TouchableOpacity
-                            onPress={() => setShowEndDate(true)}
-                            style={{
-                              height: 50,
-                              borderWidth: 1,
-                              borderColor: "#ccc",
-                              borderRadius: 10,
-                              justifyContent: "center",
-                              paddingHorizontal: 15,
-                            }}
-                          >
-                            <Text>
-                              {promoEndDate === "" ? "Select Date" : promoEndDate}
-                            </Text>
-                          </TouchableOpacity>
-
-                          {showEndDate && (
-                            <DateTimePicker
-                              value={date}
-                              mode="date"
-                              display="default"
-                              //maximumDate={new Date()}
-                              minimumDate={new Date()}
-                              onChange={onChangePromoEndDate}
-                            />
-                          )}
-                        </>
-                      )}
-                    </View>
-                  </View>
-                  
-                  {/* Input Description */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 1,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Promo Name</Text>
-                      <TextInput
-                        style={styles.notesInput}
-                        placeholder="Write Description..."
-                        placeholderTextColor="#999"
-                        value={promoDescription}
-                        onChangeText={setPromoDescription}
-                        multiline
-                        numberOfLines={5}
-                        textAlignVertical="top"
-                      />
-                    </View>
-                  </View>
                   
 
                   <View style={styles.buttonRowModal}>
@@ -700,7 +460,7 @@ export default function PromosScreen() {
                           fontWeight: "700",
                         }}
                       >
-                        Save Changes
+                        Submit
                       </Text>
                     </Pressable>
                   </View>
@@ -713,6 +473,7 @@ export default function PromosScreen() {
     </View>
   );
 }
+
 
 
 function MenuItem({
@@ -1138,15 +899,178 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  notesInput: {
-    minHeight: 110,
-    backgroundColor: "#D9D9DD",
-    borderWidth: 1,
-    borderColor: "#DDDDDD",
-    borderRadius: 8,
-    padding: 14,
-    fontSize: 14,
-    color: "#222",
+  //=============================================================
+  containera: {
+    flex: 1,
+    padding: 20,
+  },
+
+  addButton: {
+    backgroundColor: "#D71920",
+    padding: 15,
+    borderRadius: 10,
     marginBottom: 20,
+    alignSelf: "flex-start",
+  },
+
+  addText: {
+    color: "#fff",
+    fontWeight: "700",
+  },
+
+  card: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+
+  cardImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 15,
+  },
+
+  editBtn: {
+    backgroundColor: "#eee",
+    padding: 10,
+    borderRadius: 8,
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modal: {
+    width: 600,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 20,
+  },
+
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#D71920",
+    marginBottom: 20,
+  },
+
+  attachText: {
+    color: "#4F46E5",
+    marginBottom: 15,
+  },
+
+  previewImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  placeholder: {
+    width: 150,
+    height: 150,
+    backgroundColor: "#ddd",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+
+  input: {
+    height: 50,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 10,
+  },
+
+  cancelBtn: {
+    borderWidth: 1,
+    borderColor: "#D71920",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+
+  saveBtn: {
+    backgroundColor: "#D4AF37",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+
+  //-=======================
+  titlea: {
+    fontSize: 22,
+    fontWeight: "700",
+    marginBottom: 20,
+    color: "#1E293B",
+  },
+
+  attachButton: {
+    backgroundColor: "#2563EB",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignSelf: "flex-start",
+  },
+
+  attachTexta: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "600",
+  },
+
+  fileContainer: {
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: "#FFFFFF",
+  },
+
+  fileText: {
+    color: "#475569",
+  },
+
+  previewContainer: {
+    marginTop: 20,
+  },
+
+  previewImagea: {
+    width: 250,
+    height: 250,
+    borderRadius: 12,
+    resizeMode: "cover",
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+  },
+
+  removeButton: {
+    marginTop: 12,
+    backgroundColor: "#DC2626",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+  },
+
+  removeText: {
+    color: "#fff",
+    fontWeight: "600",
   },
 });
