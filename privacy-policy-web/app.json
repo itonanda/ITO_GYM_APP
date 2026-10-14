@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Privacy Policy",
+    "slug": "privacy-policy-web",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Privacy Policy",
+      "shortName": "Privacy",
+      "favicon": "./assets/favicon.png"
+    },
+    "icon": "./assets/icon.png"
+  }
+}
