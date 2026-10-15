@@ -53,7 +53,7 @@ function Rich({ text, style }: { text: string; style?: any }) {
 
 const pageFromHash = (): PageId => {
   const h = Platform.OS === 'web' ? window.location.hash.replace('#', '') : '';
-  return (PAGES.find((p) => p.id === h)?.id ?? 'privacy') as PageId;
+  return (PAGES.find((p) => p.id === h)?.id ?? 'about') as PageId;
 };
 
 export default function App() {
@@ -69,7 +69,7 @@ export default function App() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   useEffect(() => {
-    if (Platform.OS === 'web') document.title = `${page.title} | Privacy Center`;
+    if (Platform.OS === 'web') document.title = `${page.title} | About Us`;
   }, [page]);
 
   const switchPage = (id: PageId) => {
@@ -238,10 +238,10 @@ export default function App() {
 }
 
 const NAV_ICONS: Record<PageId, React.ComponentProps<typeof Ionicons>['name']> = {
+  about: 'information-circle-outline',
   privacy: 'lock-closed-outline',
   terms: 'document-text-outline',
   help: 'help-circle-outline',
-  about: 'information-circle-outline',
 };
 
 type NavProps = {
@@ -304,7 +304,7 @@ function TopBar({ isWide }: { isWide: boolean }) {
             accessibilityLabel="DOMS"
           />
           <View style={s.brandDivider} />
-          <Text style={s.brandText}>Privacy Center</Text>
+          <Text style={s.brandText}>INFORMATION</Text>
         </View>
       </View>
     </View>
@@ -314,12 +314,7 @@ function TopBar({ isWide }: { isWide: boolean }) {
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: C.bg, ...(Platform.OS === 'web' ? ({ height: '100vh' } as any) : null) },
   topbarWrap: { borderBottomWidth: 1, borderBottomColor: C.border, backgroundColor: C.bg, zIndex: 10 },
-  topbar: {
-    height: TOPBAR_H,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
+  topbar: { height: TOPBAR_H, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   brand: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   logo: { height: 32, width: 32 * (LOGO_W / LOGO_H) },
   brandDivider: { width: 1, height: 24, backgroundColor: C.border },

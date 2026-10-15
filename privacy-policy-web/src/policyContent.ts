@@ -13,7 +13,7 @@ export type Section = {
   boxed?: boolean;
   hideTitle?: boolean;
 };
-export type PageId = 'privacy' | 'terms' | 'help' | 'about';
+export type PageId = 'about' | 'terms' | 'privacy' | 'help';
 export type Page = {
   id: PageId;
   nav: string;
@@ -28,54 +28,44 @@ export const SUPPORT_EMAIL = 'infodomsbox@gmail.com';
 export const RESPONSE_TIME = 'We aim to reply to all inquiries within 24 to 48 business hours';
 const UPDATED = 'July 2026';
 
-export const PAGES: Page[] = [
+export const PAGES: Page[] = [  
   {
-    id: 'privacy',
-    nav: 'Privacy Policy',
-    title: 'Privacy Policy',
-    updated: UPDATED,
-    intro:
-      'Your privacy is extremely important to us. This Privacy Policy details how we collect, use, disclose, and protect your information when you interact with our mobile application.',
-    numbered: true,
+    id: 'about',
+    nav: 'About Us',
+    title: 'About Us',
+    numbered: false,
     sections: [
       {
-        id: 'information-we-collect',
-        title: 'Information We Collect',
-        items: [
-          { lead: 'Account Information:', text: 'When you create an account, we may collect information such as your name, email address, and profile preferences.' },
-          { lead: 'Device and Usage Data:', text: "We automatically log certain technical details, including your device model, operating system version, unique device identifiers, and data on how you navigate and use the app's features." },
+        id: 'about-us',
+        title: 'About Us',
+        hideTitle: true,
+        paragraphs: [
+          'DOMSBOX merupakan sebuah usaha di bidang kebugaran yang sudah berdiri sejak tahun 2020. Dengan menggunakan metode latihan **CrossFit**, DOMSBOX menjadi pusat kebugaran yang berbeda dari pusat kebugaran yang sudah ada sebelumnya.',
+          'Selain itu, didukung dengan **basis komunitas** yang kuat menjadikan jenis olahraga ini semakin dicari oleh masyarakat dewasa ini.',
+          'Nama **DOMS (Delayed Onset Muscle Soreness)** sendiri mencerminkan semangat kami, bahwa dalam setiap rasa lelah dan nyeri adalah tanda dari pertumbuhan dan kemajuan.',
         ],
       },
       {
-        id: 'how-we-use-your-information',
-        title: 'How We Use Your Information',
-        items: [
-          { text: "To operate, maintain, troubleshoot, and improve the application's overall performance." },
-          { text: 'To provide user support and handle any requests or inquiries you send us.' },
-          { text: 'To send you necessary system notifications, security alerts, and updates regarding your account.' },
+        id: 'layanan-program',
+        title: 'Layanan & Program Kami',
+        boxed: true,
+        cards: [
+          { lead: 'Functional Training', text: 'Latihan yang gerakannya diadaptasi dari kehidupan sehari-hari, bertujuan untuk menambah performa dalam melakukan aktivitas harian.' },
+          { lead: 'Personal Training', text: 'Program latihan yang disesuaikan secara spesifik dengan kebutuhan dan tujuan masing-masing *client*.' },
+          { lead: 'Community Event', text: 'Aktivitas bersama yang melibatkan *member* maupun *non-member* untuk membangun semangat, kebersamaan, dan kekompakan.' },
         ],
       },
       {
-        id: 'data-sharing-and-third-parties',
-        title: 'Data Sharing and Third Parties',
-        items: [
-          { text: 'We do not sell, rent, or trade your personal data to third parties.' },
-          { text: 'We may share minimal, non-identifiable data with trusted third-party service providers (such as secure cloud hosting or performance analytics tools) solely to help us run and optimize the app safely.' },
-        ],
+        id: 'visi',
+        title: 'Visi',
+        paragraphs: ['Menjadi wadah bagi siapapun untuk menjadi versi yang lebih baik setiap harinya.'],
       },
       {
-        id: 'data-security',
-        title: 'Data Security',
+        id: 'misi',
+        title: 'Misi',
         items: [
-          { text: 'We implement strict industry-standard technical and organizational security measures to protect your information against unauthorized access, loss, or alteration. However, please note that no method of transmission over the internet or mobile network is 100% secure.' },
-        ],
-      },
-      {
-        id: 'your-choices-and-data-deletion',
-        title: 'Your Choices and Data Deletion',
-        items: [
-          { text: 'You can access, update, or edit your personal profile information at any time via your account settings.' },
-          { text: 'If you wish to permanently delete your account and all associated data, you may submit a request through the app settings or contact our support team.' },
+          { lead: 'Aman, Efektif, & Menyenangkan:', text: 'Memberikan program latihan yang aman, efektif, dan menyenangkan sehingga meningkatkan kesadaran masyarakat akan pentingnya latihan untuk mendukung gaya hidup yang aktif.' },
+          { lead: 'Komunitas yang Positif:', text: 'Membangun komunitas yang suportif dan positif bagi seluruh anggota.' },
         ],
       },
     ],
@@ -137,6 +127,57 @@ export const PAGES: Page[] = [
     ],
   },
   {
+    id: 'privacy',
+    nav: 'Privacy Policy',
+    title: 'Privacy Policy',
+    updated: UPDATED,
+    intro:
+      'Your privacy is extremely important to us. This Privacy Policy details how we collect, use, disclose, and protect your information when you interact with our mobile application.',
+    numbered: true,
+    sections: [
+      {
+        id: 'information-we-collect',
+        title: 'Information We Collect',
+        items: [
+          { lead: 'Account Information:', text: 'When you create an account, we may collect information such as your name, email address, and profile preferences.' },
+          { lead: 'Device and Usage Data:', text: "We automatically log certain technical details, including your device model, operating system version, unique device identifiers, and data on how you navigate and use the app's features." },
+        ],
+      },
+      {
+        id: 'how-we-use-your-information',
+        title: 'How We Use Your Information',
+        items: [
+          { text: "To operate, maintain, troubleshoot, and improve the application's overall performance." },
+          { text: 'To provide user support and handle any requests or inquiries you send us.' },
+          { text: 'To send you necessary system notifications, security alerts, and updates regarding your account.' },
+        ],
+      },
+      {
+        id: 'data-sharing-and-third-parties',
+        title: 'Data Sharing and Third Parties',
+        items: [
+          { text: 'We do not sell, rent, or trade your personal data to third parties.' },
+          { text: 'We may share minimal, non-identifiable data with trusted third-party service providers (such as secure cloud hosting or performance analytics tools) solely to help us run and optimize the app safely.' },
+        ],
+      },
+      {
+        id: 'data-security',
+        title: 'Data Security',
+        items: [
+          { text: 'We implement strict industry-standard technical and organizational security measures to protect your information against unauthorized access, loss, or alteration. However, please note that no method of transmission over the internet or mobile network is 100% secure.' },
+        ],
+      },
+      {
+        id: 'your-choices-and-data-deletion',
+        title: 'Your Choices and Data Deletion',
+        items: [
+          { text: 'You can access, update, or edit your personal profile information at any time via your account settings.' },
+          { text: 'If you wish to permanently delete your account and all associated data, you may submit a request through the app settings or contact our support team.' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'help',
     nav: 'Help Center',
     title: 'Help Center & Support',
@@ -159,47 +200,6 @@ export const PAGES: Page[] = [
         items: [
           { lead: 'Email Support:', text: SUPPORT_EMAIL },
           { lead: 'Estimated Response Time:', text: RESPONSE_TIME },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'about',
-    nav: 'About Us',
-    title: 'About Us',
-    numbered: false,
-    sections: [
-      {
-        id: 'about-us',
-        title: 'About Us',
-        hideTitle: true,
-        paragraphs: [
-          'DOMSBOX merupakan sebuah usaha di bidang kebugaran yang sudah berdiri sejak tahun 2020. Dengan menggunakan metode latihan **CrossFit**, DOMSBOX menjadi pusat kebugaran yang berbeda dari pusat kebugaran yang sudah ada sebelumnya.',
-          'Selain itu, didukung dengan **basis komunitas** yang kuat menjadikan jenis olahraga ini semakin dicari oleh masyarakat dewasa ini.',
-          'Nama **DOMS (Delayed Onset Muscle Soreness)** sendiri mencerminkan semangat kami, bahwa dalam setiap rasa lelah dan nyeri adalah tanda dari pertumbuhan dan kemajuan.',
-        ],
-      },
-      {
-        id: 'layanan-program',
-        title: 'Layanan & Program Kami',
-        boxed: true,
-        cards: [
-          { lead: 'Functional Training', text: 'Latihan yang gerakannya diadaptasi dari kehidupan sehari-hari, bertujuan untuk menambah performa dalam melakukan aktivitas harian.' },
-          { lead: 'Personal Training', text: 'Program latihan yang disesuaikan secara spesifik dengan kebutuhan dan tujuan masing-masing *client*.' },
-          { lead: 'Community Event', text: 'Aktivitas bersama yang melibatkan *member* maupun *non-member* untuk membangun semangat, kebersamaan, dan kekompakan.' },
-        ],
-      },
-      {
-        id: 'visi',
-        title: 'Visi',
-        paragraphs: ['Menjadi wadah bagi siapapun untuk menjadi versi yang lebih baik setiap harinya.'],
-      },
-      {
-        id: 'misi',
-        title: 'Misi',
-        items: [
-          { lead: 'Aman, Efektif, & Menyenangkan:', text: 'Memberikan program latihan yang aman, efektif, dan menyenangkan sehingga meningkatkan kesadaran masyarakat akan pentingnya latihan untuk mendukung gaya hidup yang aktif.' },
-          { lead: 'Komunitas yang Positif:', text: 'Membangun komunitas yang suportif dan positif bagi seluruh anggota.' },
         ],
       },
     ],

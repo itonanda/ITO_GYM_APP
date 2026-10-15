@@ -29,7 +29,9 @@ interface dataSchedule {
   ScheduleEndTime: string;
   ScheduleDate: string;
   ScheduleDescriptions: string;
-  ScheduleList: string;
+  ScheduleActivityPlan1: string;
+  ScheduleActivityPlan2: string;
+  ScheduleActivityPlan3: string;
   ScheduleQuota: string;
   ScheduleAvailableQuota: string;
 }
@@ -44,10 +46,12 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleEndTime: "12:43",
     ScheduleDate: "2026-08-15",
     ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
-    ScheduleList: "Jump",
+    ScheduleActivityPlan1: "Jump",
+    ScheduleActivityPlan2: "Jump",
+    ScheduleActivityPlan3: "Jump",
     ScheduleQuota: "20",
     ScheduleAvailableQuota: "20",
-  },
+  },  
   {
     id: "2",
     CoachName: "Bahlil",
@@ -57,7 +61,9 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleEndTime: "19:00",
     ScheduleDate: "2026-08-15",
     ScheduleDescriptions: "",
-    ScheduleList: "Jump",
+    ScheduleActivityPlan1: "Jump",
+    ScheduleActivityPlan2: "Jump",
+    ScheduleActivityPlan3: "Jump",
     ScheduleQuota: "15",
     ScheduleAvailableQuota: "10",
   },
@@ -70,11 +76,12 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleEndTime: "09:43",
     ScheduleDate: "2026-08-15",
     ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
-    ScheduleList: "",
+    ScheduleActivityPlan1: "Jump",
+    ScheduleActivityPlan2: "Jump",
+    ScheduleActivityPlan3: "Jump",
     ScheduleQuota: "15",    
     ScheduleAvailableQuota: "9",
-  },
-  
+  },  
   {
     id: "4",
     CoachName: "James Boy",
@@ -84,7 +91,9 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleEndTime: "23:43",
     ScheduleDate: "2026-08-16",
     ScheduleDescriptions: "",
-    ScheduleList: "Jump",
+    ScheduleActivityPlan1: "Jump",
+    ScheduleActivityPlan2: "Jump",
+    ScheduleActivityPlan3: "Jump",
     ScheduleQuota: "20",
     ScheduleAvailableQuota: "19",
   },
@@ -222,7 +231,9 @@ export default function ClassScheduleScreen() {
   const [showScheduleDate, setShowScheduleDate] = useState(false);
   const [date, setDate] = useState(new Date());
   const [ScheduleDescriptions, setScheduleDescriptions] = useState('For Upper body, make you more energize and feel better .....');
-  const [ScheduleList, setScheduleList] = useState(""); 
+  const [ScheduleActivityPlan1, setScheduleActivityPlan1] = useState(""); 
+  const [ScheduleActivityPlan2, setScheduleActivityPlan2] = useState(""); 
+  const [ScheduleActivityPlan3, setScheduleActivityPlan3] = useState(""); 
   const [ScheduleQuota, setScheduleQuota] = useState(""); 
   const [ScheduleAvailableQuota, setScheduleAvailableQuota] = useState(""); 
   
@@ -242,7 +253,9 @@ export default function ClassScheduleScreen() {
     setScheduleEndTime(end);
     setScheduleDate("");
     setScheduleDescriptions("");
-    setScheduleList("");
+    setScheduleActivityPlan1("");
+    setScheduleActivityPlan2("");
+    setScheduleActivityPlan3("");
     setScheduleQuota("");
     setScheduleAvailableQuota("");
 
@@ -275,7 +288,9 @@ export default function ClassScheduleScreen() {
     setScheduleEndTime(end);
     setScheduleDate(item.ScheduleDate);
     setScheduleDescriptions(item.ScheduleDescriptions);
-    setScheduleList(item.ScheduleList);
+    setScheduleActivityPlan1(item.ScheduleActivityPlan1);
+    setScheduleActivityPlan2(item.ScheduleActivityPlan2);
+    setScheduleActivityPlan3(item.ScheduleActivityPlan3);
     setScheduleQuota(item.ScheduleQuota);
     setScheduleAvailableQuota(item.ScheduleAvailableQuota);
 
@@ -322,7 +337,9 @@ export default function ClassScheduleScreen() {
               ScheduleEndTime: formatTime(ScheduleEndTime),
               ScheduleDate: ScheduleDate,
               ScheduleDescriptions: ScheduleDescriptions,
-              ScheduleList: ScheduleList,
+              ScheduleActivityPlan1: ScheduleActivityPlan1,
+              ScheduleActivityPlan2: ScheduleActivityPlan2,
+              ScheduleActivityPlan3: ScheduleActivityPlan3,
               ScheduleQuota: ScheduleQuota,
               ScheduleAvailableQuota: ScheduleAvailableQuota,
             }
@@ -343,7 +360,9 @@ export default function ClassScheduleScreen() {
         ScheduleEndTime: formatTime(ScheduleEndTime),
         ScheduleDate: ScheduleDate,
         ScheduleDescriptions: ScheduleDescriptions,
-        ScheduleList: ScheduleList,
+        ScheduleActivityPlan1: ScheduleActivityPlan1,
+        ScheduleActivityPlan2: ScheduleActivityPlan2,
+        ScheduleActivityPlan3: ScheduleActivityPlan3,
         ScheduleQuota: ScheduleQuota,
         ScheduleAvailableQuota: ScheduleAvailableQuota,
       };
@@ -390,7 +409,9 @@ export default function ClassScheduleScreen() {
     setScheduleEndTime(end);
     setScheduleDate("");
     setScheduleDescriptions("");
-    setScheduleList("");
+    setScheduleActivityPlan1("");
+    setScheduleActivityPlan2("");
+    setScheduleActivityPlan3("");
     setScheduleQuota("");
     setScheduleAvailableQuota("");
 
@@ -989,21 +1010,65 @@ export default function ClassScheduleScreen() {
                     </View>
                   </View>
 
-                  {/* Input Activity Plan */}
+                  {/* Input Activity Plan 1 */}
                   <View style={styles.rowModal}>
                     <View
                       style={{
                         flex: 1,
                       }}
                     >
-                      <Text style={styles.labelModal}>Activity Plan</Text>
+                      <Text style={styles.labelModal}>Activity Plan 1</Text>
                     
                       <TextInput
                         style={styles.notesInput}
                         placeholder="Write Activity Plan..."
                         placeholderTextColor="#999"
-                        value={ScheduleList}
-                        onChangeText={setScheduleList}
+                        value={ScheduleActivityPlan1}
+                        onChangeText={setScheduleActivityPlan1}
+                        multiline
+                        numberOfLines={5}
+                        textAlignVertical="top"
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Activity Plan 2 */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Activity Plan 2</Text>
+                    
+                      <TextInput
+                        style={styles.notesInput}
+                        placeholder="Write Activity Plan..."
+                        placeholderTextColor="#999"
+                        value={ScheduleActivityPlan2}
+                        onChangeText={setScheduleActivityPlan2}
+                        multiline
+                        numberOfLines={5}
+                        textAlignVertical="top"
+                      />
+                    </View>
+                  </View>
+
+                  {/* Input Activity Plan 3 */}
+                  <View style={styles.rowModal}>
+                    <View
+                      style={{
+                        flex: 1,
+                      }}
+                    >
+                      <Text style={styles.labelModal}>Activity Plan 3</Text>
+                    
+                      <TextInput
+                        style={styles.notesInput}
+                        placeholder="Write Activity Plan..."
+                        placeholderTextColor="#999"
+                        value={ScheduleActivityPlan3}
+                        onChangeText={setScheduleActivityPlan3}
                         multiline
                         numberOfLines={5}
                         textAlignVertical="top"
@@ -1540,7 +1605,7 @@ const styles = StyleSheet.create({
       padding: 14,
       fontSize: 15,
       color: "#222",
-      marginBottom: 20,
+      // marginBottom: 20,
     },
 
     inputSelect: {
