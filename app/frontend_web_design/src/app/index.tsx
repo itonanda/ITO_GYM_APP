@@ -1,18 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Image,
+  KeyboardAvoidingView,
+  Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Linking } from "react-native";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -82,11 +82,7 @@ export default function LoginScreen() {
                 activeOpacity={0.7}
               >
                 <Ionicons
-                  name={
-                    showPassword
-                      ? "eye-off-outline"
-                      : "eye-outline"
-                  }
+                  name={showPassword ? "eye-off-outline" : "eye-outline"}
                   size={22}
                   color="#666"
                 />
@@ -102,29 +98,18 @@ export default function LoginScreen() {
               activeOpacity={0.7}
             >
               <View
-                style={[
-                  styles.checkbox,
-                  remember && styles.checkboxActive,
-                ]}
+                style={[styles.checkbox, remember && styles.checkboxActive]}
               >
                 {remember && (
-                  <Ionicons
-                    name="checkmark"
-                    size={13}
-                    color="#FFF"
-                  />
+                  <Ionicons name="checkmark" size={13} color="#FFF" />
                 )}
               </View>
 
-              <Text style={styles.rememberText}>
-                Remember me
-              </Text>
+              <Text style={styles.rememberText}>Remember me</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={0.7}>
-              <Text style={styles.forgotText}>
-                Forgot Password?
-              </Text>
+              <Text style={styles.forgotText}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
 
@@ -132,9 +117,7 @@ export default function LoginScreen() {
           <TouchableOpacity
             style={styles.loginButton}
             activeOpacity={0.8}
-            onPress={() =>
-              router.replace("/(tabs)/dashboard")
-            }
+            onPress={() => router.replace("/(tabs)/dashboard")}
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
@@ -143,36 +126,36 @@ export default function LoginScreen() {
         {/* About Us */}
         <View style={styles.aboutContainer}>
           <View style={styles.divider} />
-            <View style={styles.aboutRow}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => Linking.openURL("http://localhost:8081/#about")}
-              >
-                <Text style={styles.aboutText}>About Us</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => Linking.openURL("http://localhost:8081/#terms")}
-              >
-                <Text style={styles.aboutText}>Terms & Conditions</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => Linking.openURL("http://localhost:8081/#privacy")}
-              >
-                <Text style={styles.aboutText}>Privacy Policy</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => Linking.openURL("http://localhost:8081/#help")}
-              >
-                <Text style={styles.aboutText}>Help Center</Text>
-              </TouchableOpacity>
-            </View>
-          
-          <Text style={styles.footerText}>
-            © 2026 DOMS Box
-          </Text>
+          <View style={styles.aboutRow}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Linking.openURL("https://help.domsbox.com/#about")}
+            >
+              <Text style={styles.aboutText}>About Us</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Linking.openURL("https://help.domsbox.com/#terms")}
+            >
+              <Text style={styles.aboutText}>Terms & Conditions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() =>
+                Linking.openURL("https://help.domsbox.com/#privacy")
+              }
+            >
+              <Text style={styles.aboutText}>Privacy Policy</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Linking.openURL("https://help.domsbox.com/#help")}
+            >
+              <Text style={styles.aboutText}>Help Center</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.footerText}>© 2026 DOMS Box</Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -584,7 +567,7 @@ const styles = StyleSheet.create({
 //   },
 
 //   passwordInput: {
-//     flex: 1,    
+//     flex: 1,
 //     height: 58,
 //     paddingHorizontal: 16,
 //     fontSize: 15,
