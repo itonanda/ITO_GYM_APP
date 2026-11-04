@@ -41,7 +41,6 @@ interface Transaction {
 }
 
 
-
 const membersData: MemberReport[] = [
   {
     id: "1",
@@ -454,12 +453,14 @@ export default function ReportScreen() {
     }).format(value);
   };
 
-  const maxRevenue = Math.max(
-    ...revenueData.map((item) => item.value)
+  const maxRevenue = revenueData.reduce(
+    (max, item) => Math.max(max, item.value),
+    0,
   );
 
-  const maxAttendance = Math.max(
-    ...attendanceData.map((item) => item.value)
+  const maxAttendance = attendanceData.reduce(
+    (max, item) => Math.max(max, item.value),
+    0,
   );
 
   return (
@@ -556,11 +557,8 @@ export default function ReportScreen() {
               {/* HEADER */}
               <View style={styles.header}>
                 <View>
-                  <Text style={styles.pageTitle}>Gym Report</Text>
-      
-                  <Text style={styles.pageSubtitle}>
-                    Overview and performance analytics
-                  </Text>
+                  <Text style={styles.pageTitle}>Gym Report</Text>      
+                  <Text style={styles.pageSubtitle}>Overview and performance analytics</Text>
                 </View>
       
                 <View style={styles.headerActions}>
@@ -632,21 +630,13 @@ export default function ReportScreen() {
                       <Text style={styles.revenueValue}>{formatRupiah(totalRevenue)}</Text>
                     </View>      
                     <View style={styles.revenueIcon}>
-                      <Ionicons
-                        name="wallet-outline"
-                        size={27}
-                        color="#fff"
-                      />
+                      <Ionicons name="wallet-outline" size={27} color="#fff"/>
                     </View>
                   </View>
       
                   <View style={styles.revenueFooter}>
                     <View style={styles.revenueChange}>
-                      <Ionicons
-                        name="trending-up"
-                        size={16}
-                        color="#fff"
-                      />      
+                      <Ionicons name="trending-up" size={16} color="#fff"/>      
                       <Text style={styles.revenueChangeText}>18.6%</Text>
                     </View>      
                     <Text style={styles.revenueCompare}>vs last month</Text>
@@ -658,12 +648,7 @@ export default function ReportScreen() {
                   <Text style={styles.simpleRevenueValue}>{formatRupiah(600000)}</Text>
       
                   <View style={styles.progressBackground}>
-                    <View
-                      style={[
-                        styles.progressFill,
-                        { width: "50%" },
-                      ]}
-                    />
+                    <View style={[styles.progressFill,{ width: "50%" }]}/>
                   </View>      
                   <Text style={styles.progressText}>50% of monthly target</Text>
                 </View>
@@ -680,58 +665,84 @@ export default function ReportScreen() {
                     </View>      
                   </View>
       
-                  <View style={styles.chartContainer}>
-                    {revenueData.map((item) => {
-                      const height = (item.value / maxRevenue) * 180;
-      
+                  <FlatList
+                    horizontal
+                    data={revenueData}
+                    keyExtractor={(item) => item.month}
+                    style={{ height: 245 }}
+                    contentContainerStyle={{
+                      flexGrow: 1,
+                      flexDirection: "row",
+                      alignItems: "flex-end",
+                      justifyContent: "space-around",
+                      paddingTop: 25,
+                    }}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => {
+                      const height = maxRevenue > 0
+                        ? (item.value / maxRevenue) * 180
+                        : 0;
+
                       return (
-                        <View key={item.month} style={styles.barColumn}>
+                        <View style={[styles.barColumn]}>
                           <Text style={styles.barValue}>{Math.round(item.value / 1000000)}M</Text>
-      
+
                           <View style={styles.barBackground}>
                             <LinearGradient
-                              colors={["#E82528","#9A0006"]}
-                              style={[styles.bar,{ height }]}
+                              colors={["#E82528", "#9A0006"]}
+                              style={[styles.bar, { height }]}
                             />
                           </View>
-      
+
                           <Text style={styles.barLabel}>{item.month}</Text>
                         </View>
                       );
-                    })}
-                  </View>
+                    }}
+                  />
                 </View>
       
                 {/* ATTENDANCE */}      
                 <View style={styles.chartCard}>
                   <View style={styles.cardHeader}>
                     <View>
-                      <Text style={styles.cardTitle}>Attendance</Text>
-      
+                      <Text style={styles.cardTitle}>Attendance</Text>      
                       <Text style={styles.cardSubtitle}>Weekly member attendance</Text>
                     </View>
                   </View>
 
-                  <View style={styles.lineChart}>
-                    {attendanceData.map((item) => {
-                      const height = (item.value / maxAttendance) * 180;
-      
+                  <FlatList
+                    horizontal
+                    data={attendanceData}
+                    keyExtractor={(item) => item.day}
+                    style={{ height: 245 }}
+                    contentContainerStyle={{
+                      flexGrow: 1,
+                      flexDirection: "row",
+                      alignItems: "flex-end",
+                      justifyContent: "space-around",
+                    }}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => {
+                      const height = maxAttendance > 0
+                        ? (item.value / maxAttendance) * 180
+                        : 0;
+
                       return (
-                        <View key={item.day} style={styles.attendanceColumn}>
+                        <View style={[styles.attendanceColumn]}>
                           <Text style={styles.attendanceValue}>{item.value}</Text>
-      
+
                           <View style={styles.barBackground}>
                             <LinearGradient
-                              colors={["#E82528","#9A0006"]}
-                              style={[styles.bar,{ height }]}
+                              colors={["#E82528", "#9A0006"]}
+                              style={[styles.bar, { height }]}
                             />
                           </View>
-         
-                          <Text style={styles.dayLabel}>{item.day}</Text>   
+
+                          <Text style={styles.dayLabel}>{item.day}</Text>
                         </View>
                       );
-                    })}
-                  </View>
+                    }}
+                  />
                 </View>
               </View>
       
@@ -756,98 +767,71 @@ export default function ReportScreen() {
 
                     let degree = 0;
 
-                    const gradient = membershipData.map((item, index) => {
-                      const colors = [
-                        "#E82528",
-                        "#9A0006",
-                        "#D65A5C",
-                        "#151A2D",
-                        "#777777",
-                      ];
+                    const chartColors = [
+                      "#E82528",
+                      "#9A0006",
+                      "#D65A5C",
+                      "#151A2D",
+                      "#777777",
+                    ];
+                    const gradient: string[] = [];
 
+                    membershipData.forEach((item, index) => {
                       const start = degree;
                       degree += total > 0
                         ? (Number(item.value || 0) / total) * 360
                         : 0;
 
-                      return `${colors[index % colors.length]} ${start}deg ${degree}deg`;
+                      gradient.push(
+                        `${chartColors[index % chartColors.length]} ${start}deg ${degree}deg`,
+                      );
                     });
 
                     return total > 0 ? (
                       <View style={styles.donutContainer}>
                         {/* DONUT CHART - WEB */}
-                        <View
-                          style={[
-                            styles.donut,
-                            {
-                              background: `conic-gradient(${gradient.join(", ")})`,
-                            } as any,
-                          ]}
-                        >
+                        <View style={[styles.donut,{background: `conic-gradient(${gradient.join(", ")})`} as any]}>
                           <View style={styles.donutInner}>
-                            <Text style={styles.donutValue}>
-                              {total.toLocaleString("id-ID")}
-                            </Text>
-
-                            <Text style={styles.donutLabel}>
-                              Members
-                            </Text>
+                            <Text style={styles.donutValue}>{total.toLocaleString("id-ID")}</Text>
+                            <Text style={styles.donutLabel}>Members</Text>
                           </View>
                         </View>
 
                         {/* LEGEND */}
-                        <View style={styles.legend}>
-                          {membershipData.map((item, index) => {
-                            const colors = [
-                              "#E82528",
-                              "#9A0006",
-                              "#D65A5C",
-                              "#151A2D",
-                              "#777777",
-                            ];
-
+                        <FlatList
+                          data={membershipData}
+                          keyExtractor={(item) => item.membershipName}
+                          style={styles.legend}
+                          scrollEnabled={false}
+                          nestedScrollEnabled
+                          renderItem={({ item, index }) => {
                             const value = Number(item.value || 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
+                            const percentage = total > 0
+                              ? ((value / total) * 100).toFixed(1)
+                              : "0.0";
 
                             return (
-                              <View
-                                key={item.membershipName}
-                                style={styles.legendRow}
-                              >
+                              <View style={styles.legendRow}>
                                 <View style={styles.legendLeft}>
-                                  <View
-                                    style={[
-                                      styles.legendDot,
-                                      {
-                                        backgroundColor:
-                                          colors[index % colors.length],
-                                      },
-                                    ]}
-                                  />
-
-                                  <Text style={styles.legendName}>
-                                    {item.membershipName}
-                                  </Text>
+                                  <View style={[styles.legendDot,{backgroundColor: chartColors[index % chartColors.length]}]}/>
+                                  <Text style={styles.legendName}>{item.membershipName}</Text>
                                 </View>
 
                                 <Text style={styles.legendCount}>
-                                  {value.toLocaleString("id-ID")} 
-                                  <Text style={{fontSize: 8, color:"#09ae04", marginLeft: 5 }}>({percentage}%)</Text>
+                                  {value.toLocaleString("id-ID")}{" "}
+                                  <Text style={{ fontSize: 8, color: "#09ae04", marginLeft: 5 }}>({percentage}%)</Text>
                                 </Text>
                               </View>
                             );
-                          })}
-                        </View>
+                          }}
+                        />
                       </View>
                     ) : (
-                      <Text style={styles.emptyText}>
-                        No membership data
-                      </Text>
+                      <Text style={styles.emptyText}>No membership data</Text>
                     );
                   })()}
                 </View>
-              </View>
-    
+              </View> 
                 
             
               {/* TRANSACTION TABLE */}      
@@ -863,9 +847,7 @@ export default function ReportScreen() {
         
                   {/* SHOW ENTRIES */}
                   <View style={styles.leftSectionList}>
-                    <Text style={styles.labelList}>
-                      Show Entries
-                    </Text>
+                    <Text style={styles.labelList}>Show Entries</Text>
         
                     <View style={styles.pickerWrapperList}>
                       <Picker
@@ -883,11 +865,7 @@ export default function ReportScreen() {
         
                   {/* SEARCH */}
                   <View style={styles.searchContainer}>
-                    <Ionicons
-                      name="search-outline"
-                      size={19}
-                      color="#888"
-                    />
+                    <Ionicons name="search-outline" size={19} color="#888"/>
         
                     <TextInput
                       style={styles.searchInput}
@@ -898,251 +876,85 @@ export default function ReportScreen() {
                     />
         
                     {search.length > 0 && (
-                      <Pressable
-                        onPress={() => handleSearchChange("")}
-                      >
-                        <Ionicons
-                          name="close-circle"
-                          size={18}
-                          color="#999"
-                        />
+                      <Pressable onPress={() => handleSearchChange("")}>
+                        <Ionicons name="close-circle" size={18} color="#999"/>
                       </Pressable>
                     )}
                   </View>
                 </View>
         
-                <View style={styles.tableHeader}>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 1.2 },
-                    ]}
-                  >
-                    Invoice
-                  </Text>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 1.5 },
-                    ]}
-                  >
-                    Member
-                  </Text>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 1.5 },
-                    ]}
-                  >
-                    Type
-                  </Text>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 1 },
-                    ]}
-                  >
-                    Amount
-                  </Text>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 1 },
-                    ]}
-                  >
-                    Date
-                  </Text>
-        
-                  <Text
-                    style={[
-                      styles.tableHeaderText,
-                      { flex: 0.8 },
-                    ]}
-                  >
-                    Status
-                  </Text>
+                <View style={styles.tableHeader}>        
+                  <Text style={[styles.tableHeaderText,{ flex: 1.2 }]}>Invoice</Text>        
+                  <Text style={[styles.tableHeaderText,{ flex: 1.5 }]}>Member</Text>
+                  <Text style={[styles.tableHeaderText,{ flex: 1.5 }]}>Type</Text>        
+                  <Text style={[styles.tableHeaderText,{ flex: 1 }]}>Amount</Text>        
+                  <Text style={[styles.tableHeaderText,{ flex: 1 }]}>Date</Text>        
+                  <Text style={[styles.tableHeaderText,{ flex: 0.8 }]}>Status</Text>
                 </View>
         
                 {paginatedTransactions.length > 0 ? (
-                  paginatedTransactions.map((item) => (
-                    <View
-                      key={item.id}
-                      style={styles.tableRow}
-                    >
+                  <FlatList
+                    data={paginatedTransactions}
+                    keyExtractor={(item) => item.id}
+                    scrollEnabled={false}
+                    nestedScrollEnabled
+                    renderItem={({ item }) => (
+                    <View style={styles.tableRow}>
                       {/* INVOICE */}
-                      <Text
-                        style={[
-                          styles.tableText,
-                          { flex: 1.2 },
-                        ]}
-                      >
-                        {item.invoice}
-                      </Text>
+                      <Text style={[styles.tableText,{ flex: 1.2 }]}>{item.invoice}</Text>
         
                       {/* MEMBER */}
-                      <Text
-                        style={[
-                          styles.tableText,
-                          { flex: 1.5 },
-                        ]}
-                        numberOfLines={1}
-                      >
-                        {item.member}
-                      </Text>
+                      <Text style={[styles.tableText,{ flex: 1.5 }]} numberOfLines={1}>{item.member}</Text>
         
                       {/* TYPE */}
-                      <Text
-                        style={[
-                          styles.tableText,
-                          { flex: 1.5 },
-                        ]}
-                        numberOfLines={1}
-                      >
-                        {item.type}
-                      </Text>
+                      <Text style={[styles.tableText,{ flex: 1.5 }]} numberOfLines={1}>{item.type}</Text>
         
                       {/* AMOUNT */}
-                      <Text
-                        style={[
-                          styles.tableText,
-                          {
-                            flex: 1,
-                            fontWeight: "700",
-                          },
-                        ]}
-                      >
-                        {formatRupiah(item.amount)}
-                      </Text>
+                      <Text style={[styles.tableText,{ flex: 1,fontWeight: "700" }]}>{formatRupiah(item.amount)}</Text>
         
                       {/* DATE */}
-                      <Text
-                        style={[
-                          styles.tableText,
-                          { flex: 1 },
-                        ]}
-                      >
-                        {item.date}
-                      </Text>
+                      <Text style={[styles.tableText,{ flex: 1 }]}>{item.date}</Text>
         
                       {/* STATUS */}
                       <View style={{ flex: 0.8 }}>
-                        <StatusBadge
-                          status={item.status}
-                        />
+                        <StatusBadge status={item.status}/>
                       </View>
                     </View>
-                  ))
+                    )}
+                  />
                 ) : (
                   /* EMPTY DATA */
                   <View style={styles.emptyContainer}>
-                    <Ionicons
-                      name="document-text-outline"
-                      size={40}
-                      color="#CCC"
-                    />
-        
-                    <Text style={styles.emptyTitle}>
-                      No transactions found
-                    </Text>
-        
-                    <Text style={styles.emptySubtitle}>
-                      Try another search keyword
-                    </Text>
+                    <Ionicons name="document-text-outline" size={40} color="#CCC"/>        
+                    <Text style={styles.emptyTitle}>No transactions found</Text>        
+                    <Text style={styles.emptySubtitle}>Try another search keyword</Text>
                   </View>
                 )}
         
                 <View style={styles.headerRowList} />
-                <View style={styles.footerList}>
-        
+                <View style={styles.footerList}>        
                   {/* SHOWING */}
-                  <Text style={styles.footerTextList}>
-                    Showing {startEntry}-{endEntry} of{" "}
-                    {filteredTransactions.length} entries
-                  </Text>
+                  <Text style={styles.footerTextList}>Showing {startEntry}-{endEntry} of{" "} {filteredTransactions.length} entries</Text>
         
                   {/* PAGINATION */}
-                  <View style={styles.paginationList}>
-        
+                  <View style={styles.paginationList}>        
                     {/* PREVIOUS */}
-                    <Pressable
-                      style={[
-                        styles.pageButtonList,
-                        page === 1 &&
-                          styles.disabledButton,
-                      ]}
-                      disabled={page === 1}
-                      onPress={handlePrevious}
-                    >
-                      <Ionicons
-                        name="chevron-back"
-                        size={15}
-                        color={
-                          page === 1
-                            ? "#AAA"
-                            : "#333"
-                        }
-                      />
-        
-                      <Text
-                        style={[
-                          styles.pageButtonText,
-                          page === 1 &&
-                            styles.disabledText,
-                        ]}
-                      >
-                        Previous
-                      </Text>
+                    <Pressable style={[styles.pageButtonList, page === 1 && styles.disabledButton]} disabled={page === 1} onPress={handlePrevious}>
+                      <Ionicons name="chevron-back" size={15} color={page === 1 ? "#AAA" : "#333"}/>        
+                      <Text style={[styles.pageButtonText, page === 1 && styles.disabledText]}>Previous</Text>
                     </Pressable>
         
                     {/* PAGE NUMBER */}
                     <View style={styles.pageNumberContainer}>
-                      <Text style={styles.pageNumberList}>
-                        {page}
-                      </Text>
-        
-                      <Text style={styles.pageOfText}>
-                        of
-                      </Text>
-        
-                      <Text style={styles.pageNumberList}>
-                        {totalPages}
-                      </Text>
+                      <Text style={styles.pageNumberList}>{page}</Text>        
+                      <Text style={styles.pageOfText}>of</Text>        
+                      <Text style={styles.pageNumberList}>{totalPages}</Text>
                     </View>
         
                     {/* NEXT */}
-                    <Pressable
-                      style={[
-                        styles.pageButtonList,
-                        page === totalPages &&
-                          styles.disabledButton,
-                      ]}
-                      disabled={page === totalPages}
-                      onPress={handleNext}
-                    >
-                      <Text
-                        style={[
-                          styles.pageButtonText,
-                          page === totalPages &&
-                            styles.disabledText,
-                        ]}
-                      >
-                        Next
-                      </Text>
-        
-                      <Ionicons
-                        name="chevron-forward"
-                        size={15}
-                        color={
-                          page === totalPages
-                            ? "#AAA"
-                            : "#333"
-                        }
-                      />
+                    <Pressable style={[styles.pageButtonList, page === totalPages && styles.disabledButton]} disabled={page === totalPages} onPress={handleNext}>
+                      <Text style={[styles.pageButtonText, page === totalPages && styles.disabledText]}>Next</Text>        
+                      <Ionicons name="chevron-forward" size={15} color={page === totalPages ? "#AAA" : "#333"}/>
                     </Pressable>
                   </View>
                 </View>
@@ -1150,7 +962,7 @@ export default function ReportScreen() {
       
               {/* FOOTER */}      
               <View style={styles.footer}>
-                <Text style={styles.footerText}>DOMS Management Report • Updated Today</Text>
+                <Text style={styles.footerText}>DOMS Box Management Report • Updated Today</Text>
               </View>
             </View>     
             
@@ -1160,8 +972,6 @@ export default function ReportScreen() {
     </View>
   );
 }
-
-// export default MembershipDistribution;
 
 function MenuItem({
   icon,
@@ -1265,7 +1075,6 @@ function KpiCard({ title, value, change, icon, positive = false}: any) {
   );
 }
 
-
 /* STATUS */
 function StatusBadge({
   status,
@@ -1310,7 +1119,6 @@ function StatusBadge({
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -2234,7 +2042,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 38,
     borderWidth: 1,
-    borderColor: "#D9DDE3",
+    borderColor: "#000",
     borderRadius: 10,
     backgroundColor: "#FFF",
     justifyContent: "center",
@@ -2245,6 +2053,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 38,
     fontSize: 12,
+    textAlign: "center",
   },
 
   searchContainer: {

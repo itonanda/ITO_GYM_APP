@@ -410,7 +410,7 @@ export const exportPdf = (data: ExportReportData) => {
 <meta charset="UTF-8" />
 
 <title>
-DOMS Report
+DOMS Box Report
 </title>
 
 <style>
@@ -787,6 +787,11 @@ body {
   color: #151A2D;
 }
 
+.member-analytics-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
 .analytics-grid {
   display: grid;
 
@@ -917,6 +922,16 @@ body {
 ========================================== */
 
 .transaction-card {
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  margin-bottom: 10px;
+  
+  margin-right: 5px;
+}
+
+.transaction-card-table {
   border:
     1px solid #E5E5E5;
 
@@ -1044,6 +1059,7 @@ td {
    PRINT
 ========================================== */
 
+
 @media print {
 
   @page {
@@ -1091,6 +1107,11 @@ td {
     print-color-adjust:
       exact !important;
   }
+      
+  .member-analytics-section {
+    break-before: page;
+    page-break-before: always;
+  }
 }
 
 </style>
@@ -1110,7 +1131,7 @@ td {
     <div class="brand">
 
       <div class="logo">
-        DOMS FITNESS
+        DOMS Box
       </div>
 
       <div class="subtitle">
@@ -1318,100 +1339,97 @@ td {
        MEMBER ANALYTICS
   ====================================== -->
 
-  <div class="section-title">
-    Member Analytics
-  </div>
+  <div class="member-analytics-section">
+    <h3 class="section-title">Member Analytics</h3>
 
+    <div class="analytics-grid">
 
-  <div class="analytics-grid">
+      <!-- MEMBERSHIP -->
 
+      <div class="card">
 
-    <!-- MEMBERSHIP -->
+        <div class="card-title">
+          Membership Distribution
+        </div>
 
-    <div class="card">
+        <div class="card-subtitle">
+          Current membership distribution
+        </div>
 
-      <div class="card-title">
-        Membership Distribution
+        ${membershipChart}
+
       </div>
-
-      <div class="card-subtitle">
-        Current membership distribution
-      </div>
-
-      ${membershipChart}
 
     </div>
-
   </div>
-
 
   <!-- =====================================
        TRANSACTIONS
   ====================================== -->
-
-  <div class="section-title">
-    Recent Transactions
-  </div>
-
-
+  
   <div class="transaction-card">
-
-    <div class="transaction-header">
-
-      <div class="card-title">
-        Recent Transactions
-      </div>
-
-      <div class="card-subtitle">
-        Latest gym payment transactions
-      </div>
-
+    <div class="section-title">
+      Recent Transactions
     </div>
 
+    <div class="transaction-card-table">
 
-    <table>
+      <div class="transaction-header">
 
-      <thead>
+        <div class="card-title">
+          Recent Transactions
+        </div>
 
-        <tr>
+        <div class="card-subtitle">
+          Latest gym payment transactions
+        </div>
 
-          <th>
-            Invoice
-          </th>
-
-          <th>
-            Member
-          </th>
-
-          <th>
-            Type
-          </th>
-
-          <th>
-            Amount
-          </th>
-
-          <th>
-            Date
-          </th>
-
-          <th>
-            Status
-          </th>
-
-        </tr>
-
-      </thead>
+      </div>
 
 
-      <tbody>
+      <table>
 
-        ${transactionRows}
+        <thead>
 
-      </tbody>
+          <tr>
 
-    </table>
+            <th>
+              Invoice
+            </th>
 
+            <th>
+              Member
+            </th>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Amount
+            </th>
+
+            <th>
+              Date
+            </th>
+
+            <th>
+              Status
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${transactionRows}
+
+        </tbody>
+
+      </table>
+    </div>
   </div>
 
 
@@ -1422,7 +1440,7 @@ td {
   <div class="footer">
 
     <span>
-      DOMS Management Report
+      DOMS Box Management Report
     </span>
 
     <span>
