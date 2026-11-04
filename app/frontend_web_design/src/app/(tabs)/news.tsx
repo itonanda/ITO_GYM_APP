@@ -215,15 +215,18 @@ export default function NewsScreen() {
       alert("Please select a status");
       return;
     }
-    
-
 
     if (selectedActiveNews) {
       // UPDATE
-      const updatedData = activeNewsData.map((item) =>
-        item.id === selectedActiveNews.id
-          ? {
-              ...item,
+      const selectedIndex = activeNewsData.findIndex(
+        (item) => item.id === selectedActiveNews.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...activeNewsData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               titleName: titleName,
               description: description,
               picture: picture,
@@ -231,12 +234,11 @@ export default function NewsScreen() {
               postDate: postDate,
               status: status,
             }
-          : item,
-      );
 
-      setActiveNewsData(updatedData);
+        setActiveNewsData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveNews: dataActiveNews = {
@@ -633,29 +635,26 @@ export default function NewsScreen() {
                             style={styles.memberList}
                             nestedScrollEnabled
                           >
-                            {filteredCategory.length > 0 ? (
-                              filteredCategory.map((item) => (
-                                <TouchableOpacity
-                                  key={item.id}
-                                  style={styles.memberItem}
-                                  onPress={() => {
-                                    setCategory(item);
-                                    setShowCategoryDropdown(false);
-                                    setCategorySearch("");
-                                  }}
-                                >
-                                  <Text style={styles.memberItemText}>
-                                    {item.CategoryName}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            ) : (
-                              <View style={styles.noResult}>
-                                <Text style={styles.noResultText}>
-                                  Category not found
-                                </Text>
-                              </View>
-                            )}
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredCategory}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setCategory(item);
+                                      setShowCategoryDropdown(false);
+                                      setCategorySearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.CategoryName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
                           </ScrollView>
                         </View>
                       )}
@@ -784,29 +783,26 @@ export default function NewsScreen() {
                             style={styles.memberList}
                             nestedScrollEnabled
                           >
-                            {filteredStatus.length > 0 ? (
-                              filteredStatus.map((item) => (
-                                <TouchableOpacity
-                                  key={item.id}
-                                  style={styles.memberItem}
-                                  onPress={() => {
-                                    setStatus(item);
-                                    setShowStatusDropdown(false);
-                                    setStatusSearch("");
-                                  }}
-                                >
-                                  <Text style={styles.memberItemText}>
-                                    {item.StatusName}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            ) : (
-                              <View style={styles.noResult}>
-                                <Text style={styles.noResultText}>
-                                  Status not found
-                                </Text>
-                              </View>
-                            )}
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredStatus}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setStatus(item);
+                                      setShowStatusDropdown(false);
+                                      setStatusSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.StatusName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
                           </ScrollView>
                         </View>
                       )}

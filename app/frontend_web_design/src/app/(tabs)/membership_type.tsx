@@ -130,18 +130,22 @@ export default function MembersTypeScreen() {
 
     if (selectedDataType) {
       // UPDATE
-      const updatedData = TypeData.map((item) =>
-        item.id === selectedDataType.id
-          ? {
-              ...item,
-              typeName: typeName,
-            }
-          : item,
+      const selectedIndex = TypeData.findIndex(
+        (item) => item.id === selectedDataType.id,
       );
 
-      setTypeData(updatedData);
+      if (selectedIndex !== -1) {
+        const updatedData = [...TypeData];
 
-      alert("Updated successfully");
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
+              typeName: typeName,
+            }
+
+        setTypeData(updatedData);
+
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataType = {

@@ -168,21 +168,25 @@ export default function MembersPlanScreen() {
 
     if (selectedDataPlans) {
       // UPDATE
-      const updatedData = plansData.map((item) =>
-        item.id === selectedDataPlans.id
-          ? {
-              ...item,
+      const selectedIndex = plansData.findIndex(
+        (item) => item.id === selectedDataPlans.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...plansData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               planName: planName,
               day: day,
               price: price,
               description: description,
             }
-          : item,
-      );
 
-      setPlansData(updatedData);
+        setPlansData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataPlans = {

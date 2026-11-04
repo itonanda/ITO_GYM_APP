@@ -130,18 +130,22 @@ export default function NewsStatusScreen() {
 
     if (selectedDataStatus) {
       // UPDATE
-      const updatedData = StatusData.map((item) =>
-        item.id === selectedDataStatus.id
-          ? {
-              ...item,
-              StatusName: StatusName,
-            }
-          : item,
+      const selectedIndex = StatusData.findIndex(
+        (item) => item.id === selectedDataStatus.id,
       );
 
-      setStatusData(updatedData);
+      if (selectedIndex !== -1) {
+        const updatedData = [...StatusData];
 
-      alert("Updated successfully");
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
+              StatusName: StatusName,
+            }
+
+        setStatusData(updatedData);
+
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataStatus = {

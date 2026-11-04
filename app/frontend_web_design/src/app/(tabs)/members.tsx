@@ -16,7 +16,7 @@ import {
   View,
   Modal,
 } from "react-native";
-import PhoneInput from "../../components/PhoneInput";
+import PhoneInput from "@/components/PhoneInput";
 
 
 // ============ DATA ============
@@ -429,10 +429,15 @@ export default function MembersScreen() {
 
     if (selectedActiveMembers) {
       // UPDATE
-      const updatedData = activeMembersData.map((item) =>
-        item.id === selectedActiveMembers.id
-          ? {
-              ...item,
+      const selectedIndex = activeMembersData.findIndex(
+        (item) => item.id === selectedActiveMembers.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...activeMembersData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               name: fullName,
               memberId: MemberId,
               dateEnrolled: MemberDateEnrolled,
@@ -448,13 +453,12 @@ export default function MembersScreen() {
               emergencyContactNo: emergencyContactNo,
               emergencyContactName: emergencyContactName,
               gender: gender,
-            }
-          : item,
-      );
+            };
 
-      setActiveMembersData(updatedData);
+        setActiveMembersData(updatedData);
 
-      alert("Members updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataActiveMembers = {

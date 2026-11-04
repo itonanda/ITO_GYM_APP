@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import PhoneInput from "../../components/PhoneInput";
+import PhoneInput from "@/components/PhoneInput";
  
 
 // ============ DATA ============
@@ -292,31 +292,35 @@ export default function CoachesScreen() {
 
     if (selectedActiveCoaches) {
       // UPDATE
-      const updatedData = activeCoachesData.map((item) =>
-        item.id === selectedActiveCoaches.id
-          ? {
-              ...item,
-              name: fullName,
-              coachId: CoachId,
-              dateExpiration: CoachDateExpiration,
-              photo: image,
-              email: email,
-              birthDate: birthDate,
-              dialCodePhone: dialCodePhone,
-              phone: phone,
-              password: password,
-              confirmPassword: confirmPassword,
-              dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
-              emergencyContactNo: emergencyContactNo,
-              emergencyContactName: emergencyContactName,
-              gender: gender,
-            }
-          : item,
+      const selectedIndex = activeCoachesData.findIndex(
+        (item) => item.id === selectedActiveCoaches.id,
       );
 
-      setActiveCoachesData(updatedData);
+      if (selectedIndex !== -1) {
+        const updatedData = [...activeCoachesData];
 
-      alert("Updated successfully");
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
+          name: fullName,
+          coachId: CoachId,
+          dateExpiration: CoachDateExpiration,
+          photo: image,
+          email: email,
+          birthDate: birthDate,
+          dialCodePhone: dialCodePhone,
+          phone: phone,
+          password: password,
+          confirmPassword: confirmPassword,
+          dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
+          emergencyContactNo: emergencyContactNo,
+          emergencyContactName: emergencyContactName,
+          gender: gender,
+        };
+
+        setActiveCoachesData(updatedData);
+
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveCoaches: dataActiveCoaches = {
@@ -1110,23 +1114,6 @@ export default function CoachesScreen() {
                       </View>
                   }
 
-
-
-
-
-
-
-
-
-
-
-                  
-                  
-                  
-                  
-                  
-                  
-            
                   <View style={styles.buttonRowModal}>
                     <Pressable
                       style={styles.cancelButtonModal}

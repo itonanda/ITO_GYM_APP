@@ -159,19 +159,23 @@ export default function MembersQuotacreen() {
 
     if (selectedDataQuota) {
       // UPDATE
-      const updatedData = QuotaData.map((item) =>
-        item.id === selectedDataQuota.id
-          ? {
-              ...item,
+      const selectedIndex = QuotaData.findIndex(
+        (item) => item.id === selectedDataQuota.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...QuotaData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               quota: quota,
               type: type,
             }
-          : item,
-      );
 
-      setQuotaData(updatedData);
+        setQuotaData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataQuota = {

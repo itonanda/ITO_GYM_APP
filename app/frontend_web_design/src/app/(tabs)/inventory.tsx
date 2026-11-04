@@ -389,21 +389,25 @@ export default function InventoryEquipmentScreen() {
 
     if (selectedEquipment) {
       // UPDATE
-      const updatedData = equipmentData.map((item) =>
-        item.id === selectedEquipment.id
-          ? {
-              ...item,
+      const selectedIndex = equipmentData.findIndex(
+        (item) => item.id === selectedEquipment.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...equipmentData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               name: equipmentName,
               total: totalNo,
               status: status,
               photo: image,
             }
-          : item,
-      );
 
-      setEquipmentData(updatedData);
+        setEquipmentData(updatedData);
 
-      alert("Equipment updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newEquipment: Equipment = {

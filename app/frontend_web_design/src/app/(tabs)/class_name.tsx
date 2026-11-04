@@ -135,18 +135,22 @@ export default function ClassTitleScreen() {
 
     if (selectedDataTitle) {
       // UPDATE
-      const updatedData = TitleData.map((item) =>
-        item.id === selectedDataTitle.id
-          ? {
-              ...item,
-              TitleName: TitleName,
-            }
-          : item,
+      const selectedIndex = TitleData.findIndex(
+        (item) => item.id === selectedDataTitle.id,
       );
 
-      setTitleData(updatedData);
+      if (selectedIndex !== -1) {
+        const updatedData = [...TitleData];
 
-      alert("Updated successfully");
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
+              TitleName: TitleName,
+            }
+
+        setTitleData(updatedData);
+
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataTitle = {

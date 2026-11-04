@@ -384,10 +384,15 @@ export default function PaymentScreen() {
 
     if (selecteddataPayment) {
       // UPDATE
-      const updatedData = paymentsData.map((item) =>
-        item.id === selecteddataPayment.id
-          ? {
-              ...item,
+      const selectedIndex = paymentsData.findIndex(
+        (item) => item.id === selecteddataPayment.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...paymentsData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               memberId: memberId,
               memberName: memberName,
               membershipPlanName: membershipPlanName,
@@ -397,12 +402,11 @@ export default function PaymentScreen() {
               transactionDate: transactionDate,
               confirmTransactionDate: confirmTransactionDate,
             }
-          : item,
-      );
 
-      setpaymentsData(updatedData);
+        setpaymentsData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataPayment = {
@@ -744,29 +748,26 @@ export default function PaymentScreen() {
                         style={styles.memberList}
                         nestedScrollEnabled
                       >
-                        {filteredMembers.length > 0 ? (
-                          filteredMembers.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
-                                setMemberName(item);
-                                setShowMemberDropdown(false);
-                                setMemberSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.memberId}  -  {item.memberName}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Member not found
-                            </Text>
-                          </View>
-                        )}
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredMembers}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
+                                  setMemberName(item);
+                                  setShowMemberDropdown(false);
+                                  setMemberSearch("");
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>{item.memberId} - {item.memberName}</Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
                   )}
@@ -831,29 +832,26 @@ export default function PaymentScreen() {
                         style={styles.memberList}
                         nestedScrollEnabled
                       >
-                        {filteredMembershipPlan.length > 0 ? (
-                          filteredMembershipPlan.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredMembershipPlan}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
                                 setMembershipPlanName(item);
                                 setShowMembershipPlanDropdown(false);
                                 setMembershipPlanSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.membershipPlanName}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Membership Plan not found
-                            </Text>
-                          </View>
-                        )}
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>{item.membershipPlanName}</Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
                   )}
@@ -918,29 +916,26 @@ export default function PaymentScreen() {
                         style={styles.memberList}
                         nestedScrollEnabled
                       >
-                        {filteredPaymentMethod.length > 0 ? (
-                          filteredPaymentMethod.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
-                                setPaymentMethodName(item);
-                                setShowPaymentMethodDropdown(false);
-                                setPaymentMethodSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.paymentMethodName}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Payment Method not found
-                            </Text>
-                          </View>
-                        )}
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredPaymentMethod}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
+                                  setPaymentMethodName(item);
+                                  setShowPaymentMethodDropdown(false);
+                                  setPaymentMethodSearch("");
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>{item.paymentMethodName}</Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
                   )}
@@ -1088,29 +1083,26 @@ export default function PaymentScreen() {
                             style={styles.memberList}
                             nestedScrollEnabled
                           >
-                            {filteredPaymentStatus.length > 0 ? (
-                              filteredPaymentStatus.map((item) => (
-                                <TouchableOpacity
-                                  key={item.id}
-                                  style={styles.memberItem}
-                                  onPress={() => {
-                                    setPaymentStatusName(item);
-                                    setShowPaymentStatusDropdown(false);
-                                    setPaymentStatusSearch("");
-                                  }}
-                                >
-                                  <Text style={styles.memberItemText}>
-                                    {item.paymentStatusName}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            ) : (
-                              <View style={styles.noResult}>
-                                <Text style={styles.noResultText}>
-                                  Payment Status not found
-                                </Text>
-                              </View>
-                            )}
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredPaymentStatus}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setPaymentStatusName(item);
+                                      setShowPaymentStatusDropdown(false);
+                                      setPaymentStatusSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.paymentStatusName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
                           </ScrollView>
                         </View>
                       )}

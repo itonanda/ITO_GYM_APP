@@ -208,22 +208,26 @@ export default function InventoryStockScreen() {
 
     if (selectedStockData) {
       // UPDATE
-      const updatedData = StockDataData.map((item) =>
-        item.id === selectedStockData.id
-          ? {
-              ...item,
+      const selectedIndex = StockDataData.findIndex(
+        (item) => item.id === selectedStockData.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...StockDataData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               name: name,
               category: category,
               stock: stock,
               status: status,
               avatar: avatar,
             }
-          : item,
-      );
 
-      setStockDataData(updatedData);
+        setStockDataData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newStockData: StockData = {

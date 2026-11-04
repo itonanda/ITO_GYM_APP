@@ -317,10 +317,15 @@ export default function ClassBookingScreen() {
 
     if (selectedDataBooking) {
       // UPDATE
-      const updatedData = BookingData.map((item) =>
-        item.id === selectedDataBooking.id
-          ? {
-              ...item,
+      const selectedIndex = BookingData.findIndex(
+        (item) => item.id === selectedDataBooking.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...BookingData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               memberName: memberName,
               memberId: memberId,     
               ClassScheduleId: ClassScheduleId,         
@@ -333,12 +338,11 @@ export default function ClassBookingScreen() {
               ScheduleEndTime: ScheduleEndTime,
               ScheduleDate: ScheduleDate,
             }
-          : item,
-      );
 
-      setBookingData(updatedData);
+        setBookingData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataBooking = {
@@ -744,29 +748,26 @@ export default function ClassBookingScreen() {
                         style={styles.memberList}
                         nestedScrollEnabled
                       >
-                        {filteredMembers.length > 0 ? (
-                          filteredMembers.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
-                                setMemberName(item);
-                                setShowMemberDropdown(false);
-                                setMemberSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.memberId}  -  {item.memberName}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Member not found
-                            </Text>
-                          </View>
-                        )}
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredMembers}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
+                                  setMemberName(item);
+                                  setShowMemberDropdown(false);
+                                  setMemberSearch("");
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>{item.memberId} - {item.memberName}</Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
                   )}
@@ -832,34 +833,31 @@ export default function ClassBookingScreen() {
                         style={styles.memberList}
                         nestedScrollEnabled
                       >
-                        {filteredCoach.length > 0 ? (
-                          filteredCoach.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
-                                setCoachName(item);
-                                setShowCoachDropdown(false);
-                                setCoachSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   -   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Schedule not found
-                            </Text>
-                          </View>
-                        )}
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredCoach}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
+                                  setCoachName(item);
+                                  setShowCoachDropdown(false);
+                                  setCoachSearch("");
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>
+                                  {item.CoachId}   -   {item.CoachName}   -   {item.ScheduleName}   -   {item.ScheduleDate}   -   {item.ScheduleStartTime}-{item.ScheduleEndTime}   -   {item.ScheduleAvailableQuota}/{item.ScheduleQuota}
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
-                  )}
-
-                  
+                  )}                  
 
                   <View style={styles.buttonRowModal}>
                     <Pressable

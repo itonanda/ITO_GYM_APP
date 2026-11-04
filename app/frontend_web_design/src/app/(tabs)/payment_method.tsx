@@ -161,21 +161,25 @@ export default function PaymentMethodScreen() {
 
     if (selectedActiveMethod) {
       // UPDATE
-      const updatedData = activeMethodData.map((item) =>
-        item.id === selectedActiveMethod.id
-          ? {
-              ...item,
+      const selectedIndex = activeMethodData.findIndex(
+        (item) => item.id === selectedActiveMethod.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...activeMethodData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               methodName: methodName,
               photoQR: imageQR,
               accountNumber: accountNumber,
               photoLogo: imageLogo,
             }
-          : item,
-      );
 
-      setActiveMethodData(updatedData);
+        setActiveMethodData(updatedData);
 
-      alert("Members updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMethod: dataActiveMethod = {

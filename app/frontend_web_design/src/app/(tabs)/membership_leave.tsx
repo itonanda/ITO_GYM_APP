@@ -227,10 +227,15 @@ export default function MembersLeaveScreen() {
 
     if (selecteddataLeave) {
       // UPDATE
-      const updatedData = LeavesData.map((item) =>
-        item.id === selecteddataLeave.id
-          ? {
-              ...item,
+      const selectedIndex = LeavesData.findIndex(
+        (item) => item.id === selecteddataLeave.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...LeavesData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               memberName: memberName,
               memberId: memberId,
               startDate: startDate,
@@ -238,12 +243,11 @@ export default function MembersLeaveScreen() {
               reason: reason,
               notes: notes,
             }
-          : item,
-      );
 
-      setLeavesData(updatedData);
+        setLeavesData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataLeave = {
@@ -703,30 +707,27 @@ export default function MembersLeaveScreen() {
                       <ScrollView
                         style={styles.memberList}
                         nestedScrollEnabled
-                      >
-                        {filteredMembers.length > 0 ? (
-                          filteredMembers.map((item) => (
-                            <TouchableOpacity
-                              key={item.id}
-                              style={styles.memberItem}
-                              onPress={() => {
-                                setMemberName(item);
-                                setShowMemberDropdown(false);
-                                setMemberSearch("");
-                              }}
-                            >
-                              <Text style={styles.memberItemText}>
-                                {item.memberId}  -  {item.memberName}
-                              </Text>
-                            </TouchableOpacity>
-                          ))
-                        ) : (
-                          <View style={styles.noResult}>
-                            <Text style={styles.noResultText}>
-                              Member not found
-                            </Text>
-                          </View>
-                        )}
+                      >                        
+                        <View style={{ maxHeight: 200 }}>
+                          <FlatList
+                            data={filteredMembers}
+                            keyExtractor={(item) => item.id.toString()}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled
+                            renderItem={({ item }) => (
+                              <TouchableOpacity
+                                style={styles.memberItem}
+                                onPress={() => {
+                                  setMemberName(item);
+                                  setShowMemberDropdown(false);
+                                  setMemberSearch("");
+                                }}
+                              >
+                                <Text style={styles.memberItemText}>{item.memberId} - {item.memberName}</Text>
+                              </TouchableOpacity>
+                            )}
+                          />
+                        </View>
                       </ScrollView>
                     </View>
                   )}
@@ -865,28 +866,36 @@ export default function MembersLeaveScreen() {
                   {/* REASON DROPDOWN */}
                   {showReason && (
                     <View style={styles.dropdown}>
-                      {reasons.map((item) => (
-                        <TouchableOpacity
-                          key={item}
-                          style={styles.reasonItem}
-                          onPress={() => {
-                            setReason(item);
-                            setShowReason(false);
-                          }}
-                        >
-                          <Text style={styles.reasonText}>
-                            {item}
-                          </Text>
+                      <FlatList
+                        data={reasons}
+                        keyExtractor={(item) => item}
+                        keyboardShouldPersistTaps="handled"
+                        nestedScrollEnabled
+                        renderItem={({ item }) => (
+                          <TouchableOpacity
+                            style={styles.reasonItem}
+                            onPress={() => {
+                              setReason(item);
+                              setShowReason(false);
+                            }}
+                          >
+                            <Text style={styles.reasonText}>{item}</Text>
 
-                          {reason === item && (
-                            <Ionicons
-                              name="checkmark"
-                              size={20}
-                              color="#E82528"
-                            />
-                          )}
-                        </TouchableOpacity>
-                      ))}
+                            {reason === item && (
+                              <Ionicons
+                                name="checkmark"
+                                size={20}
+                                color="#E82528"
+                              />
+                            )}
+                          </TouchableOpacity>
+                        )}
+                        ListEmptyComponent={
+                          <Text style={styles.reasonText}>
+                            Tidak ada alasan tersedia
+                          </Text>
+                        }
+                      />
                     </View>
                   )}
 
@@ -1409,6 +1418,7 @@ const styles = StyleSheet.create({
     marginTop: -8,
     marginBottom: 15,
     overflow: "hidden",
+    maxHeight: 200,
   },
 
   reasonItem: {

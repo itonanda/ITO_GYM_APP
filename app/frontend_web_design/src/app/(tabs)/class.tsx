@@ -43,7 +43,7 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleStartTime: "11:23",
     ScheduleEndTime: "12:43",
     ScheduleDate: "2026-08-15",
-    ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
+    ScheduleDescriptions: "Get ready for your workout session. Follow your instructor and train at your own pace.",
     ScheduleActivityPlan: "Jump",
     ScheduleQuota: "20",
     ScheduleAvailableQuota: "20",
@@ -69,7 +69,7 @@ const initialDataSchedule: dataSchedule[] = [
     ScheduleStartTime: "05:00",
     ScheduleEndTime: "09:43",
     ScheduleDate: "2026-08-15",
-    ScheduleDescriptions: "For Upper body, make you more energize and feel better .....",
+    ScheduleDescriptions: "Get ready for your workout session. Follow your instructor and train at your own pace.",
     ScheduleActivityPlan: "Jump",
     ScheduleQuota: "15",    
     ScheduleAvailableQuota: "9",
@@ -310,10 +310,15 @@ export default function ClassScheduleScreen() {
 
     if (selectedDataSchedule) {
       // UPDATE
-      const updatedData = ScheduleData.map((item) =>
-        item.id === selectedDataSchedule.id
-          ? {
-              ...item,
+      const selectedIndex = ScheduleData.findIndex(
+        (item) => item.id === selectedDataSchedule.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...ScheduleData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               CoachName: CoachName,
               CoachId: CoachId,
               ScheduleName: ScheduleName, 
@@ -325,12 +330,11 @@ export default function ClassScheduleScreen() {
               ScheduleQuota: ScheduleQuota,
               ScheduleAvailableQuota: ScheduleAvailableQuota,
             }
-          : item,
-      );
 
-      setScheduleData(updatedData);
+        setScheduleData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataSchedule = {
@@ -728,30 +732,27 @@ export default function ClassScheduleScreen() {
                           <ScrollView
                             style={styles.memberList}
                             nestedScrollEnabled
-                          >
-                            {filteredCoach.length > 0 ? (
-                              filteredCoach.map((item) => (
-                                <TouchableOpacity
-                                  key={item.id}
-                                  style={styles.memberItem}
-                                  onPress={() => {
-                                    setCoachName(item);
-                                    setShowCoachDropdown(false);
-                                    setCoachSearch("");
-                                  }}
-                                >
-                                  <Text style={styles.memberItemText}>
-                                    {item.CoachId}  -  {item.CoachName}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            ) : (
-                              <View style={styles.noResult}>
-                                <Text style={styles.noResultText}>
-                                  Coach not found
-                                </Text>
-                              </View>
-                            )}
+                          >                      
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredCoach}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setCoachName(item);
+                                      setShowCoachDropdown(false);
+                                      setCoachSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.CoachId}  -  {item.CoachName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
                           </ScrollView>
                         </View>
                       )}

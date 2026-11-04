@@ -176,10 +176,15 @@ export default function PromosScreen() {
 
     if (selecteddataPromos) {
       // UPDATE
-      const updatedData = promosData.map((item) =>
-        item.id === selecteddataPromos.id
-          ? {
-              ...item,
+      const selectedIndex = promosData.findIndex(
+        (item) => item.id === selecteddataPromos.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...promosData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               promoName: promoName,
               promoCode: promoCode,
               promoPrice: promoPrice,
@@ -187,12 +192,11 @@ export default function PromosScreen() {
               promoEndDate: promoEndDate,
               promoDescription: promoDescription,
             }
-          : item,
-      );
 
-      setpromosData(updatedData);
+        setpromosData(updatedData);
 
-      alert("Updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataPromos = {

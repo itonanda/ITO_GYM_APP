@@ -357,10 +357,15 @@ export default function MembershipScreen() {
 
     if (selectedActiveMembership) {
       // UPDATE
-      const updatedData = activeMembershipData.map((item) =>
-        item.id === selectedActiveMembership.id
-          ? {
-              ...item,
+      const selectedIndex = activeMembershipData.findIndex(
+        (item) => item.id === selectedActiveMembership.id,
+      );
+
+      if (selectedIndex !== -1) {
+        const updatedData = [...activeMembershipData];
+
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
               name: fullName,
               memberId: MemberId,
               dateEnrolled: MemberDateEnrolled,
@@ -376,12 +381,11 @@ export default function MembershipScreen() {
               emergencyContactName: emergencyContactName,
               gender: gender,
             }
-          : item,
-      );
 
-      setActiveMembershipData(updatedData);
+        setActiveMembershipData(updatedData);
 
-      alert("Membership updated successfully");
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembership: dataActiveMembership = {
@@ -404,7 +408,7 @@ export default function MembershipScreen() {
 
       setActiveMembershipData([...activeMembershipData, newActiveMembership]);
 
-      alert("Membership added successfully");
+      alert("Added successfully");
     }
     resetForm();
   };

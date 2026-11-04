@@ -134,18 +134,22 @@ export default function NewsTypeScreen() {
 
     if (selectedDataType) {
       // UPDATE
-      const updatedData = TypeData.map((item) =>
-        item.id === selectedDataType.id
-          ? {
-              ...item,
-              CategoryName: CategoryName,
-            }
-          : item,
+      const selectedIndex = TypeData.findIndex(
+        (item) => item.id === selectedDataType.id,
       );
 
-      setTypeData(updatedData);
+      if (selectedIndex !== -1) {
+        const updatedData = [...TypeData];
 
-      alert("Updated successfully");
+        updatedData[selectedIndex] = {
+          ...updatedData[selectedIndex],
+              CategoryName: CategoryName,
+            }
+
+        setTypeData(updatedData);
+
+        alert("Updated successfully");
+      }
     } else {
       // ADD
       const newActiveMembers: dataType = {
