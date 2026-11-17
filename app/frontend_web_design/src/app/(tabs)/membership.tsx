@@ -22,192 +22,113 @@ import PhoneInput from "../../components/PhoneInput";
 // ============ DATA ============
 interface dataActiveMembership {
   id: string;
-  name: string;
+  memberName: string;
   memberId: string;
-  dateEnrolled: string;
-  dateExpiration: string;
-  photo: string;
-  email: string;
-  birthDate: string;
-  dialCodePhone: string;
-  phone: string;
-  password: string;
-  dialCodeEmergencyContactNo: string;
-  emergencyContactNo: string;
-  emergencyContactName: string;
-  gender: string;
+  planName: string;
+  planId: string;
+  startDate: string;
+  endDate: string;
+  statusName: string;
+  statusId: string;
 }
 
 const initialDataActiveMembership: dataActiveMembership[] = [
   {
     id: "1",
-    name: "James Medalla",
+    memberName: "James Medalla",
     memberId: "SFM2301N1",
-    dateEnrolled: "2024-05-11",
-    dateExpiration: "2026-05-11",
-    photo: "https://i.pravatar.cc/300?img=1",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "60",
-    phone: "85122233360",
-    password: "12345",
-    dialCodeEmergencyContactNo: "60",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    planName: "1 Month Unlimited Plan",
+    planId: "1",
+    startDate: "2026-08-10",
+    endDate: "2027-01-10",    
+    statusName: "Active",
+    statusId: "1",
   },
   {
     id: "2",
-    name: "Chris Medalla",
+    memberName: "Chris Medalla",
     memberId: "SFM2301N2",
-    dateEnrolled: "2024-05-12",
-    dateExpiration: "2026-05-12",
-    photo: "https://i.pravatar.cc/300?img=2",
-    email: "Testing@gmail.com",
-    birthDate: "2000-07-10",
-    dialCodePhone: "62",
-    phone: "85122233362",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Female",
+    planName: "3 Month Unlimited Plan",
+    planId: "2",
+    startDate: "2026-09-24",
+    endDate: "2027-04-24",
+    statusName: "Active",
+    statusId: "1",
   },
   {
     id: "3",
-    name: "James Chris",
+    memberName: "James Chris",
     memberId: "SFM2301N3",
-    dateEnrolled: "2024-05-13",
-    dateExpiration: "2026-05-13",
-    photo: "https://i.pravatar.cc/300?img=3",
-    email: "Testing@gmail.com",
-    birthDate: "2001-05-10",
-    dialCodePhone: "65",
-    phone: "85122233365",
-    password: "12345",
-    dialCodeEmergencyContactNo: "65",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    planName: "3 Month Unlimited Plan",
+    planId: "2",
+    startDate: "2026-10-19",
+    endDate: "2027-10-19",
+    statusName: "Inactive",
+    statusId: "2",
+  },
+];
+
+const dataMember = [
+  {
+    id: '1',
+    memberName: "James Medalla",
+    memberId: "SFM2301N1",
   },
   {
-    id: "4",
-    name: "Sarah Medalla",
-    memberId: "SFM2301N4",
-    dateEnrolled: "2024-05-14",
-    dateExpiration: "2026-05-14",
-    photo: "https://i.pravatar.cc/300?img=4",
-    email: "Testing@gmail.com",
-    birthDate: "2000-08-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Female",
+    id: '2',
+    memberName: "Chris Medalla",
+    memberId: "SFM2301N2",
   },
   {
-    id: "5",
-    name: "James Sarah",
-    memberId: "SFM2301N5",
-    dateEnrolled: "2024-05-15",
-    dateExpiration: "2026-05-15",
-    photo: "https://i.pravatar.cc/300?img=5",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-14",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '3',
+    memberName: "James Chris",
+    memberId: "SFM2301N3",
+  },
+];
+
+const dataMembershipPlan = [
+  {
+    id: '1',
+    planName: "1 Month Unlimited Plan",
+    planId: "1",
   },
   {
-    id: "6",
-    name: "Lee Medalla",
-    memberId: "SFM2301N6",
-    dateEnrolled: "2024-05-16",
-    dateExpiration: "2026-05-16",
-    photo: "https://i.pravatar.cc/300?img=6",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '2',
+    planName: "3 Month Unlimited Plan",
+    planId: "2",
   },
   {
-    id: "7",
-    name: "James Medalla Lee",
-    memberId: "SFM2301N7",
-    dateEnrolled: "2024-05-17",
-    dateExpiration: "2026-05-17",
-    photo: "https://i.pravatar.cc/300?img=7",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '3',
+    planName: "Open Gym Day Pass",
+    planId: "3",
   },
   {
-    id: "8",
-    name: "James Lee",
-    memberId: "SFM2301N8",
-    dateEnrolled: "2024-05-19",
-    dateExpiration: "2026-05-19",
-    photo: "https://i.pravatar.cc/300?img=8",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '4',
+    planName: "Open Gym Unlimited",
+    planId: "4",
   },
   {
-    id: "9",
-    name: "Leeoe Medalla",
-    memberId: "SFM2301N9",
-    dateEnrolled: "2024-06-12",
-    dateExpiration: "2026-06-12",
-    photo: "https://i.pravatar.cc/300?img=9",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '5',
+    planName: "1x Drop In",
+    planId: "5",
   },
   {
-    id: "10",
-    name: "James Leeber",
-    memberId: "SFM2301N10",
-    dateEnrolled: "2024-05-20",
-    dateExpiration: "2026-05-20",
-    photo: "https://i.pravatar.cc/300?img=10",
-    email: "Testing@gmail.com",
-    birthDate: "2000-05-10",
-    dialCodePhone: "62",
-    phone: "85122233300",
-    password: "12345",
-    dialCodeEmergencyContactNo: "62",
-    emergencyContactNo: "85122233301",
-    emergencyContactName: "Budi",
-    gender: "Male",
+    id: '6',
+    planName: "5x Drop In",
+    planId: "6",
+  },
+];
+
+const dataMembershipStatus = [
+  {
+    id: '1',
+    statusName: "Active",
+    statusId: "1",
+  },
+  {
+    id: '2',
+    statusName: "Inactive",
+    statusId: "2",
   },
 ];
 
@@ -227,7 +148,7 @@ export default function MembershipScreen() {
       const keyword = search.toLowerCase();
 
       const matchSearch =
-        item.name.toLowerCase().includes(keyword) ||
+        item.memberName.toLowerCase().includes(keyword) ||
         item.memberId.toString().toLowerCase().includes(keyword);
       return matchSearch;
     });
@@ -249,15 +170,9 @@ export default function MembershipScreen() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.dataRowList}>
-      <Text style={[styles.dataTextList, { flex: 3 }]}>{item.name}</Text>
-      <Text style={[styles.dataTextList, { flex: 2 }]}>{item.memberId}</Text>
-
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateEnrolled}
-      </Text>
-      <Text style={[styles.dataTextList, { flex: 2, textAlign: "center" }]}>
-        {item.dateExpiration}
-      </Text>
+      <Text style={[styles.dataTextList, { flex: 4 }]}>{item.memberId}  -  {item.memberName}</Text>
+      <Text style={[styles.dataTextList, { flex: 3, textAlign: "center" }]}>{item.planName}</Text>
+      <Text style={[styles.dataTextList, { flex: 3, textAlign: "center" }]}>{item.startDate} | {item.endDate}</Text>
 
       <View
         style={{
@@ -294,67 +209,73 @@ export default function MembershipScreen() {
   const [selectedActiveMembership, setSelectedActiveMembership] =
     useState<dataActiveMembership | null>(null);
   const [MemberId, setMemberId] = useState("");
-  const [MemberDateEnrolled, setMemberDateEnrolled] = useState("");
-  const [MemberDateExpiration, setMemberDateExpiration] = useState("");
-  const [status, setStatus] = useState<"Active" | "Blocked">("Active");
-  const [image, setImage] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dialCodePhone, setDialCodePhone] = useState("62");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [dialCodeEmergencyContactNo, setDialCodeEmergencyContactNo] = useState("62");
-  const [emergencyContactNo, setEmergencyContactNo] = useState("");
-  const [emergencyContactName, setEmergencyContactName] = useState("");
-  const [gender, setGender] = useState("");
+  const [PlanId, setPlanId] = useState("");  
+  const [StatusId, setStatusId] = useState("");
 
   const handleAdd = () => {
     setSelectedActiveMembership(null);
-    setFullName("");
+    setMemberName("");
     setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setStatus("Active");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setDialCodeEmergencyContactNo("");
-    setEmergencyContactNo("");
-    setEmergencyContactName("");
-    setGender("");
+    setPlanName("");
+    setPlanId("");
+    setStartDate("");
+    setEndDate("");
+    setStatusName("");
+    setStatusId("");
 
     setShowModal(true);
   };
 
   const handleEdit = (item: dataActiveMembership) => {
     setSelectedActiveMembership(item);
-    setFullName(item.name);
+
+    // Cari data member berdasarkan memberId
+    const selectedMember = dataMember.find(
+      (member) => member.memberId === item.memberId
+    );
+    // Simpan object member
+    setMemberName(selectedMember || null);
+    // Simpan member ID
     setMemberId(item.memberId);
-    setMemberDateEnrolled(item.dateEnrolled);
-    setMemberDateExpiration(item.dateExpiration);
-    setImage(item.photo);
-    setEmail(item.email);
-    setBirthDate(item.birthDate);
-    setDialCodePhone(item.dialCodePhone);
-    setPhone(item.phone);
-    setPassword(item.password);
-    setDialCodeEmergencyContactNo(item.dialCodeEmergencyContactNo);
-    setEmergencyContactNo(item.emergencyContactNo);
-    setEmergencyContactName(item.emergencyContactName);
-    setGender(item.gender);
+
+    // Cari data membership plan berdasarkan planId
+    const selectedMembershipPlan = dataMembershipPlan.find(
+      (membershipPlan) => membershipPlan.planId === item.planId
+    );
+    // Simpan object membership plan
+    setPlanName(selectedMembershipPlan || null);
+    // Simpan Plan ID
+    setPlanId(item.planId);
+
+    setStartDate(item.startDate);
+    setEndDate(item.endDate);
+
+    // Cari data membership status berdasarkan statusId
+    const selectedMembershipStatus = dataMembershipStatus.find(
+      (membershipStatus) => membershipStatus.statusId === item.statusId
+    );
+    // Simpan object membership status
+    setStatusName(selectedMembershipStatus || null);
+    // Simpan Status ID
+    setStatusId(item.statusId);
+
+    // Tutup dropdown member
+    setShowMemberDropdown(false);
+    setMemberSearch("");
+
+    // Tutup dropdown membership Plan
+    setShowPlanNameDropdown(false);
+    setPlanNameSearch("");
+
+    // Tutup dropdown membership status
+    setShowStatusNameDropdown(false);
+    setStatusNameSearch("");
 
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (fullName.trim() === "") {
-      alert("Member Name is required");
-      return;
-    }
-
+    
     if (selectedActiveMembership) {
       // UPDATE
       const selectedIndex = activeMembershipData.findIndex(
@@ -366,20 +287,14 @@ export default function MembershipScreen() {
 
         updatedData[selectedIndex] = {
           ...updatedData[selectedIndex],
-              name: fullName,
+              memberName: memberName,
               memberId: MemberId,
-              dateEnrolled: MemberDateEnrolled,
-              dateExpiration: MemberDateExpiration,
-              photo: image,
-              email: email,
-              birthDate: birthDate,
-              dialCodePhone: dialCodePhone,
-              phone: phone,
-              password: password,
-              dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
-              emergencyContactNo: emergencyContactNo,
-              emergencyContactName: emergencyContactName,
-              gender: gender,
+              planName: planName,
+              planId: PlanId,
+              startDate: startDate,
+              endDate: endDate,
+              statusName: statusName,
+              statusId: StatusId,
             }
 
         setActiveMembershipData(updatedData);
@@ -390,20 +305,14 @@ export default function MembershipScreen() {
       // ADD
       const newActiveMembership: dataActiveMembership = {
         id: Date.now().toString(),
-        name: fullName,
+        memberName: memberName,
         memberId: MemberId,
-        dateEnrolled: MemberDateEnrolled,
-        dateExpiration: MemberDateExpiration,
-        photo: image,
-        email: email,
-        birthDate: birthDate,
-        dialCodePhone: dialCodePhone,
-        phone: phone,
-        password: password,
-        dialCodeEmergencyContactNo: dialCodeEmergencyContactNo,
-        emergencyContactNo: emergencyContactNo,
-        emergencyContactName: emergencyContactName,
-        gender: gender,
+        planName: planName,
+        planId: PlanId,
+        startDate: startDate,
+        endDate: endDate,
+        statusName: statusName,
+        statusId: StatusId,
       };
 
       setActiveMembershipData([...activeMembershipData, newActiveMembership]);
@@ -434,52 +343,40 @@ export default function MembershipScreen() {
 
   const resetForm = () => {
     setSelectedActiveMembership(null);
-    setFullName("");
+    setMemberName("");
     setMemberId("");
-    setMemberDateEnrolled("");
-    setMemberDateExpiration("");
-    setImage("");
-    setEmail("");
-    setBirthDate("");
-    setDialCodePhone("");
-    setPhone("");
-    setPassword("");
-    setDialCodeEmergencyContactNo("");
-    setEmergencyContactNo("");
-    setEmergencyContactName("");
-    setGender("");
+    setPlanName("");
+    setPlanId("");
+    setStartDate("");
+    setEndDate("");
+    setStatusName("");
+    setStatusId("");
 
     setShowModal(false);
   };
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const [memberName, setMemberName] = useState<any>(null);
+  const [showMemberDropdown, setShowMemberDropdown] = useState(false);
+  const [memberSearch, setMemberSearch] = useState("");
 
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
+  const filteredMembers = dataMember.filter((item) => {
+    const search = memberSearch.toLowerCase();
 
-  const pickImageWeb = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
-  };
-
-  const removePhoto = () => {
-    setImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const [birthDate, setBirthDate] = useState("");
+    return (
+      item.memberName.toLowerCase().includes(search) ||
+      item.memberId.toLowerCase().includes(search)
+    );
+  });
+  
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [showStartDate, setShowStartDate] = useState(false);
+  const [showEndDate, setShowEndDate] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
 
-  const onChangeDate = (event: any, selectedDate?: Date) => {
-    setShowPicker(false);
+  const onChangeStartDate = (event: any, selectedDate?: Date) => {
+    setShowStartDate(false);
 
     if (selectedDate) {
       setDate(selectedDate);
@@ -491,9 +388,53 @@ export default function MembershipScreen() {
         "-" +
         String(selectedDate.getDate()).padStart(2, "0");
 
-      setBirthDate(formatted);
+      setStartDate(formatted);
     }
   };
+
+  const onChangeEndDate = (event: any, selectedDate?: Date) => {
+    setShowEndDate(false);
+
+    if (selectedDate) {
+      setDate(selectedDate);
+
+      const formatted =
+        selectedDate.getFullYear() +
+        "-" +
+        String(selectedDate.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(selectedDate.getDate()).padStart(2, "0");
+
+      setEndDate(formatted);
+    }
+  };
+
+  const [planName, setPlanName] = useState<any>(null);
+  const [showPlanNameDropdown, setShowPlanNameDropdown] = useState(false);
+  const [planNameSearch, setPlanNameSearch] = useState("");
+
+  const filteredPlanName = dataMembershipPlan.filter((item) => {
+    const search = planNameSearch.toLowerCase();
+
+    return (
+      item.planName.toLowerCase().includes(search) ||
+      item.planId.toLowerCase().includes(search)
+    );
+  });
+
+  const [statusName, setStatusName] = useState<any>(null);
+  const [showStatusNameDropdown, setShowStatusNameDropdown] = useState(false);
+  const [statusNameSearch, setStatusNameSearch] = useState("");
+
+  const filteredStatusName = dataMembershipStatus.filter((item) => {
+    const search = statusNameSearch.toLowerCase();
+
+    return (
+      item.statusName.toLowerCase().includes(search) ||
+      item.statusId.toLowerCase().includes(search)
+    );
+  });
+
 
   return (
     <View style={styles.container}>
@@ -660,34 +601,9 @@ export default function MembershipScreen() {
 
               {/* Header */}
               <View style={styles.headerRowList}>
-                <Text style={[styles.headerTextList, { flex: 3 }]}>Name</Text>
-                <Text style={[styles.headerTextList, { flex: 2 }]}>
-                  Member ID
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Enrolled
-                </Text>
-
-                <Text
-                  style={[
-                    styles.headerTextList,
-                    {
-                      flex: 2,
-                      textAlign: "center",
-                    },
-                  ]}
-                >
-                  Date Expiration
-                </Text>
+                <Text style={[styles.headerTextList, { flex: 4 }]}>Member Name</Text>
+                <Text style={[styles.headerTextList,{flex: 3,textAlign: "center"}]}>Membership Plan</Text>
+                <Text style={[styles.headerTextList,{flex: 3,textAlign: "center"}]}>Date</Text>
 
                 <Text
                   style={[
@@ -759,240 +675,319 @@ export default function MembershipScreen() {
               {showModal && (
                 <View style={styles.modalScreen}>
                   <Text style={styles.titleModal}>
-                    {selectedActiveMembership ? "Edit Member" : "Add Member"}
-                  </Text>
+                    {selectedActiveMembership ? "Edit Membership" : "Add Membership"}
+                  </Text>          
 
-                  {/* Attach Photo Button */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={pickImageWeb}
-                    style={{ display: "none" }}
-                  />
+                  {selectedActiveMembership ? 
+                    <View>
+                      {/* Edit Membership */}
+                      {/* MEMBER NAME */}
+                      <Text style={styles.labelModal}>Member Name</Text>
 
-                  <View style={{ flexDirection: "row" }}>
-                    <Pressable onPress={openFilePicker}>
-                      <Text style={styles.attachPhotoModal}>
-                        Attach Photo ✏️
-                      </Text>
-                    </Pressable>
-                    <Text style={styles.attachPhotoModal}> | </Text>
-                    <Pressable onPress={removePhoto}>
-                      <Text style={styles.attachPhotoModal}>
-                        Remove Photo ❌
-                      </Text>
-                    </Pressable>
-                  </View>
-
-                  {image ? (
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePlaceholderModal}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholderModal}></View>
-                  )}
-                  {/* Input Member Name */}
-                  {selectedActiveMembership ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.5,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Member ID</Text>
-
-                        <TextInput
-                          value={MemberId}
-                          editable={false}
-                          style={styles.inputModal}
-                        />
-                      </View>
-
-                      <View
-                        style={{
-                          flex: 1,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 1,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Full Name</Text>
-                        <TextInput
-                          value={fullName}
-                          onChangeText={setFullName}
-                          style={styles.inputModal}
-                        />
-                      </View>
-                    </View>
-                  )}
-                  {/* Input Date Enrolled dan Date Expiration */}
-                  {selectedActiveMembership ? (
-                    <View style={styles.rowModal}>
-                      <View
-                        style={{
-                          flex: 0.7,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Enrolled</Text>
-
-                        {Platform.OS === "web" ? (
-                          <input
-                            type="date"
-                            value={MemberDateEnrolled}
-                            disabled={true}
-                            max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setMemberDateEnrolled(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
-                          />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {MemberDateEnrolled === ""
-                                  ? "Select Date"
-                                  : MemberDateEnrolled}
-                              </Text>
-                            </TouchableOpacity>
-
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                maximumDate={new Date()}
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>
-
-                      <View
-                        style={{
-                          flex: 0.7,
-                          marginLeft: 10,
-                        }}
-                      >
-                        <Text style={styles.labelModal}>Date Expiration</Text>
-
-                        {Platform.OS === "web" ? (
-                          <input
-                            type="date"
-                            value={MemberDateExpiration}
-                            disabled={true}
-                            //max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              setMemberDateExpiration(e.target.value)
-                            }
-                            style={{
-                              paddingRight: 10,
-                              paddingLeft: 10,
-                              border: "1px solid #ccc",
-                              backgroundColor: "#D9D9DD",
-                              height: 50,
-                              borderRadius: 10,
-                              fontSize: 15,
-                            }}
-                          />
-                        ) : (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => setShowPicker(true)}
-                              style={{
-                                height: 50,
-                                borderWidth: 1,
-                                borderColor: "#ccc",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                paddingHorizontal: 15,
-                              }}
-                            >
-                              <Text>
-                                {MemberDateExpiration === ""
-                                  ? "Select Date"
-                                  : MemberDateExpiration}
-                              </Text>
-                            </TouchableOpacity>
-
-                            {showPicker && (
-                              <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={onChangeDate}
-                              />
-                            )}
-                          </>
-                        )}
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={styles.rowModal} />
-                  )}
-                  {/* Input Email dan Birth of Date */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Email</Text>
                       <TextInput
-                        value={email}
-                        onChangeText={setEmail}
+                        value={`${memberName.memberId}  -  ${memberName.memberName}`}
+                        editable={false}
                         style={styles.inputModal}
                       />
-                    </View>
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Birth of Date</Text>
+                      {/* MEMBERSHIP PLAN NAME */}
+                      <Text style={styles.labelModal}>Membership Plan Name</Text>
+
+                      <TextInput
+                        value={`${planName.planName}`}
+                        editable={false}
+                        style={styles.inputModal}
+                      />
+                                            
+                      {/* START DATE and END DATE */}
+                      <View style={styles.rowModal}>
+                        <View style={{flex: 0.7}}>
+                          <Text style={styles.labelModal}>
+                            Start Date
+                          </Text>
+                          
+                          <TextInput
+                            value={startDate}
+                            editable={false}
+                            style={styles.inputModal}
+                          />
+                        </View>
+
+                        <View style={{flex: 0.7, marginLeft: 10,}}>
+                          <Text style={styles.labelModal}>
+                            End Date
+                          </Text>
+
+                          <TextInput
+                            value={endDate}
+                            editable={false}
+                            style={styles.inputModal}
+                          />
+                        </View>
+                      </View>
+
+                      {/* MEMBERSHIP PLAN STATUS */}
+                      <Text style={styles.labelModal}>Membership Plan Status</Text>
+
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowStatusNameDropdown(!showStatusNameDropdown);
+
+                          if (showStatusNameDropdown) {
+                            setStatusNameSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {statusName
+                            ? `${statusName.statusName}`
+                            : "--Select Membership Plan Status--"}
+                        </Text>
+
+                        <MaterialIcons
+                          name={showStatusNameDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+
+                      {showStatusNameDropdown && (
+                        <View style={styles.memberDropdown}>
+
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Membership Plan Status"
+                              placeholderTextColor="#888"
+                              value={statusNameSearch}
+                              onChangeText={setStatusNameSearch}
+                            />
+
+                            {statusNameSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setStatusNameSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+
+                          {/* MEMBERSHIP PLAN STATUS LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >                        
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredStatusName}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setStatusName(item);
+                                      setShowStatusNameDropdown(false);
+                                      setStatusNameSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.statusName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
+                          </ScrollView>
+                        </View>
+                      )}
+                    </View>
+                  : 
+                    <View>
+                      {/* Add Membership */}
+                      {/* MEMBER NAME */}
+                      <Text style={styles.labelModal}>Member Name</Text>
+
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowMemberDropdown(!showMemberDropdown);
+
+                          if (showMemberDropdown) {
+                            setMemberSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {memberName
+                            ? `${memberName.memberId}  -  ${memberName.memberName}`
+                            : "--Select Member Name--"}
+                        </Text>
+
+                        <MaterialIcons
+                          name={showMemberDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+
+                      {showMemberDropdown && (
+                        <View style={styles.memberDropdown}>
+
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Member Name / ID"
+                              placeholderTextColor="#888"
+                              value={memberSearch}
+                              onChangeText={setMemberSearch}
+                            />
+
+                            {memberSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setMemberSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+
+                          {/* MEMBER LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >                        
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredMembers}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setMemberName(item);
+                                      setShowMemberDropdown(false);
+                                      setMemberSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.memberId} - {item.memberName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
+                          </ScrollView>
+                        </View>
+                      )}
+
+                      {/* MEMBERSHIP PLAN NAME */}
+                      <Text style={styles.labelModal}>Membership Plan Name</Text>
+
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowPlanNameDropdown(!showPlanNameDropdown);
+
+                          if (showPlanNameDropdown) {
+                            setPlanNameSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {planName
+                            ? `${planName.planName}`
+                            : "--Select Membership Plan Name--"}
+                        </Text>
+
+                        <MaterialIcons
+                          name={showPlanNameDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+
+                      {showPlanNameDropdown && (
+                        <View style={styles.memberDropdown}>
+
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Membership Plan Name / ID"
+                              placeholderTextColor="#888"
+                              value={planNameSearch}
+                              onChangeText={setPlanNameSearch}
+                            />
+
+                            {planNameSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setPlanNameSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+
+                          {/* MEMBERSHIP PLAN LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >                        
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredPlanName}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setPlanName(item);
+                                      setShowPlanNameDropdown(false);
+                                      setPlanNameSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.planName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
+                          </ScrollView>
+                        </View>
+                      )}
+                      
+                      {/* START DATE */}                      
+                      <Text style={styles.labelModal}>Start Date</Text>
 
                       {Platform.OS === "web" ? (
                         <input
                           type="date"
-                          value={birthDate}
-                          max={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setBirthDate(e.target.value)}
+                          value={startDate}
+                          //max={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setStartDate(e.target.value)}
                           style={{
                             paddingRight: 10,
                             paddingLeft: 10,
@@ -1006,7 +1001,7 @@ export default function MembershipScreen() {
                       ) : (
                         <>
                           <TouchableOpacity
-                            onPress={() => setShowPicker(true)}
+                            onPress={() => setShowStartDate(true)}
                             style={{
                               height: 50,
                               borderWidth: 1,
@@ -1017,112 +1012,108 @@ export default function MembershipScreen() {
                             }}
                           >
                             <Text>
-                              {birthDate === "" ? "Select Date" : birthDate}
+                              {startDate === "" ? "Select Date" : startDate}
                             </Text>
                           </TouchableOpacity>
 
-                          {showPicker && (
+                          {showStartDate && (
                             <DateTimePicker
                               value={date}
                               mode="date"
                               display="default"
-                              maximumDate={new Date()}
-                              onChange={onChangeDate}
+                              //maximumDate={new Date()}
+                              minimumDate={new Date()}
+                              onChange={onChangeStartDate}
                             />
                           )}
                         </>
                       )}
-                    </View>
-                  </View>
-                  {/* Input Gender dan Phone Number */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Gender</Text>
-                      <View style={styles.pickerContainerModal}>
-                        <Picker
-                          selectedValue={gender}
-                          onValueChange={(value) => setGender(value)}
-                          style={styles.pickerContainerListModal}
-                        >
-                          <Picker.Item label="-- Select Gender --" value="" />
-                          <Picker.Item label="Male" value="Male" />
-                          <Picker.Item label="Female" value="Female" />
-                        </Picker>
-                      </View>
-                    </View>
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Phone Number</Text>
-                      
-                      <PhoneInput
-                        phone={phone}
-                        dialCodePhone={dialCodePhone}
-                        onChangePhone={setPhone}
-                        onChangeDialCode={setDialCodePhone}
-                      />                        
-                    </View>
-                  </View>
-                  {/* Input Emergency Contact Name dan Emergency Contact No */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.7,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Name
-                      </Text>
+                      {/* MEMBERSHIP PLAN STATUS */}
+                      <Text style={styles.labelModal}>Membership Plan Status</Text>
 
-                      <TextInput
-                        value={emergencyContactName}
-                        onChangeText={setEmergencyContactName}
-                        style={styles.inputModal}
-                      />
-                    </View>
+                      <TouchableOpacity
+                        style={styles.memberSelect}
+                        onPress={() => {
+                          setShowStatusNameDropdown(!showStatusNameDropdown);
 
-                    <View
-                      style={{
-                        flex: 0.7,
-                        marginLeft: 10,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>
-                        Emergency Contact Number
-                      </Text>
-                      
-                      <PhoneInput
-                        phone={emergencyContactNo}
-                        dialCodePhone={dialCodeEmergencyContactNo}
-                        onChangePhone={setEmergencyContactNo}
-                        onChangeDialCode={setDialCodeEmergencyContactNo}
-                      />    
-                    </View>
-                  </View>
-                  {/* Input Password */}
-                  <View style={styles.rowModal}>
-                    <View
-                      style={{
-                        flex: 0.5,
-                      }}
-                    >
-                      <Text style={styles.labelModal}>Password</Text>
+                          if (showStatusNameDropdown) {
+                            setStatusNameSearch("");
+                          }
+                        }}
+                      >
+                        <Text style={styles.memberSelectText}>
+                          {statusName
+                            ? `${statusName.statusName}`
+                            : "--Select Membership Plan Status--"}
+                        </Text>
 
-                      <TextInput
-                        value={password}
-                        onChangeText={setPassword}
-                        style={styles.inputModal}
-                      />
+                        <MaterialIcons
+                          name={showStatusNameDropdown ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={20}
+                          color="#777"
+                        />
+                      </TouchableOpacity>
+
+                      {showStatusNameDropdown && (
+                        <View style={styles.memberDropdown}>
+
+                          {/* SEARCH */}
+                          <View style={styles.searchContainer}>
+                            <Text style={styles.searchIcon}>
+                              🔍
+                            </Text>
+
+                            <TextInput
+                              style={styles.searchInput}
+                              placeholder="Search Membership Plan Status"
+                              placeholderTextColor="#888"
+                              value={statusNameSearch}
+                              onChangeText={setStatusNameSearch}
+                            />
+
+                            {statusNameSearch.length > 0 && (
+                              <TouchableOpacity
+                                onPress={() => setStatusNameSearch("")}
+                              >
+                                <Text style={styles.clearSearch}>
+                                  ✕
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+
+                          {/* MEMBERSHIP PLAN STATUS LIST */}
+                          <ScrollView
+                            style={styles.memberList}
+                            nestedScrollEnabled
+                          >                        
+                            <View style={{ maxHeight: 200 }}>
+                              <FlatList
+                                data={filteredStatusName}
+                                keyExtractor={(item) => item.id.toString()}
+                                keyboardShouldPersistTaps="handled"
+                                nestedScrollEnabled
+                                renderItem={({ item }) => (
+                                  <TouchableOpacity
+                                    style={styles.memberItem}
+                                    onPress={() => {
+                                      setStatusName(item);
+                                      setShowStatusNameDropdown(false);
+                                      setStatusNameSearch("");
+                                    }}
+                                  >
+                                    <Text style={styles.memberItemText}>{item.statusName}</Text>
+                                  </TouchableOpacity>
+                                )}
+                              />
+                            </View>
+                          </ScrollView>
+                        </View>
+                      )}
                     </View>
-                  </View>
+                  }                   
+
 
                   <View style={styles.buttonRowModal}>
                     <Pressable
@@ -1582,5 +1573,93 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 25,
     paddingVertical: 10,
+  },
+
+
+ 
+  
+  memberSelect: {
+    height: 50,
+    backgroundColor: "#D9D9DD",
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  memberSelectText: {
+    fontSize: 14,
+    color: "#111",
+  },
+
+  arrow: {
+    fontSize: 25,
+    color: "#111",
+  },
+
+  memberDropdown: {
+    backgroundColor: "#D9D9DD",
+    borderWidth: 1,
+    borderColor: "#D5D5D5",
+    borderRadius: 12,
+    marginTop: 8,
+    overflow: "hidden",
+  },
+
+  searchContainer: {
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
+  },
+
+  searchIcon: {
+    fontSize: 16,
+    marginRight: 8,
+  },
+
+  searchInput: {
+    flex: 1,
+    height: 48,
+    fontSize: 14,
+    color: "#111",
+    outlineStyle: "none" as any,
+  },
+
+  clearSearch: {
+    fontSize: 14,
+    color: "#777",
+    paddingHorizontal: 8,
+  },
+
+  memberList: {
+    maxHeight: 250,
+  },
+
+  memberItem: {
+    minHeight: 55,
+    justifyContent: "center",
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EEEEEE",
+  },
+
+  memberItemText: {
+    fontSize: 14,
+    color: "#111",
+  },
+
+  noResult: {
+    padding: 20,
+    alignItems: "center",
+  },
+
+  noResultText: {
+    fontSize: 14,
+    color: "#888",
   },
 });
