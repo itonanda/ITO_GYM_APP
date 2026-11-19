@@ -474,6 +474,11 @@ export default function ClassBookingScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
+            icon="account-circle"
+            title="Admin"
+            onPress={() => router.push("/admin")}
+          />
+          <MenuItem
             icon="supervised-user-circle"
             title="Coaches"
             onPress={() => router.push("/coaches")}
@@ -525,6 +530,11 @@ export default function ClassBookingScreen() {
                   />
                 </View>
               )}
+          <MenuItem
+            icon="sports-handball"
+            title="Open Gym"
+            onPress={() => router.push("/open_gym")}
+          />
           <MenuItem
             icon="credit-card"
             title="Payment"

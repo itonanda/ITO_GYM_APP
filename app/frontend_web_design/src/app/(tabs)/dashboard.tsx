@@ -295,6 +295,11 @@ export default function DashboardScreen() {
             title="Dashboard"
             onPress={() => router.push("/dashboard")}
             active
+          />          
+          <MenuItem
+            icon="account-circle"
+            title="Admin"
+            onPress={() => router.push("/admin")}
           />
           <MenuItem
             icon="supervised-user-circle"
@@ -315,6 +320,11 @@ export default function DashboardScreen() {
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
+          />
+          <MenuItem
+            icon="sports-handball"
+            title="Open Gym"
+            onPress={() => router.push("/open_gym")}
           />
           <MenuItem
             icon="credit-card"

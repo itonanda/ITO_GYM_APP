@@ -6,6 +6,7 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="dashboard" options={{ headerShown: false }} />
+      <Stack.Screen name="admin" options={{ headerShown: false }} />
       <Stack.Screen name="coaches" options={{ headerShown: false }} />
       <Stack.Screen name="members" options={{ headerShown: false }} />
       <Stack.Screen name="membership" options={{ headerShown: false }} />
@@ -18,6 +19,10 @@ export default function RootLayout() {
       <Stack.Screen name="class_booking" options={{ headerShown: false }} />
       <Stack.Screen name="class_status" options={{ headerShown: false }} />
       <Stack.Screen name="class_name" options={{ headerShown: false }} />
+      <Stack.Screen name="open_gym" options={{ headerShown: false }} />
+      <Stack.Screen name="open_gym_booking" options={{ headerShown: false }} />
+      <Stack.Screen name="open_gym_status" options={{ headerShown: false }} />
+      <Stack.Screen name="open_gym_name" options={{ headerShown: false }} />
       <Stack.Screen name="payment" options={{ headerShown: false }} />
       <Stack.Screen name="payment_method" options={{ headerShown: false }} />
       <Stack.Screen name="payment_status" options={{ headerShown: false }} />

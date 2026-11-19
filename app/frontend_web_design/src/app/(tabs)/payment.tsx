@@ -483,6 +483,11 @@ export default function PaymentScreen() {
             onPress={() => router.push("/dashboard")}
           />
           <MenuItem
+            icon="account-circle"
+            title="Admin"
+            onPress={() => router.push("/admin")}
+          />
+          <MenuItem
             icon="supervised-user-circle"
             title="Coaches"
             onPress={() => router.push("/coaches")}
@@ -501,6 +506,11 @@ export default function PaymentScreen() {
             icon="home-work"
             title="Class"
             onPress={() => router.push("/class")}
+          />
+          <MenuItem
+            icon="sports-handball"
+            title="Open Gym"
+            onPress={() => router.push("/open_gym")}
           />
           <MenuItem
             icon="credit-card"
